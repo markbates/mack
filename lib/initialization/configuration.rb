@@ -9,7 +9,6 @@ module Mack
     DEFAULTS_PRODUCTION = {
       "mack::use_lint" => false,
       "mack::show_exceptions" => false,
-      "mack::page_cache" => true,
       "log::level" => "info",
       "log::detailed_requests" => false,
       "cachetastic_default_options" => {
@@ -77,7 +76,6 @@ module Mack
         "mack::cache_classes" => true,
         "mack::use_lint" => true,
         "mack::show_exceptions" => true,
-        "mack::page_cache" => false,
         "mack::session_id" => "_mack_session_id",
         "mack::cookie_values" => {
           "path" => "/"

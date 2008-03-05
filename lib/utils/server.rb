@@ -14,7 +14,6 @@ module Mack
         app = Rack::ShowExceptions.new(app) if app_config.mack.show_exceptions
         app = Rack::Recursive.new(app)
         # This will reload any edited classes if the cache_classes config setting is set to true.
-        app = Mack::PageCacher.new(app) if app_config.mack.page_cache
         app = Rack::Reloader.new(app, 1) unless app_config.mack.cache_classes
         # TODO: Not sure about this logger, investigate better ones.
         # TODO: Depends on MACK_DEFAULT_LOGGER already being configured.
