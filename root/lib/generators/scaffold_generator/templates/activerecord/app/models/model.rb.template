@@ -1,2 +1,0 @@
-class <%= @name_singular_camel %> < ActiveRecord::Base
-end

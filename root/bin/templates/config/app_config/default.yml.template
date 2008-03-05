@@ -1,7 +1,0 @@
-whiny_config_missing: false
-
-mack::session_id: _<%= app.downcase %>_session_id
-
-# log::level: error
-
-<%= options.orm ? "orm: #{options.orm}" : "" %>

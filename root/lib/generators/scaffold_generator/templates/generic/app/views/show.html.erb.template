@@ -1,7 +1,0 @@
-<p>
-  <%%= @<%= @name_singular %>.inspect %>
-</p>
-
-
-<%%= link_to("Edit", <%= @name_plural %>_edit_url(:id => @<%= @name_singular %>.id)) %> |
-<%%= link_to("Back", <%= @name_plural %>_index_url) %>
