@@ -1,0 +1,15 @@
+# mack::log_level: error
+
+whiny_config_missing: false
+
+foo: bar
+
+orm: data_mapper
+
+mack::page_cache: true
+
+# cachetastic_default_options:
+#   logging:
+#     logger_1:
+#       type: console
+#       level: debug

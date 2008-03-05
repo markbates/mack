@@ -1,0 +1,20 @@
+development:
+  adapter: mysql
+  database: <%= app.downcase %>_development
+  host: localhost
+  username: root
+  password: 
+    
+test:
+  adapter: mysql
+  database: <%= app.downcase %>_test
+  host: localhost
+  username: root
+  password:
+
+production:
+  adapter: mysql
+  database: <%= app.downcase %>_production
+  host: localhost
+  username: root
+  password:

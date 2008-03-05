@@ -1,0 +1,25 @@
+===0.1.0
+* Added an inflections system. The default inflections are from Jeremy McAnally's great Rails plugin, acts_as_good_speeler. Thanks Jeremy! http://www.jeremymcanally.com/
+* Added a to_params method to Hash to help with testing.
+* Added rake generate:scaffold task.
+
+===0.0.7.0
+* Fixed [#18488] Recommend moving files under lib/
+
+===0.0.6.2
+* gem: thin 0.7.0
+* gem: cachetastic 1.3.1
+* Fixed 18487: #convert_security_of_methods ignores new_level param
+
+===0.0.6
+* rake generate:<generator_name>
+* rake generate:plugin - will generate the stub of a plugin in the vendor/plugins directory. 
+* rake dump:config - prints out the configuration information for the specified environment.
+* redirect_to now takes an optional Hash as a second parameter, instead of a fixnum.
+* redirect_to will now do server side redirects if passed :server_side => true as part of the optional second argument Hash.
+* plugin in support. plugins get loaded before the 'app' directory. each plugins 'lib' directory is added to the global load path and then each plugins 'init.rb' file is called, which is responsible for loading the necessary files. The 'lib' directories are finally removed from the global load path.
+* renamed initialize directory to initialization. moved logging, orm_support, and plugins to a subfolder called initializers.
+
+===0.0.4
+* gem: rack 0.3.0
+* gem: ruby_extensions 1.0.11 
