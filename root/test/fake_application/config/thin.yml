@@ -1,0 +1,10 @@
+--- 
+pid: tmp/pids/thin.pid
+log: log/thin.log
+timeout: 60
+port: 3000
+rackup: config/thin.ru
+# chdir: /Users/markbates/mack/test/fake_application
+# environment: development # => This is for RAILS apps ONLY!!
+address: 0.0.0.0
+# servers: 10
