@@ -83,9 +83,20 @@ module Mack
       end
     end
     
+    # Potentially raised if a render(:url => "....") is a status other than 200.
+    # This is only raised if :raise_exception is passed in as true to the render options.
     class UnsuccessfulRenderUrl < StandardError
+      # Takes the uri trying to be rendered the Net::HTTP response object.
       def initialize(uri, response)
         super("URI: #{uri}; status: #{response.code}; body: #{response.body}")
+      end
+    end
+    
+    # Raised if an unsupported method, ie post or delete, is used with render url.
+    class UnsupportRenderUrlMethodType < StandardError
+      # Takes the method tried.
+      def initialize(method)
+        super("METHOD: #{method.to_s.upcase} is unsupported by render url.")
       end
     end
     
