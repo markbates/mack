@@ -67,7 +67,7 @@ class Mack::ViewBinder
   
   private
   def render_url(options = {})
-    options = {:method => :get, :domain => app_config.mack.default_domain}.merge(options)
+    options = {:method => :get, :domain => app_config.mack.default_domain, :raise_exception => false}.merge(options)
     case options[:method]
     when :get
       Timeout::timeout(app_config.mack.render_url_timeout || 5) do
@@ -76,9 +76,16 @@ class Mack::ViewBinder
           url = File.join(options[:domain], options[:url])
         end
         uri = URI.parse(url)
-        pp uri
         response = Net::HTTP.get_response(uri)
-        return response.body
+        if response.code == "200"
+          return response.body
+        else
+          if options[:raise_exception]
+            raise Mack::Errors::UnsuccessfulRenderUrl.new(uri, response)
+          else
+            return ""
+          end
+        end
       end
     when :put
     when :post

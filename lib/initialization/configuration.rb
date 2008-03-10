@@ -61,6 +61,7 @@ module Mack
       "mack::default_domain" => "http://localhost",
       "mack::default_domain_port" => 6666,
       "log::level" => "error",
+      "run_remote_tests" => true,
       "cachetastic_default_options" => {
         "debug" => false,
         "adapter" => "local_memory",

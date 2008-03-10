@@ -3,6 +3,12 @@ require "test/unit"
 module Mack
   
   module TestHelpers
+    
+    def remote_test
+      if app_config.run_remote_tests
+        yield
+      end
+    end
 
     # Performs a 'get' request for the specified uri.
     def get(uri, options = {})

@@ -5,13 +5,23 @@ class ViewBinderTest < Test::Unit::TestCase
   class RenderUrlController < Mack::Controller::Base
     
     def good_local_render_url
-      render(:url => "http://localhost:6666/foo")
+      render(:url => "http://testing.mackframework.com/hello_world.html")
+    end
+    
+    def bad_local_render_url
+      render(:url => "http://testing.mackframework.com/i_dont_exist.html")
+    end
+    
+    def bad_local_render_with_raise_url
+      render(:url => "http://testing.mackframework.com/i_dont_exist.html", :raise_exception => true)
     end
     
   end
   
   Mack::Routes.build do |r|
     r.good_local_render "/good_local_render_url", :controller => "view_binder_test/render_url", :action => :good_local_render_url
+    r.bad_local_render "/bad_local_render_url", :controller => "view_binder_test/render_url", :action => :bad_local_render_url
+    r.bad_local_render_with_raise "/bad_local_render_with_raise_url", :controller => "view_binder_test/render_url", :action => :bad_local_render_with_raise_url
   end
   
   def test_render
@@ -24,17 +34,13 @@ class ViewBinderTest < Test::Unit::TestCase
   end
   
   def test_render_url
-    Mack::Testing::Server.instance.register("/foo") do
-      "Hello World!!"
+    remote_test do
+      get good_local_render_url
+      assert_match "Hello World", response.body
+      get bad_local_render_url
+      assert_equal "", response.body
+      assert_raise(Mack::Errors::UnsuccessfulRenderUrl) { get bad_local_render_with_raise_url }
     end
-    # get good_local_render_url
-    # pp response
-    # assert_match "Hello World", response.body
-    require 'net/http'
-    res = Net::HTTP.get_response(URI.parse("http://0.0.0.0:6666/foo"))
-    pp res
-    res = Net::HTTP.get_response(URI.parse("http://0.0.0.0:6666/test"))
-    pp res
   end
   
   

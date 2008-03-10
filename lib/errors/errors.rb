@@ -83,5 +83,11 @@ module Mack
       end
     end
     
+    class UnsuccessfulRenderUrl < StandardError
+      def initialize(uri, response)
+        super("URI: #{uri}; status: #{response.code}; body: #{response.body}")
+      end
+    end
+    
   end # Errors
 end # Mack
