@@ -40,6 +40,7 @@ module Mack
     # use local memory and store stuff for 5 minutes:
     DEFAULTS_DEVELOPMENT = {
       "mack::cache_classes" => false,
+      "mack::default_domain" => "http://localhost:3000",
       "log::level" => "debug",
       "log::console" => true,
       "cachetastic_default_options" => {
@@ -57,6 +58,8 @@ module Mack
     
     # use local memory and store stuff for 1 hour:
     DEFAULTS_TEST = {
+      "mack::default_domain" => "http://localhost",
+      "mack::default_domain_port" => 6666,
       "log::level" => "error",
       "cachetastic_default_options" => {
         "debug" => false,
@@ -73,6 +76,7 @@ module Mack
     
     unless self.const_defined?("DEFAULTS")
       DEFAULTS = {
+        "mack::render_url_timeout" => 5,
         "mack::cache_classes" => true,
         "mack::use_lint" => true,
         "mack::show_exceptions" => true,

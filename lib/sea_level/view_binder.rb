@@ -1,3 +1,4 @@
+require 'net/http'
 # require 'erubis'
 # This class is used to do all the view level bindings.
 # It allows for seperation between the controller and the view levels.
@@ -57,12 +58,34 @@ class Mack::ViewBinder
       t = render_file(options[:public], {:dir => MACK_PUBLIC, :ext => ".html", :layout => false}.merge(options))
       # self.controller.instance_variable_get("@render_options").merge!({:layout => false})
       return t
+    elsif options[:url]
+      return render_url(options)
     else
-      raise Mack::UnknownRenderOption.new(options)
+      raise Mack::Errors::UnknownRenderOption.new(options)
     end
   end
   
   private
+  def render_url(options = {})
+    options = {:method => :get, :domain => app_config.mack.default_domain}.merge(options)
+    case options[:method]
+    when :get
+      Timeout::timeout(app_config.mack.render_url_timeout || 5) do
+        url = options[:url]
+        unless url.match(/^[a-zA-Z]+:\/\//)
+          url = File.join(options[:domain], options[:url])
+        end
+        uri = URI.parse(url)
+        pp uri
+        response = Net::HTTP.get_response(uri)
+        return response.body
+      end
+    when :put
+    when :post
+    when :delete
+    end
+  end
+  
   def render_file(f, options = {})
     options = {:is_partial => false, :ext => ".html.erb", :dir => MACK_VIEWS}.merge(options)
     partial = f.to_s

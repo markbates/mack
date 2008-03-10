@@ -17,6 +17,10 @@ require(File.join(File.dirname(__FILE__),  "fake_application", "config", "routes
 # place common methods, assertions, and other type things in this file so
 # other tests will have access to them.
 
+# Start the testing server:
+require File.join(File.dirname(__FILE__), "test_server")
+Mack::Testing::Server.instance
+
 class Test::Unit::TestCase
   
 end

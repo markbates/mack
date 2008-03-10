@@ -57,9 +57,9 @@ class UrlHelpersTest < Test::Unit::TestCase
   end
   
   def test_update
-    assert_equal "/tst_resources/1/update", tst_resources_update_url(:id => 1)
-    assert_equal "/tst_resources/2/update", tst_resources_update_url(:id => 2)
-    assert_equal "/tst_resources/1-hello-world/update", tst_resources_update_url(:id => "1-hello-world")
+    assert_equal "/tst_resources/1", tst_resources_update_url(:id => 1)
+    assert_equal "/tst_resources/2", tst_resources_update_url(:id => 2)
+    assert_equal "/tst_resources/1-hello-world", tst_resources_update_url(:id => "1-hello-world")
   end
   
   def test_delete
