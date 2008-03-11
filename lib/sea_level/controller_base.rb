@@ -148,6 +148,24 @@ module Mack
       #     def latest_news
       #       render(:partial => "some_other/old_news")
       #     end
+      # 
+      #     # This will render a url. If the url does not return a status code of '200',
+      #     # an empty string will be returned by default. The default method for rendering
+      #     # urls is a get.
+      #     def yahoo
+      #       render(:url => "http://www.yahoo.com")
+      #     end
+      # 
+      #     # This will render a url. If the url does not return a status code of '200',
+      #     # a Mack::Errors::UnsuccessfulRenderUrl exception will be raised.
+      #     def idontexist
+      #       render(:url => "http://www.idontexist.com", :raise_exception => true)
+      #     end
+      # 
+      #     # This will render a url with a post.
+      #     def post_to_somewhere
+      #       render(:url => "http://www.mackframework.com/post_to_me", :method => :post, :parameters => {:id => 1, :user => "markbates"})
+      #     end
       #   end
       def render(options = {:action => self.action_name})
         raise Mack::Errors::DoubleRender.new if render_performed?
