@@ -33,6 +33,7 @@ class Mack::ViewBinder
   #   <%= render(:text => "Hello") %>
   #   <%= render(:action => "show") %>
   #   <%= render(:partial => :latest_news) %>
+  #   <%= render(:url => "http://www.mackframework.com") %>
   def render(options = {})
     if options[:action]
       begin

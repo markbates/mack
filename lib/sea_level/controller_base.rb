@@ -164,7 +164,15 @@ module Mack
       # 
       #     # This will render a url with a post.
       #     def post_to_somewhere
-      #       render(:url => "http://www.mackframework.com/post_to_me", :method => :post, :parameters => {:id => 1, :user => "markbates"})
+      #       render(:url => "http://www.mackframework.com/post_to_me", :method => :post, 
+      #              :parameters => {:id => 1, :user => "markbates"})
+      #     end
+      # 
+      #     # This will render a 'local' url. If a domain is not present render url will
+      #     # reach out for the config parameter "mack::default_domain" and prepend that
+      #     # to the url. This can be overridden locally with the :domain option.
+      #     def get_index
+      #       render(:url => "/")
       #     end
       #   end
       def render(options = {:action => self.action_name})
