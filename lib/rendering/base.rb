@@ -1,6 +1,24 @@
 module Mack
   module Rendering
     # This is the base class from which all rendering systems need to extend.
+    # 
+    # Example:
+    #   class Mack::Rendering::Pdf < Mack::Rendering::Base
+    #     def render
+    #       # do work to render stuff as a PDF
+    #     end
+    #   end
+    # 
+    # Now add this to the list of available render systems:
+    #   app_config.mack.rendering_systems << :pdf
+    # 
+    # You should now be able to do this in your controller:
+    # 
+    #   class MyAwesomeController < Mack::Controller::Base
+    #     def pdf
+    #       render(:pdf => "my_pdf_template")
+    #     end
+    #   end
     class Base
       
       attr_accessor :view_binder # The Mack::ViewBinder that called this rendering system.
