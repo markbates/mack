@@ -5,7 +5,7 @@ module Mack
   module TestHelpers
     
     def remote_test
-      if app_config.run_remote_tests
+      if (app_config.run_remote_tests)
         yield
       end
     end

@@ -1,5 +1,6 @@
 ===0.2.0
 * ticket: 3 Render url in Controllers/Views
+* ticket: 5 Render Extension System
 
 ===0.1.0
 * Added an inflections system. The default inflections are from Jeremy McAnally's great Rails plugin, acts_as_good_speeler. Thanks Jeremy! http://www.jeremymcanally.com/
