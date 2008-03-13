@@ -55,7 +55,7 @@ module Mack
       #   droute_url(:app_1, :home_page_url)
       #   droute_url(:registration_app, :signup_url, {:from => :google})
       def droute_url(app_name, route_name, options = {})
-        
+        raise Mack::Errors::Distributed::UnknownApplication.new(app_name)
       end
     
     end # Urls
