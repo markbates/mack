@@ -1,3 +1,7 @@
+===0.3.0
+* gem: cachetastic 1.4.0
+* gem: application_configuration 1.2.1
+
 ===0.2.0
 * ticket: 3 Render url in Controllers/Views
 * ticket: 5 Render Extension System.
