@@ -48,6 +48,15 @@ module Mack
           </html>
         }
       end
+      
+      # Retrieves a distributed route from a DRb server.
+      # 
+      # Example:
+      #   droute_url(:app_1, :home_page_url)
+      #   droute_url(:registration_app, :signup_url, {:from => :google})
+      def droute_url(app_name, route_name, options = {})
+        
+      end
     
     end # Urls
   end # Routes
