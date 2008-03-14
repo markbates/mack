@@ -1,8 +1,8 @@
 module Mack
-  module Routes
-    module Distributed
+  module Distributed
+    module Routes
       class UrlCache < Cachetastic::Caches::Base
       end # UrlCache
-    end # Distributed
-  end # Routes
+    end # Routes
+  end # Distributed
 end # Mack

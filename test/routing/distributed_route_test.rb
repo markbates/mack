@@ -2,11 +2,11 @@ require File.dirname(__FILE__) + '/../test_helper.rb'
 class DistributedRouteTest < Test::Unit::TestCase
   
   def test_unknown_application_droute_url
-    assert_raise(Mack::Errors::Distributed::UnknownApplication) { droute_url(:unknown_app, :foo_url) }
+    assert_raise(Mack::Distributed::Errors::UnknownApplication) { droute_url(:unknown_app, :foo_url) }
   end
   
   def test_unknown_route_name_droute_url
-    assert_raise(Mack::Errors::Distributed::UnknownRouteName) { droute_url(:known_app, :unknown_url) }
+    assert_raise(Mack::Distributed::Errors::UnknownRouteName) { droute_url(:known_app, :unknown_url) }
   end
   
   def test_droute_url

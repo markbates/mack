@@ -1,6 +1,6 @@
 module Mack
-  module Errors # :nodoc:
-    module Distributed # :nodoc:
+  module Distributed # :nodoc:
+    module Errors # :nodoc:
       
       # Raised when an unknown distributed application is referenced.
       class UnknownApplication < StandardError
@@ -18,6 +18,6 @@ module Mack
         end
       end
       
-    end # Distributed
-  end # Errors
+    end # Errors
+  end # Distributed
 end # Mack
