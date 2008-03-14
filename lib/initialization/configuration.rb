@@ -11,17 +11,6 @@ module Mack
       "mack::show_exceptions" => false,
       "log::level" => "info",
       "log::detailed_requests" => false,
-      "cachetastic_default_options" => {
-        "debug" => false,
-        "adapter" => "local_memory",
-        "expiry_time" => 86400,
-        "logging" => {
-          "logger_1" => {
-            "type" => "file",
-            "file" => File.join(MACK_ROOT, "log", "cachetastic.log")
-          }
-        }
-      },
       "cachetastic_caches_mack_session_cache_options" => {
         "debug" => false,
         "adapter" => "file",
@@ -31,7 +20,7 @@ module Mack
         "logging" => {
           "logger_1" => {
             "type" => "file",
-            "file" => File.join(MACK_ROOT, "log", "cachetastic.log")
+            "file" => File.join(MACK_ROOT, "log", "cachetastic_caches_mack_session_cache.log")
           }
         }
       }
@@ -43,17 +32,6 @@ module Mack
       "mack::default_domain" => "http://localhost:3000",
       "log::level" => "debug",
       "log::console" => true,
-      "cachetastic_default_options" => {
-        "debug" => false,
-        "adapter" => "local_memory",
-        "expiry_time" => 300,
-        "logging" => {
-          "logger_1" => {
-            "type" => "file",
-            "file" => File.join(MACK_ROOT, "log", "cachetastic.log")
-          }
-        }
-      }
     } unless self.const_defined?("DEFAULTS_DEVELOPMENT")
     
     # use local memory and store stuff for 1 hour:
@@ -62,17 +40,6 @@ module Mack
       "mack::default_domain_port" => 6666,
       "log::level" => "error",
       "run_remote_tests" => true,
-      "cachetastic_default_options" => {
-        "debug" => false,
-        "adapter" => "local_memory",
-        "expiry_time" => 3600,
-        "logging" => {
-          "logger_1" => {
-            "type" => "file",
-            "file" => File.join(MACK_ROOT, "log", "cachetastic.log")
-          }
-        }
-      }
     } unless self.const_defined?("DEFAULTS_TEST")
     
     unless self.const_defined?("DEFAULTS")
@@ -86,7 +53,30 @@ module Mack
         "mack::cookie_values" => {
           "path" => "/"
         },
-        # "mack::orm" => "activerecord",
+        "cachetastic_default_options" => {
+          "debug" => false,
+          "adapter" => "local_memory",
+          "expiry_time" => 300,
+          "logging" => {
+            "logger_1" => {
+              "type" => "file",
+              "file" => File.join(MACK_ROOT, "log", "cachetastic.log")
+            }
+          }
+        },
+        "mack_distributed_routes_url_cache_options" => {
+          "debug" => false,
+          "adapter" => "drb",
+          "store_options" => {
+            "host" => "druby://127.0.0.1:61676"
+          },
+          "logging" => {
+            "logger_1" => {
+              "type" => "file",
+              "file" => File.join(MACK_ROOT, "log", "mack_distributed_routes_url_cache.log")
+            }
+          }
+        },
         "log::detailed_requests" => true,
         "log::level" => "info",
         "log::console" => false,
