@@ -8,7 +8,10 @@ module Mack
     # See Mack::Routes::RouteMap for more information.
     def self.build
       yield Mack::Routes::RouteMap.instance
-      Mack::Routes::Urls.include_safely_into(Mack::Controller::Base, Mack::ViewBinder, Test::Unit::TestCase)
+      Mack::Routes::Urls.include_safely_into(Mack::Controller::Base, Mack::ViewBinder, Mack::Distributed::Routes::Urls, Test::Unit::TestCase)
+      if app_config.mack.use_distributed_routes
+        Mack::Distributed::Routes::UrlCache.set(app_config.mack.distributed_app_name.to_sym, Mack::Distributed::Routes::Urls.new)
+      end
       # puts "Finished compiling routes: #{Mack::Routes::RouteMap.instance.routes_list.inspect}"
     end
     

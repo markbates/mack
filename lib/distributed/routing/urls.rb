@@ -1,6 +1,8 @@
 module Mack
   module Distributed
-    class Urls
-    end # Urls
+    module Routes
+      class Urls
+      end # Urls
+    end # Routes
   end # Distributed
 end # Mack

@@ -77,6 +77,8 @@ module Mack
             }
           }
         },
+        "mack::use_distributed_routes" => false,
+        "mack::distributed_app_name" => nil,
         "log::detailed_requests" => true,
         "log::level" => "info",
         "log::console" => false,
