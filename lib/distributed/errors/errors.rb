@@ -18,6 +18,10 @@ module Mack
         end
       end
       
+      # Raised when an application doesn't declare it's application name for use in a distributed system.
+      class ApplicationNameUndefined < StandardError
+      end
+      
     end # Errors
   end # Distributed
 end # Mack

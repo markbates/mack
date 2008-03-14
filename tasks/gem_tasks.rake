@@ -13,7 +13,7 @@ require 'singleton'
 GEM_NAME = "mack"
 GEM_VERSION = "0.3.0"
 
-require 'lib/tasks/private/gem_helper'
+require 'tasks/gem_helper'
 
 namespace :gem do
   

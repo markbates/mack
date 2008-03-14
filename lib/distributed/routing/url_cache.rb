@@ -1,15 +1,8 @@
 module Mack
   module Distributed
-    module Routes
+    module Routes # :nodoc:
+      # Used to house the Mack::Distributed::Routes::Urls object for each distributed application.
       class UrlCache < Cachetastic::Caches::Base
-        
-        # class << self
-        #   def get(app_name)
-        #     super(app_name) do
-        #       set(app_name, Mack::Distributed::Routes::Urls.new)
-        #     end
-        #   end
-        # end
         
       end # UrlCache
     end # Routes

@@ -55,23 +55,27 @@ module Mack
       #   droute_url(:app_1, :home_page_url)
       #   droute_url(:registration_app, :signup_url, {:from => :google})
       def droute_url(app_name, route_name, options = {})
-        ivar_cache("droute_url_hash") do
-          {}
-        end
-        d_urls = @droute_url_hash[app_name.to_sym]
-        if d_urls.nil?
-          d_urls = Mack::Distributed::Routes::UrlCache.get(app_name.to_sym)
-          @droute_url_hash[app_name.to_sym] = d_urls
-          if d_urls.nil?
-            raise Mack::Distributed::Errors::UnknownApplication.new(app_name)
+        if app_config.mack.use_distributed_routes
+          ivar_cache("droute_url_hash") do
+            {}
           end
-        end
-        if d_urls.respond_to?(route_name)
-          return d_urls.send(route_name, options)
+          d_urls = @droute_url_hash[app_name.to_sym]
+          if d_urls.nil?
+            d_urls = Mack::Distributed::Routes::UrlCache.get(app_name.to_sym)
+            @droute_url_hash[app_name.to_sym] = d_urls
+            if d_urls.nil?
+              raise Mack::Distributed::Errors::UnknownApplication.new(app_name)
+            end
+          end
+          if d_urls.respond_to?(route_name)
+            return d_urls.send(route_name, options)
+          else
+            raise Mack::Distributed::Errors::UnknownRouteName.new(app_name, route_name)
+          end
         else
-          raise Mack::Distributed::Errors::UnknownRouteName.new(app_name, route_name)
+          return nil
         end
-      end
+      end # droute_url
     
     end # Urls
   end # Routes
