@@ -11,7 +11,7 @@ require 'rubygems/gem_runner'
 require 'singleton'
 
 GEM_NAME = "mack"
-GEM_VERSION = "0.3.0"
+GEM_VERSION = "0.2.0.1"
 
 require 'tasks/gem_helper'
 
@@ -47,7 +47,11 @@ namespace :gem do
         s.add_dependency("rack", "0.3.0")
         s.add_dependency("ruby_extensions", "1.0.11")
         s.add_dependency("application_configuration", "1.2.1")
+<<<<<<< HEAD:tasks/gem_tasks.rake
         s.add_dependency("cachetastic", "1.4.0")
+=======
+        s.add_dependency("cachetastic", "1.4.1")
+>>>>>>> master:lib/tasks/private/gem_tasks.rake
         s.add_dependency("log4r", "1.0.5")
         s.add_dependency("thin", "0.7.0")
       
