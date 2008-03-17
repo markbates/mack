@@ -21,10 +21,10 @@ class ControllerBaseTest < Test::Unit::TestCase
     get you_want_what_url
     assert_match "<html>Hello World</html>", response.body
     
-    get "/ymm.html"
+    get "/yww.html"
     assert_match "<html>Hello World</html>", response.body
     
-    get "/ymm.xml"
+    get "/yww.xml"
     assert_match "<xml><greeting>Hello World</greeting></xml>", response.body
   end
   

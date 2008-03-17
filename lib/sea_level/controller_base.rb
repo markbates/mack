@@ -204,7 +204,6 @@ module Mack
         # check the extension first
         ext = File.extname(self.request.path_info)
         unless ext.blank?
-          puts "ext[1..ext.size].to_sym: #{ext[1..ext.size].to_sym}"
           if header_type == ext[1..ext.size].to_sym
             yield
           end
