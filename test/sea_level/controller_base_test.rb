@@ -27,6 +27,13 @@ class ControllerBaseTest < Test::Unit::TestCase
     r.you_want_what "/yww", :controller => "controller_base_test/wants_test", :action => :you_want_what
     r.on_disk_wants "/odw", :controller => "controller_base_test/wants_test", :action => :on_disk_wants
     r.ren_xml "/ren_xml", :controller => "controller_base_test/wants_test", :action => :ren_xml
+    r.on_disk_wants_x "/odw_x", :controller => "controller_base_test/wants_test", :action => :on_disk_wants, :format => :xml
+  end
+  
+  def test_format_on_route_definition_sets_initial_format
+    get on_disk_wants_x_url
+    assert_match "<greeting>Hello World</greeting>", response.body
+    assert !response.body.match("<html>")
   end
   
   def test_render_xml
