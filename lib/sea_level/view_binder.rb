@@ -23,6 +23,11 @@ class Mack::ViewBinder
     self.options[:locals][sym]
   end
   
+  # Maps to the controller's param method. See also Mack::Controller::Base params.
+  def params(key)
+    self.controller.params(key)
+  end
+  
   # Handles rendering calls both in the controller and in the view.
   # For full details of render examples see Mack::Controller::Base render.
   # Although the examples there are all in controllers, they idea is still

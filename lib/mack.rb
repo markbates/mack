@@ -119,7 +119,7 @@ module Mack
       url = route[:redirect_to]
       options = self.request.all_params
       options.merge!(route)
-      options - [:controller, :action, :redirect_to, :method, :status]
+      options - [:controller, :action, :redirect_to, :method, :status, :format]
       url = url_for_pattern(url, options)
       self.response.status = status
       self.response[:location] = url
