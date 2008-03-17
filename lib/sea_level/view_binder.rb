@@ -74,7 +74,8 @@ class Mack::ViewBinder
     # and returns a String. The io can be either an IO object or a String.
     def render(io, controller, options = {})
       vb = Mack::ViewBinder.new(controller, options)
-      if (controller.params(:format).to_sym == :xml) && options[:action]
+      # TODO: find a nicer way of doing this:
+      if ((controller.params(:format).to_sym == :xml) || options[:format] == :xml) && (options[:action] || options[:xml])
         return eval(io, vb.view_binding)
       else
         return ERB.new(io).result(vb.view_binding)

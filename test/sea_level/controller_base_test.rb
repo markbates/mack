@@ -18,7 +18,7 @@ class ControllerBaseTest < Test::Unit::TestCase
     
     def ren_xml
       @greeting = "Hello World"
-      render(:xml => "on_disk_wants")
+      render(:xml => :on_disk_wants)
     end
     
   end
@@ -29,11 +29,11 @@ class ControllerBaseTest < Test::Unit::TestCase
     r.ren_xml "/ren_xml", :controller => "controller_base_test/wants_test", :action => :ren_xml
   end
   
-  # def test_render_xml
-  #   get ren_xml_url
-  #   assert_match "<greeting>Hello World</greeting>", response.body
-  #   assert !response.body.match("<html>")
-  # end
+  def test_render_xml
+    get ren_xml_url
+    assert_match "<greeting>Hello World</greeting>", response.body
+    assert !response.body.match("<html>")
+  end
   
   def test_on_disk_wants
     get on_disk_wants_url
