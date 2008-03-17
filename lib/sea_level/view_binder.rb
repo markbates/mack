@@ -1,3 +1,4 @@
+require 'builder'
 # require 'erubis'
 # This class is used to do all the view level bindings.
 # It allows for seperation between the controller and the view levels.
@@ -10,6 +11,8 @@ class Mack::ViewBinder
     self.controller = cont
     self.options = {:locals => {}}.merge(opts)
     transfer_vars(@controller)
+    @xml_output = ""
+    @xml = Builder::XmlMarkup.new(:target => @xml_output, :indent => 1)
   end
   
   # Returns the binding for this class.
@@ -26,6 +29,10 @@ class Mack::ViewBinder
   # Maps to the controller's param method. See also Mack::Controller::Base params.
   def params(key)
     self.controller.params(key)
+  end
+  
+  def xml
+    @xml
   end
   
   # Handles rendering calls both in the controller and in the view.
@@ -67,7 +74,11 @@ class Mack::ViewBinder
     # and returns a String. The io can be either an IO object or a String.
     def render(io, controller, options = {})
       vb = Mack::ViewBinder.new(controller, options)
-      return ERB.new(io).result(vb.view_binding)
+      if (controller.params(:format).to_sym == :xml) && options[:action]
+        return eval(io, vb.view_binding)
+      else
+        return ERB.new(io).result(vb.view_binding)
+      end
       # return Erubis::Eruby.new(io).result(vb.view_binding)
     end
     

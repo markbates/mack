@@ -1,3 +1,8 @@
+====
+* Ticket: #8 Xml Builder Support
+* Ticket: #7 Ability to drive certain content based on 'format'
+* gem: builder 2.1.2
+
 ===0.2.0.1
 * gem: cachetastic 1.4.1
 * gem: application_configuration 1.2.1
