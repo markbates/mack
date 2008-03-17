@@ -199,19 +199,33 @@ module Mack
         render(:text => redirect_html(request.path_info, url, options[:status]))
       end
       
+      # In an action wants will run blocks of code based on the content type that has
+      # been requested.
+      # 
+      # Examples:
+      #   class MyAwesomeController < Mack::Controller::Base
+      #     def hello
+      #       wants(:html) do
+      #         render(:text => "<html>Hello World</html>")
+      #       end
+      #       wants(:xml) do
+      #         render(:text => "<xml><greeting>Hello World</greeting></xml>")
+      #       end
+      #     end
+      #   end
+      # 
+      # If you were to go to: /my_awesome/hello you would get:
+      #   "<html>Hello World</html>"
+      # 
+      # If you were to go to: /my_awesome/hello.html you would get:
+      #   "<html>Hello World</html>"
+      # 
+      # If you were to go to: /my_awesome/hello.xml you would get:
+      #   "<xml><greeting>Hello World</greeting></xml>"
       def wants(header_type, &block)
         header_type = header_type.to_sym
-        # check the extension first
-        ext = File.extname(self.request.path_info)
-        unless ext.blank?
-          if header_type == ext[1..ext.size].to_sym
-            yield
-          end
-        else
-          # assume html
-          if header_type == :html
-            yield
-          end
+        if header_type == params(:format).to_sym
+          yield
         end
       end
       

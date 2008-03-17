@@ -193,10 +193,9 @@ module Mack
         raise Mack::Errors::UndefinedRoute.new(req)
       end # get
       
-      
+      private
       attr_reader :routes_list # :nodoc:
       
-      private
       def connect_with_named_route(n_route, pattern, options = {})
         route = connect(pattern, options)
         Mack::Routes::Urls.class_eval %{
@@ -209,9 +208,6 @@ module Mack
               "\#{@request.full_host}\#{u}"
             end
           }
-        unless pattern.match(/:format/)
-          connect(pattern + ".:format", options)
-        end
       end
       
       def regex_from_pattern(pattern)
@@ -227,9 +223,12 @@ module Mack
         end
         s = segs.join("/")
         s = "/" if s.blank?
-        if s.match(/:format/)
-          s.gsub!(":format", ".+")
+        if s.match(".:format")
+          s.gsub!(/\.:format/, "(\\..+|$)")
+        else
+          s << "(\\..+|$)"
         end
+        
         rx = /^#{s}$/
         rx
       end # regex_from_pattern
@@ -249,24 +248,24 @@ module Mack
           self.embedded_parameters = []
           # find out where the embedded_parameters are:
           original_pattern.split("/").each_with_index do |seg, ind|
-            if seg.match(/:/)
-              self.embedded_parameters[ind] = seg[(seg.index(/:/) + 1)..seg.length].to_sym
+            if seg.match(/^:/)
+              self.embedded_parameters[ind] = seg[1..seg.length].to_sym
             end
           end
         end
         
         def options_with_embedded_parameters(uri)
-          opts = self.options
+          opts = {:format => :html}.merge(self.options)
+          m = uri.match(/\..+$/)
+          if m
+            m = m.to_s
+            opts[:format]= m[1..m.size].to_sym
+            uri.gsub!(/\..+$/, "")
+          end
           split_uri = uri.split("/")
           self.embedded_parameters.each_with_index do |val, ind|
             unless val.nil?
               opts[val] = split_uri[ind]
-              if val == :format
-                m = opts[val].match(/\.(.+$)/)
-                if m
-                  opts[val] = m.captures.first
-                end
-              end
             end
           end
           opts
