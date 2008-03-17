@@ -31,6 +31,7 @@ module Mack
         @controller_name = params(:controller)
         @action_name = params(:action)
         @cookies = cookies
+        @wants_list = []
       end
       
       # Gives access to all the parameters for this request.
@@ -196,6 +197,23 @@ module Mack
         response.status = options[:status]
         response[:location] = url
         render(:text => redirect_html(request.path_info, url, options[:status]))
+      end
+      
+      def wants(header_type, &block)
+        header_type = header_type.to_sym
+        # check the extension first
+        ext = File.extname(self.request.path_info)
+        unless ext.blank?
+          puts "ext[1..ext.size].to_sym: #{ext[1..ext.size].to_sym}"
+          if header_type == ext[1..ext.size].to_sym
+            yield
+          end
+        else
+          # assume html
+          if header_type == :html
+            yield
+          end
+        end
       end
       
       # Returns true/false depending on whether the render action has been called yet.

@@ -2,6 +2,32 @@ require File.dirname(__FILE__) + '/../test_helper.rb'
 
 class ControllerBaseTest < Test::Unit::TestCase
   
+  class WantsTestController < Mack::Controller::Base
+    def you_want_what
+      wants(:html) do
+        render(:text => "<html>Hello World</html>")
+      end
+      wants(:xml) do
+        render(:text => "<xml><greeting>Hello World</greeting></xml>")
+      end
+    end
+  end
+  
+  Mack::Routes.build do |r|
+    r.you_want_what "/yww", :controller => "controller_base_test/wants_test", :action => :you_want_what
+  end
+  
+  def test_wants
+    get you_want_what_url
+    assert_match "<html>Hello World</html>", response.body
+    
+    get "/ymm.html"
+    assert_match "<html>Hello World</html>", response.body
+    
+    get "/ymm.xml"
+    assert_match "<xml><greeting>Hello World</greeting></xml>", response.body
+  end
+  
   def test_automatic_render_of_action
     get "/foo"
     assert_match "tst_home_page: foo: yummy", response.body
