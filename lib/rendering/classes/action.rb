@@ -10,7 +10,7 @@ module Mack
         rescue Errno::ENOENT => e
           begin
             # If the action doesn't exist on disk, try to render it from the public directory:
-            t = render_file(options[:action], {:dir => MACK_PUBLIC, :ext => ".html", :layout => false}.merge(options))
+            t = render_file(options[:action], {:dir => MACK_PUBLIC, :ext => ".#{params(:format)}", :layout => false}.merge(options))
             # Because it's being served from public don't wrap a layout around it!
             # self.controller.instance_variable_get("@render_options").merge!({:layout => false})
             return t

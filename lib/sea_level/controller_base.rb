@@ -268,7 +268,13 @@ module Mack
             end
           else layout
             # use the layout specified by the layout method
-            return Mack::ViewBinder.new(self).render(@render_options.merge({:action => "layouts/#{layout}"}))
+            begin
+              return Mack::ViewBinder.new(self).render(@render_options.merge({:action => "layouts/#{layout}"}))
+            rescue Errno::ENOENT => e
+              # if the layout doesn't exist, we don't care.
+            rescue Exception => e
+              raise e
+            end
           end
         # end
         @content_for_layout

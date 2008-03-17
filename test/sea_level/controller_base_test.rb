@@ -11,10 +11,29 @@ class ControllerBaseTest < Test::Unit::TestCase
         render(:text => "<xml><greeting>Hello World</greeting></xml>")
       end
     end
+    
+    def on_disk_wants
+      @greeting = "Hello World"
+    end
+    
   end
   
   Mack::Routes.build do |r|
     r.you_want_what "/yww", :controller => "controller_base_test/wants_test", :action => :you_want_what
+    r.on_disk_wants "/odw", :controller => "controller_base_test/wants_test", :action => :on_disk_wants
+  end
+  
+  def test_on_disk_wants
+    get on_disk_wants_url
+    assert_match "<p>Hello World</p>", response.body
+    
+    get "/odw.html"
+    assert_match "<p>Hello World</p>", response.body
+    assert_match "<html>", response.body
+    
+    get "/odw.xml"
+    assert_match "<greeting>Hello World</greeting>", response.body
+    assert !response.body.match("<html>")
   end
   
   def test_wants
