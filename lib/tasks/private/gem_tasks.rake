@@ -11,7 +11,7 @@ require 'rubygems/gem_runner'
 require 'singleton'
 
 GEM_NAME = "mack"
-GEM_VERSION = "0.2.0.1"
+GEM_VERSION = "0.3.0"
 
 require 'lib/tasks/private/gem_helper'
 
