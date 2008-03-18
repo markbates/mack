@@ -6,6 +6,7 @@ require 'application_configuration'
 require 'cachetastic'
 require 'fileutils'
 require 'log4r'
+require 'crypt/rijndael'
 
 # Set up Mack constants, if they haven't already been set up.
 unless Object.const_defined?("MACK_ENV")
