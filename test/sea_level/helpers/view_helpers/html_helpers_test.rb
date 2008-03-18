@@ -20,5 +20,9 @@ class HtmlHelpersTest < Test::Unit::TestCase
     assert_equal Mack::Utils::Html.b("hello"), html.b("hello")
   end
   
+  def test_rss
+    assert_equal Mack::Utils::Html.rss(tst_resources_index_url(:format => :xml)), rss_tag(tst_resources_index_url(:format => :xml))
+  end
+  
   
 end
