@@ -28,6 +28,10 @@ module Mack
         Mack::Utils::Html
       end
       
+      def rss_tag(url)
+        "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS\" href=\"#{url}\">"
+      end
+      
     end # HtmlHelpers
   end # ViewHelpers
 end # Mack

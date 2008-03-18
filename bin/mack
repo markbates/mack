@@ -1,3 +1,4 @@
+#!/usr/local/bin/ruby
 require 'fileutils'
 require 'optparse'
 require 'optparse/time'

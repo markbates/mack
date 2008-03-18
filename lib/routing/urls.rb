@@ -18,11 +18,19 @@ module Mack
       def url_for_pattern(url, options = {})
         u = url.dup
         unused_params = []
+        format = nil
         options.each_pair do |k, v|
-          vp = Rack::Utils.escape(v.to_param)
-          if u.gsub!(":#{k}", vp).nil?
-            unused_params << "#{Rack::Utils.escape(k)}=#{vp}"
+          unless k.to_sym == :format
+            vp = Rack::Utils.escape(v.to_param)
+            if u.gsub!(":#{k}", vp).nil?
+              unused_params << "#{Rack::Utils.escape(k)}=#{vp}"
+            end
+          else
+            format = v
           end
+        end
+        if format
+          u << ".#{format}"
         end
         unless unused_params.empty?
           u << "?" << unused_params.sort.join("&")
