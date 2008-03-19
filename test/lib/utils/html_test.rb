@@ -21,4 +21,8 @@ class HtmlHelpersTest < Test::Unit::TestCase
     assert_equal Mack::Utils::Html.href("Mack", "http://www.mackframework.com", :method => :update, :confirm => "Are you sure?"), Mack::Utils::Html.a("Mack", "http://www.mackframework.com", :method => :update, :confirm => "Are you sure?")
   end
   
+  def test_rss
+    assert_equal "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS\" href=\"/tst_resources.xml\">", Mack::Utils::Html.rss(tst_resources_index_url(:format => :xml))
+  end
+  
 end

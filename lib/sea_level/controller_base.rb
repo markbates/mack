@@ -31,6 +31,7 @@ module Mack
         @controller_name = params(:controller)
         @action_name = params(:action)
         @cookies = cookies
+        @wants_list = []
       end
       
       # Gives access to all the parameters for this request.
@@ -198,6 +199,36 @@ module Mack
         render(:text => redirect_html(request.path_info, url, options[:status]))
       end
       
+      # In an action wants will run blocks of code based on the content type that has
+      # been requested.
+      # 
+      # Examples:
+      #   class MyAwesomeController < Mack::Controller::Base
+      #     def hello
+      #       wants(:html) do
+      #         render(:text => "<html>Hello World</html>")
+      #       end
+      #       wants(:xml) do
+      #         render(:text => "<xml><greeting>Hello World</greeting></xml>")
+      #       end
+      #     end
+      #   end
+      # 
+      # If you were to go to: /my_awesome/hello you would get:
+      #   "<html>Hello World</html>"
+      # 
+      # If you were to go to: /my_awesome/hello.html you would get:
+      #   "<html>Hello World</html>"
+      # 
+      # If you were to go to: /my_awesome/hello.xml you would get:
+      #   "<xml><greeting>Hello World</greeting></xml>"
+      def wants(header_type, &block)
+        header_type = header_type.to_sym
+        if header_type == params(:format).to_sym
+          yield
+        end
+      end
+      
       # Returns true/false depending on whether the render action has been called yet.
       def render_performed?
         @render_performed
@@ -237,7 +268,13 @@ module Mack
             end
           else layout
             # use the layout specified by the layout method
-            return Mack::ViewBinder.new(self).render(@render_options.merge({:action => "layouts/#{layout}"}))
+            begin
+              return Mack::ViewBinder.new(self).render(@render_options.merge({:action => "layouts/#{layout}"}))
+            rescue Errno::ENOENT => e
+              # if the layout doesn't exist, we don't care.
+            rescue Exception => e
+              raise e
+            end
           end
         # end
         @content_for_layout

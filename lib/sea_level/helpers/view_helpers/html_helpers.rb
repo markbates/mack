@@ -28,6 +28,14 @@ module Mack
         Mack::Utils::Html
       end
       
+      # A wrapper to Mack::Utils::Html rss method.
+      # 
+      # Example:
+      #   <%= rss_tag(posts_index_url(:format => :xml)) %>
+      def rss_tag(url)
+        Mack::Utils::Html.rss(url)
+      end
+      
     end # HtmlHelpers
   end # ViewHelpers
 end # Mack

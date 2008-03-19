@@ -82,7 +82,7 @@ module Mack
         "mack::use_lint" => true,
         "mack::show_exceptions" => true,
         "mack::session_id" => "_mack_session_id",
-        "mack::rendering_systems" => [:action, :text, :partial, :public, :url],
+        "mack::rendering_systems" => [:action, :text, :partial, :public, :url, :xml],
         "mack::cookie_values" => {
           "path" => "/"
         },
