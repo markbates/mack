@@ -8,7 +8,7 @@ module Mack
           @crypt_workers_cache = {}
         end
         
-        def get_worker(key)
+        def worker(key = :default)
           worker = @crypt_workers_cache[key.to_sym]
           if worker.nil?
             worker_klass = key.to_s.camelcase + "Worker"

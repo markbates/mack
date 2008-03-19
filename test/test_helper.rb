@@ -17,6 +17,23 @@ require(File.join(File.dirname(__FILE__),  "fake_application", "config", "routes
 # place common methods, assertions, and other type things in this file so
 # other tests will have access to them.
 
+module Mack
+  module Utils
+    module Crypt
+      class ReverseWorker
+        
+        def encrypt(x)
+          x.reverse
+        end
+        
+        def decrypt(x)
+          x.reverse
+        end
+        
+      end
+    end
+  end
+end
 
 class Test::Unit::TestCase
   

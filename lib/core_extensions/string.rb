@@ -35,12 +35,12 @@ class String
     Mack::Utils::Inflector.instance.singularize(self)
   end
   
-  def encrypt
-    Mack::Utils::Crypt::Keeper.instance.get_worker(:string).encrypt(self)
+  def encrypt(worker = :default)
+    Mack::Utils::Crypt::Keeper.instance.worker(:string).encrypt(self)
   end
   
-  def decrypt
-    Mack::Utils::Crypt::Keeper.instance.get_worker(:string).decrypt(self)
+  def decrypt(worker = :default)
+    Mack::Utils::Crypt::Keeper.instance.worker(:string).decrypt(self)
   end
   
 end
