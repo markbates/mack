@@ -1,3 +1,6 @@
+* Added a global encryption system to make encrypting/decrypting of strings easy to use.
+* gem: crypt 1.1.4
+
 ===0.2.0.1
 * gem: cachetastic 1.4.1
 * gem: application_configuration 1.2.1
