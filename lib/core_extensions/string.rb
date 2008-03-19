@@ -35,12 +35,22 @@ class String
     Mack::Utils::Inflector.instance.singularize(self)
   end
   
+  # Maps to Kernel _encrypt
+  # 
+  # Examples:
+  #   "Hello World".encrypt
+  #   "Hello World".encrypt(:my_crypt)
   def encrypt(worker = :default)
-    Mack::Utils::Crypt::Keeper.instance.worker(:string).encrypt(self)
+    _encrypt(self, worker)
   end
   
+  # Maps to Kernel _decrypt
+  # 
+  # Examples:
+  #   some_encrypted_string.decrypt
+  #   some_encrypted_string.decrypt(:my_crypt)
   def decrypt(worker = :default)
-    Mack::Utils::Crypt::Keeper.instance.worker(:string).decrypt(self)
+    _decrypt(self, worker)
   end
   
 end
