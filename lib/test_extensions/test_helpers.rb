@@ -9,6 +9,11 @@ module Mack
         yield
       end
     end
+    
+    def assigns(key)
+      pp response
+      response.assigns(key)
+    end
 
     # Performs a 'get' request for the specified uri.
     def get(uri, options = {})

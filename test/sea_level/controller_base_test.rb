@@ -44,6 +44,7 @@ class ControllerBaseTest < Test::Unit::TestCase
   
   def test_on_disk_wants
     get on_disk_wants_url
+    assert assigns(:greeting)
     assert_match "<p>Hello World</p>", response.body
     
     get "/odw.html"

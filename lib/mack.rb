@@ -22,6 +22,7 @@ module Mack
             else
               # let's handle a normal request:
               c = "#{route[:controller].to_s.camelcase}Controller".constantize.new(self.request, self.response, self.cookies)
+              self.response.controller = c
               self.response.write(c.run)
             end
           rescue Mack::Errors::ResourceNotFound, Mack::Errors::UndefinedRoute => e
