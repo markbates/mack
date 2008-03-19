@@ -1,7 +1,9 @@
 ===0.3.0
 * Ticket: #8 Xml Builder Support
 * Ticket: #7 Ability to drive certain content based on 'format'
+* Ticket: #9 Added a global encryption system to make encrypting/decrypting of strings easy to use.
 * gem: builder 2.1.2
+* gem: crypt 1.1.4
 
 ===0.2.0.1
 * gem: cachetastic 1.4.1

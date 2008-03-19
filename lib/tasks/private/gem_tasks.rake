@@ -11,7 +11,7 @@ require 'rubygems/gem_runner'
 require 'singleton'
 
 GEM_NAME = "mack"
-GEM_VERSION = "0.2.103"
+GEM_VERSION = "0.2.104"
 
 require 'lib/tasks/private/gem_helper'
 
@@ -51,6 +51,7 @@ namespace :gem do
         s.add_dependency("log4r", "1.0.5")
         s.add_dependency("thin", "0.7.0")
         s.add_dependency("builder", "2.1.2")
+        s.add_dependency("crypt", "1.1.4")
       
         s.rubyforge_project = gh.project
       end

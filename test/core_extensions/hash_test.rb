@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper.rb'
 
-class NilTest < Test::Unit::TestCase
+class HashTest < Test::Unit::TestCase
   
   def test_minus
     h = {:a => "aaa", :b => "bbb", :c => "ccc"}
