@@ -46,6 +46,14 @@ module Mack
         
         alias_method :a, :href
         
+        # A wrapper to generate an auto discovery tag so browsers no the page contains an RSS feed.
+        # 
+        # Example:
+        #   <%= Mack::Utils::Html.rss(posts_index_url(:format => :xml)) %>
+        def rss(url)
+          "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS\" href=\"#{url}\">"
+        end
+        
         # Wraps the content_tag method.
         # 
         # Examples:

@@ -1,18 +1,16 @@
 module Mack
   module Rendering
-    # Used when someone calls render(:action => "index")
-    class Action < Base
+    # Used when someone calls render(:xml => "rss_feed")
+    class Xml < Base
       
       def render
         begin
           # Try to render the action:
-          return render_file(options[:action], options)
+          return render_file(options[:xml], options.merge(:format => :xml, :ext => ".xml.erb"))
         rescue Errno::ENOENT => e
           begin
             # If the action doesn't exist on disk, try to render it from the public directory:
-            t = render_file(options[:action], {:dir => MACK_PUBLIC, :ext => ".#{params(:format)}", :layout => false}.merge(options))
-            # Because it's being served from public don't wrap a layout around it!
-            # self.controller.instance_variable_get("@render_options").merge!({:layout => false})
+            t = render_file(options[:xml], {:dir => MACK_PUBLIC, :ext => ".xml.erb", :layout => false}.merge(options.merge(:format => :xml)))
             return t
           rescue Errno::ENOENT => ex
           end

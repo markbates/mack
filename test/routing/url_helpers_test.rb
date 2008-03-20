@@ -17,6 +17,16 @@ class UrlHelpersTest < Test::Unit::TestCase
     
   end
   
+  def test_format
+    assert_equal "/tst_resources.xml", tst_resources_index_url(:format => :xml)
+    assert_equal "/tst_resources.xml?id=1", tst_resources_index_url(:id => 1, :format => :xml)
+    assert_equal "/tst_resources.xml?id=2", tst_resources_index_url(:id => 2, :format => :xml)
+    assert_equal "/tst_resources.xml?id=1-hello-world", tst_resources_index_url(:id => "1-hello-world", :format => :xml)
+    assert_equal "/tst_resources.xml?foo=bar&id=1", tst_resources_index_url(:id => 1, :foo => :bar, :format => :xml)
+    assert_equal "/tst_resources.xml?foo=bar&id=2", tst_resources_index_url(:id => 2, :foo => :bar, :format => :xml)
+    assert_equal "/tst_resources.xml?foo=bar&id=1-hello-world", tst_resources_index_url(:id => "1-hello-world", :foo => :bar, :format => :xml)
+  end
+  
   def test_to_param
     assert_equal "/tst_resources?id=uhtso-1-olleh", tst_resources_index_url(:id => UrlHelperTestSimpleObject.new(1, "hello"))
   end

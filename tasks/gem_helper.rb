@@ -42,7 +42,7 @@ class GemHelper # :nodoc:
   end
   
   def install
-    `sudo gem install #{File.join("pkg", full_gem_name)}`
+    puts `sudo gem install #{File.join("pkg", full_gem_name)}`
     # require 'rubygems'
     # Gem.manage_gems
     # Gem::GemRunner.new.run(["install", File.join("pkg", full_gem_name)])

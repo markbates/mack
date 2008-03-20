@@ -35,10 +35,15 @@ module Mack
         raise MethodNotImplemented.new("render")
       end
       
+      # Maps to the view_binder's param method. See also Mack::ViewBinder params.
+      def params(key)
+        self.view_binder.params(key)
+      end
+      
       private
       # Used to render a file from disk.
       def render_file(f, options = {})
-        options = {:is_partial => false, :ext => ".html.erb", :dir => MACK_VIEWS}.merge(options)
+        options = {:is_partial => false, :ext => ".#{self.params(:format)}.erb", :dir => MACK_VIEWS}.merge(options)
         partial = f.to_s
         parts = partial.split("/")
         if parts.size == 1

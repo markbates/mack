@@ -2,6 +2,70 @@ require File.dirname(__FILE__) + '/../test_helper.rb'
 
 class ControllerBaseTest < Test::Unit::TestCase
   
+  class WantsTestController < Mack::Controller::Base
+    def you_want_what
+      wants(:html) do
+        render(:text => "<html>Hello World</html>")
+      end
+      wants(:xml) do
+        render(:text => "<xml><greeting>Hello World</greeting></xml>")
+      end
+    end
+    
+    def on_disk_wants
+      @greeting = "Hello World"
+    end
+    
+    def ren_xml
+      @greeting = "Hello World"
+      render(:xml => :on_disk_wants)
+    end
+    
+  end
+  
+  Mack::Routes.build do |r|
+    r.you_want_what "/yww", :controller => "controller_base_test/wants_test", :action => :you_want_what
+    r.on_disk_wants "/odw", :controller => "controller_base_test/wants_test", :action => :on_disk_wants
+    r.ren_xml "/ren_xml", :controller => "controller_base_test/wants_test", :action => :ren_xml
+    r.on_disk_wants_x "/odw_x", :controller => "controller_base_test/wants_test", :action => :on_disk_wants, :format => :xml
+  end
+  
+  def test_format_on_route_definition_sets_initial_format
+    get on_disk_wants_x_url
+    assert_match "<greeting>Hello World</greeting>", response.body
+    assert !response.body.match("<html>")
+  end
+  
+  def test_render_xml
+    get ren_xml_url
+    assert_match "<greeting>Hello World</greeting>", response.body
+    assert !response.body.match("<html>")
+  end
+  
+  def test_on_disk_wants
+    get on_disk_wants_url
+    assert_match "<p>Hello World</p>", response.body
+    
+    get "/odw.html"
+    assert_match "<p>Hello World</p>", response.body
+    assert_match "<html>", response.body
+    
+    get "/odw.xml"
+    assert_match "<greeting>Hello World</greeting>", response.body
+    assert !response.body.match("<html>")
+  end
+  
+  def test_wants
+    get you_want_what_url
+    assert_match "<html>Hello World</html>", response.body
+    
+    get "/yww.html"
+    assert_match "<html>Hello World</html>", response.body
+    
+    get "/yww.xml"
+    assert_match "<xml><greeting>Hello World</greeting></xml>", response.body
+  end
+  
   def test_automatic_render_of_action
     get "/foo"
     assert_match "tst_home_page: foo: yummy", response.body

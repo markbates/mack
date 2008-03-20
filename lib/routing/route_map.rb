@@ -227,6 +227,12 @@ module Mack
         end
         s = segs.join("/")
         s = "/" if s.blank?
+        if s.match(".:format")
+          s.gsub!(/\.:format/, "(\\..+|$)")
+        else
+          s << "(\\..+|$)"
+        end
+        
         rx = /^#{s}$/
         rx
       end # regex_from_pattern
@@ -253,7 +259,13 @@ module Mack
         end
         
         def options_with_embedded_parameters(uri)
-          opts = self.options
+          opts = {:format => :html}.merge(self.options)
+          m = uri.match(/\..+$/)
+          if m
+            m = m.to_s
+            opts[:format]= m[1..m.size].to_sym
+            uri.gsub!(/\..+$/, "")
+          end
           split_uri = uri.split("/")
           self.embedded_parameters.each_with_index do |val, ind|
             unless val.nil?
