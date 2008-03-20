@@ -197,9 +197,9 @@ module Mack
         raise Mack::Errors::UndefinedRoute.new(req)
       end # get
       
-      private
       attr_reader :routes_list # :nodoc:
       
+      private
       def connect_with_named_route(n_route, pattern, options = {})
         route = connect(pattern, options)
         Mack::Routes::Urls.class_eval %{
