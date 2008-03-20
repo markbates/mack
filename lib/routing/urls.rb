@@ -75,6 +75,15 @@ module Mack
               raise Mack::Distributed::Errors::UnknownApplication.new(app_name)
             end
           end
+          route_name = route_name.to_s
+          if route_name.match(/_url$/)
+            unless route_name.match(/_distributed_url$/)
+              route_name.gsub!("_url", "_distributed_url")
+            end
+          else
+            route_name << "_distributed_url"
+          end
+          puts "route_name: #{route_name}"
           if d_urls.respond_to?(route_name)
             return d_urls.send(route_name, options)
           else

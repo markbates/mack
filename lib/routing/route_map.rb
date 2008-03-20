@@ -212,6 +212,13 @@ module Mack
               "\#{@request.full_host}\#{u}"
             end
           }
+        if app_config.mack.use_distributed_routes
+          Mack::Routes::Urls.class_eval %{
+            def #{n_route}_distributed_url(options = {})
+              "#{app_config.mack.distributed_site_domain}" << #{n_route}_url(options)
+            end
+          }
+        end
       end
       
       def regex_from_pattern(pattern)

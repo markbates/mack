@@ -29,15 +29,12 @@ module Mack
     # use local memory and store stuff for 5 minutes:
     DEFAULTS_DEVELOPMENT = {
       "mack::cache_classes" => false,
-      "mack::default_domain" => "http://localhost:3000",
       "log::level" => "debug",
       "log::console" => true,
     } unless self.const_defined?("DEFAULTS_DEVELOPMENT")
     
     # use local memory and store stuff for 1 hour:
     DEFAULTS_TEST = {
-      "mack::default_domain" => "http://localhost",
-      "mack::default_domain_port" => 6666,
       "log::level" => "error",
       "run_remote_tests" => true,
     } unless self.const_defined?("DEFAULTS_TEST")
@@ -77,8 +74,10 @@ module Mack
             }
           }
         },
+        "mack::site_domain" => "http://localhost:3000",
         "mack::use_distributed_routes" => false,
         "mack::distributed_app_name" => nil,
+        "mack::distributed_site_domain" => "http://localhost:3000",
         "log::detailed_requests" => true,
         "log::level" => "info",
         "log::console" => false,

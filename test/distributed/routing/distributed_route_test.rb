@@ -45,11 +45,13 @@ class DistributedRouteTest < Test::Unit::TestCase
   end
   
   def test_droute_url
-    assert_equal "/my_known_app/my_known_url", droute_url(:known_app, :known_url)
+    assert_equal "#{app_config.mack.distributed_site_domain}/my_known_app/my_known_url", droute_url(:known_app, :known_url)
+    assert_equal "#{app_config.mack.distributed_site_domain}/my_known_app/my_known_url", droute_url(:known_app, :known)
+    assert_equal "#{app_config.mack.distributed_site_domain}/my_known_app/my_known_url", droute_url(:known_app, :known_distributed_url)
   end
   
   def test_droute_url_with_options
-    assert_equal "/my_known_app/my_known_url_w_opts/1", droute_url(:known_app, :known_w_opts_url, :id => 1)
+    assert_equal "#{app_config.mack.distributed_site_domain}/my_known_app/my_known_url_w_opts/1", droute_url(:known_app, :known_w_opts_url, :id => 1)
   end
   
   def test_nil_app_when_registering
