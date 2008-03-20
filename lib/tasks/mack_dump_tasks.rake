@@ -36,7 +36,7 @@ namespace :mack do
       
       url_methods = Mack::Routes::Urls.protected_instance_methods.collect {|x| x if x.match(/_url$/)}.compact
       url_methods.sort.each do |meth|
-        unless meth.match(/_full_url$/) || meth.match(/_distributed_url$/) || meth == "droute_url"
+        unless meth.match(/(full|distributed|droute)_url$/)
           puts "#{meth.rjust(50)}\t#{self.send(meth)}"
         end
       end
