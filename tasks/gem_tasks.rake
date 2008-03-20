@@ -10,9 +10,6 @@ require 'rubygems'
 require 'rubygems/gem_runner'
 require 'singleton'
 
-GEM_NAME = "mack"
-GEM_VERSION = "0.3.0"
-
 require 'tasks/gem_helper'
 
 namespace :gem do
@@ -27,8 +24,13 @@ namespace :gem do
       gem_spec = Gem::Specification.new do |s|
         s.name = gh.gem_name
         s.version = gh.version
-        s.summary = gh.gem_name
-        s.description = %{#{gh.gem_name} was developed by: markbates}
+        s.summary = "Mack is a powerful, yet simple, web application framework."
+        s.description = %{
+          Mack is a powerful, yet simple, web application framework. 
+          It takes some cues from the likes of Rails and Merb, so it's not entirely unfamiliar.
+          Mack hopes to provide developers a great framework for building, and deploying, portal and
+          distributed applications.
+        }
         s.author = "markbates"
         s.email = "mark@mackframework.com"
         s.homepage = "http://www.mackframework.com"
