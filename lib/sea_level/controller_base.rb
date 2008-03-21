@@ -287,12 +287,12 @@ module Mack
           begin
             # try action.html.erb
             return Mack::ViewBinder.new(self).render({:action => self.action_name})
-          rescue Exception => e
+          rescue Errno::ENOENT => e
             if @result_of_action_called.is_a?(String)
               @render_options[:text] = @result_of_action_called
               return Mack::ViewBinder.new(self).render(@render_options)
             end
-            raise e
+            
           end
         end
       end # complete_action_render

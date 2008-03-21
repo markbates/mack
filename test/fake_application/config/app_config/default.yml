@@ -8,6 +8,9 @@ orm: data_mapper
 
 mack::page_cache: true
 
+mack::use_distributed_routes: true
+mack::distributed_app_name: fake_app
+
 # cachetastic_default_options:
 #   logging:
 #     logger_1:

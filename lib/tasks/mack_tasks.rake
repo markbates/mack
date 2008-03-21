@@ -19,3 +19,4 @@ namespace :mack do
 end # mack
 
 alias_task :console, "mack:console"
+alias_task :environment, "mack:environment"

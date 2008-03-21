@@ -83,7 +83,6 @@ module Mack
           else
             route_name << "_distributed_url"
           end
-          puts "route_name: #{route_name}"
           if d_urls.respond_to?(route_name)
             return d_urls.send(route_name, options)
           else

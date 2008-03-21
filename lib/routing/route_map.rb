@@ -11,7 +11,7 @@ module Mack
       Mack::Routes::Urls.include_safely_into(Mack::Controller::Base, Mack::ViewBinder, Mack::Distributed::Routes::Urls, Test::Unit::TestCase)
       if app_config.mack.use_distributed_routes
         raise Mack::Distributed::Errors::ApplicationNameUndefined.new if app_config.mack.distributed_app_name.nil?
-        Mack::Distributed::Routes::UrlCache.set(app_config.mack.distributed_app_name.to_sym, Mack::Distributed::Routes::Urls.new)
+        Mack::Distributed::Routes::UrlCache.set(app_config.mack.distributed_app_name.to_sym, Mack::Distributed::Routes::Urls.new(app_config.mack.distributed_site_domain))
       end
       # puts "Finished compiling routes: #{Mack::Routes::RouteMap.instance.routes_list.inspect}"
     end
@@ -215,7 +215,9 @@ module Mack
         if app_config.mack.use_distributed_routes
           Mack::Routes::Urls.class_eval %{
             def #{n_route}_distributed_url(options = {})
-              "#{app_config.mack.distributed_site_domain}" << #{n_route}_url(options)
+              puts "dsd: \#{@dsd}"
+              puts "url: " + #{n_route}_url(options)
+              (@dsd || app_config.mack.distributed_site_domain) + #{n_route}_url(options)
             end
           }
         end
