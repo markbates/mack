@@ -7,11 +7,12 @@ module Mack
     # 
     # See Mack::Routes::RouteMap for more information.
     def self.build
+      $distributed_urls = Mack::Distributed::Routes::Urls.new(app_config.mack.distributed_site_domain) if $distributed_urls.nil?
       yield Mack::Routes::RouteMap.instance
-      Mack::Routes::Urls.include_safely_into(Mack::Controller::Base, Mack::ViewBinder, Mack::Distributed::Routes::Urls, Test::Unit::TestCase)
+      Mack::Routes::Urls.include_safely_into(Mack::Controller::Base, Mack::ViewBinder, Test::Unit::TestCase)
       if app_config.mack.use_distributed_routes
         raise Mack::Distributed::Errors::ApplicationNameUndefined.new if app_config.mack.distributed_app_name.nil?
-        Mack::Distributed::Routes::UrlCache.set(app_config.mack.distributed_app_name.to_sym, Mack::Distributed::Routes::Urls.new(app_config.mack.distributed_site_domain))
+        Mack::Distributed::Routes::UrlCache.set(app_config.mack.distributed_app_name.to_sym, $distributed_urls)
       end
       # puts "Finished compiling routes: #{Mack::Routes::RouteMap.instance.routes_list.inspect}"
     end
@@ -202,21 +203,25 @@ module Mack
       private
       def connect_with_named_route(n_route, pattern, options = {})
         route = connect(pattern, options)
-        Mack::Routes::Urls.class_eval %{
-            def #{n_route}_url(options = {})
-              url_for_pattern("#{route.original_pattern}", options)
-            end
-            
-            def #{n_route}_full_url(options = {})
-              u = #{n_route}_url(options)
-              "\#{@request.full_host}\#{u}"
-            end
-          }
+        
+        url = %{
+          def #{n_route}_url(options = {})
+            url_for_pattern("#{route.original_pattern}", options)
+          end
+          
+          def #{n_route}_full_url(options = {})
+            u = #{n_route}_url(options)
+            "\#{@request.full_host}\#{u}"
+          end
+        }
+        
+        Mack::Routes::Urls.class_eval(url)
+        
         if app_config.mack.use_distributed_routes
-          Mack::Routes::Urls.class_eval %{
+          $distributed_urls["#{n_route}_url"] = url
+          
+          $distributed_urls["#{n_route}_distributed_url"] = %{
             def #{n_route}_distributed_url(options = {})
-              puts "dsd: \#{@dsd}"
-              puts "url: " + #{n_route}_url(options)
               (@dsd || app_config.mack.distributed_site_domain) + #{n_route}_url(options)
             end
           }

@@ -83,8 +83,8 @@ module Mack
           else
             route_name << "_distributed_url"
           end
-          if d_urls.respond_to?(route_name)
-            return d_urls.send(route_name, options)
+          if d_urls.run.respond_to?(route_name)
+            return d_urls.run.send(route_name, options)
           else
             raise Mack::Distributed::Errors::UnknownRouteName.new(app_name, route_name)
           end
@@ -95,4 +95,4 @@ module Mack
     
     end # Urls
   end # Routes
-end # Mack
+end # Mack 
