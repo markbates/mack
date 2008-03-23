@@ -3,19 +3,28 @@ class DistributedRouteTest < Test::Unit::TestCase
   
   def setup
     # fire up the drb server
-    @started_drb_server = false
-    t = Thread.new do
-      x = `ps aux | grep cachetastic_drb_server`
-      unless x.match(/\/cachetastic_drb_server/)
-        `cachetastic_drb_server > /dev/null &`
-        @started_drb_server = true
-      end
-    end
-    t.join
-    if @started_drb_server
-      puts "sleep for a second to let the drb server fire up."
-      sleep(1)
-    end
+    # @started_drb_server = false
+    # t = Thread.new do
+    #   x = `ps aux | grep cachetastic_drb_server`
+    #   unless x.match(/\/cachetastic_drb_server/)
+    #     `cachetastic_drb_server > /dev/null &`
+    #     @started_drb_server = true
+    #   end
+    # end
+    # t.join
+    # if @started_drb_server
+    #   puts "sleep for a second to let the drb server fire up."
+    #   sleep(1)
+    # end
+    
+    # unless @drb_pid
+    #   @drb_pid = Process.fork do
+    #     puts exec('cachetastic_drb_server -vv')
+    #   end
+    #   # Process.detach(@drb_pid)
+    # end
+    
+    
     app_config.load_hash({"mack::use_distributed_routes" => true, "mack::distributed_app_name" => :known_app}, :distributed_route_test)
     # app_config.reload
     Mack::Routes.build do |r| # force the routes to go the DRb server
@@ -26,14 +35,16 @@ class DistributedRouteTest < Test::Unit::TestCase
   
   def teardown
     # tear down the drb server
-    x = `ps aux | grep cachetastic_drb_server`
-    x.split("\n").each do |line|
-      if line.match("/cachetastic_drb_server")
-        pid = line.match(/\s(\d+)/).captures.first
-        `kill -9 #{pid}`
-      end
-    end
+    # x = `ps aux | grep cachetastic_drb_server`
+    # x.split("\n").each do |line|
+    #   if line.match("/cachetastic_drb_server")
+    #     pid = line.match(/\s(\d+)/).captures.first
+    #     `kill -9 #{pid}`
+    #   end
+    # end
+    # Process.kill("TERM", @drb_pid) rescue Errno::ESRCH
     app_config.revert
+    # @drb_pid = nil
   end
   
   def test_unknown_application_droute_url
