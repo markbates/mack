@@ -49,9 +49,7 @@ module Mack
       end
       
       # Needs to be implemented by the subclass.
-      def generate
-        raise MethodNotImplemented.new("generate")
-      end
+      needs_method :generate
       
       # Takes an input_file runs it through ERB and 
       # saves it to the specified output_file. If the output_file exists it will

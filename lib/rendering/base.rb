@@ -31,9 +31,7 @@ module Mack
       
       # This is the only method that needs to be implemented by a rendering system.
       # It should return a String.
-      def render
-        raise MethodNotImplemented.new("render")
-      end
+      needs_method :render
       
       # Maps to the view_binder's param method. See also Mack::ViewBinder params.
       def params(key)
