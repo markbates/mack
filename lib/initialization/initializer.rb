@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'rack'
 require 'digest'
-require 'ruby_extensions'
+require 'mack_ruby_core_extensions'
 require 'application_configuration'
 require 'cachetastic'
 require 'fileutils'
