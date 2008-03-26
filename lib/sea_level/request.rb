@@ -57,9 +57,9 @@ module Mack
       unless p.nil?
         p = p.to_s if p.is_a?(Symbol)
         if p.is_a?(String)
-          p = Rack::Utils.unescape(p)
+          p = p.to_s.uri_unescape
         elsif p.is_a?(Hash)
-          p.each_pair {|k,v| p[k] = Rack::Utils.unescape(v)}
+          p.each_pair {|k,v| p[k] = v.to_s.uri_unescape}
         end
       end
       p

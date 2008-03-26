@@ -11,7 +11,7 @@ require 'rubygems/gem_runner'
 require 'singleton'
 
 GEM_NAME = "mack"
-GEM_VERSION = "0.3.0"
+GEM_VERSION = "0.4.0"
 
 require 'lib/tasks/private/gem_helper'
 
@@ -45,8 +45,7 @@ namespace :gem do
         s.rdoc_options << '--title' << 'Mack' << '--main' << 'README' << '--line-numbers' << "--inline-source"
         
         s.add_dependency("rack", "0.3.0")
-        # s.add_dependency("ruby_extensions", "1.0.11")
-        s.add_dependency("mack_ruby_core_extensions", "0.0.4")
+        s.add_dependency("mack_ruby_core_extensions", "0.1.3")
         s.add_dependency("application_configuration", "1.2.1")
         s.add_dependency("cachetastic", "1.4.1")
         s.add_dependency("log4r", "1.0.5")

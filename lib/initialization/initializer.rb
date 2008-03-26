@@ -8,6 +8,7 @@ require 'fileutils'
 require 'log4r'
 require 'crypt/rijndael'
 require 'singleton'
+require 'uri'
 
 # Set up Mack constants, if they haven't already been set up.
 unless Object.const_defined?("MACK_ENV")
