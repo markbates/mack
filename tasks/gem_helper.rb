@@ -10,7 +10,7 @@ class GemHelper # :nodoc:
     self.project = "magrathea"
     self.package = "mack"
     self.gem_name = "mack"
-    self.version = "0.3.0.120"
+    self.version = "0.4.0"
   end
   
   def gem_name_with_version
@@ -43,9 +43,6 @@ class GemHelper # :nodoc:
   
   def install
     puts `sudo gem install #{File.join("pkg", full_gem_name)}`
-    # require 'rubygems'
-    # Gem.manage_gems
-    # Gem::GemRunner.new.run(["install", File.join("pkg", full_gem_name)])
   end
   
 end

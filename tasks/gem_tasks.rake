@@ -10,9 +10,6 @@ require 'rubygems'
 require 'rubygems/gem_runner'
 require 'singleton'
 
-GEM_NAME = "mack"
-GEM_VERSION = "0.4.0"
-
 require 'tasks/gem_helper'
 
 namespace :gem do
