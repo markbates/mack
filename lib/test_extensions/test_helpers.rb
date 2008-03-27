@@ -23,23 +23,22 @@ module Mack
 
     # Performs a 'get' request for the specified uri.
     def get(uri, options = {})
-      options = {"HTTP_COOKIE" => test_cookies.join("%s=%s", "; ")}.merge(options)
-      build_response(request.get(uri, options))
+      build_response(request.get(uri, build_request_options(options)))
     end
     
     # Performs a 'put' request for the specified uri.
     def put(uri, options = {})
-      build_response(request.put(uri, {"HTTP_COOKIE" => test_cookies.join("%s=%s", "; ")}.merge({:input => options.to_params})))
+      build_response(request.put(uri, build_request_options({:input => options.to_params})))
     end
     
     # Performs a 'post' request for the specified uri.
     def post(uri, options = {})
-      build_response(request.post(uri, :input => options.to_params))
+      build_response(request.post(uri, build_request_options({:input => options.to_params})))
     end
     
     # Performs a 'delete' request for the specified uri.
     def delete(uri, options = {})
-      build_response(request.delete(uri, options))
+      build_response(request.delete(uri, build_request_options(options)))
     end
     
     # Returns a Rack::MockRequest. If there isn't one, a new one is created.
@@ -102,6 +101,10 @@ module Mack
         $mack_app = Rack::Recursive.new(Mack::Runner.new)
       end
       $mack_app
+    end
+    
+    def build_request_options(options)
+      {"HTTP_COOKIE" => test_cookies.join("%s=%s", "; ")}.merge(options)
     end
     
     def build_response(res)
