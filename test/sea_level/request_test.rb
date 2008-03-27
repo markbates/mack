@@ -13,18 +13,17 @@ class RequestTest < Test::Unit::TestCase
   end
   
   def test_session_gets_set
-    get "/tst_home_page/read_param_from_session"
-    assert_not_nil session
-    t = session[:my_time]
-    assert_not_nil t
-    assert_match t.to_s, response.body
-    # this won't work because we don't have integration tests yet!
-    # sleep(1)
-    # get "/tst_home_page/read_param_from_session"
-    # assert_not_nil session
-    # assert_not_nil session[:my_time]
-    # assert_equal t, session[:my_time]
-    # assert_match t.to_s, response.body
+    in_session do
+      get "/tst_home_page/read_param_from_session"
+      assert_not_nil session
+      t = session[:my_time]
+      assert_not_nil t
+      assert_match t.to_s, response.body
+      sleep(1)
+      get "/tst_home_page/read_param_from_session"
+      assert_not_nil session
+      assert_equal t.to_s, session[:my_time].to_s
+    end
   end
   
   def test_params_returns_regardless_of_string_or_symbol

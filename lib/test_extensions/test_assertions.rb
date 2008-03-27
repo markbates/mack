@@ -33,6 +33,7 @@ module Mack
     # Asserts that the specified cookie has been set to the specified value.
     def assert_cookie(name, value)
       assert cookies[name.to_s]
+      assert_equal value, cookies[name.to_s]
     end
     
     # Asserts that there is no cookie set for the specified cookie

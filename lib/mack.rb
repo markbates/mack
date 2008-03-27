@@ -12,6 +12,7 @@ module Mack
     # This method needs to be defined as part of the Rack framework. As is noted for the Mack::Runner
     # class, this is where the center of the Mack framework lies.
     def call(env)
+      # pp env
       begin
         setup(env) do
           begin
@@ -86,7 +87,7 @@ module Mack
           sess_id = create_new_session
         end
       end
-      
+
       yield
       
       Cachetastic::Caches::MackSessionCache.set(sess_id, self.request.session)
@@ -98,6 +99,7 @@ module Mack
       sess = Mack::Session.new(id)
       self.request.session = sess
       Cachetastic::Caches::MackSessionCache.set(id, sess)
+      id
     end
     
     def try_to_find_resource(env, path_info, exception)
