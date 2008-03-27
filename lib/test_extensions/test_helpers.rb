@@ -16,9 +16,9 @@ module Mack
       end
     end
     
+    # Retrieves an instance variable from the controller from a request.
     def assigns(key)
-      # pp response
-      # response.assigns(key)
+      $mack_app.instance_variable_get("@app").instance_variable_get("@response").instance_variable_get("@controller").instance_variable_get("@#{key}")
     end
 
     # Performs a 'get' request for the specified uri.

@@ -50,6 +50,7 @@ class TstAnotherController < Mack::Controller::Base
   end
   
   def params_return_as_hash
+    @foo = params(:foo)
     x = ""
     x << "class: #{params(:foo).class}]\n"
     x << "inspect: #{params(:foo).inspect}"

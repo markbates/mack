@@ -41,6 +41,13 @@ module Mack
       assert !cookies[name.to_s]
     end
     
+    def assert_difference(object, method = nil, difference = 1)
+      start_count = object.send(method)
+      yield
+      object.reload if object.respond_to? :reload
+      assert_equal start_count + difference, object.send(method)
+    end
+    
   end # TestAssertions
   
 end # Mack

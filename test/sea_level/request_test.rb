@@ -35,6 +35,8 @@ class RequestTest < Test::Unit::TestCase
   def test_nested_params_return_as_hash
     post "/tst_another/params_return_as_hash", :foo => {:one => "one", :two => "too", :three => 3}
     assert_match "class: Hash", response.body
+    foo = assigns(:foo)
+    assert_not_nil foo
   end
   
 end
