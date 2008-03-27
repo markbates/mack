@@ -60,7 +60,7 @@ module Mack
         #   Mack::Utils::Html.b("hello") # => <b>hello</b>
         #   Mack::Utils::Html.div("hello world!", :class => :foo)) # => <div class="foo">hello world!</div>
         def method_missing(sym, *args)
-          ags = args.from_args
+          ags = args.parse_splat_args
           
           tag = sym
           content = nil

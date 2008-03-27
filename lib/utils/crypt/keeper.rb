@@ -31,7 +31,7 @@ module Mack
           if worker.nil?
             worker_klass = key.to_s.camelcase + "Worker"
             if Mack::Utils::Crypt.const_defined?(worker_klass)
-              worker = "Mack::Utils::Crypt::#{worker_klass}".constantize.new
+              worker = "Mack::Utils::Crypt::#{worker_klass}".to_instance
             else
               worker = Mack::Utils::Crypt::DefaultWorker.new
             end

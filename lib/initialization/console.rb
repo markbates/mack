@@ -9,5 +9,5 @@ fl = File.join(File.dirname(__FILE__), "..")
 
 require File.join(fl, "test_extensions", "test_helpers")
 
-self.send(:include, Mack::TestHelpers)
+# self.send(:include, Mack::TestHelpers)
 self.send(:include, Mack::Routes::Urls)

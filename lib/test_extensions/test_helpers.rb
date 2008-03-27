@@ -4,6 +4,12 @@ module Mack
   
   module TestHelpers
     
+    def temp_app_config(options = {})
+      app_config.load_hash(options, String.randomize)
+      yield
+      app_config.revert
+    end
+    
     def remote_test
       if (app_config.run_remote_tests)
         yield

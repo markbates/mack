@@ -5,7 +5,7 @@ module Mack
     class Url < Base
       
       def render
-        options = {:method => :get, :domain => app_config.mack.default_domain, :raise_exception => false}.merge(self.options)
+        options = {:method => :get, :domain => app_config.mack.site_domain, :raise_exception => false}.merge(self.options)
         case options[:method]
         when :get
           do_render_url(options) do |uri, options|

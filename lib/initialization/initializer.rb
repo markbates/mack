@@ -1,13 +1,14 @@
 require 'rubygems'
 require 'rack'
 require 'digest'
-require 'ruby_extensions'
+require 'mack_ruby_core_extensions'
 require 'application_configuration'
 require 'cachetastic'
 require 'fileutils'
 require 'log4r'
 require 'crypt/rijndael'
 require 'singleton'
+require 'uri'
 
 # Set up Mack constants, if they haven't already been set up.
 unless Object.const_defined?("MACK_ENV")
@@ -42,7 +43,7 @@ unless Object.const_defined?("MACK_INITIALIZED")
   fl = File.join(File.dirname(__FILE__), "..")
 
   # Require all the necessary files to make Mack actually work!
-  ["errors", "core_extensions", "utils", "test_extensions", "routing", "rendering", "sea_level", "tasks", "initialization/server", "generators"].each do |dir|
+  ["distributed", "errors", "core_extensions", "utils", "test_extensions", "routing", "rendering", "sea_level", "tasks", "initialization/server", "generators"].each do |dir|
     dir_globs = Dir.glob(File.join(fl, dir, "**/*.rb"))
     dir_globs.each do |d|
       require d

@@ -10,10 +10,7 @@ require 'rubygems'
 require 'rubygems/gem_runner'
 require 'singleton'
 
-GEM_NAME = "mack"
-GEM_VERSION = "0.3.0"
-
-require 'lib/tasks/private/gem_helper'
+require 'tasks/gem_helper'
 
 namespace :gem do
   
@@ -27,8 +24,13 @@ namespace :gem do
       gem_spec = Gem::Specification.new do |s|
         s.name = gh.gem_name
         s.version = gh.version
-        s.summary = gh.gem_name
-        s.description = %{#{gh.gem_name} was developed by: markbates}
+        s.summary = "Mack is a powerful, yet simple, web application framework."
+        s.description = %{
+          Mack is a powerful, yet simple, web application framework. 
+          It takes some cues from the likes of Rails and Merb, so it's not entirely unfamiliar.
+          Mack hopes to provide developers a great framework for building, and deploying, portal and
+          distributed applications.
+        }
         s.author = "markbates"
         s.email = "mark@mackframework.com"
         s.homepage = "http://www.mackframework.com"
@@ -45,13 +47,14 @@ namespace :gem do
         s.rdoc_options << '--title' << 'Mack' << '--main' << 'README' << '--line-numbers' << "--inline-source"
         
         s.add_dependency("rack", "0.3.0")
-        s.add_dependency("ruby_extensions", "1.0.11")
+        s.add_dependency("mack_ruby_core_extensions", "0.1.3")
         s.add_dependency("application_configuration", "1.2.1")
-        s.add_dependency("cachetastic", "1.4.1")
+        s.add_dependency("cachetastic", "1.4.2")
         s.add_dependency("log4r", "1.0.5")
         s.add_dependency("thin", "0.7.0")
         s.add_dependency("builder", "2.1.2")
         s.add_dependency("crypt", "1.1.4")
+        
       
         s.rubyforge_project = gh.project
       end
