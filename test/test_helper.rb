@@ -35,14 +35,6 @@ module Mack
   end
 end
 
-unless $drb_pid
-  $drb_pid = Process.fork do
-    puts exec('cachetastic_drb_server -vv')
-  end
-  sleep(2)
-  Process.detach($drb_pid)
-end
-
 class Test::Unit::TestCase
   
 end
