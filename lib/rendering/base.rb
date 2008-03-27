@@ -26,7 +26,7 @@ module Mack
       
       def initialize(view_binder, options)
         self.view_binder = view_binder
-        self.options = options
+        self.options = {:parameters => {}}.merge(options)
       end
       
       # This is the only method that needs to be implemented by a rendering system.

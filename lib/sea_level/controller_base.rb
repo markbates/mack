@@ -170,7 +170,7 @@ module Mack
       #     end
       # 
       #     # This will render a 'local' url. If a domain is not present render url will
-      #     # reach out for the config parameter "mack::default_domain" and prepend that
+      #     # reach out for the config parameter "mack::site_domain" and prepend that
       #     # to the url. This can be overridden locally with the :domain option.
       #     def get_index
       #       render(:url => "/")
@@ -287,12 +287,12 @@ module Mack
           begin
             # try action.html.erb
             return Mack::ViewBinder.new(self).render({:action => self.action_name})
-          rescue Exception => e
+          rescue Errno::ENOENT => e
             if @result_of_action_called.is_a?(String)
               @render_options[:text] = @result_of_action_called
               return Mack::ViewBinder.new(self).render(@render_options)
             end
-            raise e
+            
           end
         end
       end # complete_action_render

@@ -56,7 +56,43 @@ module Mack
           </html>
         }
       end
+      
+      # Retrieves a distributed route from a DRb server.
+      # 
+      # Example:
+      #   droute_url(:app_1, :home_page_url)
+      #   droute_url(:registration_app, :signup_url, {:from => :google})
+      def droute_url(app_name, route_name, options = {})
+        if app_config.mack.use_distributed_routes
+          ivar_cache("droute_url_hash") do
+            {}
+          end
+          d_urls = @droute_url_hash[app_name.to_sym]
+          if d_urls.nil?
+            d_urls = Mack::Distributed::Routes::UrlCache.get(app_name.to_sym)
+            @droute_url_hash[app_name.to_sym] = d_urls
+            if d_urls.nil?
+              raise Mack::Distributed::Errors::UnknownApplication.new(app_name)
+            end
+          end
+          route_name = route_name.to_s
+          if route_name.match(/_url$/)
+            unless route_name.match(/_distributed_url$/)
+              route_name.gsub!("_url", "_distributed_url")
+            end
+          else
+            route_name << "_distributed_url"
+          end
+          if d_urls.run.respond_to?(route_name)
+            return d_urls.run.send(route_name, options)
+          else
+            raise Mack::Distributed::Errors::UnknownRouteName.new(app_name, route_name)
+          end
+        else
+          return nil
+        end
+      end # droute_url
     
     end # Urls
   end # Routes
-end # Mack
+end # Mack 

@@ -1,0 +1,6 @@
+mack_distributed_routes_url_cache_options:
+  adapter: file
+  store_options:
+    dir: <%= File.join(MACK_ROOT, "tmp") %>
+  expiry_time: 14400
+  marshall_method: ruby
