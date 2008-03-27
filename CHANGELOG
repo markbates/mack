@@ -1,5 +1,6 @@
 ===0.4.1
 * Improved testing support.
+* Added assigns support to testing. This is allows for pulling instance variables that were set in a controller to tests.
 * Added ability to do 'session' based tests.
 * Added assert_difference method.
 * Added ability to set/remove cookies before requests are made.
