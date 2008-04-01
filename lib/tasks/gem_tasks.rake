@@ -2,10 +2,10 @@ namespace :gem do
   
   task :list do
     
-  end
+  end # list
   
   task :install do
     
-  end
+  end # install
   
 end # gem
