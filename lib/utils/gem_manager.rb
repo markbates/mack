@@ -10,21 +10,40 @@ module Mack
       end
       
       def add(name, version = nil, require_file = nil)
-        # puts "name: #{name}; version: #{version}, require_file: #{require_file}"
-        @required_gem_list << {:name => name, :version => version, :require_file => require_file}
+        @required_gem_list << Mack::Utils::GemManager::GemObject.new(name, version, require_file)
       end
       
       def do_requires
         @required_gem_list.each do |g|
-          if g[:version].nil?
-            gem(g[:name])
+          if g.version.nil?
+            gem(g.name)
           else
-            gem(g[:name], g[:version])
+            gem(g.name, g.version)
           end
-          unless g[:require_file].blank?
-            require g[:require_file]
+          unless g.require_file.blank?
+            require g.require_file
           end
         end
+      end
+      
+      private
+      class GemObject
+        attr_accessor :name
+        attr_accessor :version
+        attr_accessor :require_file
+        
+        def initialize(name, version, require_file)
+          self.name = name
+          self.version = version
+          self.require_file = require_file
+        end
+        
+        def to_s
+          t = "#{self.name.downcase}" 
+          t << "-#{self.version}" unless self.version.blank?
+          t
+        end
+        
       end
       
     end # GemManager

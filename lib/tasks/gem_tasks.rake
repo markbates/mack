@@ -3,14 +3,19 @@ namespace :gem do
   desc "lists all the gem required for this application."
   task :list => :setup do
     Mack::Utils::GemManager.instance.required_gem_list.each do |g|
-      puts "#{g[:name]}" << (g[:version].blank? ? '' : "-#{g[:version]}")
+      puts g
     end
   end # list
   
   desc "installs the gems needed for this application."
   task :install => :setup do
+    runner = Gem::GemRunner.new
     Mack::Utils::GemManager.instance.required_gem_list.each do |g|
-      puts `gem install #{g[:name]} #{g[:version].blank? ? '' : "--version=\"#{g[:version]}\""}`
+      unless g.version.blank?
+        runner.run(["install", g.name, "--version=#{g.version}"])
+      else
+        runner.run(["install", g.name])
+      end
     end
   end # install
   
@@ -22,6 +27,9 @@ namespace :gem do
     gem 'mack_ruby_core_extensions'
     require 'mack_ruby_core_extensions'
     require File.join(FileUtils.pwd, "config", "gems")
+    require 'rubygems'
+    require 'rubygems/gem_runner'
+    Gem.manage_gems
   end
   
 end # gem
