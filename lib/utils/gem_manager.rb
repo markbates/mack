@@ -3,7 +3,7 @@ module Mack
     class GemManager
       include Singleton
 
-      attr_reader :required_gem_list
+      attr_accessor :required_gem_list
       
       def initialize
         @required_gem_list = []
@@ -16,7 +16,11 @@ module Mack
       
       def do_requires
         @required_gem_list.each do |g|
-          gem(g[:name], g[:version])
+          if g[:version].nil?
+            gem(g[:name])
+          else
+            gem(g[:name], g[:version])
+          end
           unless g[:require_file].blank?
             require g[:require_file]
           end
