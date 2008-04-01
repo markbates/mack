@@ -36,7 +36,7 @@ namespace :gem do
         s.homepage = "http://www.mackframework.com"
         s.has_rdoc = true
         s.extra_rdoc_files = ["README", "CHANGELOG"]
-        s.files = FileList["README", "**/*.*"].exclude("pkg/").exclude("test/").exclude("tasks/private").exclude("doc")
+        s.files = FileList["README", "lib/**/*.*", 'bin/**/*.*']
         s.require_paths << '.'
         s.require_paths << 'bin'
         s.require_paths << 'lib'

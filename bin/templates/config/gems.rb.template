@@ -1,0 +1,11 @@
+# Using this file you can add gems dependencies to your application.
+# gem_name, version, require_file
+# gem_name is the name of the gem you want to add.
+# version, optional, is the version of the gem you want to use.
+# require_file, optional, is a file in the gem you want to require.
+require_gems do |gem|
+  # examples:
+  # gem.add('redgreen', '1.2.2', 'redgreen')
+  # gem.add('test-spec')
+  # gem.add('rubyzip', '0.9.1')
+end
