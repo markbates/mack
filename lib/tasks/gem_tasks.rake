@@ -11,11 +11,10 @@ namespace :gem do
   task :install => :setup do
     runner = Gem::GemRunner.new
     Mack::Utils::GemManager.instance.required_gem_list.each do |g|
-      unless g.version.blank?
-        runner.run(["install", g.name, "--version=#{g.version}"])
-      else
-        runner.run(["install", g.name])
-      end
+      params = ["install", g.name.to_s]
+      params << "--version=#{g.version}" if g.version?
+      params << "--source=#{g.source}" if g.source?
+      runner.run(params)
     end
   end # install
   
