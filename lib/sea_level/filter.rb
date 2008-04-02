@@ -33,9 +33,10 @@ module Mack
       attr_reader :filter_method
       attr_reader :action_list
   
-      def initialize(filter_method, action_list = {})
+      def initialize(filter_method, klass, action_list = {})
         @filter_method = filter_method
         clean_action_list(action_list)
+        @klass = klass
       end
   
       def run?(action)
@@ -46,6 +47,22 @@ module Mack
           return !action_list[:except].include?(action)
         end
         return false
+      end
+      
+      def to_s
+        "#{@klass}.#{filter_method}"
+      end
+      
+      def ==(other)
+        self.to_s == other.to_s
+      end
+      
+      def eql?(other)
+        self.to_s == other.to_s
+      end
+      
+      def hash
+        self.to_s.hash
       end
     
       private

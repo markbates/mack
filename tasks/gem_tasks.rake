@@ -36,7 +36,7 @@ namespace :gem do
         s.homepage = "http://www.mackframework.com"
         s.has_rdoc = true
         s.extra_rdoc_files = ["README", "CHANGELOG"]
-        s.files = FileList["README", "**/*.*"].exclude("pkg/").exclude("test/").exclude("tasks/private").exclude("doc")
+        s.files = FileList["README", "lib/**/*.*", 'bin/**/*.*']
         s.require_paths << '.'
         s.require_paths << 'bin'
         s.require_paths << 'lib'
@@ -48,11 +48,11 @@ namespace :gem do
         s.rdoc_options << '--title' << 'Mack' << '--main' << 'README' << '--line-numbers' << "--inline-source"
         
         s.add_dependency("rack", "0.3.0")
-        s.add_dependency("mack_ruby_core_extensions", "0.1.4")
+        s.add_dependency("mack_ruby_core_extensions", "0.1.5")
         s.add_dependency("application_configuration", "1.2.1")
         s.add_dependency("cachetastic", "1.4.2")
         s.add_dependency("log4r", "1.0.5")
-        s.add_dependency("thin", "0.7.0")
+        s.add_dependency("thin", "0.7.1")
         s.add_dependency("builder", "2.1.2")
         s.add_dependency("crypt", "1.1.4")
         s.add_dependency("daemons", "1.0.10")

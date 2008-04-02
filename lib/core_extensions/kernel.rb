@@ -12,4 +12,9 @@ module Kernel
     Mack::Utils::Crypt::Keeper.instance.worker(worker).decrypt(value)
   end
   
+  # Returns Mack::Utils::GemManager
+  def require_gems
+    yield Mack::Utils::GemManager.instance
+  end
+  
 end

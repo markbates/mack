@@ -320,11 +320,23 @@ module Mack
         end
         
         def add_filter(type, meth, options) # :nodoc:
-          controller_filters[type.to_sym] << Mack::Controller::Filter.new(meth, options)
+          controller_filters[type.to_sym] << Mack::Controller::Filter.new(meth, self, options)
         end
         
         def controller_filters # :nodoc:
-          @controller_filters = {:before => [], :after => [], :after_render => []} unless @controller_filters
+          unless @controller_filters
+            @controller_filters = {:before => [], :after => [], :after_render => []}
+            # inherit filters from the superclass, if any, to this parent
+            sc = self.superclass
+            if sc.class_is_a?(Mack::Controller::Base)
+              ch = sc.controller_filters
+              [:before, :after, :after_render].each do |v|
+                @controller_filters[v] << ch[v]
+                @controller_filters[v].flatten!
+                @controller_filters[v].uniq!
+              end
+            end
+          end
           @controller_filters
         end
         

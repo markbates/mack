@@ -1,3 +1,14 @@
+===0.4.2.1
+* Fixed bug with gems:list rake task that was looking in the wrong path for the gems.rb file.
+
+===0.4.2
+* Added config/initializers directory. All files in this directory will be required at start up time.
+* Gems can now be required simply using the initializers/gems.rb file and the require_gems method.
+* Added gems:list and gems:install rake tasks. The gems:list task will list any gems being required for the application. The gems:install task will install all the gems being required for the application.
+* Filters in controllers can now be inherited from parent controller classes.
+* gem: mack_ruby_core_extensions 0.1.5
+* gem: thing 0.7.1
+
 ===0.4.1
 * Improved testing support.
 * Added assigns support to testing. This is allows for pulling instance variables that were set in a controller to tests.
