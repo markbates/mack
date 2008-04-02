@@ -27,7 +27,6 @@ class FilterTest < Test::Unit::TestCase
   
   def test_to_s
     f = Mack::Controller::Filter.new(:log_action, FilterTest)
-    puts f
     assert_equal "FilterTest.log_action", f.to_s
   end
   
@@ -39,6 +38,7 @@ class FilterTest < Test::Unit::TestCase
     fs = [Mack::Controller::Filter.new(:log_action, FilterTest), Mack::Controller::Filter.new(:log_action, FilterTest)]
     fs.uniq!
     assert_equal [Mack::Controller::Filter.new(:log_action, FilterTest)], fs
+    assert_equal 1, fs.size
   end
   
   def test_before_all_actions
