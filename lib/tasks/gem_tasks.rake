@@ -25,7 +25,7 @@ namespace :gems do
     require 'utils/gem_manager'
     gem 'mack_ruby_core_extensions'
     require 'mack_ruby_core_extensions'
-    require File.join(FileUtils.pwd, "config", "gems")
+    require File.join(FileUtils.pwd, "config", "initializers", "gems")
     require 'rubygems'
     require 'rubygems/gem_runner'
     Gem.manage_gems

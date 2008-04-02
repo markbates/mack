@@ -1,3 +1,6 @@
+===0.4.2.1
+* Fixed bug with gems:list rake task that was looking in the wrong path for the gems.rb file.
+
 ===0.4.2
 * Added config/initializers directory. All files in this directory will be required at start up time.
 * Gems can now be required simply using the initializers/gems.rb file and the require_gems method.
