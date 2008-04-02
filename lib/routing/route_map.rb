@@ -7,12 +7,19 @@ module Mack
     # 
     # See Mack::Routes::RouteMap for more information.
     def self.build
-      $distributed_urls = Mack::Distributed::Routes::Urls.new(app_config.mack.distributed_site_domain) if $distributed_urls.nil?
       yield Mack::Routes::RouteMap.instance
-      Mack::Routes::Urls.include_safely_into(Mack::Controller::Base, Mack::ViewBinder, Test::Unit::TestCase)
+      Mack::Routes::Urls.include_safely_into(Mack::Controller::Base, 
+                                             Mack::ViewBinder, 
+                                             Test::Unit::TestCase, 
+                                             Mack::Distributed::Routes::Urls)
       if app_config.mack.use_distributed_routes
         raise Mack::Distributed::Errors::ApplicationNameUndefined.new if app_config.mack.distributed_app_name.nil?
-        Mack::Distributed::Routes::UrlCache.set(app_config.mack.distributed_app_name.to_sym, $distributed_urls)
+        
+        d_urls = Mack::Distributed::Routes::Urls.new(app_config.mack.distributed_site_domain)
+        
+        Mack::Distributed::Utils::Rinda.register_or_renew(:klass_def => :distributed_routes,
+                                                          :object => d_urls, 
+                                                          :space => app_config.mack.distributed_app_name.to_sym)
       end
       # puts "Finished compiling routes: #{Mack::Routes::RouteMap.instance.routes_list.inspect}"
     end
@@ -218,9 +225,8 @@ module Mack
         Mack::Routes::Urls.class_eval(url)
         
         if app_config.mack.use_distributed_routes
-          $distributed_urls["#{n_route}_url"] = url
           
-          $distributed_urls["#{n_route}_distributed_url"] = %{
+          Mack::Routes::Urls.class_eval %{
             def #{n_route}_distributed_url(options = {})
               (@dsd || app_config.mack.distributed_site_domain) + #{n_route}_url(options)
             end

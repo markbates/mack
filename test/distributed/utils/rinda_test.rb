@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../../test_helper.rb'
-class DistributedUrlsTest < Test::Unit::TestCase
+class RindaTest < Test::Unit::TestCase
   
   def test_runner
     d_url = Mack::Distributed::Routes::Urls.new("http://www.mackframework.com")
