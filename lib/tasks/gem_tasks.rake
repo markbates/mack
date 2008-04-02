@@ -1,4 +1,4 @@
-namespace :gem do
+namespace :gems do
   
   desc "lists all the gem required for this application."
   task :list => :setup do

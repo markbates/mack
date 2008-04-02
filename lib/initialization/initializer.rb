@@ -59,8 +59,10 @@ unless Object.const_defined?("MACK_INITIALIZED")
   # set up routes:
   require File.join(MACK_CONFIG, "routes")
   
-  # set up gems:
-  require File.join(MACK_CONFIG, "gems")
+  # set up initializers:
+  Dir.glob(File.join(MACK_CONFIG, "initializers", "**/*.rb")) do |d|
+    require d
+  end
   Mack::Utils::GemManager.instance.do_requires
 
   # require 'plugins':
