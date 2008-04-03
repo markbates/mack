@@ -16,10 +16,7 @@ module Mack
         raise Mack::Distributed::Errors::ApplicationNameUndefined.new if app_config.mack.distributed_app_name.nil?
         
         d_urls = Mack::Distributed::Routes::Urls.new(app_config.mack.distributed_site_domain)
-        
-        Mack::Distributed::Utils::Rinda.register_or_renew(:klass_def => :distributed_routes,
-                                                          :object => d_urls, 
-                                                          :space => app_config.mack.distributed_app_name.to_sym)
+        d_urls.put
       end
       # puts "Finished compiling routes: #{Mack::Routes::RouteMap.instance.routes_list.inspect}"
     end

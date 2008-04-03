@@ -65,6 +65,7 @@ module Mack
         "mack::use_distributed_routes" => false,
         "mack::distributed_app_name" => nil,
         "mack::distributed_site_domain" => "http://localhost:3000",
+        "mack::drb_timeout" => 1,
         "log::detailed_requests" => true,
         "log::level" => "info",
         "log::console" => false,

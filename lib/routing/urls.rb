@@ -64,8 +64,7 @@ module Mack
       #   droute_url(:registration_app, :signup_url, {:from => :google})
       def droute_url(app_name, route_name, options = {})
         if app_config.mack.use_distributed_routes
-          d_urls = Mack::Distributed::Utils::Rinda.read(:space => app_name.to_sym, :klass_def => :distributed_routes)
-          puts "d_urls: #{d_urls.inspect}"
+          d_urls = Mack::Distributed::Routes::Urls.get(app_name)
           # return d_urls.send(route_name, options)
           # ivar_cache("droute_url_hash") do
           #   {}
@@ -86,7 +85,8 @@ module Mack
           else
             route_name << "_distributed_url"
           end
-          return d_urls.send(route_name, options)
+          raise Mack::Distributed::Errors::UnknownRouteName.new(app_name, route_name) unless d_urls.respond_to?(route_name)
+          return d_urls.run(route_name, options)
           # if d_urls.run.respond_to?(route_name)
           #   return d_urls.run.send(route_name, options)
           # else

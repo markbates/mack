@@ -26,7 +26,6 @@ module Mack
         
         def self.ring_server
           rs = ::Rinda::RingFinger.primary
-          puts "rs: #{rs.inspect}"
           rs
         end
         
@@ -37,7 +36,7 @@ module Mack
         
         private
         def self.handle_options(options = {})
-          {:space => :name, :klass_def => nil, :object => nil, :description => nil, :timeout => 1}.merge(options)
+          {:space => :name, :klass_def => nil, :object => nil, :description => nil, :timeout => app_config.mack.drb_timeout}.merge(options)
         end
         
       end
