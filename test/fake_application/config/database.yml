@@ -1,20 +1,11 @@
 development:
-  adapter: mysql
-  database: fake_application_development
-  host: localhost
-  username: root
-  password: 
+  adapter: sqlite3
+  database: db/fake_application_development.db 
     
 test:
-  adapter: mysql
-  database: fake_application_test
-  host: localhost
-  username: root
-  password:
+  adapter: sqlite3
+  database: db/fake_application_test.db
 
 production:
-  adapter: mysql
-  database: fake_application_development
-  host: localhost
-  username: root
-  password:
+  adapter: sqlite3
+  database: db/fake_application_production.db
