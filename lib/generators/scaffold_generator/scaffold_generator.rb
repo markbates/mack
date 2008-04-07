@@ -50,6 +50,7 @@ class ScaffoldGenerator < Mack::Generator::Base
       template(File.join(temp_dir, "generic", "app", "views", "show.html.erb.template"), File.join(app_views_dir, "show.html.erb"), :force => param(:force))
     else
       template(File.join(temp_dir, "no_orm", "app", "controllers", "controller.rb.template"), File.join(app_cont_dir, "#{@name_plural}_controller.rb"), :force => param(:force))
+      MigrationGenerator.new("NAME" => "create_#{param(:name)}")
     end
 
   end
