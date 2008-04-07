@@ -1,9 +1,5 @@
 Mack::Routes.build do |r|
 
-  r.resource :users # Added by rake generate:scaffold name=users
-
-  r.resource :posts # Added by rake generate:scaffold name=post
-  
   r.connect "/", :controller => :tst_home_page
   r.connect "foo", :controller => :tst_home_page, :action => :foo
   r.pickles "/pickles", :controller => :tst_another, :action => :foo, :method => :post
