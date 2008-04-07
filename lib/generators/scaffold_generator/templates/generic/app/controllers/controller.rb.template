@@ -24,7 +24,7 @@ class <%= @name_plural_camel %>Controller < Mack::Controller::Base
   def create
     @<%= @name_singular %> = <%= @name_singular_camel %>.new(params(:<%= @name_singular %>))
     if @<%= @name_singular %>.save
-      redirect_to(<%= @name_plural %>_show_url(:id => @<%= @name_singular %>))
+      redirect_to(<%= @name_plural %>_show_url(:id => @<%= @name_singular %>.id))
     else
       render(:action => "new")
     end
@@ -34,7 +34,7 @@ class <%= @name_plural_camel %>Controller < Mack::Controller::Base
   def update
     @<%= @name_singular %> = <%= @name_singular_camel %>.find(params(:id))
     if @<%= @name_singular %>.update_attributes(params(:<%= @name_singular %>))
-      redirect_to(<%= @name_plural %>_show_url(:id => @<%= @name_singular %>))
+      redirect_to(<%= @name_plural %>_show_url(:id => @<%= @name_singular %>.id))
     else
       render(:action => "edit")
     end
@@ -43,7 +43,7 @@ class <%= @name_plural_camel %>Controller < Mack::Controller::Base
   # DELETE /<%= @name_plural %>/1
   def delete
     @<%= @name_singular %> = <%= @name_singular_camel %>.find(params(:id))
-    @<%= @name_singular %>.destroy
+    @<%= @name_singular %>.destroy<%= app_config.orm == "data_mapper" ? "!" : "" %>
     redirect_to(<%= @name_plural %>_index_url)
   end
   
