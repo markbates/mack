@@ -27,7 +27,6 @@ class FilterTest < Test::Unit::TestCase
   
   def test_to_s
     f = Mack::Controller::Filter.new(:log_action, FilterTest)
-    puts f
     assert_equal "FilterTest.log_action", f.to_s
   end
   

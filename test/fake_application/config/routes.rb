@@ -1,5 +1,7 @@
 Mack::Routes.build do |r|
 
+  r.resource :users # Added by rake generate:scaffold name=users
+
   r.resource :posts # Added by rake generate:scaffold name=post
   
   r.connect "/", :controller => :tst_home_page

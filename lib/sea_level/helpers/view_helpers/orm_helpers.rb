@@ -1,4 +1,4 @@
-if using_activerecord?
+if using_active_record?
   class ActiveRecord::Base # :nodoc:
     def business_display_name
       self.class.name#.titlecase

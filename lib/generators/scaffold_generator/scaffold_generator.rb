@@ -42,9 +42,9 @@ class ScaffoldGenerator < Mack::Generator::Base
     temp_dir = File.join(File.dirname(__FILE__), "templates")
 
     case app_config.orm
-    when "activerecord"
+    when "active_record"
       template(File.join(temp_dir, "generic", "app", "controllers", "controller.rb.template"), File.join(app_cont_dir, "#{@name_plural}_controller.rb"), :force => param(:force))
-      template(File.join(temp_dir, "activerecord", "app", "models", "model.rb.template"), File.join(app_model_dir, "#{@name_singular}.rb"), :force => param(:force))
+      template(File.join(temp_dir, "generic", "app", "models", "model.rb.template"), File.join(app_model_dir, "#{@name_singular}.rb"), :force => param(:force))
       
       template(File.join(temp_dir, "generic", "app", "views", "index.html.erb.template"), File.join(app_views_dir, "index.html.erb"), :force => param(:force))
       template(File.join(temp_dir, "generic", "app", "views", "edit.html.erb.template"), File.join(app_views_dir, "edit.html.erb"), :force => param(:force))
@@ -52,7 +52,6 @@ class ScaffoldGenerator < Mack::Generator::Base
       template(File.join(temp_dir, "generic", "app", "views", "show.html.erb.template"), File.join(app_views_dir, "show.html.erb"), :force => param(:force))
     when "data_mapper"
       template(File.join(temp_dir, "data_mapper", "app", "controllers", "controller.rb.template"), File.join(app_cont_dir, "#{@name_plural}_controller.rb"), :force => param(:force))
-      template(File.join(temp_dir, "data_mapper", "app", "models", "model.rb.template"), File.join(app_model_dir, "#{@name_singular}.rb"), :force => param(:force))
       
       template(File.join(temp_dir, "generic", "app", "views", "index.html.erb.template"), File.join(app_views_dir, "index.html.erb"), :force => param(:force))
       template(File.join(temp_dir, "generic", "app", "views", "edit.html.erb.template"), File.join(app_views_dir, "edit.html.erb"), :force => param(:force))

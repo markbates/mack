@@ -26,8 +26,8 @@ class MigrationGeneratorTest < Test::Unit::TestCase
   end
   
   def test_generate_active_record
-    temp_app_config("orm" => "activerecord") do
-      assert app_config.orm = "activerecord"
+    temp_app_config("orm" => "active_record") do
+      assert app_config.orm = "active_record"
       generate_common
       assert_match "class FooBar < ActiveRecord::Migration", @file_body
     end
@@ -43,12 +43,18 @@ class MigrationGeneratorTest < Test::Unit::TestCase
   
   def generate_common
     mg = MigrationGenerator.new("NAME" => "foo_bar")
-    mg.generate
+    mg.run
     assert File.exists?(fake_app_migration_dir)
     assert File.exists?(File.join(fake_app_migration_dir, "001_foo_bar.rb"))
     File.open(File.join(fake_app_migration_dir, "001_foo_bar.rb"), "r") do |file|
       @file_body = file.read
     end
+  end
+  
+  def test_required_params
+    assert_raise(Mack::Errors::RequiredGeneratorParameterMissing) { MigrationGenerator.new }
+    mg = MigrationGenerator.new("NAME" => "foo")
+    assert_not_nil mg
   end
   
   private

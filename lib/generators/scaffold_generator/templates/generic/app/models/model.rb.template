@@ -1,0 +1,2 @@
+class <%= @name_singular_camel %> < <%= app_config.orm.camelcase %>::Base
+end
