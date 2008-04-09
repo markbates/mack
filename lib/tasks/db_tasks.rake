@@ -2,14 +2,41 @@ namespace :db do
   
   desc "db:migrate"
   task :migrate => "mack:environment" do
-    require 'data_mapper/migration' if using_data_mapper?
+    
+    if using_data_mapper? 
+      require 'data_mapper/migration'
+    
+      class SchemaInfo < DataMapper::Base
+        property :version, :integer, :default => 0
+      end
+      
+      unless SchemaInfo.table.exists?
+        SchemaInfo.table.create!
+        SchemaInfo.create(:version => 0)
+      end
+      
+      schema_info = SchemaInfo.first
+      
+    elsif using_active_record?
+      class SchemaInfo < ActiveRecord::Base
+      end
+    end
+    
     Dir.glob(File.join(MACK_ROOT, "db", "migrations", "*.rb")).each do |migration|
       require migration
+      
       migration = File.basename(migration, ".rb")
       m_number = migration.match(/(^\d+)/).captures.last.to_i
-      m_name = migration.match(/^\d+_(.+)/).captures.last
       
-      m_name.camelcase.constantize.up
+      if m_number > schema_info.version
+      
+        m_name = migration.match(/^\d+_(.+)/).captures.last
+      
+        m_name.camelcase.constantize.up
+        
+        schema_info.version += 1
+        schema_info.save
+      end
       
     end
   end
