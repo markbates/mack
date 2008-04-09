@@ -27,7 +27,18 @@ class MigrationGeneratorTest < Test::Unit::TestCase
     temp_app_config("orm" => "active_record") do
       assert app_config.orm = "active_record"
       generate_common
-      assert_match "class FooBar < ActiveRecord::Migration", @file_body
+      mig = <<-MIG
+class FooBar < ActiveRecord::Migration
+
+  def self.up
+  end
+
+  def self.down
+  end
+
+end
+MIG
+      assert_equal mig, @file_body
     end
   end
   
@@ -35,17 +46,30 @@ class MigrationGeneratorTest < Test::Unit::TestCase
     temp_app_config("orm" => "data_mapper") do
       assert app_config.orm = "data_mapper"
       generate_common
-      assert_match "class FooBar < DataMapper::Migration", @file_body
+      mig = <<-MIG
+class FooBar < DataMapper::Migration
+
+  def self.up
+  end
+
+  def self.down
+  end
+
+end
+MIG
+      assert_equal mig, @file_body
     end
   end
   
   def generate_common
-    mg = MigrationGenerator.new("NAME" => "foo_bar")
-    mg.run
-    assert File.exists?(fake_app_migration_dir)
-    assert File.exists?(File.join(fake_app_migration_dir, "001_foo_bar.rb"))
-    File.open(File.join(fake_app_migration_dir, "001_foo_bar.rb"), "r") do |file|
-      @file_body = file.read
+    5.times do |i|
+      mg = MigrationGenerator.new("NAME" => "foo_bar")
+      mg.run
+      assert File.exists?(fake_app_migration_dir)
+      assert File.exists?(File.join(fake_app_migration_dir, "00#{i+1}_foo_bar.rb"))
+      File.open(File.join(fake_app_migration_dir, "00#{i+1}_foo_bar.rb"), "r") do |file|
+        @file_body = file.read
+      end
     end
   end
   

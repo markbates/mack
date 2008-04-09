@@ -1,3 +1,5 @@
+* gem: application_configuration 1.2.2
+
 ===0.4.2.1
 * Fixed bug with gems:list rake task that was looking in the wrong path for the gems.rb file.
 

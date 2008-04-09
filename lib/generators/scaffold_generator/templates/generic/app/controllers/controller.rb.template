@@ -1,25 +1,25 @@
 class <%= @name_plural_camel %>Controller < Mack::Controller::Base
-  
+
   # GET /<%= @name_plural %>
   def index
     @<%= @name_plural %> = <%= @name_singular_camel %>.find(:all)
   end
-  
+
   # GET /<%= @name_plural %>/1
   def show
     @<%= @name_singular %> = <%= @name_singular_camel %>.find(params(:id))
   end
-  
+
   # GET /<%= @name_plural %>/new
   def new
     @<%= @name_singular %> = <%= @name_singular_camel %>.new
   end
-  
+
   # GET /<%= @name_plural %>/1/edit
   def edit
     @<%= @name_singular %> = <%= @name_singular_camel %>.find(params(:id))
   end
-  
+
   # POST /<%= @name_plural %>
   def create
     @<%= @name_singular %> = <%= @name_singular_camel %>.new(params(:<%= @name_singular %>))
@@ -29,7 +29,7 @@ class <%= @name_plural_camel %>Controller < Mack::Controller::Base
       render(:action => "new")
     end
   end
-  
+
   # PUT /<%= @name_plural %>/1
   def update
     @<%= @name_singular %> = <%= @name_singular_camel %>.find(params(:id))
@@ -46,5 +46,5 @@ class <%= @name_plural_camel %>Controller < Mack::Controller::Base
     @<%= @name_singular %>.destroy<%= app_config.orm == "data_mapper" ? "!" : "" %>
     redirect_to(<%= @name_plural %>_index_url)
   end
-  
+
 end

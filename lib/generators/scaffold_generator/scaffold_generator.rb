@@ -33,24 +33,24 @@ class ScaffoldGenerator < Mack::Generator::Base
     app_cont_dir = File.join(MACK_APP, "controllers")
     directory(app_cont_dir)
     
-    app_model_dir = File.join(MACK_APP, "models")
-    directory(app_model_dir)
-    
-    app_views_dir = File.join(MACK_APP, "views", @name_plural)
-    directory(app_views_dir)
-    
     temp_dir = File.join(File.dirname(__FILE__), "templates")
 
     if app_config.orm
+      app_model_dir = File.join(MACK_APP, "models")
+      directory(app_model_dir)
+
+      app_views_dir = File.join(MACK_APP, "views", @name_plural)
+      directory(app_views_dir)
+      
       template(File.join(temp_dir, "generic", "app", "controllers", "controller.rb.template"), File.join(app_cont_dir, "#{@name_plural}_controller.rb"), :force => param(:force))
       template(File.join(temp_dir, "generic", "app", "models", "model.rb.template"), File.join(app_model_dir, "#{@name_singular}.rb"), :force => param(:force))
       template(File.join(temp_dir, "generic", "app", "views", "index.html.erb.template"), File.join(app_views_dir, "index.html.erb"), :force => param(:force))
       template(File.join(temp_dir, "generic", "app", "views", "edit.html.erb.template"), File.join(app_views_dir, "edit.html.erb"), :force => param(:force))
       template(File.join(temp_dir, "generic", "app", "views", "new.html.erb.template"), File.join(app_views_dir, "new.html.erb"), :force => param(:force))
       template(File.join(temp_dir, "generic", "app", "views", "show.html.erb.template"), File.join(app_views_dir, "show.html.erb"), :force => param(:force))
+      MigrationGenerator.new("NAME" => "create_#{@name_plural}").run
     else
       template(File.join(temp_dir, "no_orm", "app", "controllers", "controller.rb.template"), File.join(app_cont_dir, "#{@name_plural}_controller.rb"), :force => param(:force))
-      MigrationGenerator.new("NAME" => "create_#{param(:name)}")
     end
 
   end
