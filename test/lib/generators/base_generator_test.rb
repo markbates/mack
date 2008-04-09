@@ -8,6 +8,9 @@ class BaseGeneratorTest < Test::Unit::TestCase
     
     def generate
       directory(File.join(MACK_ROOT, "test", "simple_gen"))
+      template_dir = File.join(File.dirname(__FILE__), "templates")
+      template(File.join(template_dir, "hello_world.rb.template"), File.join(MACK_ROOT, "test", "simple_gen", "hello_world.rb"))
+      template(File.join(template_dir, "goodbye_world.rb.template"), File.join(MACK_ROOT, "test", "simple_gen", "goodbye_world.rb"), :force => true)
     end
     
   end
@@ -51,6 +54,40 @@ class BaseGeneratorTest < Test::Unit::TestCase
     # run it again to prove we don't get any errors if the folder already exists
     sg.run
     assert File.exists?(File.join(MACK_ROOT, "test", "simple_gen"))
+  end
+  
+  def test_template
+    assert !File.exists?(File.join(MACK_ROOT, "test", "simple_gen", "hello_world.rb"))
+    sg = SimpleGenerator.new("name" => "Mark", "id" => 1)
+    sg.run
+    assert File.exists?(File.join(MACK_ROOT, "test", "simple_gen", "hello_world.rb"))
+    File.open(File.join(MACK_ROOT, "test", "simple_gen", "hello_world.rb"), "r") do |f|
+      assert_equal "Hello Mark\n", f.read
+    end
+  end
+  
+  def test_template_force
+    assert !File.exists?(File.join(MACK_ROOT, "test", "simple_gen", "goodbye_world.rb"))
+    sg = SimpleGenerator.new("name" => "Mark", "id" => 1)
+    sg.run
+    assert File.exists?(File.join(MACK_ROOT, "test", "simple_gen", "goodbye_world.rb"))
+    File.open(File.join(MACK_ROOT, "test", "simple_gen", "goodbye_world.rb"), "r") do |f|
+      assert_equal "Goodbye cruel world! Love, Mark\n", f.read
+    end
+    
+    File.open(File.join(MACK_ROOT, "test", "simple_gen", "goodbye_world.rb"), "w") do |f|
+      f.puts "I've been edited."
+    end
+    
+    File.open(File.join(MACK_ROOT, "test", "simple_gen", "goodbye_world.rb"), "r") do |f|
+      assert_equal "I've been edited.\n", f.read
+    end
+    
+    sg.run
+    
+    File.open(File.join(MACK_ROOT, "test", "simple_gen", "goodbye_world.rb"), "r") do |f|
+      assert_equal "Goodbye cruel world! Love, Mark\n", f.read
+    end
   end
   
 end
