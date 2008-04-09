@@ -19,6 +19,8 @@ class PluginGenerator < Mack::Generator::Base
     directory(plugin_dir)
     # create vendor/plugins/<name>/lib
     directory(File.join(plugin_dir, "lib"))
+    # create vendor/plugins/<name>/lib/tasks
+    directory(File.join(plugin_dir, "lib", "tasks"))
     
     # create vendor/plugins/<name>/init.rb
     template(File.join(template_dir, "init.rb.template"), File.join(plugin_dir, "init.rb"))

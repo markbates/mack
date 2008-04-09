@@ -3,16 +3,14 @@ require File.dirname(__FILE__) + '/../../test_helper.rb'
 class MigrationGeneratorTest < Test::Unit::TestCase
   
   def setup
-    begin
+    if File.exists?(fake_app_migration_dir)
       FileUtils.rm_r(fake_app_migration_dir)
-    rescue Exception => e
     end
   end
   
   def teardown
-    begin
+    if File.exists?(fake_app_migration_dir)
       FileUtils.rm_r(fake_app_migration_dir)
-    rescue Exception => e
     end
   end
   
