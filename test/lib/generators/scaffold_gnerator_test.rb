@@ -70,6 +70,12 @@ class ZoosController < Mack::Controller::Base
 end
 CONT
       assert_equal cont, File.open(controller_file).read
+      
+      mod = <<-MOD
+class Zoo < ActiveRecord::Base
+end
+MOD
+      assert_equal mod, File.open(model_file).read
     end
   end
   
@@ -129,6 +135,12 @@ class ZoosController < Mack::Controller::Base
 end
 CONT
       assert_equal cont, File.open(controller_file).read
+      
+      mod = <<-MOD
+class Zoo < DataMapper::Base
+end
+MOD
+      assert_equal mod, File.open(model_file).read
     end
   end
   
