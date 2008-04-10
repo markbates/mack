@@ -2,7 +2,6 @@ require 'rubygems'
 require "test/unit"
 require 'rake'
 require 'fileutils'
-
 ENV["MACK_ENV"] = "test"
 ENV["MACK_ROOT"] = File.join(File.dirname(__FILE__), "fake_application")
 
@@ -36,5 +35,19 @@ module Mack
 end
 
 class Test::Unit::TestCase
+  
+  def use_data_mapper
+    temp_app_config("orm" => "data_mapper") do
+      load(File.join(File.dirname(__FILE__), "..", "lib", "initialization", "initializers", "orm_support.rb"))
+      yield
+    end
+  end
+  
+  def use_active_record
+    temp_app_config("orm" => "active_record") do
+      load(File.join(File.dirname(__FILE__), "..", "lib", "initialization", "initializers", "orm_support.rb"))
+      yield
+    end
+  end
   
 end
