@@ -4,6 +4,38 @@ module Mack
   
   module TestHelpers
     
+    def rake_task(name, env = {}, tasks = File.join(File.dirname(__FILE__), "..", "mack_tasks.rb"))
+      # set up the Rake application
+      rake = Rake::Application.new
+      Rake.application = rake
+      
+      load(tasks)
+      
+      # save the old ENV so we can revert it
+      old_env = ENV.to_hash
+      # add in the new ENV stuff
+      env.each_pair {|k,v| ENV[k.to_s] = v}
+      
+      begin
+        # run the rake task
+        rake[name].invoke
+        
+        # yield for the tests
+        yield
+        
+      rescue Exception => e
+        raise e
+      ensure
+        # empty out the ENV
+        ENV.clear
+        # revert to the ENV before the test started
+        old_env.to_hash.each_pair {|k,v| ENV[k] = v}
+
+        # get rid of the Rake application
+        Rake.application = nil
+      end
+    end
+    
     def temp_app_config(options = {})
       app_config.load_hash(options, String.randomize)
       yield

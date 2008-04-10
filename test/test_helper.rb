@@ -1,6 +1,6 @@
 require 'rubygems'
 require "test/unit"
-# require 'test/spec'
+require 'rake'
 require 'fileutils'
 
 ENV["MACK_ENV"] = "test"

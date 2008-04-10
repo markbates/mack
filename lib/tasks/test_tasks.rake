@@ -6,4 +6,17 @@ Rake::TestTask.new(:default) do |t|
   t.verbose = true
 end
 
+namespace :test do
+  
+  task :empty do |t|
+    ENV["TEST:EMPTY"] = "true"
+    puts ENV["TEST:EMPTY"]
+  end
+  
+  task :raise_exception do |t|
+    raise "Oh No!"
+  end
+  
+end
+
 alias_task :test, :default

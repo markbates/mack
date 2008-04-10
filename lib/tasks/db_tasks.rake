@@ -5,7 +5,7 @@ namespace :db do
     
     if using_data_mapper? 
       require 'data_mapper/migration'
-    
+      puts database.inspect
       class SchemaInfo < DataMapper::Base
         property :version, :integer, :default => 0
       end
