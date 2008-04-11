@@ -21,7 +21,7 @@ module Mack
         rake[name].invoke
         
         # yield for the tests
-        yield
+        yield if block_given?
         
       rescue Exception => e
         raise e

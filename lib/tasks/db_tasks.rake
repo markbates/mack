@@ -6,11 +6,11 @@ namespace :db do
     if using_data_mapper? 
       require 'data_mapper/migration'
 
-      unless SchemaInfo.table.exists?
-        SchemaInfo.table.create!
-        SchemaInfo.create(:version => 0)
+      unless DmSchemaInfo.table.exists?
+        DmSchemaInfo.table.create!
+        DmSchemaInfo.create(:version => 0)
       end
-      schema_info = SchemaInfo.first
+      schema_info = DmSchemaInfo.first
       
     elsif using_active_record?
     end

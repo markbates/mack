@@ -11,14 +11,16 @@ unless app_config.orm.nil?
     require 'activerecord'
     ActiveRecord::Base.establish_connection(dbs[MACK_ENV])
     
-    class SchemaInfo < ActiveRecord::Base
+    class ArSchemaInfo < ActiveRecord::Base
+      set_table_name :schema_info
     end
     
     eval("def using_active_record?; true; end")
   when 'data_mapper'
     require 'data_mapper'
     DataMapper::Database.setup(dbs[MACK_ENV])
-    class SchemaInfo < DataMapper::Base
+    class DmSchemaInfo < DataMapper::Base
+      set_table_name "schema_info"
       property :version, :integer, :default => 0
     end
     eval("def using_data_mapper?; true; end")
