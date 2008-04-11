@@ -13,6 +13,23 @@ namespace :db do
       schema_info = DmSchemaInfo.first
       
     elsif using_active_record?
+      require 'active_record/migration'
+
+      unless ArSchemaInfo.table_exists?
+        class CreateArSchemaInfo < ActiveRecord::Migration
+          
+          def self.up
+            create_table :schema_info do |t|
+              t.column :version, :integer, :default => 0
+            end
+          end
+          
+        end
+        CreateArSchemaInfo.up
+        ArSchemaInfo.create(:version => 0)
+      end
+      schema_info = ArSchemaInfo.find(:first)
+      
     end
     
     Dir.glob(File.join(MACK_ROOT, "db", "migrations", "*.rb")).each do |migration|
