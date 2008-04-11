@@ -1,6 +1,6 @@
 module Mack
   module Generator
-    module Migration
+    module Migration # :nodoc:
       class Base < Mack::Generator::Base
         
         attr_reader :db_directory
