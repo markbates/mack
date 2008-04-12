@@ -11,8 +11,50 @@ class DbTasksTest < Test::Unit::TestCase
   def teardown
     cleanup
   end
+  
+  def test_db_rollback_active_record
+    test_db_migrate_active_record
+    si = ArSchemaInfo.find(:first)
+    assert_equal 2, si.version
+    rake_task("db:rollback")
+    si = ArSchemaInfo.find(:first)
+    assert_equal 1, si.version
+    assert !ArPost.table_exists?
+  end
+  
+  def test_db_rollback_data_mapper
+    test_db_migrate_data_mapper
+    si = DmSchemaInfo.first
+    assert_equal 2, si.version
+    rake_task("db:rollback")
+    si = DmSchemaInfo.first
+    assert_equal 1, si.version
+    assert !DmPost.table.exists?
+  end
+  
+  def test_db_rollback_active_record_two_steps
+    test_db_migrate_active_record
+    si = ArSchemaInfo.find(:first)
+    assert_equal 2, si.version
+    rake_task("db:rollback", "STEP" => "2")
+    si = ArSchemaInfo.find(:first)
+    assert_equal 0, si.version
+    assert !ArPost.table_exists?
+    assert !ArUser.table_exists?
+  end
+  
+  def test_db_rollback_data_mapper_two_steps
+    test_db_migrate_data_mapper
+    si = DmSchemaInfo.first
+    assert_equal 2, si.version
+    rake_task("db:rollback", "STEP" => "2")
+    si = DmSchemaInfo.first
+    assert_equal 0, si.version
+    assert !DmPost.table.exists?
+    assert !DmUser.table.exists?
+  end
 
-  def test_db_migrate_active_record_up
+  def test_db_migrate_active_record
     use_active_record do
       assert !ArSchemaInfo.table_exists?
       rake_task("db:migrate") do
@@ -51,7 +93,7 @@ class DbTasksTest < Test::Unit::TestCase
     end
   end
   
-  def test_db_migrate_data_mapper_up
+  def test_db_migrate_data_mapper
     use_data_mapper do
       assert !DmSchemaInfo.table.exists?
       rake_task("db:migrate") do

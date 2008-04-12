@@ -1,6 +1,6 @@
 namespace :db do
   
-  desc "db:migrate"
+  desc "Migrate the database through scripts in db/migrations"
   task :migrate => "mack:environment" do
     
     if using_data_mapper? 
@@ -24,6 +24,33 @@ namespace :db do
     end # glob
     
   end # migrate
+  
+  desc "Rolls the schema back to the previous version. Specify the number of steps with STEP=n"
+  task :rollback => "mack:environment" do
+    
+    if using_data_mapper? 
+      require 'data_mapper/migration'
+      schema_info = data_mapper_schema_info
+    elsif using_active_record?
+      require 'active_record/migration'
+      schema_info = active_record_schema_info
+    end
+    
+    migrations = Dir.glob(File.join(MACK_ROOT, "db", "migrations", "*.rb")).reverse
+    (ENV["STEP"] || 1).to_i.times do |step|
+      migration = migrations[step]
+      require migration
+      migration = File.basename(migration, ".rb")
+      m_number = migration.match(/(^\d+)/).captures.last.to_i
+      if m_number == schema_info.version
+        m_name = migration.match(/^\d+_(.+)/).captures.last
+        m_name.camelcase.constantize.down
+        schema_info.version -= 1
+        schema_info.save
+      end
+    end
+
+  end # rollback
   
   private
   def data_mapper_schema_info
