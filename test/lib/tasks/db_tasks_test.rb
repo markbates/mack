@@ -13,46 +13,75 @@ class DbTasksTest < Test::Unit::TestCase
   end
   
   def test_db_rollback_active_record
-    test_db_migrate_active_record
-    si = ArSchemaInfo.find(:first)
-    assert_equal 2, si.version
-    rake_task("db:rollback")
-    si = ArSchemaInfo.find(:first)
-    assert_equal 1, si.version
-    assert !ArPost.table_exists?
+    use_active_record do
+      test_db_migrate_active_record
+      si = ArSchemaInfo.find(:first)
+      assert_equal 2, si.version
+      rake_task("db:rollback")
+      si = ArSchemaInfo.find(:first)
+      assert_equal 1, si.version
+      assert !ArPost.table_exists?
+    end
   end
   
   def test_db_rollback_data_mapper
-    test_db_migrate_data_mapper
-    si = DmSchemaInfo.first
-    assert_equal 2, si.version
-    rake_task("db:rollback")
-    si = DmSchemaInfo.first
-    assert_equal 1, si.version
-    assert !DmPost.table.exists?
+    use_data_mapper do
+      test_db_migrate_data_mapper
+      si = DmSchemaInfo.first
+      assert_equal 2, si.version
+      rake_task("db:rollback")
+      si = DmSchemaInfo.first
+      assert_equal 1, si.version
+      assert !DmPost.table.exists?
+    end
   end
   
   def test_db_rollback_active_record_two_steps
-    test_db_migrate_active_record
-    si = ArSchemaInfo.find(:first)
-    assert_equal 2, si.version
-    rake_task("db:rollback", "STEP" => "2")
-    si = ArSchemaInfo.find(:first)
-    assert_equal 0, si.version
-    assert !ArPost.table_exists?
-    assert !ArUser.table_exists?
+    use_active_record do
+      test_db_migrate_active_record
+      si = ArSchemaInfo.find(:first)
+      assert_equal 2, si.version
+      rake_task("db:rollback", "STEP" => "2")
+      si = ArSchemaInfo.find(:first)
+      assert_equal 0, si.version
+      assert !ArPost.table_exists?
+      assert !ArUser.table_exists?
+    end
   end
   
   def test_db_rollback_data_mapper_two_steps
-    test_db_migrate_data_mapper
-    si = DmSchemaInfo.first
-    assert_equal 2, si.version
-    rake_task("db:rollback", "STEP" => "2")
-    si = DmSchemaInfo.first
-    assert_equal 0, si.version
-    assert !DmPost.table.exists?
-    assert !DmUser.table.exists?
+    use_data_mapper do
+      test_db_migrate_data_mapper
+      si = DmSchemaInfo.first
+      assert_equal 2, si.version
+      rake_task("db:rollback", "STEP" => "2")
+      si = DmSchemaInfo.first
+      assert_equal 0, si.version
+      assert !DmPost.table.exists?
+      assert !DmUser.table.exists?
+    end
   end
+  
+  
+  # def test_db_rollback_active_record_unrun_migrations
+  #   use_active_record do
+  #     test_db_migrate_active_record
+  #     MigrationGenerator.new("name" => "create_comments").run
+  #     si = ArSchemaInfo.find(:first)
+  #     assert_equal 2, si.version
+  #     assert_raise(Mack::Errors::UnrunMigrations) { rake_task("db:rollback") }
+  #   end
+  # end
+  # 
+  # def test_db_rollback_data_mapper_unrun_migrations
+  #   use_data_mapper do
+  #     test_db_migrate_data_mapper
+  #     MigrationGenerator.new("name" => "create_comments").run
+  #     si = DmSchemaInfo.first
+  #     assert_equal 2, si.version
+  #     assert_raise(Mack::Errors::UnrunMigrations) { rake_task("db:rollback") }
+  #   end
+  # end
 
   def test_db_migrate_active_record
     use_active_record do
