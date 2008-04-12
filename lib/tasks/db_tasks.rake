@@ -11,13 +11,12 @@ namespace :db do
       schema_info = active_record_schema_info
     end
     
-    Dir.glob(File.join(MACK_ROOT, "db", "migrations", "*.rb")).each do |migration|
+    migration_files.each do |migration|
       require migration
       migration = File.basename(migration, ".rb")
-      m_number = migration.match(/(^\d+)/).captures.last.to_i
+      m_number = migration_number(migration)
       if m_number > schema_info.version
-        m_name = migration.match(/^\d+_(.+)/).captures.last
-        m_name.camelcase.constantize.up
+        migration_name(migration).camelcase.constantize.up
         schema_info.version += 1
         schema_info.save
       end
@@ -36,15 +35,14 @@ namespace :db do
       schema_info = active_record_schema_info
     end
     
-    migrations = Dir.glob(File.join(MACK_ROOT, "db", "migrations", "*.rb")).reverse
+    migrations = migration_files.reverse
     (ENV["STEP"] || 1).to_i.times do |step|
       migration = migrations[step]
       require migration
       migration = File.basename(migration, ".rb")
-      m_number = migration.match(/(^\d+)/).captures.last.to_i
+      m_number = migration_number(migration)
       if m_number == schema_info.version
-        m_name = migration.match(/^\d+_(.+)/).captures.last
-        m_name.camelcase.constantize.down
+        migration_name(migration).camelcase.constantize.down
         schema_info.version -= 1
         schema_info.save
       end
@@ -53,6 +51,18 @@ namespace :db do
   end # rollback
   
   private
+  def migration_files
+    Dir.glob(File.join(MACK_ROOT, "db", "migrations", "*.rb"))
+  end
+  
+  def migration_number(migration)
+    migration.match(/(^\d+)/).captures.last.to_i
+  end
+  
+  def migration_name(migration)
+    migration.match(/^\d+_(.+)/).captures.last
+  end
+  
   def data_mapper_schema_info
     unless DmSchemaInfo.table.exists?
       DmSchemaInfo.table.create!
