@@ -61,23 +61,11 @@ module Mack
             }
           }
         },
-        "mack_distributed_routes_url_cache_options" => {
-          "debug" => false,
-          "adapter" => "drb",
-          "store_options" => {
-            "host" => "druby://127.0.0.1:61676"
-          },
-          "logging" => {
-            "logger_1" => {
-              "type" => "file",
-              "file" => File.join(MACK_ROOT, "log", "mack_distributed_routes_url_cache.log")
-            }
-          }
-        },
         "mack::site_domain" => "http://localhost:3000",
         "mack::use_distributed_routes" => false,
         "mack::distributed_app_name" => nil,
         "mack::distributed_site_domain" => "http://localhost:3000",
+        "mack::drb_timeout" => 1,
         "log::detailed_requests" => true,
         "log::level" => "info",
         "log::console" => false,

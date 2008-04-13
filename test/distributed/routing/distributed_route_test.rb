@@ -2,10 +2,7 @@ require File.dirname(__FILE__) + '/../../test_helper.rb'
 class DistributedRouteTest < Test::Unit::TestCase
   
   def setup
-    FileUtils.rm_f(File.join(MACK_ROOT, "tmp", "mack_distributed_routes_url_cache"))
-    
     app_config.load_hash({"mack::use_distributed_routes" => true, "mack::distributed_app_name" => :known_app}, :distributed_route_test)
-    # app_config.reload
     Mack::Routes.build do |r| # force the routes to go the DRb server
       r.known "/my_known_app/my_known_url", :controller => :foo, :action => :bar
       r.known_w_opts "/my_known_app/my_known_url_w_opts/:id", :controller => :foo, :action => :bar
@@ -17,7 +14,7 @@ class DistributedRouteTest < Test::Unit::TestCase
   end
   
   def test_unknown_application_droute_url
-    assert_raise(Mack::Distributed::Errors::UnknownApplication) { droute_url(:unknown_app, :foo_url) }
+    assert_raise(Rinda::RequestExpiredError) { droute_url(:unknown_app, :foo_url) }
   end
   
   def test_unknown_route_name_droute_url

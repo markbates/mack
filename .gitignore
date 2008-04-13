@@ -4,3 +4,4 @@ log/**/*
 doc
 pkg
 tmp
+*.pid

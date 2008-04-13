@@ -4,44 +4,31 @@ module Mack
       # A class used to house the Mack::Routes::Url module for distributed applications.
       # Functionally this class does nothing, but since you can't cache a module, a class is needed.
       class Urls
+        include DRbUndumped
         
         def initialize(dsd) # :nodoc:
           @dsd = dsd
-          @url_method_list = {}
         end
         
-        # def add_url_method(key, meth)
-        #   @url_method_list[key.to_sym] = meth
-        # end
-        
-        def []=(key, method)
-          @url_method_list[key.to_sym] = method
-          @runner = nil
+        def put
+          Mack::Distributed::Utils::Rinda.register_or_renew(:space => app_config.mack.distributed_app_name.to_sym, 
+                                                            :klass_def => :distributed_routes, 
+                                                            :object => self)
         end
         
-        def run
-          if @runner.nil?
-            klass_name = String.randomize(40).downcase.camelcase
-            meths = ""
-            @url_method_list.each_pair {|k,v| meths += v + "\n\n"}
-            eval %{
-              class Mack::Distributed::Routes::Temp::M#{klass_name}
-                include Mack::Routes::Urls
-                def initialize(dsd)
-                  @dsd = dsd
-                end
-                #{meths}
-              end
-            }
-            @runner = "Mack::Distributed::Routes::Temp::M#{klass_name}".constantize.new(@dsd)
+        def run(meth, options)
+          self.send(meth, options)
+        end
+        
+        class << self
+          
+          def get(app_name)
+            Mack::Distributed::Utils::Rinda.read(:space => app_name.to_sym, :klass_def => :distributed_routes)
           end
-          @runner
+          
         end
         
       end # Urls
-      
-      module Temp # :nodoc:
-      end # Temp
       
     end # Routes
   end # Distributed

@@ -43,6 +43,7 @@ namespace :gem do
         
         s.bindir = "bin"
         s.executables << "mack"
+        s.executables << "mack_ring_server"
         
         s.rdoc_options << '--title' << 'Mack' << '--main' << 'README' << '--line-numbers' << "--inline-source"
         
@@ -54,6 +55,7 @@ namespace :gem do
         s.add_dependency("thin", "0.7.1")
         s.add_dependency("builder", "2.1.2")
         s.add_dependency("crypt", "1.1.4")
+        s.add_dependency("daemons", "1.0.10")
         
       
         s.rubyforge_project = gh.project
