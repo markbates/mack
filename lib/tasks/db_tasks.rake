@@ -2,63 +2,50 @@ namespace :db do
   
   desc "Migrate the database through scripts in db/migrations"
   task :migrate => "db:schema:create" do
-    
-    if using_data_mapper? 
-      require 'data_mapper/migration'
-      schema_info = data_mapper_schema_info
-    elsif using_active_record?
-      require 'active_record/migration'
-      schema_info = active_record_schema_info
-    end
-    
     migration_files.each do |migration|
       require migration
       migration = File.basename(migration, ".rb")
       m_number = migration_number(migration)
-      if m_number > schema_info.version
+      if m_number > @schema_info.version
         migration_name(migration).camelcase.constantize.up
-        schema_info.version += 1
-        schema_info.save
+        @schema_info.version += 1
+        @schema_info.save
       end
-    end # glob
-    
+    end # each
   end # migrate
   
   desc "Rolls the schema back to the previous version. Specify the number of steps with STEP=n"
-  task :rollback => "db:schema:create" do
-    if using_data_mapper? 
-      require 'data_mapper/migration'
-      schema_info = data_mapper_schema_info
-    elsif using_active_record?
-      require 'active_record/migration'
-      schema_info = active_record_schema_info
-    end
+  task :rollback => ["db:schema:create", "db:abort_if_pending_migrations"] do
     migrations = migration_files.reverse
     (ENV["STEP"] || 1).to_i.times do |step|
       migration = migrations[step]
       require migration
       migration = File.basename(migration, ".rb")
       m_number = migration_number(migration)
-      # if m_number > schema_info.version
-      #   raise Mack::Errors::UnrunMigrations.new(m_number - schema_info.version)
-      # end
-      if m_number == schema_info.version
+      if m_number == @schema_info.version
         migration_name(migration).camelcase.constantize.down
-        schema_info.version -= 1
-        schema_info.save
+        @schema_info.version -= 1
+        @schema_info.save
       end
     end
 
   end # rollback
   
-  desc ""
-  task :version => "db:schema:create" do
-    if using_data_mapper? 
-      schema_info = data_mapper_schema_info
-    elsif using_active_record?
-      schema_info = active_record_schema_info
+  desc "Raises an error if there are pending migrations"
+  task :abort_if_pending_migrations do
+    migrations = migration_files.reverse
+    return if migrations.empty?
+    migration = migrations.first
+    migration = File.basename(migration, ".rb")
+    m_number = migration_number(migration)
+    if m_number > @schema_info.version
+      raise Mack::Errors::UnrunMigrations.new(m_number - @schema_info.version)
     end
-    puts "\nYour database is currently at version: #{schema_info.version}\n"
+  end
+  
+  desc "Displays the current schema version of your database"
+  task :version => "db:schema:create" do
+    puts "\nYour database is currently at version: #{@schema_info.version}\n"
   end
   
   private
@@ -71,6 +58,7 @@ namespace :db do
           DmSchemaInfo.table.create!
           DmSchemaInfo.create(:version => 0)
         end
+        @schema_info = DmSchemaInfo.first
       elsif using_active_record?
         require 'active_record/migration'
         class CreateArSchemaInfo < ActiveRecord::Migration # :nodoc:
@@ -84,6 +72,7 @@ namespace :db do
           CreateArSchemaInfo.up
           ArSchemaInfo.create(:version => 0)
         end
+        @schema_info = ArSchemaInfo.find(:first)
       end
     end # create
     
@@ -101,13 +90,5 @@ namespace :db do
   def migration_name(migration)
     migration.match(/^\d+_(.+)/).captures.last
   end
-  
-  def data_mapper_schema_info
-    DmSchemaInfo.first
-  end # data_mapper_schema_info
-  
-  def active_record_schema_info
-    ArSchemaInfo.find(:first)
-  end # active_record_schema_info
   
 end # db

@@ -63,25 +63,25 @@ class DbTasksTest < Test::Unit::TestCase
   end
   
   
-  # def test_db_rollback_active_record_unrun_migrations
-  #   use_active_record do
-  #     test_db_migrate_active_record
-  #     MigrationGenerator.new("name" => "create_comments").run
-  #     si = ArSchemaInfo.find(:first)
-  #     assert_equal 2, si.version
-  #     assert_raise(Mack::Errors::UnrunMigrations) { rake_task("db:rollback") }
-  #   end
-  # end
-  # 
-  # def test_db_rollback_data_mapper_unrun_migrations
-  #   use_data_mapper do
-  #     test_db_migrate_data_mapper
-  #     MigrationGenerator.new("name" => "create_comments").run
-  #     si = DmSchemaInfo.first
-  #     assert_equal 2, si.version
-  #     assert_raise(Mack::Errors::UnrunMigrations) { rake_task("db:rollback") }
-  #   end
-  # end
+  def test_db_rollback_active_record_unrun_migrations
+    use_active_record do
+      test_db_migrate_active_record
+      MigrationGenerator.new("name" => "create_comments").run
+      si = ArSchemaInfo.find(:first)
+      assert_equal 2, si.version
+      assert_raise(Mack::Errors::UnrunMigrations) { rake_task("db:rollback") }
+    end
+  end
+  
+  def test_db_rollback_data_mapper_unrun_migrations
+    use_data_mapper do
+      test_db_migrate_data_mapper
+      MigrationGenerator.new("name" => "create_comments").run
+      si = DmSchemaInfo.first
+      assert_equal 2, si.version
+      assert_raise(Mack::Errors::UnrunMigrations) { rake_task("db:rollback") }
+    end
+  end
 
   def test_db_migrate_active_record
     use_active_record do
@@ -166,6 +166,7 @@ class DbTasksTest < Test::Unit::TestCase
   end
   
   private
+  
   def ar_create_users_migration
     <<-MIG
 class ArCreateUsers < ActiveRecord::Migration
