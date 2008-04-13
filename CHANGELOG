@@ -1,3 +1,17 @@
+===0.4.5
+* Added support for migrations for both ActiveRecord and DataMapper. DataMapper migration support requires DataMapper 0.3.0 gem. Please keep in mind, though, that DataMapper 0.3.0 has a serious bug in it, which may prevent you from using it. Please see http://www.mackframework.com/2008/04/09/horrible-bug-in-datamapper-030/ for more information.
+* Rewrote distributed routing support to use Rinda inside of plain old DRb. This makes for an almost zero configuration usage.
+* Added: mack_ring_server binary to start a Rinda ring server for use with distributed routing.
+* Sqlite3 is now the default database for Mack applications configured with ORM support.
+* Added a test helper method, rake_task, to aid in the testing of Rake tasks.
+* Added: rake db:migrate
+* Added: rake db:abort_if_pending_migrations
+* Added: rake db:rollback
+* Added: rake db:version
+* Added: rake mack:ring_server:start
+* Added: rake mack:ring_server:stop
+* Added: rake mack:ring_server:restart
+* Added: rake mack:ring_server:services:list
 * gem: application_configuration 1.2.2
 
 ===0.4.2.1
