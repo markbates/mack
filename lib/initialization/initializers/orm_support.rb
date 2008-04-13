@@ -1,7 +1,23 @@
+#--
 # setup ORM:
+#++
 
-[:active_record, :data_mapper].each do |orm|
-  eval("def using_#{orm}?; false; end")
+$using_active_record = false
+$using_data_mapper = false
+
+# Returns true if the system is setup to use ActiveRecord
+def using_active_record?
+  $using_active_record
+end
+
+# Returns true if the system is setup to use DataMapper
+def using_data_mapper?
+  $using_data_mapper
+end
+
+module ActiveRecord # :nodoc:
+end
+module DataMapper # :nodoc:
 end
 
 unless app_config.orm.nil?
@@ -13,7 +29,8 @@ unless app_config.orm.nil?
     class ArSchemaInfo < ActiveRecord::Base # :nodoc:
       set_table_name :schema_info
     end
-    eval("def using_active_record?; true; end")
+    $using_active_record = true
+    $using_data_mapper = false # set to false, in case we're flipping back and forth
   when 'data_mapper'
     require 'data_mapper'
     DataMapper::Database.setup(dbs[MACK_ENV])
@@ -21,7 +38,8 @@ unless app_config.orm.nil?
       set_table_name "schema_info"
       property :version, :integer, :default => 0
     end
-    eval("def using_data_mapper?; true; end")
+    $using_data_mapper = true
+    $using_active_record = false # set to false, in case we're flipping back and forth
   else
     MACK_DEFAULT_LOGGER.warn("Attempted to configure an unknown ORM: #{app_config.orm}")
   end

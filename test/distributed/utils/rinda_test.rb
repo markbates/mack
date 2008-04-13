@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../test_helper.rb'
 class RindaTest < Test::Unit::TestCase
   
   def setup
-    puts `mack_ring_server restart`
+    rake_task("mack:ring_server:start")
   end
   
   def test_ring_server

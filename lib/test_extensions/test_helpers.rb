@@ -4,6 +4,7 @@ module Mack
   
   module TestHelpers
     
+    # Runs the given rake task. Takes an optional hash that mimics command line parameters.
     def rake_task(name, env = {}, tasks = File.join(File.dirname(__FILE__), "..", "mack_tasks.rb"))
       # set up the Rake application
       rake = Rake::Application.new
@@ -36,13 +37,15 @@ module Mack
       end
     end
     
+    # Temporarily changes the application configuration. Changes are reverted after
+    # the yield returns.
     def temp_app_config(options = {})
       app_config.load_hash(options, String.randomize)
       yield
       app_config.revert
     end
     
-    def remote_test
+    def remote_test # :nodoc:
       if (app_config.run_remote_tests)
         yield
       end
