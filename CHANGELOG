@@ -6,6 +6,7 @@
 * Added: mack_ring_server binary to start a Rinda ring server for use with distributed routing.
 * Sqlite3 is now the default database for Mack applications configured with ORM support.
 * Added a test helper method, rake_task, to aid in the testing of Rake tasks.
+* Added: rake generate:migration name=<migration_name>
 * Added: rake db:migrate
 * Added: rake db:abort_if_pending_migrations
 * Added: rake db:rollback
