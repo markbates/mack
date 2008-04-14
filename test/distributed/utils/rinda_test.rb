@@ -1,8 +1,17 @@
 require File.dirname(__FILE__) + '/../../test_helper.rb'
+require 'rinda/ring'
+require 'rinda/tuplespace'
 class RindaTest < Test::Unit::TestCase
   
   def setup
-    rake_task("mack:ring_server:start")
+    begin
+      DRb.start_service
+      Rinda::RingServer.new(Rinda::TupleSpace.new)
+      DRb.thread.join
+    rescue Errno::EADDRINUSE => e
+      # it's fine to ignore this, it's expected that it's already running.
+      # all other exceptions should be thrown
+    end
   end
   
   def test_ring_server

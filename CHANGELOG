@@ -1,4 +1,6 @@
 ===0.4.5
+* Removed boot.rb file. It was unnecessary.
+* When a new Mack application is generated the Rakefile that gets generated is stamped with the Mack gem version used to create it. This ties the project to that gem. This can, of course, be upgraded as new Mack gems come out, but it's a good way of tying your app to a specific revision of Mack.
 * Added support for migrations for both ActiveRecord and DataMapper. DataMapper migration support requires DataMapper 0.3.0 gem. Please keep in mind, though, that DataMapper 0.3.0 has a serious bug in it, which may prevent you from using it. Please see http://www.mackframework.com/2008/04/09/horrible-bug-in-datamapper-030/ for more information.
 * Rewrote distributed routing support to use Rinda inside of plain old DRb. This makes for an almost zero configuration usage.
 * Added: mack_ring_server binary to start a Rinda ring server for use with distributed routing.
@@ -13,6 +15,7 @@
 * Added: rake mack:ring_server:restart
 * Added: rake mack:ring_server:services:list
 * gem: application_configuration 1.2.2
+* gem: daemons 1.0.10
 
 ===0.4.2.1
 * Fixed bug with gems:list rake task that was looking in the wrong path for the gems.rb file.
@@ -23,7 +26,7 @@
 * Added gems:list and gems:install rake tasks. The gems:list task will list any gems being required for the application. The gems:install task will install all the gems being required for the application.
 * Filters in controllers can now be inherited from parent controller classes.
 * gem: mack_ruby_core_extensions 0.1.5
-* gem: thing 0.7.1
+* gem: thin 0.7.1
 
 ===0.4.1
 * Improved testing support.

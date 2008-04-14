@@ -4,7 +4,8 @@ namespace :mack do
   task :environment do
     MACK_ENV = ENV["MACK_ENV"] ||= "development" unless Object.const_defined?("MACK_ENV")
     MACK_ROOT = FileUtils.pwd unless Object.const_defined?("MACK_ROOT")
-    require File.join(MACK_ROOT, "config", "boot.rb")
+    require 'mack'
+    # require File.join(MACK_ROOT, "config", "boot.rb")
   end # environment
 
   desc "Loads an irb console allow you full access to the application w/o a browser."

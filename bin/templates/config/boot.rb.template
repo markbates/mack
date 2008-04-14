@@ -1,6 +1,0 @@
-require 'rubygems'
-require 'rack'
-require 'fileutils'
-
-gem 'mack'
-require 'mack'

@@ -30,7 +30,8 @@ namespace :mack do
       options.handler = (ENV["HANDLER"] ||= d_handler)
 
 
-      require File.join(MACK_ROOT, "config", "boot.rb")
+      # require File.join(MACK_ROOT, "config", "boot.rb")
+      require 'mack'
 
       if options.handler == "thin"
         # thin_opts = ["start", "-r", "config/thin.ru"]

@@ -25,7 +25,7 @@ opts.parse!(ARGV)
 include FileUtils
 
 def mack_version
-  "0.4.2.1.115"
+  "<%= gh.version %>"
 end
 
 def create_dir(dir)
