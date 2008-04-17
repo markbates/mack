@@ -85,4 +85,35 @@ class ScaffoldGenerator < Mack::Generator::Base
     form
   end
   
+  def columns
+    cs = []
+    cols = (param(:cols) || param(:columns))
+    if cols
+      cols.split("|").each do |x|
+        cs << ColumnObject.new(@name_singular, x)
+      end
+    end
+    cs
+  end
+  
+  class ColumnObject
+    attr_accessor :column_name
+    attr_accessor :column_type
+    attr_accessor :model_name
+    def initialize(model_name, column_unsplit)
+      self.model_name = model_name
+      cols = column_unsplit.split(":")
+      self.column_name = cols.first
+      self.column_type = cols.last
+    end
+    
+    def form_element_name
+      "#{self.model_name}[#{self.column_name}]"
+    end
+    
+    def form_element_id
+      "#{self.model_name}_#{self.column_name}"
+    end
+  end
+  
 end

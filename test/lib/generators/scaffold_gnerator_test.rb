@@ -249,12 +249,19 @@ ERB
 
 <table>
   <tr>
-    <th>&nbsp;</th>
+    
+    
+    <th>Name</th>
+    
+    <th>Description</th>
+    
+    
   </tr>
 
 <% for zoo in @zoos %>
   <tr>
-    <td>&nbsp;</td>
+    <td><%= zoo.name %></td>
+    <td><%= zoo.description %></td>
     <td><%= link_to("Show", zoos_show_url(:id => zoo.id)) %></td>
     <td><%= link_to("Edit", zoos_edit_url(:id => zoo.id)) %></td>
     <td><%= link_to("Delete", zoos_delete_url(:id => zoo.id), :method => :delete, :confirm => "Are you sure?") %></td>
@@ -338,12 +345,16 @@ ERB
 
 <table>
   <tr>
+    
     <th>&nbsp;</th>
+    
   </tr>
 
 <% for zoo in @zoos %>
   <tr>
+    
     <td>&nbsp;</td>
+    
     <td><%= link_to("Show", zoos_show_url(:id => zoo.id)) %></td>
     <td><%= link_to("Edit", zoos_edit_url(:id => zoo.id)) %></td>
     <td><%= link_to("Delete", zoos_delete_url(:id => zoo.id), :method => :delete, :confirm => "Are you sure?") %></td>
