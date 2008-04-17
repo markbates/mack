@@ -37,9 +37,15 @@
 # db/migrations/<number>_create_users.rb:
 #   class CreateUsers < ActiveRecord::Migration
 #     self.up
+#       create_table :users do |t|
+#         t.column :username, :string
+#         t.column :email_address, :string
+#         t.column :created_at, :datetime
+#         t.column :updated_at, :datetime
 #     end
 # 
 #     self.down
+#       drop_table :users
 #     end
 #   end
 # 
@@ -54,9 +60,15 @@
 # db/migrations/<number>_create_users.rb:
 #   class CreateUsers < DataMapper::Migration
 #     self.up
+#       create_table :users do |t|
+#         t.column :username, :string
+#         t.column :email_address, :string
+#         t.column :created_at, :datetime
+#         t.column :updated_at, :datetime
 #     end
 # 
 #     self.down
+#       drop_table :users
 #     end
 #   end
 class ModelGenerator < Mack::Generator::Base
