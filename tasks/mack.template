@@ -13,8 +13,9 @@ options = OpenStruct.new
 options.orm = false
 
 opts = OptionParser.new do |opts|
+  opts.banner = "Usage: mack <application_name> [options]"
   
-  opts.on("-o [ORM]") do |v|
+  opts.on("-o [data_mapper|active_record]") do |v|
     options.orm = v
   end
   
