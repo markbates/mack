@@ -69,9 +69,9 @@ module Mack
             exception = e
           end
         end
-        return self.response.finish unless exception
       end
       raise exception if exception
+      self.response.finish
     end
     
     def session
