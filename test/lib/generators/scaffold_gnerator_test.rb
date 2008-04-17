@@ -15,7 +15,7 @@ class ScaffoldGeneratorTest < Test::Unit::TestCase
   end
   
   def test_generate_active_record
-    temp_app_config("orm" => "active_record") do
+    use_active_record do
       orm_common
       cont = <<-CONT
 class ZoosController < Mack::Controller::Base
@@ -80,7 +80,7 @@ MOD
   end
   
   def test_generate_data_mapper
-    temp_app_config("orm" => "data_mapper") do
+    use_data_mapper do
       orm_common
             cont = <<-CONT
 class ZoosController < Mack::Controller::Base
@@ -145,6 +145,18 @@ MOD
     end
   end
   
+  def test_generate_data_mapper_with_columns
+    use_data_mapper do
+      orm_common_with_cols
+    end
+  end
+  
+  def test_generate_active_record_with_columns
+    use_active_record do
+      orm_common_with_cols
+    end
+  end
+  
   def test_generate_no_orm
     temp_app_config("orm" => nil) do
       sg = ScaffoldGenerator.new("name" => "zoo")
@@ -199,6 +211,102 @@ CONT
   end
   
   private
+  
+  def orm_common_with_cols
+    sg = ScaffoldGenerator.new("name" => "zoo", "cols" => "name:string|description:text")
+    sg.run
+    File.open(File.join(MACK_CONFIG, "routes.rb")) do |f|
+      assert_match "r.resource :zoos # Added by rake generate:scaffold name=zoo", f.read
+    end
+    assert File.exists?(views_dir)
+    edit_erb = <<-ERB
+<h1>Edit zoo</h1>
+
+<%= error_messages_for :zoo %>
+
+<form action="<%= zoos_update_url(:id => @zoo.id) %>" class="edit_zoo" id="edit_zoo" method="zoo">
+  <input type="hidden" name="_method" value="put">
+<p>
+  <b>Name</b><br />
+  <input type="text" name="zoo[name]" id="zoo_name" size="30" value="<%= @zoo.name %>">
+</p>
+<p>
+  <b>Description</b><br />
+  <textarea name="zoo[description]" id="zoo_description"><%= @zoo.description %></textarea>
+</p>
+
+  <p>
+    <input id="zoo_submit" name="commit" type="submit" value="Create" />
+  </p>
+</form>
+
+<%= link_to("Back", zoos_index_url) %>
+ERB
+    assert_equal edit_erb, File.open(File.join(views_dir, "edit.html.erb")).read
+
+    index_erb = <<-ERB
+<h1>Listing zoos</h1>
+
+<table>
+  <tr>
+    <th>&nbsp;</th>
+  </tr>
+
+<% for zoo in @zoos %>
+  <tr>
+    <td>&nbsp;</td>
+    <td><%= link_to("Show", zoos_show_url(:id => zoo.id)) %></td>
+    <td><%= link_to("Edit", zoos_edit_url(:id => zoo.id)) %></td>
+    <td><%= link_to("Delete", zoos_delete_url(:id => zoo.id), :method => :delete, :confirm => "Are you sure?") %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to("New Zoo", zoos_new_url) %>
+ERB
+    assert_equal index_erb, File.open(File.join(views_dir, "index.html.erb")).read
+
+    new_erb = <<-ERB
+<h1>New zoo</h1>
+
+<%= error_messages_for :zoo %>
+
+<form action="<%= zoos_create_url %>" class="new_zoo" id="new_zoo" method="zoo">
+<p>
+  <b>Name</b><br />
+  <input type="text" name="zoo[name]" id="zoo_name" size="30" value="<%= @zoo.name %>">
+</p>
+<p>
+  <b>Description</b><br />
+  <textarea name="zoo[description]" id="zoo_description"><%= @zoo.description %></textarea>
+</p>
+
+  <p>
+    <input id="zoo_submit" name="commit" type="submit" value="Create" />
+  </p>
+</form>
+
+<%= link_to("Back", zoos_index_url) %>
+ERB
+    assert_equal new_erb, File.open(File.join(views_dir, "new.html.erb")).read
+
+    show_erb = <<-ERB
+<p>
+  <%= @zoo.inspect %>
+</p>
+
+
+<%= link_to("Edit", zoos_edit_url(:id => @zoo.id)) %> |
+<%= link_to("Back", zoos_index_url) %>
+ERB
+    assert_equal show_erb, File.open(File.join(views_dir, "show.html.erb")).read
+
+    assert File.exists?(model_file)
+    assert File.exists?(controller_file)
+    assert File.exists?(migration_file)
+  end
   
   def orm_common
     sg = ScaffoldGenerator.new("name" => "zoo")

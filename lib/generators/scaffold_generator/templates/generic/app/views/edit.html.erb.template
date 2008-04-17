@@ -4,7 +4,7 @@
 
 <form action="<%%= <%= @name_singular %>s_update_url(:id => @<%= @name_singular %>.id) %>" class="edit_<%= @name_singular %>" id="edit_<%= @name_singular %>" method="<%= @name_singular %>">
   <input type="hidden" name="_method" value="put">
-
+<%= form_from_cols %>
   <p>
     <input id="<%= @name_singular %>_submit" name="commit" type="submit" value="Create" />
   </p>
