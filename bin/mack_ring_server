@@ -3,7 +3,25 @@ require 'rubygems'
 require 'daemons'
 require 'rinda/ring'
 require 'rinda/tuplespace'
-require 'fileutils'
+require 'fileutils' 
+require 'optparse'
+require 'optparse/time'
+require 'ostruct'
+
+options = OpenStruct.new
+opts = OptionParser.new do |opts|
+  opts.banner = <<-BANNER
+Usage: mack_ring_server <command>
+Available commands are:
+
+- start
+- stop
+- restart
+
+BANNER
+end
+
+opts.parse!(ARGV)
 
 FileUtils.mkdir_p(File.join("tmp", "pids"))
 
