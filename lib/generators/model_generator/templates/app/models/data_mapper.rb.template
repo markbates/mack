@@ -1,0 +1,3 @@
+class <%= param(:name).singular.camelcase %> < DataMapper::Base
+  <%= @columns %>
+end
