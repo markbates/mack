@@ -24,16 +24,18 @@ class MigrationGeneratorTest < Test::Unit::TestCase
   end
   
   def test_generate_active_record
-    temp_app_config("orm" => "active_record") do
+    use_active_record do
       assert app_config.orm = "active_record"
       generate_common
       mig = <<-MIG
 class FooBar < ActiveRecord::Migration
 
   def self.up
+    
   end
 
   def self.down
+    
   end
 
 end
@@ -43,16 +45,18 @@ MIG
   end
   
   def test_generate_data_mapper
-    temp_app_config("orm" => "data_mapper") do
+    use_data_mapper do
       assert app_config.orm = "data_mapper"
       generate_common
       mig = <<-MIG
 class FooBar < DataMapper::Migration
 
   def self.up
+    
   end
 
   def self.down
+    
   end
 
 end
@@ -61,13 +65,66 @@ MIG
     end
   end
   
-  def generate_common
+  def test_generate_active_record_with_columns
+    use_active_record do
+      assert app_config.orm = "active_record"
+      generate_common({"NAME" => "create_users", "cols" => "username:string|email_address:string|created_at:datetime|updated_at:datetime"})
+      mig = <<-MIG
+class CreateUsers < ActiveRecord::Migration
+
+  def self.up
+    create_table :users do |t|
+      t.column :username, :string
+      t.column :email_address, :string
+      t.column :created_at, :datetime
+      t.column :updated_at, :datetime
+    end
+  end
+
+  def self.down
+    drop_table :users
+  end
+
+end
+MIG
+      assert_equal mig, @file_body
+    end
+  end
+
+  def test_generate_data_mapper_with_columns
+    use_data_mapper do
+      assert app_config.orm = "data_mapper"
+      generate_common({"NAME" => "create_users", "cols" => "username:string|email_address:string|created_at:datetime|updated_at:datetime"})
+      mig = <<-MIG
+class CreateUsers < DataMapper::Migration
+
+  def self.up
+    create_table :users do |t|
+      t.column :username, :string
+      t.column :email_address, :string
+      t.column :created_at, :datetime
+      t.column :updated_at, :datetime
+    end
+  end
+
+  def self.down
+    drop_table :users
+  end
+
+end
+MIG
+      assert_equal mig, @file_body
+    end
+  end
+  
+  def generate_common(opts = {})
     5.times do |i|
-      mg = MigrationGenerator.new("NAME" => "foo_bar")
+      options = {"NAME" => "foo_bar"}.merge(opts)
+      mg = MigrationGenerator.new(options)
       mg.run
       assert File.exists?(fake_app_migration_dir)
-      assert File.exists?(File.join(fake_app_migration_dir, "00#{i+1}_foo_bar.rb"))
-      File.open(File.join(fake_app_migration_dir, "00#{i+1}_foo_bar.rb"), "r") do |file|
+      assert File.exists?(File.join(fake_app_migration_dir, "00#{i+1}_#{options["NAME"]}.rb"))
+      File.open(File.join(fake_app_migration_dir, "00#{i+1}_#{options["NAME"]}.rb"), "r") do |file|
         @file_body = file.read
       end
     end

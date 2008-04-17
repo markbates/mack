@@ -1,9 +1,11 @@
 class <%= param(:name).camelcase %> < <%= app_config.orm.camelcase %>::Migration
 
   def self.up
+    <%= @create_table_block %>
   end
 
   def self.down
+    <%= @drop_table_block %>
   end
 
 end
