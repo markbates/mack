@@ -1,3 +1,5 @@
+* Added 'options' banners to the mack and mack_ring_server binaries.
+
 ===0.4.5
 * Removed boot.rb file. It was unnecessary.
 * When a new Mack application is generated the Rakefile that gets generated is stamped with the Mack gem version used to create it. This ties the project to that gem. This can, of course, be upgraded as new Mack gems come out, but it's a good way of tying your app to a specific revision of Mack.
