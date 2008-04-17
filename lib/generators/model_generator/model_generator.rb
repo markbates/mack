@@ -89,7 +89,7 @@ class ModelGenerator < Mack::Generator::Base
       @columns.strip!
     end
     
-    template(File.join(File.dirname(__FILE__), "templates", "app", "models", "#{app_config.orm}.rb.template"), File.join(MACK_APP, "models", "#{param(:name).singular.underscore}.rb"))
+    template(File.join(File.dirname(__FILE__), "templates", "app", "models", "#{app_config.orm}.rb.template"), File.join(MACK_APP, "models", "#{param(:name).singular.underscore}.rb"), :force => param(:force))
     MigrationGenerator.new(@env.merge({"name" => "create_#{param(:name).plural}"})).generate
   end
   

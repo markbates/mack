@@ -23,9 +23,9 @@ class PluginGenerator < Mack::Generator::Base
     directory(File.join(plugin_dir, "lib", "tasks"))
     
     # create vendor/plugins/<name>/init.rb
-    template(File.join(template_dir, "init.rb.template"), File.join(plugin_dir, "init.rb"))
+    template(File.join(template_dir, "init.rb.template"), File.join(plugin_dir, "init.rb"), :force => param(:force))
     # create vendor/plugins/<name>/lib/<name>.rb
-    template(File.join(template_dir, "lib", "plugin.rb.template"), File.join(plugin_dir, "lib", "#{param(:name).downcase}.rb"))
+    template(File.join(template_dir, "lib", "plugin.rb.template"), File.join(plugin_dir, "lib", "#{param(:name).downcase}.rb"), :force => param(:force))
     
   end
   

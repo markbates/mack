@@ -1,5 +1,6 @@
 * Added rake generate:model name=<model_name> (optional: cols=<col_1>:<col_1_type>|<col_2>:<col_2_type>) This will also create a migration for you.
 * Updated rake generate:migration name=<model_name> (optional: cols=<col_1>:<col_1_type>|<col_2>:<col_2_type>) This will create the proper table migration for you.
+* Updated rake generate:scaffold to use the ModelGenerator now.
 * Fixed a bug with request logging not, well, logging.
 * gem: thin 0.8.0
 
