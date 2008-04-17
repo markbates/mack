@@ -1,3 +1,4 @@
+* Added rake generate:model name=<model_name> (optional: cols=<col_1>:<col_1_type>|<col_2>:<col_2_type>)
 * Fixed a bug with request logging not, well, logging.
 * gem: thin 0.8.0
 
