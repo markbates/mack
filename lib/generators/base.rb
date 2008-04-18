@@ -76,13 +76,13 @@ module Mack
         puts "Created: #{output_dir}"
       end
       
-      def columns
+      def columns(name = param(:name))
         ivar_cache("form_columns") do
           cs = []
           cols = (param(:cols) || param(:columns))
           if cols
             cols.split("|").each do |x|
-              cs << Mack::Generator::ModelColumnObject.new(@name_singular, x)
+              cs << Mack::Generator::ModelColumnObject.new(name, x)
             end
           end
           cs

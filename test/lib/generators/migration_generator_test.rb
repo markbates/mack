@@ -31,11 +31,9 @@ class MigrationGeneratorTest < Test::Unit::TestCase
 class FooBar < ActiveRecord::Migration
 
   def self.up
-    
   end
 
   def self.down
-    
   end
 
 end
@@ -52,11 +50,9 @@ MIG
 class FooBar < DataMapper::Migration
 
   def self.up
-    
   end
 
   def self.down
-    
   end
 
 end
