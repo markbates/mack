@@ -226,15 +226,14 @@ CONT
 
 <form action="<%= zoos_update_url(:id => @zoo.id) %>" class="edit_zoo" id="edit_zoo" method="zoo">
   <input type="hidden" name="_method" value="put">
-<p>
-  <b>Name</b><br />
-  <input type="text" name="zoo[name]" id="zoo_name" size="30" value="<%= @zoo.name %>">
-</p>
-<p>
-  <b>Description</b><br />
-  <textarea name="zoo[description]" id="zoo_description"><%= @zoo.description %></textarea>
-</p>
-
+  <p>
+    <b>Name</b><br />
+    <input type="text" name="zoo[name]" id="zoo_name" size="30" value="<%= @zoo.name %>" />
+  </p>
+  <p>
+    <b>Description</b><br />
+    <textarea name="zoo[description]" id="zoo_description"><%= @zoo.description %></textarea>
+  </p>
   <p>
     <input id="zoo_submit" name="commit" type="submit" value="Create" />
   </p>
@@ -326,7 +325,6 @@ ERB
 
 <form action="<%= zoos_update_url(:id => @zoo.id) %>" class="edit_zoo" id="edit_zoo" method="zoo">
   <input type="hidden" name="_method" value="put">
-
   <p>
     <input id="zoo_submit" name="commit" type="submit" value="Create" />
   </p>

@@ -86,14 +86,16 @@ class ScaffoldGenerator < Mack::Generator::Base
   end
   
   def columns
-    cs = []
-    cols = (param(:cols) || param(:columns))
-    if cols
-      cols.split("|").each do |x|
-        cs << ColumnObject.new(@name_singular, x)
+    ivar_cache("form_columns") do
+      cs = []
+      cols = (param(:cols) || param(:columns))
+      if cols
+        cols.split("|").each do |x|
+          cs << ColumnObject.new(@name_singular, x)
+        end
       end
+      cs
     end
-    cs
   end
   
   class ColumnObject
@@ -114,6 +116,16 @@ class ScaffoldGenerator < Mack::Generator::Base
     def form_element_id
       "#{self.model_name}_#{self.column_name}"
     end
+    
+    def form_field
+      case self.column_type
+      when "text"
+        %{<textarea name="#{self.form_element_name}" id="#{self.form_element_id}"><%= @#{self.model_name}.#{self.column_name} %></textarea>}
+      else
+        %{<input type="text" name="#{self.form_element_name}" id="#{self.form_element_id}" size="30" value="<%= @#{self.model_name}.#{self.column_name} %>" />}
+      end
+    end
+    
   end
   
 end
