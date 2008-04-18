@@ -4,7 +4,7 @@ require 'rake/clean'
 require 'rake/testtask'
 require 'find'
 require 'fileutils'
-require 'erb'
+require 'erubis'
 require 'rubyforge'
 require 'rubygems'
 require 'rubygems/gem_runner'
@@ -56,11 +56,12 @@ namespace :gem do
         s.add_dependency("builder", "2.1.2")
         s.add_dependency("crypt", "1.1.4")
         s.add_dependency("daemons", "1.0.10")
+        s.add_dependency("erubis", "2.5.0")
         
       
         s.rubyforge_project = gh.project
         
-        File.open(File.join("bin", "mack"), "w") {|f| f.puts ERB.new(File.open(File.join("tasks", "mack.template")).read).result(binding)}
+        File.open(File.join("bin", "mack"), "w") {|f| f.puts Erubis::Eruby.new(File.open(File.join("tasks", "mack.template")).read).result(binding)}
         
       end
       Rake::GemPackageTask.new(gem_spec) do |pkg|

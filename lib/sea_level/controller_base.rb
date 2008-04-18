@@ -1,4 +1,4 @@
-require 'erb'
+require 'erubis'
 module Mack
   module Controller # :nodoc:
     # All controllers in a Mack application have to extend this class. I'll be honest, if they don't extend this class

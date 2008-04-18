@@ -21,7 +21,7 @@ module DataMapper # :nodoc:
 end
 
 unless app_config.orm.nil?
-  dbs = YAML::load(ERB.new(IO.read(File.join(MACK_CONFIG, "database.yml"))).result)
+  dbs = YAML::load(Erubis::Eruby.new(IO.read(File.join(MACK_CONFIG, "database.yml"))).result)
   case app_config.orm
   when 'active_record'
     require 'activerecord'

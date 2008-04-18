@@ -12,6 +12,9 @@ require 'uri'
 require 'drb'
 require 'rinda/ring'
 require 'rinda/tuplespace'
+require 'builder'
+require 'erubis'
+require 'erb'
 
 # Set up Mack constants, if they haven't already been set up.
 unless Object.const_defined?("MACK_ENV")
