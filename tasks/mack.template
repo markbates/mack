@@ -4,7 +4,7 @@ require 'optparse'
 require 'optparse/time'
 require 'ostruct'
 require 'pp'
-require 'erubis'
+require 'erb'
 
 app = ARGV[0]
 raise "You must specify a name for this application!" if app.nil?
@@ -56,7 +56,7 @@ erb_files = Dir.glob(File.join(File.dirname(__FILE__), "templates", "**/*.templa
 erb_files.each do |fl|
   if fl.match("database.yml") && !options.orm
   else
-    res = Erubis::Eruby.new(File.open(fl).read).result(binding)
+    res = ERB.new(File.open(fl).read, nil, "->").result(binding)
     n = fl.gsub(File.join(File.dirname(__FILE__), "templates"), app).gsub(".template", "")
     File.open(n, "w") {|f| f.puts res}
     puts "Created: #{n}"

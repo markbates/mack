@@ -62,7 +62,7 @@ module Mack
             return
           end
         end
-        File.open(output_file, "w") {|f| f.puts ERB.new(File.open(input_file).read).result(binding)}
+        File.open(output_file, "w") {|f| f.puts ERB.new(File.open(input_file).read, nil, "->").result(binding)}
         puts "Wrote: #{output_file}"
       end
       
