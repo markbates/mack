@@ -220,7 +220,7 @@ CONT
     end
     assert File.exists?(views_dir)
     edit_erb = <<-ERB
-<h1>Edit zoo</h1>
+<h1>Edit Zoo</h1>
 
 <%= error_messages_for :zoo %>
 
@@ -244,7 +244,7 @@ ERB
     assert_equal edit_erb, File.open(File.join(views_dir, "edit.html.erb")).read
 
     index_erb = <<-ERB
-<h1>Listing zoos</h1>
+<h1>Listing Zoos</h1>
 
 <table>
   <tr>
@@ -252,7 +252,7 @@ ERB
     <th>Description</th>
   </tr>
 
-<% for zoo in @zoos -%>
+<% for zoo in @zoos %>
   <tr>
     <td><%= zoo.name %></td>
     <td><%= zoo.description %></td>
@@ -260,7 +260,7 @@ ERB
     <td><%= link_to("Edit", zoos_edit_url(:id => zoo.id)) %></td>
     <td><%= link_to("Delete", zoos_delete_url(:id => zoo.id), :method => :delete, :confirm => "Are you sure?") %></td>
   </tr>
-<% end -%>
+<% end %>
 </table>
 
 <br />
@@ -271,20 +271,19 @@ ERB
     assert_equal index_erb, File.open(File.join(views_dir, "index.html.erb")).read
 
     new_erb = <<-ERB
-<h1>New zoo</h1>
+<h1>New Zoo</h1>
 
 <%= error_messages_for :zoo %>
 
 <form action="<%= zoos_create_url %>" class="new_zoo" id="new_zoo" method="zoo">
-<p>
-  <b>Name</b><br />
-  <input type="text" name="zoo[name]" id="zoo_name" size="30" value="<%= @zoo.name %>">
-</p>
-<p>
-  <b>Description</b><br />
-  <textarea name="zoo[description]" id="zoo_description"><%= @zoo.description %></textarea>
-</p>
-
+  <p>
+    <b>Name</b><br />
+    <input type="text" name="zoo[name]" id="zoo_name" size="30" value="<%= @zoo.name %>" />
+  </p>
+  <p>
+    <b>Description</b><br />
+    <textarea name="zoo[description]" id="zoo_description"><%= @zoo.description %></textarea>
+  </p>
   <p>
     <input id="zoo_submit" name="commit" type="submit" value="Create" />
   </p>
@@ -296,7 +295,15 @@ ERB
 
     show_erb = <<-ERB
 <p>
-  <%= @zoo.inspect %>
+  <h1>Zoo</h1>
+</p>
+<p>
+  <b>Name</b><br />
+  <%= @zoo.name %>
+</p>
+<p>
+  <b>Description</b><br />
+  <%= @zoo.description %>
 </p>
 
 <%= link_to("Edit", zoos_edit_url(:id => @zoo.id)) %> |
@@ -319,7 +326,7 @@ ERB
     
     assert File.exists?(views_dir)
     edit_erb = <<-ERB
-<h1>Edit zoo</h1>
+<h1>Edit Zoo</h1>
 
 <%= error_messages_for :zoo %>
 
@@ -335,21 +342,21 @@ ERB
     assert_equal edit_erb, File.open(File.join(views_dir, "edit.html.erb")).read
     
     index_erb = <<-ERB
-<h1>Listing zoos</h1>
+<h1>Listing Zoos</h1>
 
 <table>
   <tr>
     <th>&nbsp;</th>
   </tr>
 
-<% for zoo in @zoos -%>
+<% for zoo in @zoos %>
   <tr>
     <td>&nbsp;</td>
     <td><%= link_to("Show", zoos_show_url(:id => zoo.id)) %></td>
     <td><%= link_to("Edit", zoos_edit_url(:id => zoo.id)) %></td>
     <td><%= link_to("Delete", zoos_delete_url(:id => zoo.id), :method => :delete, :confirm => "Are you sure?") %></td>
   </tr>
-<% end -%>
+<% end %>
 </table>
 
 <br />
@@ -359,12 +366,11 @@ ERB
     assert_equal index_erb, File.open(File.join(views_dir, "index.html.erb")).read
     
     new_erb = <<-ERB
-<h1>New zoo</h1>
+<h1>New Zoo</h1>
 
 <%= error_messages_for :zoo %>
 
 <form action="<%= zoos_create_url %>" class="new_zoo" id="new_zoo" method="zoo">
-
   <p>
     <input id="zoo_submit" name="commit" type="submit" value="Create" />
   </p>
@@ -376,7 +382,7 @@ ERB
     
     show_erb = <<-ERB
 <p>
-  <%= @zoo.inspect %>
+  <h1>Zoo</h1>
 </p>
 
 <%= link_to("Edit", zoos_edit_url(:id => @zoo.id)) %> |

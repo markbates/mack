@@ -54,37 +54,6 @@ class ScaffoldGenerator < Mack::Generator::Base
 
   end
   
-  def form_from_cols
-    form = ""
-    cols = (param(:cols) || param(:columns))
-    if cols
-      cols = cols.split("|")
-      cols.each_with_index do |v, i|
-        x = v.split(":")
-        col = x.first
-        type = x.last
-        # <p>
-        #   <b>Email</b><br />
-        #   <input id="post_email" name="post[email]" size="30" type="text" value="<%= @post.email %>" />
-        # </p>
-        form_element_name = "#{@name_singular}[#{col}]"
-        form_element_id = "#{@name_singular}_#{col}"
-        form << "<p>\n"
-        form << "  <b>#{col.singular.camelcase}</b><br />\n"
-        case type
-        when "text"
-          # <textarea name="zoo[description]" id="zoo_description"><%= @zoo.description %></textarea>
-          form << %{  <textarea name="#{form_element_name}" id="#{form_element_id}"><%= @#{@name_singular}.#{col} %></textarea>\n}
-        else
-          # <input id="post_email" name="post[email]" size="30" type="text" value="<%= @post.email %>" />
-          form << %{  <input type="text" name="#{form_element_name}" id="#{form_element_id}" size="30" value="<%= @#{@name_singular}.#{col} %>">\n}
-        end
-        form << "</p>\n"
-      end
-    end
-    form
-  end
-  
   def columns
     ivar_cache("form_columns") do
       cs = []

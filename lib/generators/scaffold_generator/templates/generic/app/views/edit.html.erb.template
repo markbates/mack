@@ -1,4 +1,4 @@
-<h1>Edit <%= @name_singular %></h1>
+<h1>Edit <%= @name_singular_camel %></h1>
 
 <%%= error_messages_for :<%= @name_singular %> %>
 
