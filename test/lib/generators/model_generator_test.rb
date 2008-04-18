@@ -71,7 +71,6 @@ ALBUM
   def dm_album
     <<-ALBUM
 class Album < DataMapper::Base
-  
 end
 ALBUM
   end
