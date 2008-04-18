@@ -212,7 +212,7 @@ CONT
   private
   
   def orm_common_with_cols
-    sg = ScaffoldGenerator.new("name" => "zoo", "cols" => "name:string,description:text")
+    sg = ScaffoldGenerator.new("name" => "zoo", "cols" => "name:string,description:text,created_at:datetime,updated_at:datetime")
     sg.run
     File.open(File.join(MACK_CONFIG, "routes.rb")) do |f|
       assert_match "r.resource :zoos # Added by rake generate:scaffold name=zoo", f.read
@@ -249,12 +249,16 @@ ERB
   <tr>
     <th>Name</th>
     <th>Description</th>
+    <th>CreatedAt</th>
+    <th>UpdatedAt</th>
   </tr>
 
 <% for zoo in @zoos %>
   <tr>
     <td><%= zoo.name %></td>
     <td><%= zoo.description %></td>
+    <td><%= zoo.created_at %></td>
+    <td><%= zoo.updated_at %></td>
     <td><%= link_to("Show", zoos_show_url(:id => zoo.id)) %></td>
     <td><%= link_to("Edit", zoos_edit_url(:id => zoo.id)) %></td>
     <td><%= link_to("Delete", zoos_delete_url(:id => zoo.id), :method => :delete, :confirm => "Are you sure?") %></td>
@@ -303,6 +307,14 @@ ERB
 <p>
   <b>Description</b><br />
   <%= @zoo.description %>
+</p>
+<p>
+  <b>CreatedAt</b><br />
+  <%= @zoo.created_at %>
+</p>
+<p>
+  <b>UpdatedAt</b><br />
+  <%= @zoo.updated_at %>
 </p>
 
 <%= link_to("Edit", zoos_edit_url(:id => @zoo.id)) %> |

@@ -32,7 +32,7 @@ module Mack
       # Raise Mack::Errors::RequiredGeneratorParameterMissing if a required parameter
       # is missing.
       def initialize(env = {})
-        @env = env
+        @env = env.to_hash
         self.class.required_params.each do |p|
           raise Mack::Errors::RequiredGeneratorParameterMissing.new(p) unless param(p)
         end
