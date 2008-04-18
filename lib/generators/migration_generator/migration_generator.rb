@@ -23,7 +23,7 @@
 #   end
 # 
 # Example with columns:
-#   rake generate:migration name=create_users cols=username:string|email_address:string|created_at:datetime|updated_at:datetime
+#   rake generate:migration name=create_users cols=username:string,email_address:string,created_at:datetime,updated_at:datetime
 # If using ActiveRecord generates:
 # db/migrations/<number>_create_users.rb:
 #   class CreateUsers < ActiveRecord::Migration

@@ -29,7 +29,7 @@
 #   end
 # 
 # Example with columns:
-#   rake generate:model name=user cols=username:string|email_address:string|created_at:datetime|updated_at:datetime
+#   rake generate:model name=user cols=username:string,email_address:string,created_at:datetime,updated_at:datetime
 # If using ActiveRecord generates:
 # app/models/user.rb:
 #   class User < ActiveRecord::Base

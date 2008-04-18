@@ -32,7 +32,7 @@ class ModelGeneratorTest < Test::Unit::TestCase
   
   def test_generate_data_mapper_with_columns
     use_data_mapper do 
-      ModelGenerator.new("name" => "albums", "cols" => "title:string|artist_id:integer|description:text").generate
+      ModelGenerator.new("name" => "albums", "cols" => "title:string,artist_id:integer,description:text").generate
       assert File.exists?(model_loc)
       assert_equal dm_album_with_columns, File.open(model_loc).read
       assert File.exists?(migration_loc)

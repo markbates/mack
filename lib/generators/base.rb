@@ -81,7 +81,7 @@ module Mack
           cs = []
           cols = (param(:cols) || param(:columns))
           if cols
-            cols.split("|").each do |x|
+            cols.split(",").each do |x|
               cs << Mack::Generator::ModelColumn.new(name, x)
             end
           end

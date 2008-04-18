@@ -212,7 +212,7 @@ CONT
   private
   
   def orm_common_with_cols
-    sg = ScaffoldGenerator.new("name" => "zoo", "cols" => "name:string|description:text")
+    sg = ScaffoldGenerator.new("name" => "zoo", "cols" => "name:string,description:text")
     sg.run
     File.open(File.join(MACK_CONFIG, "routes.rb")) do |f|
       assert_match "r.resource :zoos # Added by rake generate:scaffold name=zoo", f.read

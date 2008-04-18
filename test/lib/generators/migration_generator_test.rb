@@ -64,7 +64,7 @@ MIG
   def test_generate_active_record_with_columns
     use_active_record do
       assert app_config.orm = "active_record"
-      generate_common({"NAME" => "create_users", "cols" => "username:string|email_address:string|created_at:datetime|updated_at:datetime"})
+      generate_common({"NAME" => "create_users", "cols" => "username:string,email_address:string,created_at:datetime,updated_at:datetime"})
       mig = <<-MIG
 class CreateUsers < ActiveRecord::Migration
 
@@ -90,7 +90,7 @@ MIG
   def test_generate_data_mapper_with_columns
     use_data_mapper do
       assert app_config.orm = "data_mapper"
-      generate_common({"NAME" => "create_users", "cols" => "username:string|email_address:string|created_at:datetime|updated_at:datetime"})
+      generate_common({"NAME" => "create_users", "cols" => "username:string,email_address:string,created_at:datetime,updated_at:datetime"})
       mig = <<-MIG
 class CreateUsers < DataMapper::Migration
 
