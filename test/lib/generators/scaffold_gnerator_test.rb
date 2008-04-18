@@ -249,16 +249,11 @@ ERB
 
 <table>
   <tr>
-    
-    
     <th>Name</th>
-    
     <th>Description</th>
-    
-    
   </tr>
 
-<% for zoo in @zoos %>
+<% for zoo in @zoos -%>
   <tr>
     <td><%= zoo.name %></td>
     <td><%= zoo.description %></td>
@@ -266,13 +261,14 @@ ERB
     <td><%= link_to("Edit", zoos_edit_url(:id => zoo.id)) %></td>
     <td><%= link_to("Delete", zoos_delete_url(:id => zoo.id), :method => :delete, :confirm => "Are you sure?") %></td>
   </tr>
-<% end %>
+<% end -%>
 </table>
 
 <br />
 
 <%= link_to("New Zoo", zoos_new_url) %>
 ERB
+
     assert_equal index_erb, File.open(File.join(views_dir, "index.html.erb")).read
 
     new_erb = <<-ERB
@@ -304,10 +300,10 @@ ERB
   <%= @zoo.inspect %>
 </p>
 
-
 <%= link_to("Edit", zoos_edit_url(:id => @zoo.id)) %> |
 <%= link_to("Back", zoos_index_url) %>
 ERB
+
     assert_equal show_erb, File.open(File.join(views_dir, "show.html.erb")).read
 
     assert File.exists?(model_file)
@@ -345,21 +341,17 @@ ERB
 
 <table>
   <tr>
-    
     <th>&nbsp;</th>
-    
   </tr>
 
-<% for zoo in @zoos %>
+<% for zoo in @zoos -%>
   <tr>
-    
     <td>&nbsp;</td>
-    
     <td><%= link_to("Show", zoos_show_url(:id => zoo.id)) %></td>
     <td><%= link_to("Edit", zoos_edit_url(:id => zoo.id)) %></td>
     <td><%= link_to("Delete", zoos_delete_url(:id => zoo.id), :method => :delete, :confirm => "Are you sure?") %></td>
   </tr>
-<% end %>
+<% end -%>
 </table>
 
 <br />
@@ -388,7 +380,6 @@ ERB
 <p>
   <%= @zoo.inspect %>
 </p>
-
 
 <%= link_to("Edit", zoos_edit_url(:id => @zoo.id)) %> |
 <%= link_to("Back", zoos_index_url) %>

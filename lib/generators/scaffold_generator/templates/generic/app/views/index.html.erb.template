@@ -2,29 +2,35 @@
 
 <table>
   <tr>
-    <% unless columns.empty? %>
-    <% columns.each do |col| %>
-    <th><%= col.column_name.upcase %></th>
-    <% end %>
-    <% else %>
+<% 
+unless columns.empty? 
+  columns.each do |col|
+-%>
+    <th><%= col.column_name.camelcase %></th>
+<% 
+  end
+else
+-%>
     <th>&nbsp;</th>
-    <% end %>
+<% 
+end
+-%>
   </tr>
 
-<%% for <%= @name_singular %> in @<%= @name_plural %> %>
+<%% for <%= @name_singular %> in @<%= @name_plural %> -%>
   <tr>
-    <% unless columns.empty? %>
-    <% columns.each do |col| %>
+<% unless columns.empty? -%>
+<% columns.each do |col| -%>
     <td><%%= <%= @name_singular %>.<%= col.column_name %> %></td>
-    <% end %>
-    <% else %>
+<% end -%>
+<% else -%>
     <td>&nbsp;</td>
-    <% end %>
+<% end -%>
     <td><%%= link_to("Show", <%= @name_plural %>_show_url(:id => <%= @name_singular %>.id)) %></td>
     <td><%%= link_to("Edit", <%= @name_plural %>_edit_url(:id => <%= @name_singular %>.id)) %></td>
     <td><%%= link_to("Delete", <%= @name_plural %>_delete_url(:id => <%= @name_singular %>.id), :method => :delete, :confirm => "Are you sure?") %></td>
   </tr>
-<%% end %>
+<%% end -%>
 </table>
 
 <br />
