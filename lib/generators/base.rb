@@ -51,7 +51,7 @@ module Mack
       # Needs to be implemented by the subclass.
       needs_method :generate
       
-      # Takes an input_file runs it through ERB and 
+      # Takes an input_file runs it through Erubis::Eruby and 
       # saves it to the specified output_file. If the output_file exists it will
       # be skipped. If you would like to force the writing of the file, use the
       # :force => true option.

@@ -1,8 +1,10 @@
+* Mack now uses Erubis, http://www.kuwata-lab.com/erubis/, for it's rendering engine instead of ERB. This makes Mack even faster now! Yippie!
 * Added rake generate:model name=<model_name> (optional: cols=<col_1>:<col_1_type>|<col_2>:<col_2_type>) This will also create a migration for you.
 * Updated rake generate:migration name=<model_name> (optional: cols=<col_1>:<col_1_type>|<col_2>:<col_2_type>) This will create the proper table migration for you.
 * Updated rake generate:scaffold to use the ModelGenerator now.
 * edit and new templates in ScaffoldGenerator now create input fields based on the type of columns, if any, passed in.
 * Fixed a bug with request logging not, well, logging.
+* gem: erubis 2.5.0
 * gem: thin 0.8.0
 
 ===0.4.5
