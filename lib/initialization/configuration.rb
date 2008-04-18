@@ -37,6 +37,7 @@ module Mack
     DEFAULTS_TEST = {
       "log::level" => "error",
       "run_remote_tests" => true,
+      "mack::drb_timeout" => 0
     } unless self.const_defined?("DEFAULTS_TEST")
     
     unless self.const_defined?("DEFAULTS")

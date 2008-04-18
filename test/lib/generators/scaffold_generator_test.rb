@@ -138,7 +138,6 @@ CONT
       
       mod = <<-MOD
 class Zoo < DataMapper::Base
-  
 end
 MOD
       assert_equal mod, File.open(model_file).read

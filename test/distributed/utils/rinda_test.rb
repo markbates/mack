@@ -7,17 +7,21 @@ class RindaTest < Test::Unit::TestCase
     begin
       DRb.start_service
       Rinda::RingServer.new(Rinda::TupleSpace.new)
-      DRb.thread.join
+      # DRb.thread.join
     rescue Errno::EADDRINUSE => e
       # it's fine to ignore this, it's expected that it's already running.
       # all other exceptions should be thrown
+    end
+    begin
+      rs.take([:testing, :String, nil, nil], 0)
+    rescue Exception => e
     end
   end
   
   def test_ring_server
     rs = Mack::Distributed::Utils::Rinda.ring_server
     assert_not_nil rs
-    assert rs.is_a?(DRb::DRbObject)
+    assert rs.is_a?(Rinda::TupleSpace)
   end
   
   def test_register

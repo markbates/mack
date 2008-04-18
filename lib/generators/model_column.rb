@@ -2,7 +2,7 @@ module Mack
   module Generator
     
     # Used to represent a 'column' from the param cols or columns for generators.
-    class ModelColumnObject
+    class ModelColumn
       
       # The name of the column.
       attr_accessor :column_name
@@ -49,7 +49,7 @@ module Mack
         end
       end
       
-    end # ModelColumnObject
+    end # ModelColumn
     
   end # Generator
 end # Mack

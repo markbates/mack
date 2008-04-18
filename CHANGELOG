@@ -3,6 +3,7 @@
 * Updated rake generate:migration name=<model_name> (optional: cols=<col_1>:<col_1_type>|<col_2>:<col_2_type>) This will create the proper table migration for you.
 * Updated rake generate:scaffold to use the ModelGenerator now.
 * ScaffoldGenerator now create input fields based on the type of columns, if any, passed in.
+* Overall general refactoring of the generator classes.
 * Fixed a bug with request logging not, well, logging.
 * gem: erubis 2.5.0
 * gem: thin 0.8.0
