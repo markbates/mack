@@ -56,7 +56,7 @@ erb_files = Dir.glob(File.join(File.dirname(__FILE__), "templates", "**/*.templa
 erb_files.each do |fl|
   if fl.match("database.yml") && !options.orm
   else
-    res = ERB.new(File.open(fl).read).result(binding)
+    res = ERB.new(File.open(fl).read, nil, "->").result(binding)
     n = fl.gsub(File.join(File.dirname(__FILE__), "templates"), app).gsub(".template", "")
     File.open(n, "w") {|f| f.puts res}
     puts "Created: #{n}"
