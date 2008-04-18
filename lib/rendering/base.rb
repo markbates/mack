@@ -53,6 +53,7 @@ module Mack
           parts[parts.size - 1] = "_" << parts.last if options[:is_partial]
           partial = File.join(options[:dir], parts.join("/") + options[:ext])
         end
+        raise Errno::ENOENT.new(partial) unless File.exists?(partial)
         return Mack::ViewBinder.render(File.open(partial).read, self.view_binder.controller, options)
       end
       

@@ -291,8 +291,9 @@ module Mack
             if @result_of_action_called.is_a?(String)
               @render_options[:text] = @result_of_action_called
               return Mack::ViewBinder.new(self).render(@render_options)
+            else
+              raise e
             end
-            
           end
         end
       end # complete_action_render

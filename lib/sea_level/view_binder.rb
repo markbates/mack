@@ -78,7 +78,6 @@ class Mack::ViewBinder
       else
         return Erubis::Eruby.new(io).result(vb.view_binding)
       end
-      # return Erubis::Eruby.new(io).result(vb.view_binding)
     end
     
   end

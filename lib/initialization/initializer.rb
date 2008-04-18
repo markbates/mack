@@ -32,6 +32,7 @@ Object::MACK_PLUGINS = File.join(MACK_ROOT, "vendor", "plugins") unless Object.c
 
 unless Object.const_defined?("MACK_INITIALIZED")
   puts "Starting application in #{MACK_ENV} mode."
+  puts "Mack root: #{MACK_ROOT}"
   
   Object::MACK_INITIALIZED = true
   
