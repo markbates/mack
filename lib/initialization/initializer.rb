@@ -15,6 +15,7 @@ require 'rinda/tuplespace'
 require 'builder'
 require 'erubis'
 require 'erb'
+require 'genosaurus'
 
 # Set up Mack constants, if they haven't already been set up.
 unless Object.const_defined?("MACK_ENV")

@@ -1,0 +1,12 @@
+lib_dir:
+  type: directory
+  output_path: <%= File.join("vendor", "plugins", param(:name).underscore.downcase, "lib") %>
+init_template:
+  type: file
+  template_path: <%= File.join(generator_directory_path, "templates", "init.rb.template") %>
+  output_path: <%= File.join("vendor", "plugins", param(:name).underscore.downcase, "init.rb") %>
+plugin_template:
+  type: file
+  template_path: <%= File.join(generator_directory_path, "templates", "lib", "plugin.rb.template") %>
+  output_path: <%= File.join("vendor", "plugins", param(:name).underscore.downcase, "lib", "#{param(:name).underscore.downcase}.rb") %>
+  

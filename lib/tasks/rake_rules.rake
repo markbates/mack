@@ -22,6 +22,5 @@ rule /^generate:/ do |t|
   klass = t.name.gsub("generate:", '')
   Rake::Task["environment"].invoke
   klass = "#{klass.camelcase}Generator"
-  gen = klass.constantize.new(ENV)
-  gen.run
+  gen = klass.constantize.run(ENV.to_hash)
 end

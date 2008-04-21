@@ -1,3 +1,5 @@
+* gem: genosaurus
+
 ===0.4.6
 * Mack now uses Erubis, http://www.kuwata-lab.com/erubis/, for it's rendering engine instead of ERB. This makes Mack even faster now! Yippie!
 * Added rake generate:model name=<model_name> (optional: cols=<col_1>:<col_1_type>,<col_2>:<col_2_type>) This will also create a migration for you.
