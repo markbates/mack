@@ -1,4 +1,4 @@
-* gem: genosaurus 1.0.0
+* gem: genosaurus 1.1.0
 
 ===0.4.6
 * Mack now uses Erubis, http://www.kuwata-lab.com/erubis/, for it's rendering engine instead of ERB. This makes Mack even faster now! Yippie!
