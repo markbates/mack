@@ -17,7 +17,7 @@ class MigrationGeneratorTest < Test::Unit::TestCase
   def test_next_migration_number
     mg = MigrationGenerator.new("NAME" => "foo")
     assert_equal "001", mg.next_migration_number
-    mg.directory(mg.migrations_directory)
+    FileUtils.mkdir_p(fake_app_migration_dir)
     assert File.exists?(fake_app_migration_dir)
     File.open(File.join(fake_app_migration_dir, "001_foo.rb"), "w") {|f| f.puts ""}
     assert_equal "002", mg.next_migration_number
@@ -116,8 +116,7 @@ MIG
   def generate_common(opts = {})
     5.times do |i|
       options = {"NAME" => "foo_bar"}.merge(opts)
-      mg = MigrationGenerator.new(options)
-      mg.run
+      mg = MigrationGenerator.run(options)
       assert File.exists?(fake_app_migration_dir)
       assert File.exists?(File.join(fake_app_migration_dir, "00#{i+1}_#{options["NAME"]}.rb"))
       File.open(File.join(fake_app_migration_dir, "00#{i+1}_#{options["NAME"]}.rb"), "r") do |file|
@@ -127,7 +126,7 @@ MIG
   end
   
   def test_required_params
-    assert_raise(Mack::Errors::RequiredGeneratorParameterMissing) { MigrationGenerator.new }
+    assert_raise(Genosaurus::Errors::RequiredGeneratorParameterMissing) { MigrationGenerator.new }
     mg = MigrationGenerator.new("NAME" => "foo")
     assert_not_nil mg
   end

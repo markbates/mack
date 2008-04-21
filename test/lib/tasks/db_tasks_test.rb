@@ -66,7 +66,7 @@ class DbTasksTest < Test::Unit::TestCase
   def test_db_rollback_active_record_unrun_migrations
     use_active_record do
       test_db_migrate_active_record
-      MigrationGenerator.new("name" => "create_comments").run
+      MigrationGenerator.run("name" => "create_comments")
       si = ArSchemaInfo.find(:first)
       assert_equal 2, si.version
       assert_raise(Mack::Errors::UnrunMigrations) { rake_task("db:rollback") }
@@ -76,7 +76,7 @@ class DbTasksTest < Test::Unit::TestCase
   def test_db_rollback_data_mapper_unrun_migrations
     use_data_mapper do
       test_db_migrate_data_mapper
-      MigrationGenerator.new("name" => "create_comments").run
+      MigrationGenerator.run("name" => "create_comments")
       si = DmSchemaInfo.first
       assert_equal 2, si.version
       assert_raise(Mack::Errors::UnrunMigrations) { rake_task("db:rollback") }

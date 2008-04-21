@@ -55,19 +55,13 @@
 #       drop_table :users
 #     end
 #   end
-class MigrationGenerator < Mack::Generator::Migration::Base
+class MigrationGenerator < Genosaurus::Base
 
   require_param :name
   
-  def generate # :nodoc:
-    directory(migrations_directory)
-    
-    template_dir = File.join(File.dirname(__FILE__), "templates")
-    
+  def setup
     @table_name = param(:name).underscore.plural.gsub("create_", "")
-    
-    template(File.join(template_dir, "migration.rb.template"), File.join(migrations_directory, "#{next_migration_number}_#{param(:name)}.rb"), :force => param(:force))
-    
+    @migration_name = "#{next_migration_number}_#{param(:name).underscore}"
   end
   
 end

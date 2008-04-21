@@ -83,7 +83,7 @@ class ModelGenerator < Genosaurus::Base
   # end
   
   def after_generate
-    MigrationGenerator.new(@options.merge({"name" => "create_#{param(:name).plural}"})).generate
+    MigrationGenerator.run(@options.merge({"name" => "create_#{param(:name).plural}"}))
   end
   
 end

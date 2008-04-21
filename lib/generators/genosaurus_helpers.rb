@@ -1,6 +1,7 @@
 module Mack
   module Genosaurus
     module Helpers
+      
       def columns(name = param(:name))
         ivar_cache("form_columns") do
           cs = []
@@ -13,7 +14,25 @@ module Mack
           cs
         end
       end
-      self.include_safely_into(::Genosaurus::Base)
+
+      def db_directory
+        File.join(MACK_ROOT, "db")
+      end
+      
+      def migrations_directory
+        File.join(db_directory, "migrations")
+      end
+      
+      def next_migration_number
+        last = Dir.glob(File.join(migrations_directory, "*.rb")).last
+        if last
+          return File.basename(last).match(/^\d+/).to_s.succ
+        end
+        return "001"
+      end
+      
+      ::Genosaurus::Base.send(:include, self)
+      
     end # Helpers
   end # Genosaurus
 end # Mack
