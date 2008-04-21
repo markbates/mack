@@ -40,31 +40,4 @@ class ScaffoldGenerator < Genosaurus::Base
     end
   end
   
-  # def generate # :nodoc:
- 
-  #   
-  #   app_cont_dir = File.join(MACK_APP, "controllers")
-  #   directory(app_cont_dir)
-  #   
-  #   temp_dir = File.join(File.dirname(__FILE__), "templates")
-  # 
-  #   if app_config.orm
-  #     app_model_dir = File.join(MACK_APP, "models")
-  #     directory(app_model_dir)
-  # 
-  #     app_views_dir = File.join(MACK_APP, "views", @name_plural)
-  #     directory(app_views_dir)
-  #     
-  #     template(File.join(temp_dir, "generic", "app", "controllers", "controller.rb.template"), File.join(app_cont_dir, "#{@name_plural}_controller.rb"), :force => param(:force))
-  #     template(File.join(temp_dir, "generic", "app", "views", "index.html.erb.template"), File.join(app_views_dir, "index.html.erb"), :force => param(:force))
-  #     template(File.join(temp_dir, "generic", "app", "views", "edit.html.erb.template"), File.join(app_views_dir, "edit.html.erb"), :force => param(:force))
-  #     template(File.join(temp_dir, "generic", "app", "views", "new.html.erb.template"), File.join(app_views_dir, "new.html.erb"), :force => param(:force))
-  #     template(File.join(temp_dir, "generic", "app", "views", "show.html.erb.template"), File.join(app_views_dir, "show.html.erb"), :force => param(:force))
-  #     ModelGenerator.run(@env)
-  #   else
-  #     template(File.join(temp_dir, "no_orm", "app", "controllers", "controller.rb.template"), File.join(app_cont_dir, "#{@name_plural}_controller.rb"), :force => param(:force))
-  #   end
-  # 
-  # end
-  
 end
