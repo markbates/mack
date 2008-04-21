@@ -2,7 +2,7 @@
 # 
 # Example:
 #   rake generate:scaffold name=post
-class ScaffoldGenerator < Genosaurus::Base
+class ScaffoldGenerator < Genosaurus
   
   require_param :name
   

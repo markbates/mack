@@ -55,7 +55,7 @@
 #       drop_table :users
 #     end
 #   end
-class MigrationGenerator < Genosaurus::Base
+class MigrationGenerator < Genosaurus
 
   require_param :name
   

@@ -71,7 +71,7 @@
 #       drop_table :users
 #     end
 #   end
-class ModelGenerator < Genosaurus::Base
+class ModelGenerator < Genosaurus
   
   require_param :name
   

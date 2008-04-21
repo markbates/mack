@@ -7,7 +7,7 @@
 #   vendor/plugins/my_cool_plugin/init.rb
 #   vendor/plugins/my_cool_plugin/lib
 #   vendor/plugins/my_cool_plugin/lib/my_cool_plugin.rb
-class PluginGenerator < Genosaurus::Base
+class PluginGenerator < Genosaurus
   
   require_param :name
   

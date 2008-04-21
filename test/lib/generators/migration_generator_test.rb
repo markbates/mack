@@ -126,7 +126,7 @@ MIG
   end
   
   def test_required_params
-    assert_raise(Genosaurus::Errors::RequiredGeneratorParameterMissing) { MigrationGenerator.new }
+    assert_raise(ArgumentError) { MigrationGenerator.new }
     mg = MigrationGenerator.new("NAME" => "foo")
     assert_not_nil mg
   end

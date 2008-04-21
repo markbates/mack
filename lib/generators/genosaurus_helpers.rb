@@ -31,7 +31,7 @@ module Mack
         return "001"
       end
       
-      ::Genosaurus::Base.send(:include, self)
+      ::Genosaurus.send(:include, self)
       
     end # Helpers
   end # Genosaurus
