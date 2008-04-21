@@ -8,7 +8,7 @@ module Mack
           cols = (param(:cols) || param(:columns))
           if cols
             cols.split(",").each do |x|
-              cs << Mack::Generator::ModelColumn.new(name, x)
+              cs << Mack::Genosaurus::ModelColumn.new(name, x)
             end
           end
           cs

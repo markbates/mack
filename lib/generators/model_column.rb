@@ -1,5 +1,5 @@
 module Mack
-  module Generator
+  module Genosaurus
     
     # Used to represent a 'column' from the param cols or columns for generators.
     class ModelColumn
