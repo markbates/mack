@@ -1,0 +1,27 @@
+<% if app_config.orm -%>
+controller_template:
+  type: file
+  template_path: <%= File.join(generator_directory_path, "templates", "generic", "app", "controllers", "controller.rb.template") %>
+  output_path: <%= File.join("app", "controllers", "#{@name_plural}_controller.rb") %>
+edit_template:
+  type: file
+  template_path: <%= File.join(generator_directory_path, "templates", "generic", "app", "views", "edit.html.erb.template") %>
+  output_path: <%= File.join("app", "views", @name_plural, "edit.html.erb") %>
+index_template:
+  type: file
+  template_path: <%= File.join(generator_directory_path, "templates", "generic", "app", "views", "index.html.erb.template") %>
+  output_path: <%= File.join("app", "views", @name_plural, "index.html.erb") %>
+new_template:
+  type: file
+  template_path: <%= File.join(generator_directory_path, "templates", "generic", "app", "views", "new.html.erb.template") %>
+  output_path: <%= File.join("app", "views", @name_plural, "new.html.erb") %>
+show_template:
+  type: file
+  template_path: <%= File.join(generator_directory_path, "templates", "generic", "app", "views", "show.html.erb.template") %>
+  output_path: <%= File.join("app", "views", @name_plural, "show.html.erb") %>
+<% else -%>
+controller_template:
+  type: file
+  template_path: <%= File.join(generator_directory_path, "templates", "no_orm", "controller.rb.template") %>
+  output_path: <%= File.join("app", "controllers", "#{@name_plural}_controller.rb") %>
+<% end -%>

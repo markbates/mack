@@ -158,8 +158,7 @@ MOD
   
   def test_generate_no_orm
     temp_app_config("orm" => nil) do
-      sg = ScaffoldGenerator.new("name" => "zoo")
-      sg.run
+      sg = ScaffoldGenerator.run("name" => "zoo")
       File.open(File.join(MACK_CONFIG, "routes.rb")) do |f|
         assert_match "r.resource :zoos # Added by rake generate:scaffold name=zoo", f.read
       end
@@ -212,8 +211,7 @@ CONT
   private
   
   def orm_common_with_cols
-    sg = ScaffoldGenerator.new("name" => "zoo", "cols" => "name:string,description:text,created_at:datetime,updated_at:datetime")
-    sg.run
+    sg = ScaffoldGenerator.run("name" => "zoo", "cols" => "name:string,description:text,created_at:datetime,updated_at:datetime")
     File.open(File.join(MACK_CONFIG, "routes.rb")) do |f|
       assert_match "r.resource :zoos # Added by rake generate:scaffold name=zoo", f.read
     end
@@ -329,8 +327,7 @@ ERB
   end
   
   def orm_common
-    sg = ScaffoldGenerator.new("name" => "zoo")
-    sg.run
+    sg = ScaffoldGenerator.run("name" => "zoo")
     File.open(File.join(MACK_CONFIG, "routes.rb")) do |f|
       assert_match "r.resource :zoos # Added by rake generate:scaffold name=zoo", f.read
     end
