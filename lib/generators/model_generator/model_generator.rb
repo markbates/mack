@@ -71,26 +71,19 @@
 #       drop_table :users
 #     end
 #   end
-class ModelGenerator < Mack::Generator::Base
+class ModelGenerator < Genosaurus::Base
   
   require_param :name
   
-  def generate
-    directory(File.join(MACK_APP, "models"))
-    
-    @columns = ""
-    cols = (param(:cols) || param(:columns))
-    if cols
-      cols = cols.split("|")
-      cols.each_with_index do |v, i|
-        x = v.split(":")
-        @columns << "property :#{x.first}, :#{x.last}\n  "
-      end
-      @columns.strip!
-    end
-    
-    template(File.join(File.dirname(__FILE__), "templates", "app", "models", "#{app_config.orm}.rb.template"), File.join(MACK_APP, "models", "#{param(:name).singular.underscore}.rb"), :force => param(:force))
-    MigrationGenerator.new(@env.merge({"name" => "create_#{param(:name).plural}"})).generate
+  # def generate
+  #   directory(File.join(MACK_APP, "models"))
+  #   
+  #   template(File.join(File.dirname(__FILE__), "templates", "app", "models", "#{app_config.orm}.rb.template"), File.join(MACK_APP, "models", "#{param(:name).singular.underscore}.rb"), :force => param(:force))
+  #   MigrationGenerator.new(@env.merge({"name" => "create_#{param(:name).plural}"})).generate
+  # end
+  
+  def after_generate
+    MigrationGenerator.new(@options.merge({"name" => "create_#{param(:name).plural}"})).generate
   end
   
 end

@@ -47,7 +47,7 @@ class ScaffoldGenerator < Mack::Generator::Base
       template(File.join(temp_dir, "generic", "app", "views", "edit.html.erb.template"), File.join(app_views_dir, "edit.html.erb"), :force => param(:force))
       template(File.join(temp_dir, "generic", "app", "views", "new.html.erb.template"), File.join(app_views_dir, "new.html.erb"), :force => param(:force))
       template(File.join(temp_dir, "generic", "app", "views", "show.html.erb.template"), File.join(app_views_dir, "show.html.erb"), :force => param(:force))
-      ModelGenerator.new(@env).run
+      ModelGenerator.run(@env)
     else
       template(File.join(temp_dir, "no_orm", "app", "controllers", "controller.rb.template"), File.join(app_cont_dir, "#{@name_plural}_controller.rb"), :force => param(:force))
     end

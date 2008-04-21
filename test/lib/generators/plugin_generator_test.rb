@@ -21,7 +21,7 @@ class PluginGeneratorTest < Test::Unit::TestCase
     assert !File.exists?(File.join(bandit_dir, "lib"))
     assert !File.exists?(File.join(bandit_dir, "lib", "bandit.rb"))
     assert !File.exists?(File.join(bandit_dir, "lib", "tasks"))
-    pg.run
+    pg.generate
     assert File.exists?(bandit_dir)
     assert File.exists?(File.join(bandit_dir, "init.rb"))
     assert File.exists?(File.join(bandit_dir, "lib"))
