@@ -5,12 +5,15 @@ require 'optparse/time'
 require 'ostruct'
 require 'pp'
 require 'erb'
+require 'genosaurus'
+require File.join(File.dirname(__FILE__), "..", "lib", "generators", "mack_application_generator", "mack_application_generator")
 
 app = ARGV[0]
 raise "You must specify a name for this application!" if app.nil?
 
 options = OpenStruct.new
-options.orm = false
+options.orm = "data_mapper"
+options.version = "0.4.6.100"
 
 opts = OptionParser.new do |opts|
   
@@ -22,45 +25,4 @@ end
 
 opts.parse!(ARGV)
 
-include FileUtils
-
-def mack_version
-  "0.4.6"
-end
-
-def create_dir(dir)
-  mkdir_p(dir)
-  puts "Created: #{dir}"
-end
-
-# Create directories:
-create_dir(File.join(app, "app", "controllers"))
-create_dir(File.join(app, "app", "helpers"))
-create_dir(File.join(app, "app", "models"))
-create_dir(File.join(app, "app", "views", "default"))
-create_dir(File.join(app, "app", "views", "layouts"))
-create_dir(File.join(app, "config", "app_config"))
-create_dir(File.join(app, "config", "initializers"))
-create_dir(File.join(app, "lib", "tasks"))
-create_dir(File.join(app, "log"))
-create_dir(File.join(app, "public", "images"))
-create_dir(File.join(app, "public", "stylesheets"))
-create_dir(File.join(app, "public", "javascripts"))
-create_dir(File.join(app, "test", "unit"))
-create_dir(File.join(app, "test", "functional"))
-create_dir(File.join(app, "vendor", "plugins"))
-
-# Copy over templates:
-erb_files = Dir.glob(File.join(File.dirname(__FILE__), "templates", "**/*.template"))
-
-erb_files.each do |fl|
-  if fl.match("database.yml") && !options.orm
-  else
-    res = ERB.new(File.open(fl).read, nil, "->").result(binding)
-    n = fl.gsub(File.join(File.dirname(__FILE__), "templates"), app).gsub(".template", "")
-    File.open(n, "w") {|f| f.puts res}
-    puts "Created: #{n}"
-  end
-end
-
-cp(File.join(File.dirname(__FILE__), "templates", "public", "favicon.ico"), File.join(app, "public", "favicon.ico"))
+MackApplicationGenerator.run({"orm" => options.orm, "version" => options.version, "app" => app})

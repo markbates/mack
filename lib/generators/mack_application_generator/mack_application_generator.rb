@@ -1,0 +1,3 @@
+class MackApplicationGenerator < Genosaurus
+  
+end
