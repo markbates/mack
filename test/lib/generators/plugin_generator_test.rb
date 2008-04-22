@@ -27,6 +27,7 @@ class PluginGeneratorTest < Test::Unit::TestCase
     assert File.exists?(File.join(bandit_dir, "lib"))
     assert File.exists?(File.join(bandit_dir, "lib", "bandit.rb"))
     assert File.exists?(File.join(bandit_dir, "lib", "tasks"))
+    assert File.exists?(File.join(bandit_dir, "lib", "tasks", "bandit_tasks.rake"))
     
     File.open(File.join(bandit_dir, "init.rb"), "r") do |f|
       assert_equal "require 'bandit'\n", f.read
