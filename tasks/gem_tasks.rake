@@ -52,7 +52,7 @@ namespace :gem do
         s.add_dependency("application_configuration", "1.2.2")
         s.add_dependency("cachetastic", "1.4.2")
         s.add_dependency("log4r", "1.0.5")
-        s.add_dependency("thin", "0.8.0")
+        s.add_dependency("thin", "0.8.1")
         s.add_dependency("builder", "2.1.2")
         s.add_dependency("crypt", "1.1.4")
         s.add_dependency("daemons", "1.0.10")
