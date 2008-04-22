@@ -8,4 +8,4 @@ model_template:
 test_template:
   type: file
   template_path: <%= File.join(templates_directory_path, "test.rb.template") %>
-  output_path: <%= File.join("test", "unit", "#{param(:name).singular.underscore}.rb") %>
+  output_path: <%= File.join("test", "unit", "#{param(:name).singular.underscore}_test.rb") %>

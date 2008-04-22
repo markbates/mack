@@ -423,7 +423,15 @@ ERB
     File.join(MACK_ROOT, "db", "migrations")
   end
   
+  def test_dir
+    File.join(MACK_ROOT, "test")
+  end
+  
   def cleanup
+    if File.exists?(test_dir)
+      FileUtils.rm_r(test_dir)
+    end
+    
     if File.exists?(migration_dir)
       FileUtils.rm_r(migration_dir)
     end
