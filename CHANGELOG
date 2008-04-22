@@ -1,3 +1,4 @@
+* Rake tasks in plugins now show up in the Rake tasks list.
 * All generators, including the 'mack' binary are now using Genosaurus.
 * gem: thin 0.8.1
 * gem: genosaurus 1.1.1
