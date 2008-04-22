@@ -76,6 +76,9 @@ unless Object.const_defined?("MACK_INITIALIZED")
   # require 'plugins':
   require File.join(File.dirname(__FILE__), "initializers", "plugins.rb")
   
+  # require 'default controller'
+  require File.join(MACK_APP, "controllers/default_controller")
+  
   # require 'app' files:
   Dir.glob(File.join(MACK_APP, "**/*.rb")).each do |d|
     require d
