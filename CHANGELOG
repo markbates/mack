@@ -1,3 +1,4 @@
+* Added rake generator:list task to list all the available generators.
 * scaffold generator now creates a stub functional test.
 * model generator now creates a stub unit test.
 * Rake tasks in plugins now show up in the Rake tasks list.
