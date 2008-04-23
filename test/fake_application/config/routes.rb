@@ -21,7 +21,6 @@ Mack::Routes.build do |r|
   r.kill_kenny_bad "/tst_another/kill_kenny_bad", :controller => :tst_another, :action => :kill_kenny_bad
   r.resource :tst_users
   r.resource :tst_resources
-  r.resource "admin/home_page"
   
   r.defaults
   
