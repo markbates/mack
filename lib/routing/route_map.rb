@@ -162,13 +162,21 @@ module Mack
       
       # Sets up mappings and named routes for a resource.
       def resource(controller)
-        connect_with_named_route("#{controller}_index", "/#{controller}", {:controller => controller, :action => :index, :method => :get})
-        connect_with_named_route("#{controller}_create", "/#{controller}", {:controller => controller, :action => :create, :method => :post})
-        connect_with_named_route("#{controller}_new", "/#{controller}/new", {:controller => controller, :action => :new, :method => :get})
-        connect_with_named_route("#{controller}_show", "/#{controller}/:id", {:controller => controller, :action => :show, :method => :get})
-        connect_with_named_route("#{controller}_edit", "/#{controller}/:id/edit", {:controller => controller, :action => :edit, :method => :get})
-        connect_with_named_route("#{controller}_update", "/#{controller}/:id", {:controller => controller, :action => :update, :method => :put})
-        connect_with_named_route("#{controller}_delete", "/#{controller}/:id", {:controller => controller, :action => :delete, :method => :delete})
+        
+        # make sure that we also support controller string in the form of: "ns1/ns2/ctl_name"
+        ctl_str = controller.to_s
+        
+        if ctl_str.index("/")
+          ctl_str.gsub!("/", "_")
+        end
+        
+        connect_with_named_route("#{ctl_str}_index", "/#{controller}", {:controller => controller, :action => :index, :method => :get})
+        connect_with_named_route("#{ctl_str}_create", "/#{controller}", {:controller => controller, :action => :create, :method => :post})
+        connect_with_named_route("#{ctl_str}_new", "/#{controller}/new", {:controller => controller, :action => :new, :method => :get})
+        connect_with_named_route("#{ctl_str}_show", "/#{controller}/:id", {:controller => controller, :action => :show, :method => :get})
+        connect_with_named_route("#{ctl_str}_edit", "/#{controller}/:id/edit", {:controller => controller, :action => :edit, :method => :get})
+        connect_with_named_route("#{ctl_str}_update", "/#{controller}/:id", {:controller => controller, :action => :update, :method => :put})
+        connect_with_named_route("#{ctl_str}_delete", "/#{controller}/:id", {:controller => controller, :action => :delete, :method => :delete})
       end
       
       def method_missing(sym, *args) # :nodoc:
