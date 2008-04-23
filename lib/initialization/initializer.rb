@@ -78,7 +78,17 @@ unless Object.const_defined?("MACK_INITIALIZED")
   
   # require 'app' files:
   Dir.glob(File.join(MACK_APP, "**/*.rb")).each do |d|
-    require d
+    begin
+      require d
+    rescue NameError => e
+      mod = e.message.gsub("uninitialized constant ", "")
+      x =%{
+        module ::#{mod}
+        end
+      }
+      eval(x)
+      require d
+    end
   end
   
   # require 'lib' files:

@@ -1,3 +1,4 @@
+* Namespaced resourced routes, such as Admin::UserController, now work.
 * Added rake generator:list task to list all the available generators.
 * scaffold generator now creates a stub functional test.
 * model generator now creates a stub unit test.

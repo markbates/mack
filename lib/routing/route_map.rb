@@ -206,6 +206,7 @@ module Mack
       
       private
       def connect_with_named_route(n_route, pattern, options = {})
+        n_route = n_route.methodize
         route = connect(pattern, options)
         
         url = %{
