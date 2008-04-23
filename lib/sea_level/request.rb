@@ -59,7 +59,11 @@ module Mack
         if p.is_a?(String)
           p = p.to_s.uri_unescape
         elsif p.is_a?(Hash)
-          p.each_pair {|k,v| p[k] = v.to_s.uri_unescape}
+          p.each_pair do |k,v|
+            if v.is_a?(String)
+              p[k] = v.to_s.uri_unescape
+            end
+          end
         end
       end
       p
