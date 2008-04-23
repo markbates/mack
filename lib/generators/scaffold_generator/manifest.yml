@@ -25,3 +25,7 @@ controller_template:
   template_path: <%= File.join(templates_directory_path, "no_orm", "controller.rb.template") %>
   output_path: <%= File.join("app", "controllers", "#{@name_plural}_controller.rb") %>
 <% end -%>
+functional_teat_template:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "test.rb.template") %>
+  output_path: <%= File.join("test", "functional", "#{@name_plural}_controller_test.rb") %>

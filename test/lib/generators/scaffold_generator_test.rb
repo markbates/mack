@@ -401,6 +401,11 @@ ERB
     assert File.exists?(model_file)
     assert File.exists?(controller_file)
     assert File.exists?(migration_file)
+    assert File.exists?(functional_test_file)
+  end
+  
+  def functional_test_file
+    File.join(MACK_ROOT, "test", "functional", "zoos_controller_test.rb")
   end
   
   def views_dir

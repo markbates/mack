@@ -1,3 +1,4 @@
+* scaffold generator now creates a stub functional test.
 * model generator now creates a stub unit test.
 * Rake tasks in plugins now show up in the Rake tasks list.
 * All generators, including the 'mack' binary are now using Genosaurus.
