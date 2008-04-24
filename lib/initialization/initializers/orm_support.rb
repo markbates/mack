@@ -14,20 +14,23 @@ else
   MACK_DEFAULT_LOGGER.warn("No ORM has been configured!")
 end
 
-
-begin
+if app_config.orm == 'active_record'
   
-  module ActiveRecord # :nodoc:
-  end
+  begin
   
-  require 'activerecord'
+    module ActiveRecord # :nodoc:
+    end
+  
+    require 'activerecord'
 
-  ActiveRecord::Base.establish_connection(dbs[MACK_ENV])
-  class ArSchemaInfo < ActiveRecord::Base # :nodoc:
-    set_table_name :schema_info
+    ActiveRecord::Base.establish_connection(dbs[MACK_ENV])
+    class ArSchemaInfo < ActiveRecord::Base # :nodoc:
+      set_table_name :schema_info
+    end
+
+  rescue Exception => e
   end
 
-rescue Exception => e
 end
 
 begin

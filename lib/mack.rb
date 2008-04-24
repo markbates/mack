@@ -22,7 +22,12 @@ module Mack
               redirect_to(route)
             else
               # let's handle a normal request:
-              c = "#{route[:controller].to_s.camelcase}Controller".constantize.new(self.request, self.response, self.cookies)
+              begin
+                cont = "#{route[:controller].to_s.camelcase}Controller".constantize
+              rescue NameError => e
+                raise Mack::Errors::ResourceNotFound.new(self.request.path_info)
+              end
+              c = cont.new(self.request, self.response, self.cookies)
               self.response.controller = c
               self.response.write(c.run)
             end

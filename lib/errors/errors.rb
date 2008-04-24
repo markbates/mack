@@ -42,6 +42,9 @@ module Mack
       end
     end # ResourceNotFound
     
+    class UnknownController < NameError
+    end
+    
     # Raised when a route that matches the pattern of the incoming route AND the method of the request can't be found.
     # It's important to note that BOTH the PATTERN and the HTTP METHOD HAVE to match for a route to be found!
     class UndefinedRoute < StandardError

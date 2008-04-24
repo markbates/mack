@@ -108,6 +108,16 @@ class ControllerBaseTest < Test::Unit::TestCase
     # assert !response.body.match("<title>Application Layout</title>") 
   end
   
+  def test_no_controller_served_from_public
+    get "/something/hello"
+    assert_response :success
+    assert_match "Hi from public/something/hello.html", response.body
+  end
+  
+  def test_no_controller_nothing_in_public
+    assert_raise(Mack::Errors::ResourceNotFound) { get "/dflsjflsdjf/sadlfjsdlfjasldf/sdljsadlsdfl.html" }
+  end
+  
   def test_basic_redirect_to
     get "/tst_home_page/world_hello"
     assert_response :redirect
