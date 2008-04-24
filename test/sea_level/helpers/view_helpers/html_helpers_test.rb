@@ -24,5 +24,14 @@ class HtmlHelpersTest < Test::Unit::TestCase
     assert_equal Mack::Utils::Html.rss(tst_resources_index_url(:format => :xml)), rss_tag(tst_resources_index_url(:format => :xml))
   end
   
+  def test_link_image_to
+    assert_equal "<a href=\"foo.com\" class=\"bar\"><img src=\"/images/foo.jpg\" class=\"foo\" alt=\"This is an image!\" border=\"0\"></a>", link_image_to("/images/foo.jpg", "foo.com", {:class => "foo", :alt => "This is an image!", :border => 0}, {:class => "bar"})
+    
+    assert_equal "<a href=\"foo.com\"><img src=\"/images/foo.jpg\" alt=\"This is an image!\" border=\"0\"></a>", link_image_to("/images/foo.jpg", "foo.com", {:border => 0, :alt => "This is an image!"})
+    
+    assert_equal "<a href=\"foo.com\"><img src=\"/images/foo.jpg\"></a>", link_image_to("/images/foo.jpg", "foo.com")
+        
+    assert_equal Mack::Utils::Html.href(Mack::Utils::Html.image_tag("/images/foo.jpg", {:border=>0}), "foo.com", {:class => "foo"}), link_image_to("/images/foo.jpg", "foo.com", {:border => 0}, {:class => "foo"})
+  end
   
 end

@@ -30,6 +30,11 @@ class ControllerBaseTest < Test::Unit::TestCase
     r.on_disk_wants_x "/odw_x", :controller => "controller_base_test/wants_test", :action => :on_disk_wants, :format => :xml
   end
   
+  def test_admin_index
+    get admin_users_index_url
+    assert_match "Hello from Admin::UsersController", response.body
+  end
+  
   def test_format_on_route_definition_sets_initial_format
     get on_disk_wants_x_url
     assert_match "<greeting>Hello World</greeting>", response.body

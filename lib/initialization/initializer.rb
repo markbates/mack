@@ -77,11 +77,22 @@ unless Object.const_defined?("MACK_INITIALIZED")
   require File.join(File.dirname(__FILE__), "initializers", "plugins.rb")
   
   # make sure that default_controller is available to other controllers
-  require File.join(MACK_APP, "controllers/default_controller")
+  path = File.join(MACK_APP, "controllers/default_controller.rb")
+  require path if File.exists?(path) 
   
   # require 'app' files:
   Dir.glob(File.join(MACK_APP, "**/*.rb")).each do |d|
-    require d
+    begin
+      require d
+    rescue NameError => e
+      mod = e.message.gsub("uninitialized constant ", "")
+      x =%{
+        module ::#{mod}
+        end
+      }
+      eval(x)
+      require d
+    end
   end
   
   # require 'lib' files:

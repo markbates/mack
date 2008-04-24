@@ -13,7 +13,7 @@ raise "You must specify a name for this application!" if app.nil?
 
 options = OpenStruct.new
 options.orm = "data_mapper"
-options.version = "0.4.6.101"
+options.version = "0.4.6.100"
 
 opts = OptionParser.new do |opts|
   
