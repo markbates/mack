@@ -25,4 +25,8 @@ class HtmlHelpersTest < Test::Unit::TestCase
     assert_equal "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS\" href=\"/tst_resources.xml\">", Mack::Utils::Html.rss(tst_resources_index_url(:format => :xml))
   end
   
+  def test_image    
+    assert_equal %{<img src="/images/foo.jpg">}, Mack::Utils::Html.image_tag("/images/foo.jpg")
+  end
+  
 end

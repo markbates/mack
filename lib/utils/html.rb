@@ -89,6 +89,14 @@ module Mack
           html = "<#{tag} #{options.join("%s=\"%s\"", " ")}>#{content}</#{tag}>"
         end
         
+        # Builds a HTML image tag.
+        #
+        def image_tag(image_src, options = {})
+          html = "<img src=\"#{image_src}\""
+          html << " " << options.join("%s=\"%s\"", " ") unless options.empty?
+          html << ">"
+        end
+        
       end # self
       
     end # Html
