@@ -77,7 +77,7 @@ unless Object.const_defined?("MACK_INITIALIZED")
   require File.join(File.dirname(__FILE__), "initializers", "plugins.rb")
   
   # make sure that default_controller is available to other controllers
-  path = File.join(MACK_APP, "controllers/default_controller.rb")
+  path = File.join(MACK_APP, "controllers", "default_controller.rb")
   require path if File.exists?(path) 
   
   # require 'app' files:

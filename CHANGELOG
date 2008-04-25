@@ -7,6 +7,8 @@
 * All generators, including the 'mack' binary are now using Genosaurus.
 * gem: thin 0.8.1
 * gem: genosaurus 1.1.1
+* initializer will load MACK_APP/controllers/default_controller.rb if it exists
+* added link_image_to and image_tag to html helper.
 
 ===0.4.6
 * Mack now uses Erubis, http://www.kuwata-lab.com/erubis/, for it's rendering engine instead of ERB. This makes Mack even faster now! Yippie!
