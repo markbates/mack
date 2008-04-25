@@ -53,20 +53,28 @@ module Mack
     #   route: '/users/:id' => {:controller => 'users', :action => 'show'}
     #   parameters: {:controller => 'users', :action => 'show', :id => 1, :foo => "bar"}
     def params(key)
-      p = (@mack_params[key.to_sym] || @mack_params[key.to_s])
-      unless p.nil?
-        p = p.to_s if p.is_a?(Symbol)
-        if p.is_a?(String)
-          p = p.to_s.uri_unescape
-        elsif p.is_a?(Hash)
-          p.each_pair do |k,v|
-            if v.is_a?(String)
-              p[k] = v.to_s.uri_unescape
+      ivar_cache("params_#{key}") do
+        p = (@mack_params[key.to_sym] || @mack_params[key.to_s])
+        unless p.nil?
+          p = p.to_s if p.is_a?(Symbol)
+          if p.is_a?(String)
+            p = p.to_s.uri_unescape
+          elsif p.is_a?(Hash)
+            p.each_pair do |k,v|
+              if v.is_a?(String)
+                p[k] = v.to_s.uri_unescape
+              end
             end
           end
         end
+        p
       end
-      p
+    end
+    
+    def file(key)
+      ivar_cache("file_#{key}") do
+        Mack::Request::UploadedFile.new(params(key))
+      end
     end
     
     private
