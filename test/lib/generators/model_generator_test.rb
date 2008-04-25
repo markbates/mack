@@ -106,14 +106,18 @@ ALBUM
   
   def dm_album
     <<-ALBUM
-class Album < DataMapper::Base
+class Album
+  include DataMapper::Persistence
+  
 end
 ALBUM
   end
   
   def dm_album_with_columns
     <<-ALBUM
-class Album < DataMapper::Base
+class Album
+  include DataMapper::Persistence
+  
   property :title, :string
   property :artist_id, :integer
   property :description, :text
