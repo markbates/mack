@@ -17,7 +17,9 @@
 # 
 # If using DataMapper generates:
 # app/models/user.rb:
-#   class User < DataMapper::Base
+#   class User
+#     include DataMapper::Persistence
+#     
 #   end
 # db/migrations/<number>_create_users.rb:
 #   class CreateUsers < DataMapper::Migration
@@ -51,7 +53,9 @@
 # 
 # If using DataMapper generates:
 # app/models/user.rb:
-#   class User < DataMapper::Base
+#   class User
+#     include DataMapper::Persistence
+# 
 #     property :username, :string
 #     property :email_address, :string
 #     property :created_at, :datetime

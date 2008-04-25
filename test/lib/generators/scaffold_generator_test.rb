@@ -137,7 +137,9 @@ CONT
       assert_equal cont, File.open(controller_file).read
       
       mod = <<-MOD
-class Zoo < DataMapper::Base
+class Zoo
+  include DataMapper::Persistence
+  
 end
 MOD
       assert_equal mod, File.open(model_file).read
