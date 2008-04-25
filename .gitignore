@@ -5,3 +5,4 @@ doc
 pkg
 tmp
 *.pid
+test/fake_application/public/something/logo.gif
