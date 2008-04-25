@@ -134,7 +134,8 @@ class DbTasksTest < Test::Unit::TestCase
         f.puts dm_create_users_migration
       end
       File.open(user_rb, "w") do |f|
-        f.puts "class DmUser < DataMapper::Base"
+        f.puts "class DmUser"
+        f.puts "include DataMapper::Persistence"
         f.puts "set_table_name 'users'"
         f.puts "property :username, :string"
         f.puts "property :email, :string"
@@ -150,7 +151,8 @@ class DbTasksTest < Test::Unit::TestCase
         f.puts dm_create_posts_migration
       end
       File.open(post_rb, "w") do |f|
-        f.puts "class DmPost < DataMapper::Base"
+        f.puts "class DmPost"
+        f.puts "include DataMapper::Persistence"
         f.puts "set_table_name 'posts'"
         f.puts "property :user_id, :integer"
         f.puts "property :body, :text"
