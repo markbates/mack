@@ -1,4 +1,6 @@
-class <%= param(:name).singular.camelcase %> < DataMapper::Base
+class <%= param(:name).singular.camelcase %>
+  include DataMapper::Persistence
+  
 <% 
 for column in columns
 -%>

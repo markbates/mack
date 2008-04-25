@@ -162,6 +162,7 @@ module Mack
       
       # Sets up mappings and named routes for a resource.
       def resource(controller)
+        
         connect_with_named_route("#{controller}_index", "/#{controller}", {:controller => controller, :action => :index, :method => :get})
         connect_with_named_route("#{controller}_create", "/#{controller}", {:controller => controller, :action => :create, :method => :post})
         connect_with_named_route("#{controller}_new", "/#{controller}/new", {:controller => controller, :action => :new, :method => :get})

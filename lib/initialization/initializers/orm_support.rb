@@ -41,7 +41,9 @@ begin
   require 'data_mapper'
   
   DataMapper::Database.setup(dbs[MACK_ENV])
-  class DmSchemaInfo < DataMapper::Base # :nodoc:
+  class DmSchemaInfo # :nodoc:
+    include DataMapper::Persistence
+    
     set_table_name "schema_info"
     property :version, :integer, :default => 0
   end

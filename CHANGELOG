@@ -1,3 +1,4 @@
+* Generated DataMapper models no longer extend DataMapper::Base, but rather 'include DataMapper::Persistence'. This corresponds to the 0.9.0 upcoming release of DataMapper.
 * Fixed a bug in request.params that was making file uploads into strings.
 * Namespaced resourced routes, such as Admin::UserController, now work.
 * Added rake generator:list task to list all the available generators.
@@ -5,6 +6,8 @@
 * model generator now creates a stub unit test.
 * Rake tasks in plugins now show up in the Rake tasks list.
 * All generators, including the 'mack' binary are now using Genosaurus.
+* [dsutedja] initializer will load MACK_APP/controllers/default_controller.rb if it exists
+* [dsutedja] added link_image_to and image_tag to html helper.
 * gem: thin 0.8.1
 * gem: genosaurus 1.1.1
 
