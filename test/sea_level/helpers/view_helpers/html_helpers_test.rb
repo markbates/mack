@@ -25,7 +25,13 @@ class HtmlHelpersTest < Test::Unit::TestCase
   end
   
   def test_link_image_to
-    assert_equal "<a href=\"foo.com\" class=\"bar\"><img src=\"/images/foo.jpg\" class=\"foo\" alt=\"This is an image!\" border=\"0\"></a>", link_image_to("/images/foo.jpg", "foo.com", {:class => "foo", :alt => "This is an image!", :border => 0}, {:class => "bar"})
+    var1 = "<a href=\"foo.com\" class=\"bar\"><img src=\"/images/foo.jpg\" border=\"0\" class=\"foo\" alt=\"This is an image!\"></a>"
+    var2 = "<a href=\"foo.com\" class=\"bar\"><img src=\"/images/foo.jpg\" class=\"foo\" alt=\"This is an image!\" border=\"0\"></a>"
+    var3 = "<a href=\"foo.com\" class=\"bar\"><img src=\"/images/foo.jpg\" class=\"foo\" border=\"0\" alt=\"This is an image!\"></a>"
+    
+    link = link_image_to("/images/foo.jpg", "foo.com", {:class => "foo", :alt => "This is an image!", :border => 0}, {:class => "bar"})
+    puts link
+    assert(link == var1 || link == var2)
     
     assert_equal "<a href=\"foo.com\"><img src=\"/images/foo.jpg\" alt=\"This is an image!\" border=\"0\"></a>", link_image_to("/images/foo.jpg", "foo.com", {:border => 0, :alt => "This is an image!"})
     
