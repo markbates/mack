@@ -1,3 +1,4 @@
+* Fixed bug where if a controller didn't exist it wasn't checking the public directory.
 * Generated DataMapper models no longer extend DataMapper::Base, but rather 'include DataMapper::Persistence'. This corresponds to the 0.9.0 upcoming release of DataMapper.
 * Fixed a bug in request.params that was making file uploads into strings.
 * Namespaced resourced routes, such as Admin::UserController, now work.

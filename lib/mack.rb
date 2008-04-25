@@ -32,7 +32,7 @@ module Mack
               self.response.write(c.run)
             end
           rescue Mack::Errors::ResourceNotFound, Mack::Errors::UndefinedRoute => e
-            return try_to_find_resource(env, self.request.path_info, e)
+            return try_to_find_resource(env, e)
           end
         end # setup
       rescue Exception => e
@@ -107,12 +107,13 @@ module Mack
       id
     end
     
-    def try_to_find_resource(env, path_info, exception)
+    def try_to_find_resource(env, exception)
+      env = env.dup
       # we can't find a route for this, so let's try and see if it's in the public directory:
-      if File.extname(path_info).blank?
-        path_info << ".html"
+      if File.extname(env["PATH_INFO"]).blank?
+        env["PATH_INFO"] << ".html"
       end
-      if File.exists?(File.join(MACK_PUBLIC, path_info))
+      if File.exists?(File.join(MACK_PUBLIC, env["PATH_INFO"]))
         return Rack::File.new(File.join(MACK_PUBLIC)).call(env)
       else
         raise exception
