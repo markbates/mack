@@ -9,7 +9,14 @@ end
 if using_data_mapper?
   class DataMapper::Base # :nodoc:
     def business_display_name
-      self.class.name#.titlecase
+      ""
+    end
+  end
+  module DataMapper
+    module Persistence
+      def business_display_name
+        ""
+      end
     end
   end
 end
