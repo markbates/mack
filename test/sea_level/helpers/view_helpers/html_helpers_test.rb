@@ -28,9 +28,10 @@ class HtmlHelpersTest < Test::Unit::TestCase
     var1 = "<a href=\"foo.com\" class=\"bar\"><img src=\"/images/foo.jpg\" border=\"0\" class=\"foo\" alt=\"This is an image!\"></a>"
     var2 = "<a href=\"foo.com\" class=\"bar\"><img src=\"/images/foo.jpg\" class=\"foo\" alt=\"This is an image!\" border=\"0\"></a>"
     var3 = "<a href=\"foo.com\" class=\"bar\"><img src=\"/images/foo.jpg\" class=\"foo\" border=\"0\" alt=\"This is an image!\"></a>"
+    var4 = "<a href=\"foo.com\" class=\"bar\"><img src=\"/images/foo.jpg\" alt=\"This is an image!\" class=\"foo\" border=\"0\"></a>"
     
     link = link_image_to("/images/foo.jpg", "foo.com", {:class => "foo", :alt => "This is an image!", :border => 0}, {:class => "bar"})
-    assert(link == var1 || link == var2 || link == var3)
+    assert((link == var1 || link == var2 || link == var3 || link == var4), link)
     
     var1 = "<a href=\"foo.com\"><img src=\"/images/foo.jpg\" alt=\"This is an image!\" border=\"0\"></a>"
     var2 = "<a href=\"foo.com\"><img src=\"/images/foo.jpg\" border=\"0\" alt=\"This is an image!\"></a>"
