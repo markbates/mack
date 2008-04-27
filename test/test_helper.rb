@@ -72,10 +72,9 @@ class Test::Unit::TestCase
   end
   
   def model_generator_cleanup
-    clean_test_directrory
+    clean_test_directory
     clean_models_directory
     clean_migrations_directory
-    clean_unit_test_loc
   end
   
 end

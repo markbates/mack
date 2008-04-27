@@ -219,7 +219,7 @@ CONT
 
 <%= error_messages_for :zoo %>
 
-<form action="<%= zoos_update_url(:id => @zoo.id) %>" class="edit_zoo" id="edit_zoo" method="zoo">
+<form action="<%= zoos_update_url(:id => @zoo.id) %>" class="edit_zoo" id="edit_zoo" method="post">
   <input type="hidden" name="_method" value="put">
   <p>
     <b>Name</b><br />
@@ -274,7 +274,7 @@ ERB
 
 <%= error_messages_for :zoo %>
 
-<form action="<%= zoos_create_url %>" class="new_zoo" id="new_zoo" method="zoo">
+<form action="<%= zoos_create_url %>" class="new_zoo" id="new_zoo" method="post">
   <p>
     <b>Name</b><br />
     <input type="text" name="zoo[name]" id="zoo_name" size="30" value="<%= @zoo.name %>" />
@@ -336,7 +336,7 @@ ERB
 
 <%= error_messages_for :zoo %>
 
-<form action="<%= zoos_update_url(:id => @zoo.id) %>" class="edit_zoo" id="edit_zoo" method="zoo">
+<form action="<%= zoos_update_url(:id => @zoo.id) %>" class="edit_zoo" id="edit_zoo" method="post">
   <input type="hidden" name="_method" value="put">
   <p>
     <input id="zoo_submit" name="commit" type="submit" value="Update" />
@@ -376,7 +376,7 @@ ERB
 
 <%= error_messages_for :zoo %>
 
-<form action="<%= zoos_create_url %>" class="new_zoo" id="new_zoo" method="zoo">
+<form action="<%= zoos_create_url %>" class="new_zoo" id="new_zoo" method="post">
   <p>
     <input id="zoo_submit" name="commit" type="submit" value="Create" />
   </p>
@@ -423,7 +423,6 @@ ERB
   end
   
   def cleanup
-    puts "CLEANING UP SCAFFOLD!"
     clean_test_directory
     clean_migrations_directory
     clean_views_directory
