@@ -231,7 +231,7 @@ CONT
   </p>
   <p>
     <b>Description</b><br />
-    <textarea name="zoo[description]" id="zoo_description"><%= @zoo.description %></textarea>
+    <textarea name="zoo[description]" id="zoo_description" cols="60" rows="20"><%= @zoo.description %></textarea>
   </p>
   <p>
     <input id="zoo_submit" name="commit" type="submit" value="Create" />
@@ -285,7 +285,7 @@ ERB
   </p>
   <p>
     <b>Description</b><br />
-    <textarea name="zoo[description]" id="zoo_description"><%= @zoo.description %></textarea>
+    <textarea name="zoo[description]" id="zoo_description" cols="60" rows="20"><%= @zoo.description %></textarea>
   </p>
   <p>
     <input id="zoo_submit" name="commit" type="submit" value="Create" />
