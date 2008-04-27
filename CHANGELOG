@@ -1,5 +1,6 @@
+* Fixed a bug with the scaffold generating 'bad' methods instead of 'post'
 * Made error_messages_for more compatible with DataMapper.
-* gem: mack_ruby_core_extensions 0.1.6
+* gem: mack_ruby_core_extensions 0.1.7
 
 ===0.4.7
 * Added Mack::Request::UploadedFile class to make dealing with file uploads easy.

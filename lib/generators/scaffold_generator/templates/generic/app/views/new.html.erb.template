@@ -2,7 +2,7 @@
 
 <%%= error_messages_for :<%= @name_singular %> %>
 
-<form action="<%%= <%= @name_singular %>s_create_url %>" class="new_<%= @name_singular %>" id="new_<%= @name_singular %>" method="<%= @name_singular %>">
+<form action="<%%= <%= @name_singular %>s_create_url %>" class="new_<%= @name_singular %>" id="new_<%= @name_singular %>" method="post">
 <% for column in columns -%>
 <% unless column.column_name == "created_at" || column.column_name == "updated_at" -%>
   <p>

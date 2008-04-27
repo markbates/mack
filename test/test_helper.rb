@@ -55,4 +55,49 @@ class Test::Unit::TestCase
     end
   end
   
+  def models_directory
+    File.join(MACK_APP, "models")
+  end
+  
+  def migrations_directory
+    File.join(database_directory, "migrations")
+  end
+  
+  def database_directory
+    File.join(MACK_ROOT, "db")
+  end
+  
+  def test_directory
+    File.join(MACK_ROOT, "test")
+  end
+  
+  def model_generator_cleanup
+    clean_test_directrory
+    clean_models_directory
+    clean_migrations_directory
+    clean_unit_test_loc
+  end
+  
+  def method_missing(sym, *args)
+    sym = sym.to_s
+    case sym
+    when /^clean_(.+)/
+      captures = sym.match(/^clean_(.+)/).captures
+      clean(captures.first)
+    else
+      raise NoMethodError.new(sym)
+    end
+  end
+
+  def clean(thing)
+    puts self.methods.sort.join("\n")
+    puts "thing: '#{thing}'"
+    thing = eval(thing)
+    puts "thing: #{thing}"
+    puts "File.exists?(thing): #{File.exists?(thing)}"
+    if File.exists?(thing)
+      FileUtils.rm_rf(thing)
+    end
+  end
+  
 end

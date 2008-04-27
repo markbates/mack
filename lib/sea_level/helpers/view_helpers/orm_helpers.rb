@@ -4,7 +4,7 @@ module Mack
       DEFAULT_PARTIAL = %{
         <div>
           <div class="errorExplanation" id="errorExplanation">
-            <h2>Oi, there were errors! Fix `em!</h2>
+            <h2><%= pluralize_word(errors.size, "error") %> occured.</h2>
             <ul>
               <% for error in errors %>
                 <li><%= error %></li>

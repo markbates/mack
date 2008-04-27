@@ -4,11 +4,9 @@ class ScaffoldGeneratorTest < Test::Unit::TestCase
   
   def setup
     @routes = File.open(File.join(MACK_CONFIG, "routes.rb")).read
-    cleanup
   end
   
   def teardown
-    cleanup
     File.open(File.join(MACK_CONFIG, "routes.rb"), "w") do |f|
       f.puts @routes
     end
@@ -165,7 +163,7 @@ MOD
         assert_match "r.resource :zoos # Added by rake generate:scaffold name=zoo", f.read
       end
       assert File.exists?(controller_file)
-      assert !File.exists?(views_dir)
+      assert !File.exists?(views_directory)
       cont = <<-CONT
 class ZoosController < Mack::Controller::Base
 
@@ -210,14 +208,12 @@ CONT
     end
   end
   
-  private
-  
   def orm_common_with_cols
     sg = ScaffoldGenerator.run("name" => "zoo", "cols" => "name:string,description:text,created_at:datetime,updated_at:datetime")
     File.open(File.join(MACK_CONFIG, "routes.rb")) do |f|
       assert_match "r.resource :zoos # Added by rake generate:scaffold name=zoo", f.read
     end
-    assert File.exists?(views_dir)
+    assert File.exists?(views_directory)
     edit_erb = <<-ERB
 <h1>Edit Zoo</h1>
 
@@ -234,13 +230,13 @@ CONT
     <textarea name="zoo[description]" id="zoo_description" cols="60" rows="20"><%= @zoo.description %></textarea>
   </p>
   <p>
-    <input id="zoo_submit" name="commit" type="submit" value="Create" />
+    <input id="zoo_submit" name="commit" type="submit" value="Update" />
   </p>
 </form>
 
 <%= link_to("Back", zoos_index_url) %>
 ERB
-    assert_equal edit_erb, File.open(File.join(views_dir, "edit.html.erb")).read
+    assert_equal edit_erb, File.open(File.join(views_directory, "edit.html.erb")).read
 
     index_erb = <<-ERB
 <h1>Listing Zoos</h1>
@@ -271,7 +267,7 @@ ERB
 <%= link_to("New Zoo", zoos_new_url) %>
 ERB
 
-    assert_equal index_erb, File.open(File.join(views_dir, "index.html.erb")).read
+    assert_equal index_erb, File.open(File.join(views_directory, "index.html.erb")).read
 
     new_erb = <<-ERB
 <h1>New Zoo</h1>
@@ -294,7 +290,7 @@ ERB
 
 <%= link_to("Back", zoos_index_url) %>
 ERB
-    assert_equal new_erb, File.open(File.join(views_dir, "new.html.erb")).read
+    assert_equal new_erb, File.open(File.join(views_directory, "new.html.erb")).read
 
     show_erb = <<-ERB
 <p>
@@ -321,7 +317,7 @@ ERB
 <%= link_to("Back", zoos_index_url) %>
 ERB
 
-    assert_equal show_erb, File.open(File.join(views_dir, "show.html.erb")).read
+    assert_equal show_erb, File.open(File.join(views_directory, "show.html.erb")).read
 
     assert File.exists?(model_file)
     assert File.exists?(controller_file)
@@ -334,7 +330,7 @@ ERB
       assert_match "r.resource :zoos # Added by rake generate:scaffold name=zoo", f.read
     end
     
-    assert File.exists?(views_dir)
+    assert File.exists?(views_directory)
     edit_erb = <<-ERB
 <h1>Edit Zoo</h1>
 
@@ -343,13 +339,13 @@ ERB
 <form action="<%= zoos_update_url(:id => @zoo.id) %>" class="edit_zoo" id="edit_zoo" method="zoo">
   <input type="hidden" name="_method" value="put">
   <p>
-    <input id="zoo_submit" name="commit" type="submit" value="Create" />
+    <input id="zoo_submit" name="commit" type="submit" value="Update" />
   </p>
 </form>
 
 <%= link_to("Back", zoos_index_url) %>
 ERB
-    assert_equal edit_erb, File.open(File.join(views_dir, "edit.html.erb")).read
+    assert_equal edit_erb, File.open(File.join(views_directory, "edit.html.erb")).read
     
     index_erb = <<-ERB
 <h1>Listing Zoos</h1>
@@ -373,7 +369,7 @@ ERB
 
 <%= link_to("New Zoo", zoos_new_url) %>
 ERB
-    assert_equal index_erb, File.open(File.join(views_dir, "index.html.erb")).read
+    assert_equal index_erb, File.open(File.join(views_directory, "index.html.erb")).read
     
     new_erb = <<-ERB
 <h1>New Zoo</h1>
@@ -388,7 +384,7 @@ ERB
 
 <%= link_to("Back", zoos_index_url) %>
 ERB
-    assert_equal new_erb, File.open(File.join(views_dir, "new.html.erb")).read
+    assert_equal new_erb, File.open(File.join(views_directory, "new.html.erb")).read
     
     show_erb = <<-ERB
 <p>
@@ -398,7 +394,7 @@ ERB
 <%= link_to("Edit", zoos_edit_url(:id => @zoo.id)) %> |
 <%= link_to("Back", zoos_index_url) %>
 ERB
-    assert_equal show_erb, File.open(File.join(views_dir, "show.html.erb")).read
+    assert_equal show_erb, File.open(File.join(views_directory, "show.html.erb")).read
     
     assert File.exists?(model_file)
     assert File.exists?(controller_file)
@@ -407,10 +403,10 @@ ERB
   end
   
   def functional_test_file
-    File.join(MACK_ROOT, "test", "functional", "zoos_controller_test.rb")
+    File.join(test_directory, "functional", "zoos_controller_test.rb")
   end
   
-  def views_dir
+  def views_directory
     File.join(MACK_VIEWS, "zoos")
   end
   
@@ -423,37 +419,16 @@ ERB
   end
   
   def migration_file
-    File.join(migration_dir, "001_create_zoos.rb")
-  end
-  
-  def migration_dir
-    File.join(MACK_ROOT, "db", "migrations")
-  end
-  
-  def test_dir
-    File.join(MACK_ROOT, "test")
+    File.join(migrations_directory, "001_create_zoos.rb")
   end
   
   def cleanup
-    if File.exists?(test_dir)
-      FileUtils.rm_r(test_dir)
-    end
-    
-    if File.exists?(migration_dir)
-      FileUtils.rm_r(migration_dir)
-    end
-    
-    if File.exists?(views_dir)
-      FileUtils.rm_r(views_dir)
-    end
-
-    if File.exists?(model_file)
-      FileUtils.rm_r(model_file)
-    end
-
-    if File.exists?(controller_file)
-      FileUtils.rm_r(controller_file)
-    end
+    puts "CLEANING UP SCAFFOLD!"
+    clean_test_directory
+    clean_migrations_directory
+    clean_views_directory
+    clean_models_directory
+    clean_controller_file
   end
   
 end

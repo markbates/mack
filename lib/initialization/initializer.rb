@@ -82,6 +82,7 @@ unless Object.const_defined?("MACK_INITIALIZED")
   
   # require 'app' files:
   Dir.glob(File.join(MACK_APP, "**/*.rb")).each do |d|
+    # puts "d: #{d}"
     begin
       require d
     rescue NameError => e

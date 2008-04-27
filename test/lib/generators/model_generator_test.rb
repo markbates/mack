@@ -2,14 +2,6 @@ require File.dirname(__FILE__) + '/../../test_helper.rb'
 
 class ModelGeneratorTest < Test::Unit::TestCase
   
-  def setup
-    cleanup
-  end
-  
-  def teardown
-    cleanup
-  end
-  
   def test_generate_active_record
     use_active_record do 
       ModelGenerator.new("name" => "album").generate
@@ -45,42 +37,20 @@ class ModelGeneratorTest < Test::Unit::TestCase
     end
   end
   
-  private
   def cleanup
-    if File.exists?(test_dir)
-      FileUtils.rm_r(test_dir)
-    end
-    FileUtils.rm_r(model_loc) if File.exists?(model_loc)
-    FileUtils.rm_r(fake_app_migration_dir) if File.exists?(fake_app_migration_dir)
-    FileUtils.rm_r(unit_test_loc) if File.exists?(unit_test_loc)    
-  end
-  
-  def test_dir
-    File.join(MACK_ROOT, "test")
+    model_generator_cleanup
   end
   
   def unit_test_loc
-    File.join(MACK_ROOT, "test", "unit", "album_test.rb")
+    File.join(test_directory, "unit", "album_test.rb")
   end
   
   def model_loc
-    File.join(models_dir, "album.rb")
-  end
-  
-  def models_dir
-    File.join(MACK_APP, "models")
+    File.join(models_directory, "album.rb")
   end
   
   def migration_loc
-    File.join(fake_app_migration_dir, "001_create_albums.rb")
-  end
-  
-  def fake_app_migration_dir
-    File.join(fake_app_db_dir, "migrations")
-  end
-  
-  def fake_app_db_dir
-    File.join(MACK_ROOT, "db")
+    File.join(migrations_directory, "001_create_albums.rb")
   end
   
   def unit_test
