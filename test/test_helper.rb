@@ -78,26 +78,4 @@ class Test::Unit::TestCase
     clean_unit_test_loc
   end
   
-  def method_missing(sym, *args)
-    sym = sym.to_s
-    case sym
-    when /^clean_(.+)/
-      captures = sym.match(/^clean_(.+)/).captures
-      clean(captures.first)
-    else
-      raise NoMethodError.new(sym)
-    end
-  end
-
-  def clean(thing)
-    puts self.methods.sort.join("\n")
-    puts "thing: '#{thing}'"
-    thing = eval(thing)
-    puts "thing: #{thing}"
-    puts "File.exists?(thing): #{File.exists?(thing)}"
-    if File.exists?(thing)
-      FileUtils.rm_rf(thing)
-    end
-  end
-  
 end
