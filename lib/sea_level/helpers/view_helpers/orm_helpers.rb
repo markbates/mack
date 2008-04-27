@@ -1,26 +1,3 @@
-if using_active_record?
-  class ActiveRecord::Base # :nodoc:
-    def business_display_name
-      self.class.name#.titlecase
-    end
-  end
-end
-
-if using_data_mapper?
-  class DataMapper::Base # :nodoc:
-    def business_display_name
-      ""
-    end
-  end
-  module DataMapper
-    module Persistence
-      def business_display_name
-        ""
-      end
-    end
-  end
-end
-
 module Mack
   module ViewHelpers
     module OrmHelpers
@@ -38,40 +15,29 @@ module Mack
       }
   
       def error_messages_for(object_names = [], view_partial = nil)
-        object_names = [object_names]
-        object_names.flatten!
+        object_names = [object_names].flatten
         app_errors = []
-        object_names.each do |name| 
+        object_names.each do |name|
           object = instance_variable_get("@#{name}")
           if object
-            object.errors.each do |key, value|
-              key = key.to_s
-              if value.is_a?(Array)
-                value.each do |v|
-                  if v.match(/^\^/)
-                    app_errors << v[1..v.length]
-                  else
-                    if key.class == String and key == "base"
-                      app_errors << "#{v}"
-                    else
-                      app_errors << "#{object.business_display_name} #{key.underscore.split('_').join(' ')} #{v}"
-                    end
-                  end
-                end
-              else
+            if object.is_a?(ActiveRecord::Base)
+              object.errors.each do |key, value|
                 if value.match(/^\^/)
                   app_errors << value[1..value.length]
                 else
                   if key.class == String and key == "base"
                     app_errors << "#{value}"
                   else
-                    app_errors << "#{object.business_display_name} #{key.underscore.split('_').join(' ')} #{value}"
+                    app_errors << "#{object.business_name} #{key.underscore.split('_').join(' ').humanize} #{value}"
                   end
                 end
               end
+            elsif object.is_a?(DataMapper::Persistence)
+              app_errors << object.errors.full_messages
             end
           end
         end
+        app_errors.flatten!
         File.join(MACK_VIEWS, "application", "_error_messages.html.erb")
         unless app_errors.empty?
           if view_partial.nil?
@@ -87,7 +53,6 @@ module Mack
           ""
         end
       end
-  
       # self.include_safely_into(Mack::ViewBinder)
     end # OrmHelpers
   end # ViewHelpers

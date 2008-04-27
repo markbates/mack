@@ -1,3 +1,5 @@
+* Made error_messages_for more compatible with DataMapper.
+
 ===0.4.7
 * Added Mack::Request::UploadedFile class to make dealing with file uploads easy.
 * Fixed bug where if a controller didn't exist it wasn't checking the public directory.
