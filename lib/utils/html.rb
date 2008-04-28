@@ -59,7 +59,7 @@ module Mack
         # Examples:
         #   Mack::Utils::Html.b("hello") # => <b>hello</b>
         #   Mack::Utils::Html.div("hello world!", :class => :foo)) # => <div class="foo">hello world!</div>
-        def method_missing(sym, *args)
+        def method_missing(sym, *args, &block)
           ags = args.parse_splat_args
           
           tag = sym
@@ -75,9 +75,14 @@ module Mack
             options = ags
           end
           
-          content = yield if block_given?
-          
-          content_tag(tag, content, options)
+          if block_given?
+            content = yield
+            return content_tag(tag, content, options)
+          elsif content
+            return content_tag(tag, content, options)
+          else
+            return non_content_tag(tag, options)
+          end
         end
         
         # Builds an HTML tag.
@@ -86,15 +91,26 @@ module Mack
         #   content_tag(:b, "hello") # => <b>hello</b>
         #   content_tag("div", "hello world!", :class => :foo) # => <div class="foo">hello world!</div>
         def content_tag(tag, content, options = {})
-          html = "<#{tag} #{options.join("%s=\"%s\"", " ")}>#{content}</#{tag}>"
+          "<#{tag}#{build_options(options)}>#{content}</#{tag}>"
+        end
+        
+        def non_content_tag(tag, options = {})
+          "<#{tag}#{build_options(options)} />"
         end
         
         # Builds a HTML image tag.
         #
-        def image_tag(image_src, options = {})
-          html = "<img src=\"#{image_src}\""
-          html << " " << options.join("%s=\"%s\"", " ") unless options.empty?
-          html << ">"
+        def img(image_src, options = {})
+          non_content_tag(:img, {:src => image_src}.merge(options))
+        end
+        
+        private
+        def build_options(options)
+          opts = ""
+          unless options.empty?
+            opts = " " << options.join("%s=\"%s\"", " ")
+          end
+          opts
         end
         
       end # self

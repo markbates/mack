@@ -33,7 +33,7 @@ module Mack
       # Examples:
       #   <%= link_image_to("/images/foo.jpg", "#" %> # => <a href="#"><img src="/images/foo.jpg"></a>
       def link_image_to(image_url, url, image_options = {}, html_options = {})
-        link_to(Mack::Utils::Html.image_tag(image_url, image_options), url, html_options)
+        link_to(Mack::Utils::Html.img(image_url, image_options), url, html_options)
       end
       
       # A wrapper to Mack::Utils::Html rss method.

@@ -15,8 +15,10 @@ class HtmlHelpersTest < Test::Unit::TestCase
   end
   
   def test_method_missing
-    assert_equal "<b >hello</b>", Mack::Utils::Html.b("hello")
-    assert_equal "<b >hello</b>", Mack::Utils::Html.b { "hello" }
+    assert_equal "<hr />", Mack::Utils::Html.hr
+    assert_equal "<hr width=\"100%\" />", Mack::Utils::Html.hr(:width => "100%")
+    assert_equal "<b>hello</b>", Mack::Utils::Html.b("hello")
+    assert_equal "<b>hello</b>", Mack::Utils::Html.b { "hello" }
     assert_equal %{<div class="foo">Hello World</div>}, Mack::Utils::Html.div(:class => :foo) {"Hello World"}
     assert_equal Mack::Utils::Html.href("Mack", "http://www.mackframework.com", :method => :update, :confirm => "Are you sure?"), Mack::Utils::Html.a("Mack", "http://www.mackframework.com", :method => :update, :confirm => "Are you sure?")
   end
@@ -26,7 +28,7 @@ class HtmlHelpersTest < Test::Unit::TestCase
   end
   
   def test_image    
-    assert_equal %{<img src="/images/foo.jpg">}, Mack::Utils::Html.image_tag("/images/foo.jpg")
+    assert_equal %{<img src="/images/foo.jpg" />}, Mack::Utils::Html.img("/images/foo.jpg")
   end
   
 end
