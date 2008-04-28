@@ -34,4 +34,10 @@ class HtmlHelpersTest < Test::Unit::TestCase
     assert_equal %{<img src="/images/foo.jpg" />}, Mack::Utils::Html.img("/images/foo.jpg")
   end
   
+  def test_form
+    assert_equal "<form action=\"http://www.mackframework.com\" method=\"post\">Hello</form>", Mack::Utils::Html.form(:action => "http://www.mackframework.com") {"Hello"}
+    assert_equal "<form action=\"http://www.mackframework.com\" enctype=\"multipart/form-data\" method=\"post\">Hello</form>", Mack::Utils::Html.form(:action => "http://www.mackframework.com", :multipart => true) {"Hello"}
+    assert_equal "<form action=\"http://www.mackframework.com\" class=\"my_form\" id=\"my_form\" method=\"post\">Hello</form>", Mack::Utils::Html.form(:action => "http://www.mackframework.com", :id => "my_form") {"Hello"}
+  end
+  
 end

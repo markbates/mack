@@ -49,6 +49,19 @@ module Mack
           "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS\" href=\"#{url}\">"
         end
         
+        def form(options = {}, &block)
+          options = {:method => "post"}.merge(options)
+          if options[:id]
+            options = {:class => options[:id]}.merge(options)
+          end
+          if options[:multipart]
+            options = {:enctype => "multipart/form-data"}.merge(options)
+            options.delete(:multipart)
+          end
+          content = yield
+          content_tag(:form, content, options, &block)
+        end
+        
         # Wraps the content_tag method.
         # 
         # Examples:
@@ -72,7 +85,7 @@ module Mack
           
           if block_given?
             content = yield
-            return content_tag(tag, content, options)
+            return content_tag(tag, content, options, &block)
           elsif content
             return content_tag(tag, content, options)
           else
@@ -85,8 +98,12 @@ module Mack
         # Examples:
         #   content_tag(:b, "hello") # => <b>hello</b>
         #   content_tag("div", "hello world!", :class => :foo) # => <div class="foo">hello world!</div>
-        def content_tag(tag, content, options = {})
-          "<#{tag}#{build_options(options)}>#{content}</#{tag}>"
+        def content_tag(tag, content, options = {}, &block)
+          t = "<#{tag}#{build_options(options)}>#{content}</#{tag}>"
+          if block_given?
+            return Erubis::Eruby.new(t).result(block.binding)
+          end
+          t
         end
         
         # Builds an HTML tag with no content.
@@ -99,7 +116,6 @@ module Mack
         end
         
         # Builds a HTML image tag.
-        #
         def img(image_src, options = {})
           non_content_tag(:img, {:src => image_src}.merge(options))
         end

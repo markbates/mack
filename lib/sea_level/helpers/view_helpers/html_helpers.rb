@@ -45,6 +45,10 @@ module Mack
         Mack::Utils::Html.rss(url)
       end
       
+      def form(action, options = {}, &block)
+        Mack::Utils::Html.form({:action => action}.merge(options), &block)
+      end
+      
     end # HtmlHelpers
   end # ViewHelpers
 end # Mack

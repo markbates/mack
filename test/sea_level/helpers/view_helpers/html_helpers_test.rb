@@ -38,4 +38,10 @@ class HtmlHelpersTest < Test::Unit::TestCase
     assert_equal Mack::Utils::Html.href(Mack::Utils::Html.img("/images/foo.jpg", {:border=>0}), :href => "foo.com", :class => "foo"), link_img
   end
   
+  def test_form
+    f = form("http://www.mackframework.com") {"Hello"}
+    hf = Mack::Utils::Html.form(:action => "http://www.mackframework.com") {"Hello"}
+    assert_equal hf, f
+  end
+  
 end
