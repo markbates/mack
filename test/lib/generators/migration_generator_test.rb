@@ -2,24 +2,12 @@ require File.dirname(__FILE__) + '/../../test_helper.rb'
 
 class MigrationGeneratorTest < Test::Unit::TestCase
   
-  def setup
-    if File.exists?(fake_app_migration_dir)
-      FileUtils.rm_r(fake_app_migration_dir)
-    end
-  end
-  
-  def teardown
-    if File.exists?(fake_app_migration_dir)
-      FileUtils.rm_r(fake_app_migration_dir)
-    end
-  end
-  
   def test_next_migration_number
     mg = MigrationGenerator.new("NAME" => "foo")
     assert_equal "001", mg.next_migration_number
-    FileUtils.mkdir_p(fake_app_migration_dir)
-    assert File.exists?(fake_app_migration_dir)
-    File.open(File.join(fake_app_migration_dir, "001_foo.rb"), "w") {|f| f.puts ""}
+    FileUtils.mkdir_p(migrations_directory)
+    assert File.exists?(migrations_directory)
+    File.open(File.join(migrations_directory, "001_foo.rb"), "w") {|f| f.puts ""}
     assert_equal "002", mg.next_migration_number
   end
   
@@ -117,9 +105,9 @@ MIG
     5.times do |i|
       options = {"NAME" => "foo_bar"}.merge(opts)
       mg = MigrationGenerator.run(options)
-      assert File.exists?(fake_app_migration_dir)
-      assert File.exists?(File.join(fake_app_migration_dir, "00#{i+1}_#{options["NAME"]}.rb"))
-      File.open(File.join(fake_app_migration_dir, "00#{i+1}_#{options["NAME"]}.rb"), "r") do |file|
+      assert File.exists?(migrations_directory)
+      assert File.exists?(File.join(migrations_directory, "00#{i+1}_#{options["NAME"]}.rb"))
+      File.open(File.join(migrations_directory, "00#{i+1}_#{options["NAME"]}.rb"), "r") do |file|
         @file_body = file.read
       end
     end
@@ -131,13 +119,8 @@ MIG
     assert_not_nil mg
   end
   
-  private
-  def fake_app_migration_dir
-    File.join(fake_app_db_dir, "migrations")
-  end
-  
-  def fake_app_db_dir
-    File.join(MACK_ROOT, "db")
+  def cleanup
+    clean_migrations_directory
   end
   
 end

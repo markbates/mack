@@ -2,18 +2,6 @@ require File.dirname(__FILE__) + '/../../test_helper.rb'
 
 class PluginGeneratorTest < Test::Unit::TestCase
   
-  def setup
-    if File.exists?(bandit_dir)
-      FileUtils.rm_r(bandit_dir)
-    end
-  end
-  
-  def teardown
-    if File.exists?(bandit_dir)
-      FileUtils.rm_r(bandit_dir)
-    end
-  end
-  
   def test_generate
     pg = PluginGenerator.new("name" => "bandit")
     assert !File.exists?(bandit_dir)
@@ -38,7 +26,10 @@ class PluginGeneratorTest < Test::Unit::TestCase
     end
   end
   
-  private
+  def cleanup
+    clean_bandit_dir
+  end
+  
   def bandit_dir
     File.join(MACK_PLUGINS, "bandit")
   end
