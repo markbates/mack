@@ -7,13 +7,13 @@ class HtmlHelpersTest < Test::Unit::TestCase
   def test_link
     assert_equal Mack::Utils::Html.href("http://www.mackframework.com"), link_to("http://www.mackframework.com")
     
-    assert_equal Mack::Utils::Html.href("Mack", "http://www.mackframework.com"), link_to("Mack", "http://www.mackframework.com")
+    assert_equal Mack::Utils::Html.href("Mack", :href => "http://www.mackframework.com"), link_to("Mack", "http://www.mackframework.com")
     
-    assert_equal Mack::Utils::Html.href("Mack", "http://www.mackframework.com", :target => "_blank"), link_to("Mack", "http://www.mackframework.com", :target => "_blank")
+    assert_equal Mack::Utils::Html.href("Mack", :href => "http://www.mackframework.com", :target => "_blank"), link_to("Mack", "http://www.mackframework.com", :target => "_blank")
     
-    assert_equal Mack::Utils::Html.href("Mack", "http://www.mackframework.com", :method => :delete), link_to("Mack", "http://www.mackframework.com", :method => :delete)
+    assert_equal Mack::Utils::Html.href("Mack", :href => "http://www.mackframework.com", :method => :delete), link_to("Mack", "http://www.mackframework.com", :method => :delete)
     
-    assert_equal Mack::Utils::Html.href("Mack", "http://www.mackframework.com", :method => :update, :confirm => "Are you sure?"), link_to("Mack", "http://www.mackframework.com", :method => :update, :confirm => "Are you sure?")
+    assert_equal Mack::Utils::Html.href("Mack", :href => "http://www.mackframework.com", :method => :update, :confirm => "Are you sure?"), link_to("Mack", "http://www.mackframework.com", :method => :update, :confirm => "Are you sure?")
   end
   
   def test_html
@@ -25,25 +25,17 @@ class HtmlHelpersTest < Test::Unit::TestCase
   end
   
   def test_link_image_to
-    var1 = "<a href=\"foo.com\" class=\"bar\"><img src=\"/images/foo.jpg\" border=\"0\" class=\"foo\" alt=\"This is an image!\" /></a>"
-    var2 = "<a href=\"foo.com\" class=\"bar\"><img src=\"/images/foo.jpg\" class=\"foo\" alt=\"This is an image!\" border=\"0\" /></a>"
-    var3 = "<a href=\"foo.com\" class=\"bar\"><img src=\"/images/foo.jpg\" class=\"foo\" border=\"0\" alt=\"This is an image!\" /></a>"
-    var4 = "<a href=\"foo.com\" class=\"bar\"><img src=\"/images/foo.jpg\" alt=\"This is an image!\" class=\"foo\" border=\"0\" /></a>"
-    var5 = "<a href=\"foo.com\" class=\"bar\"><img alt=\"This is an image!\" border=\"0\" class=\"foo\" src=\"/images/foo.jpg\" /></a>"
-    var6 = "<a href=\"foo.com\" class=\"bar\"><img alt=\"This is an image!\" class=\"foo\" border=\"0\" src=\"/images/foo.jpg\" /></a>"
-    
     link = link_image_to("/images/foo.jpg", "foo.com", {:class => "foo", :alt => "This is an image!", :border => 0}, {:class => "bar"})
-    assert((link == var1 || link == var2 || link == var3 || link == var4 || link == var5 || link == var6), link)
-    
-    var1 = "<a href=\"foo.com\"><img src=\"/images/foo.jpg\" alt=\"This is an image!\" border=\"0\" /></a>"
-    var2 = "<a href=\"foo.com\"><img src=\"/images/foo.jpg\" border=\"0\" alt=\"This is an image!\" /></a>"
+    assert_equal "<a class=\"bar\" href=\"foo.com\"><img alt=\"This is an image!\" border=\"0\" class=\"foo\" src=\"/images/foo.jpg\" /></a>", link
     
     link = link_image_to("/images/foo.jpg", "foo.com", {:border => 0, :alt => "This is an image!"})
-    assert(link == var1 || var2)
+    assert_equal "<a href=\"foo.com\"><img alt=\"This is an image!\" border=\"0\" src=\"/images/foo.jpg\" /></a>", link
     
     assert_equal "<a href=\"foo.com\"><img src=\"/images/foo.jpg\" /></a>", link_image_to("/images/foo.jpg", "foo.com")
         
-    assert_equal Mack::Utils::Html.href(Mack::Utils::Html.img("/images/foo.jpg", {:border=>0}), "foo.com", {:class => "foo"}), link_image_to("/images/foo.jpg", "foo.com", {:border => 0}, {:class => "foo"})
+    link_img = link_image_to("/images/foo.jpg", "foo.com", {:border => 0}, {:class => "foo"})
+        
+    assert_equal Mack::Utils::Html.href(Mack::Utils::Html.img("/images/foo.jpg", {:border=>0}), :href => "foo.com", :class => "foo"), link_img
   end
   
 end

@@ -20,31 +20,33 @@ module Mack
         # javascript confirmation window. If 'OK' is selected the the form will submit. If 'cancel' is selected, then
         # nothing will happen. This is extremely useful for 'delete' type of links.
         #    Mack::Utils::Html.href("Mack", "http://www.mackframework.com", :method => :delete, :confirm => "Are you sure?")
-        def href(link_text, url = link_text, html_options = {})
-          if html_options[:method]
+        def a(link_text, options = {})
+          options = {:href => link_text}.merge(options)
+          if options[:method]
             meth = nil
             confirm = nil
-
-            meth = %{var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var s = document.createElement('input'); s.setAttribute('type', 'hidden'); s.setAttribute('name', '_method'); s.setAttribute('value', '#{html_options[:method]}'); f.appendChild(s);f.submit()}
-            html_options.delete(:method)
-
-            if html_options[:confirm]
-              confirm = %{if (confirm('#{html_options[:confirm]}'))}
-              html_options.delete(:confirm)
+          
+            meth = %{var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var s = document.createElement('input'); s.setAttribute('type', 'hidden'); s.setAttribute('name', '_method'); s.setAttribute('value', '#{options[:method]}'); f.appendChild(s);f.submit()}
+            options.delete(:method)
+          
+            if options[:confirm]
+              confirm = %{if (confirm('#{options[:confirm]}'))}
+              options.delete(:confirm)
             end
-
-            html_options[:onclick] = (confirm ? (confirm + " { ") : "") << meth << (confirm ? (" } ") : "") << ";return false;"
+          
+            options[:onclick] = (confirm ? (confirm + " { ") : "") << meth << (confirm ? (" } ") : "") << ";return false;"
           end
-
-          html = "<a href=" << '"' << url
-          html << '"'
-          html << " " << html_options.join("%s=\"%s\"", " ") unless html_options.empty?
-          html << ">" << link_text
-          html << "</a>"
-          html
+          content_tag(:a, link_text, options)
+          # 
+          # html = "<a href=" << '"' << url
+          # html << '"'
+          # html << " " << html_options.join("%s=\"%s\"", " ") unless html_options.empty?
+          # html << ">" << link_text
+          # html << "</a>"
+          # html
         end
         
-        alias_method :a, :href
+        alias_method :href, :a
         
         # A wrapper to generate an auto discovery tag so browsers no the page contains an RSS feed.
         # 

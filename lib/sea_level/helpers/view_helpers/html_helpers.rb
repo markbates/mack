@@ -17,7 +17,8 @@ module Mack
       # nothing will happen. This is extremely useful for 'delete' type of links.
       #   <%= link_to("Mack", "http://www.mackframework.com", :method => :delete, :confirm => "Are you sure?") %>
       def link_to(link_text, url = link_text, html_options = {})
-        Mack::Utils::Html.href(link_text, url, html_options)
+        options = {:href => url}.merge(html_options)
+        Mack::Utils::Html.a(link_text, options)
       end
       
       # A wrapper method for views that calls out to Mack::Utils::Html.
