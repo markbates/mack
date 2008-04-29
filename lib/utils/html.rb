@@ -85,6 +85,7 @@ module Mack
           
           if block_given?
             content = yield
+            puts "content: #{content}"
             return content_tag(tag, content, options, &block)
           elsif content
             return content_tag(tag, content, options)
