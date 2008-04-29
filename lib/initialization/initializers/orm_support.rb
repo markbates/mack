@@ -40,6 +40,15 @@ begin
   
   require 'data_mapper'
   
+  settings = dbs[MACK_ENV]
+  if settings["default"]
+    settings.each do |k,v|
+      DataMapper::Database.setup(k.to_sym, v)
+    end
+  else
+    DataMapper::Database.setup(settings)
+  end
+  
   DataMapper::Database.setup(dbs[MACK_ENV])
   class DmSchemaInfo # :nodoc:
     include DataMapper::Persistence
