@@ -11,7 +11,6 @@ class Mack::ViewBinder
     transfer_vars(@controller)
     @xml_output = ""
     @xml = Builder::XmlMarkup.new(:target => @xml_output, :indent => 1)
-    @__erb_output = ""
   end
   
   # If a method can not be found then the :locals key of
@@ -56,14 +55,14 @@ class Mack::ViewBinder
   def run(io)
     # TODO: find a nicer way of doing this:
     if ((controller.params(:format).to_sym == :xml) || options[:format] == :xml) && (options[:action] || options[:xml])
-      return eval(io, vb.view_binding)
+      return eval(io, binding)
     else
-      return ERB.new(io, nil, "->", "@__erb_output").result(binding)
+      return Erubis::Eruby.new(io).result(binding)
     end
   end
   
-  def concat(text)
-    @__erb_output << text
+  def concat(txt, b)
+    eval( "_buf", b) << txt
   end
   
   private

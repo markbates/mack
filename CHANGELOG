@@ -1,5 +1,6 @@
+* Fixed a bug where yields in ERB weren't giving the desired results.
 * DataMapper database.yml file can now be nested, and is generated as such.
-* Cleaned up some tests, and refactored some of the HTML generation stuff.
+* Cleaned up some tests, and refactored the HTML generation stuff.
 * Fixed a bug with the scaffold generating 'bad' methods instead of 'post'
 * Made error_messages_for more compatible with DataMapper.
 * gem: mack_ruby_core_extensions 0.1.22
