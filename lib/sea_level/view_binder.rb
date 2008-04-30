@@ -11,11 +11,7 @@ class Mack::ViewBinder
     transfer_vars(@controller)
     @xml_output = ""
     @xml = Builder::XmlMarkup.new(:target => @xml_output, :indent => 1)
-  end
-  
-  # Returns the binding for this class.
-  def view_binding
-    binding
+    @__erb_output = ""
   end
   
   # If a method can not be found then the :locals key of
@@ -57,6 +53,19 @@ class Mack::ViewBinder
     raise Mack::Errors::UnknownRenderOption.new(options)
   end
   
+  def run(io)
+    # TODO: find a nicer way of doing this:
+    if ((controller.params(:format).to_sym == :xml) || options[:format] == :xml) && (options[:action] || options[:xml])
+      return eval(io, vb.view_binding)
+    else
+      return ERB.new(io, nil, "->", "@__erb_output").result(binding)
+    end
+  end
+  
+  def concat(text)
+    @__erb_output << text
+  end
+  
   private
   
   # Transfer instance variables from the controller to the view.
@@ -72,12 +81,7 @@ class Mack::ViewBinder
     # and returns a String. The io can be either an IO object or a String.
     def render(io, controller, options = {})
       vb = Mack::ViewBinder.new(controller, options)
-      # TODO: find a nicer way of doing this:
-      if ((controller.params(:format).to_sym == :xml) || options[:format] == :xml) && (options[:action] || options[:xml])
-        return eval(io, vb.view_binding)
-      else
-        return Erubis::Eruby.new(io).result(vb.view_binding)
-      end
+      vb.run(io)
     end
     
   end

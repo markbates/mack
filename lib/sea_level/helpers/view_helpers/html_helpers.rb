@@ -29,6 +29,13 @@ module Mack
         Mack::Utils::Html
       end
       
+      def b(options = {}, &block)
+        puts "in b tag!"
+        concat("<b>")
+        yield
+        concat("</b>")
+      end
+      
       # A wrapper method for image link.
       # 
       # Examples:

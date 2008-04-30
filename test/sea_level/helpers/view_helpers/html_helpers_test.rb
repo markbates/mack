@@ -15,11 +15,11 @@ class HtmlHelpersTest < Test::Unit::TestCase
     r.b_tag "/html_helpme_b", :controller => "html_helpers_test/help_me", :action => :b_tag
   end
   
-  # def test_b_tag_in_view
-  #   get b_tag_url
-  #   assert_response :success
-  #   assert_match "<b>Hello</b>", response.body
-  # end
+  def test_b_tag_in_view
+    get b_tag_url
+    assert_response :success
+    assert_match "<b>hello\n</b>", response.body
+  end
   
   def test_link
     assert_equal Mack::Utils::Html.href("http://www.mackframework.com"), link_to("http://www.mackframework.com")

@@ -101,9 +101,7 @@ module Mack
         #   content_tag("div", "hello world!", :class => :foo) # => <div class="foo">hello world!</div>
         def content_tag(tag, content, options = {}, &block)
           t = "<#{tag}#{build_options(options)}>#{content}</#{tag}>"
-          if block_given?
-            return Erubis::Eruby.new(t).result(block.binding)
-          end
+          # @__erb_output << t
           t
         end
         
