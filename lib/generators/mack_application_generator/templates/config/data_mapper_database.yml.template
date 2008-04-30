@@ -1,0 +1,38 @@
+# development:
+#   default:
+#     adapter: mysql
+#     database: <%= @options["app"].downcase %>_development
+#     host: localhost
+#     username: root
+#     password: 
+#     
+# test:
+#   default:
+#     adapter: mysql
+#     database: <%= @options["app"].downcase %>_test
+#     host: localhost
+#     username: root
+#     password:
+# 
+# production:
+#   default:
+#     adapter: mysql
+#     database: <%= @options["app"].downcase %>_production
+#     host: localhost
+#     username: root
+#     password:
+
+development:
+  default:
+    adapter: sqlite3
+    database: db/<%= @options["app"].downcase %>_development.db 
+
+test:
+  default:
+    adapter: sqlite3
+    database: db/<%= @options["app"].downcase %>_test.db 
+
+production:
+  default:
+    adapter: sqlite3
+    database: db/<%= @options["app"].downcase %>_production.db 

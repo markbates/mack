@@ -86,13 +86,17 @@ unless Object.const_defined?("MACK_INITIALIZED")
     begin
       require d
     rescue NameError => e
-      mod = e.message.gsub("uninitialized constant ", "")
-      x =%{
-        module ::#{mod}
-        end
-      }
-      eval(x)
-      require d
+      if e.message.match("uninitialized constant")
+        mod = e.message.gsub("uninitialized constant ", "")
+        x =%{
+          module ::#{mod}
+          end
+        }
+        eval(x)
+        require d
+      else
+        raise e
+      end
     end
   end
   

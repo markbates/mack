@@ -4,7 +4,7 @@ whiny_config_missing: false
 
 foo: bar
 
-# orm: data_mapper
+orm: data_mapper
 
 mack::page_cache: true
 

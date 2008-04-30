@@ -1,7 +1,8 @@
+* DataMapper database.yml file can now be nested, and is generated as such.
 * Cleaned up some tests, and refactored some of the HTML generation stuff.
 * Fixed a bug with the scaffold generating 'bad' methods instead of 'post'
 * Made error_messages_for more compatible with DataMapper.
-* gem: mack_ruby_core_extensions 0.1.9
+* gem: mack_ruby_core_extensions 0.1.22
 * gem: genosaurus 1.1.3
 
 ===0.4.7
