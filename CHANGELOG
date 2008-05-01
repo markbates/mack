@@ -1,3 +1,4 @@
+* Removed support for ActiveRecord
 * Fixed a bug where yields in ERB weren't giving the desired results.
 * DataMapper database.yml file can now be nested, and is generated as such.
 * Cleaned up some tests, and refactored the HTML generation stuff.
