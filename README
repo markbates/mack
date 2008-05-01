@@ -10,9 +10,6 @@ Mack is also about performance. Because Mack uses technologies like Thin[http://
 ==Getting Started
 First things first, let's generate your application:
   $ mack <app_name>
-  
-If you'd like to configure your application to use an ORM, then when you generate it, use the following command:
-  $ mack <app_name> -o <data_mapper|active_record>
 
 To run a Mack application:
   $ rake script:server

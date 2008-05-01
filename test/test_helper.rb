@@ -41,20 +41,6 @@ end
 
 class Test::Unit::TestCase
   
-  def use_data_mapper
-    temp_app_config("orm" => "data_mapper") do
-      load(File.join(File.dirname(__FILE__), "..", "lib", "initialization", "initializers", "orm_support.rb"))
-      yield
-    end
-  end
-  
-  def use_active_record
-    temp_app_config("orm" => "active_record") do
-      load(File.join(File.dirname(__FILE__), "..", "lib", "initialization", "initializers", "orm_support.rb"))
-      yield
-    end
-  end
-  
   def models_directory
     File.join(MACK_APP, "models")
   end

@@ -43,7 +43,7 @@ class <%= @name_plural_camel %>Controller < Mack::Controller::Base
   # DELETE /<%= @name_plural %>/1
   def delete
     @<%= @name_singular %> = <%= @name_singular_camel %>.find(params(:id))
-    @<%= @name_singular %>.destroy<%= app_config.orm == "data_mapper" ? "!" : "" %>
+    @<%= @name_singular %>.destroy!
     redirect_to(<%= @name_plural %>_index_url)
   end
 

@@ -12,75 +12,9 @@ class ScaffoldGeneratorTest < Test::Unit::TestCase
     end
   end
   
-  def test_generate_active_record
-    use_active_record do
-      orm_common
-      cont = <<-CONT
-class ZoosController < Mack::Controller::Base
-
-  # GET /zoos
-  def index
-    @zoos = Zoo.find(:all)
-  end
-
-  # GET /zoos/1
-  def show
-    @zoo = Zoo.find(params(:id))
-  end
-
-  # GET /zoos/new
-  def new
-    @zoo = Zoo.new
-  end
-
-  # GET /zoos/1/edit
-  def edit
-    @zoo = Zoo.find(params(:id))
-  end
-
-  # POST /zoos
-  def create
-    @zoo = Zoo.new(params(:zoo))
-    if @zoo.save
-      redirect_to(zoos_show_url(:id => @zoo.id))
-    else
-      render(:action => "new")
-    end
-  end
-
-  # PUT /zoos/1
-  def update
-    @zoo = Zoo.find(params(:id))
-    if @zoo.update_attributes(params(:zoo))
-      redirect_to(zoos_show_url(:id => @zoo.id))
-    else
-      render(:action => "edit")
-    end
-  end
-
-  # DELETE /zoos/1
-  def delete
-    @zoo = Zoo.find(params(:id))
-    @zoo.destroy
-    redirect_to(zoos_index_url)
-  end
-
-end
-CONT
-      assert_equal cont, File.open(controller_file).read
-      
-      mod = <<-MOD
-class Zoo < ActiveRecord::Base
-end
-MOD
-      assert_equal mod, File.open(model_file).read
-    end
-  end
-  
   def test_generate_data_mapper
-    use_data_mapper do
-      orm_common
-            cont = <<-CONT
+    orm_common
+          cont = <<-CONT
 class ZoosController < Mack::Controller::Base
 
   # GET /zoos
@@ -132,80 +66,19 @@ class ZoosController < Mack::Controller::Base
 
 end
 CONT
-      assert_equal cont, File.open(controller_file).read
-      
-      mod = <<-MOD
+    assert_equal cont, File.open(controller_file).read
+    
+    mod = <<-MOD
 class Zoo
   include DataMapper::Persistence
   
 end
 MOD
-      assert_equal mod, File.open(model_file).read
-    end
+    assert_equal mod, File.open(model_file).read
   end
   
   def test_generate_data_mapper_with_columns
-    use_data_mapper do
-      orm_common_with_cols
-    end
-  end
-  
-  def test_generate_active_record_with_columns
-    use_active_record do
-      orm_common_with_cols
-    end
-  end
-  
-  def test_generate_no_orm
-    temp_app_config("orm" => nil) do
-      sg = ScaffoldGenerator.run("name" => "zoo")
-      File.open(File.join(MACK_CONFIG, "routes.rb")) do |f|
-        assert_match "r.resource :zoos # Added by rake generate:scaffold name=zoo", f.read
-      end
-      assert File.exists?(controller_file)
-      assert !File.exists?(views_directory)
-      cont = <<-CONT
-class ZoosController < Mack::Controller::Base
-
-  # GET /zoos
-  def index
-    "Zoos#index"
-  end
-
-  # POST /zoos
-  def create
-    "Zoos#create"
-  end
-
-  # GET /zoos/new
-  def new
-    "Zoos#new"
-  end
-
-  # GET /zoos/1
-  def show
-    "Zoos#show id: \#{params(:id)}"
-  end
-
-  # GET /zoos/1/edit
-  def edit
-    "Zoos#edit id: \#{params(:id)}"
-  end
-
-  # PUT /zoos/1
-  def update
-    "Zoos#update id: \#{params(:id)}"
-  end
-
-  # DELETE /zoos/1
-  def delete
-    "Zoos#delete"
-  end
-
-end
-CONT
-      assert_equal cont, File.open(controller_file).read
-    end
+    orm_common_with_cols
   end
   
   def orm_common_with_cols

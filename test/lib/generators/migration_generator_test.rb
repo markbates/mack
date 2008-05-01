@@ -11,30 +11,9 @@ class MigrationGeneratorTest < Test::Unit::TestCase
     assert_equal "002", mg.next_migration_number
   end
   
-  def test_generate_active_record
-    use_active_record do
-      assert app_config.orm = "active_record"
-      generate_common
-      mig = <<-MIG
-class FooBar < ActiveRecord::Migration
-
-  def self.up
-  end
-
-  def self.down
-  end
-
-end
-MIG
-      assert_equal mig, @file_body
-    end
-  end
-  
   def test_generate_data_mapper
-    use_data_mapper do
-      assert app_config.orm = "data_mapper"
-      generate_common
-      mig = <<-MIG
+    generate_common
+    mig = <<-MIG
 class FooBar < DataMapper::Migration
 
   def self.up
@@ -45,41 +24,12 @@ class FooBar < DataMapper::Migration
 
 end
 MIG
-      assert_equal mig, @file_body
-    end
-  end
-  
-  def test_generate_active_record_with_columns
-    use_active_record do
-      assert app_config.orm = "active_record"
-      generate_common({"NAME" => "create_users", "cols" => "username:string,email_address:string,created_at:datetime,updated_at:datetime"})
-      mig = <<-MIG
-class CreateUsers < ActiveRecord::Migration
-
-  def self.up
-    create_table :users do |t|
-      t.column :username, :string
-      t.column :email_address, :string
-      t.column :created_at, :datetime
-      t.column :updated_at, :datetime
-    end
-  end
-
-  def self.down
-    drop_table :users
-  end
-
-end
-MIG
-      assert_equal mig, @file_body
-    end
+    assert_equal mig, @file_body
   end
 
   def test_generate_data_mapper_with_columns
-    use_data_mapper do
-      assert app_config.orm = "data_mapper"
-      generate_common({"NAME" => "create_users", "cols" => "username:string,email_address:string,created_at:datetime,updated_at:datetime"})
-      mig = <<-MIG
+    generate_common({"NAME" => "create_users", "cols" => "username:string,email_address:string,created_at:datetime,updated_at:datetime"})
+    mig = <<-MIG
 class CreateUsers < DataMapper::Migration
 
   def self.up
@@ -97,8 +47,7 @@ class CreateUsers < DataMapper::Migration
 
 end
 MIG
-      assert_equal mig, @file_body
-    end
+    assert_equal mig, @file_body
   end
   
   def generate_common(opts = {})
