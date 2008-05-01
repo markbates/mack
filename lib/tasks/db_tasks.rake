@@ -52,28 +52,12 @@ namespace :db do
   namespace :schema do
     
     task :create => "mack:environment" do
-      if using_data_mapper? 
-        require 'data_mapper/migration'
-        unless DmSchemaInfo.table.exists?
-          DmSchemaInfo.table.create!
-          DmSchemaInfo.create(:version => 0)
-        end
-        @schema_info = DmSchemaInfo.first
-      elsif using_active_record?
-        require 'active_record/migration'
-        class CreateArSchemaInfo < ActiveRecord::Migration # :nodoc:
-          def self.up
-            create_table :schema_info do |t|
-              t.column :version, :integer, :default => 0
-            end
-          end # up
-        end # CreateArSchemaInfo
-        unless ArSchemaInfo.table_exists?
-          CreateArSchemaInfo.up
-          ArSchemaInfo.create(:version => 0)
-        end
-        @schema_info = ArSchemaInfo.find(:first)
+      require 'data_mapper/migration'
+      unless DmSchemaInfo.table.exists?
+        DmSchemaInfo.table.create!
+        DmSchemaInfo.create(:version => 0)
       end
+      @schema_info = DmSchemaInfo.first
     end # create
     
   end # schema

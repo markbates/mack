@@ -2,8 +2,6 @@ module Mack
   # Even though it's called, SimpleServer, this might be the only server you need to run
   # a Mack application.
   # 
-  #   $ ruby script/server
-  # 
   # This SimpleServer does not use Thin. But does work with anything that Rack has a handler for.
   class SimpleServer
     

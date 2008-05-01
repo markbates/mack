@@ -20,19 +20,7 @@ module Mack
         object_names.each do |name|
           object = instance_variable_get("@#{name}")
           if object
-            if object.is_a?(ActiveRecord::Base)
-              object.errors.each do |key, value|
-                if value.match(/^\^/)
-                  app_errors << value[1..value.length]
-                else
-                  if key.class == String and key == "base"
-                    app_errors << "#{value}"
-                  else
-                    app_errors << "#{object.business_name} #{key.underscore.split('_').join(' ').humanize} #{value}"
-                  end
-                end
-              end
-            elsif object.is_a?(DataMapper::Persistence)
+            if object.is_a?(DataMapper::Persistence)
               app_errors << object.errors.full_messages
             end
           end
