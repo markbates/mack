@@ -14,9 +14,7 @@ class ScaffoldGenerator < Genosaurus
   end
   
   def after_generate
-    if app_config.orm
-      ModelGenerator.run(@options)
-    end
+    ModelGenerator.run(@options)
     update_routes_file
   end
   
