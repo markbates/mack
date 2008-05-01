@@ -146,7 +146,7 @@ ERB
 
 <%= error_messages_for :zoo %>
 
-<form action="<%= zoos_create_url %>" class="new_zoo" id="new_zoo" method="post">
+<% form(zoos_create_url, :class => "new_zoo", :id => "new_zoo") do %>
   <p>
     <b>Name</b><br />
     <input type="text" name="zoo[name]" id="zoo_name" size="30" value="<%= @zoo.name %>" />
@@ -158,7 +158,7 @@ ERB
   <p>
     <input id="zoo_submit" name="commit" type="submit" value="Create" />
   </p>
-</form>
+<% end %>
 
 <%= link_to("Back", zoos_index_url) %>
 ERB
@@ -247,11 +247,11 @@ ERB
 
 <%= error_messages_for :zoo %>
 
-<form action="<%= zoos_create_url %>" class="new_zoo" id="new_zoo" method="post">
+<% form(zoos_create_url, :class => "new_zoo", :id => "new_zoo") do %>
   <p>
     <input id="zoo_submit" name="commit" type="submit" value="Create" />
   </p>
-</form>
+<% end %>
 
 <%= link_to("Back", zoos_index_url) %>
 ERB
