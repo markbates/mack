@@ -55,10 +55,6 @@ module Mack
         content_tag(:a, options, link_text)
       end
       
-      def b(options = {}, &block)
-        content_tag(:b, options, &block)
-      end
-      
       # Builds an HTML tag.
       # 
       # Examples:
@@ -66,7 +62,7 @@ module Mack
       #   content_tag("div", :class => :foo) {"hello world!"} # => <div class="foo">hello world!</div>
       def content_tag(tag, options = {}, content = nil, &block)
         if block_given?
-          concat("<#{tag}#{build_options(options)}>", block.binding)
+          concat("<#{tag}#{build_options(options)}>\n", block.binding)
           yield
           concat("</#{tag}>", block.binding)
         else
@@ -104,7 +100,7 @@ module Mack
       end
       
       def form(options = {}, &block)
-        options = {:method => "post"}.merge(options)
+        options = {:method => :post}.merge(options)
         if options[:id]
           options = {:class => options[:id]}.merge(options)
         end
@@ -112,7 +108,16 @@ module Mack
           options = {:enctype => "multipart/form-data"}.merge(options)
           options.delete(:multipart)
         end
-        content_tag(:form, options, &block)
+        meth = nil
+        unless options[:method] == :get || options[:method] == :post
+          meth = "<input name=\"_method\" type=\"hidden\" value=\"#{options[:method]}\" />\n"
+          options[:method] = :post
+        end
+        concat("<form#{build_options(options)}>\n", block.binding)
+        concat(meth, block.binding) unless meth.blank?
+        yield
+        concat("</form>", block.binding)
+        # content_tag(:form, options, &block)
       end
       
       private

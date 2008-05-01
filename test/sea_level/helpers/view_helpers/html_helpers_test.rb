@@ -17,17 +17,6 @@ class HtmlHelpersTest < Test::Unit::TestCase
     Mack::ViewBinder.render(template, MockController.new)
   end
   
-  def test_b_tag
-    tmp = <<-EOF
-before
-<% b do -%>
-hello
-<% end %>
-after
-    EOF
-    assert_match "<b>hello\n</b>", erb(tmp)
-  end
-  
   def test_link
     assert_equal a("http://www.mackframework.com"), link_to("http://www.mackframework.com")
     
@@ -79,19 +68,32 @@ after
 Hello
 <% end %>
     EOF
-    assert_equal "<form action=\"http://www.mackframework.com\" method=\"post\">Hello\n</form>", erb(tmp)
+    assert_equal "<form action=\"http://www.mackframework.com\" method=\"post\">\nHello\n</form>", erb(tmp)
     tmp = <<-EOF
 <% form(:action => "http://www.mackframework.com", :multipart => true) do %>
 Hello
 <% end %>
     EOF
-    assert_equal "<form action=\"http://www.mackframework.com\" enctype=\"multipart/form-data\" method=\"post\">Hello\n</form>", erb(tmp)
+    assert_equal "<form action=\"http://www.mackframework.com\" enctype=\"multipart/form-data\" method=\"post\">\nHello\n</form>", erb(tmp)
     tmp = <<-EOF
 <% form(:action => "http://www.mackframework.com", :id => "my_form") do %>
 Hello
 <% end %>
     EOF
-    assert_equal "<form action=\"http://www.mackframework.com\" class=\"my_form\" id=\"my_form\" method=\"post\">Hello\n</form>", erb(tmp)
+    assert_equal "<form action=\"http://www.mackframework.com\" class=\"my_form\" id=\"my_form\" method=\"post\">\nHello\n</form>", erb(tmp)
+    
+    tmp = <<-EOF
+<% form(:action => "http://www.mackframework.com", :id => "my_form", :method => :get) do %>
+Hello
+<% end %>
+    EOF
+    assert_equal "<form action=\"http://www.mackframework.com\" class=\"my_form\" id=\"my_form\" method=\"get\">\nHello\n</form>", erb(tmp)
+    tmp = <<-EOF
+<% form(:action => "http://www.mackframework.com", :id => "my_form", :method => :put) do %>
+Hello
+<% end %>
+    EOF
+    assert_equal "<form action=\"http://www.mackframework.com\" class=\"my_form\" id=\"my_form\" method=\"post\">\n<input name=\"_method\" type=\"hidden\" value=\"put\" />\nHello\n</form>", erb(tmp)
   end
   
 end
