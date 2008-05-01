@@ -64,32 +64,32 @@ class HtmlHelpersTest < Test::Unit::TestCase
   
   def test_form
     tmp = <<-EOF
-<% form(:action => "http://www.mackframework.com") do %>
+<% form("http://www.mackframework.com") do %>
 Hello
 <% end %>
     EOF
     assert_equal "<form action=\"http://www.mackframework.com\" method=\"post\">\nHello\n</form>", erb(tmp)
     tmp = <<-EOF
-<% form(:action => "http://www.mackframework.com", :multipart => true) do %>
+<% form("http://www.mackframework.com", :multipart => true) do %>
 Hello
 <% end %>
     EOF
     assert_equal "<form action=\"http://www.mackframework.com\" enctype=\"multipart/form-data\" method=\"post\">\nHello\n</form>", erb(tmp)
     tmp = <<-EOF
-<% form(:action => "http://www.mackframework.com", :id => "my_form") do %>
+<% form("http://www.mackframework.com", :id => "my_form") do %>
 Hello
 <% end %>
     EOF
     assert_equal "<form action=\"http://www.mackframework.com\" class=\"my_form\" id=\"my_form\" method=\"post\">\nHello\n</form>", erb(tmp)
     
     tmp = <<-EOF
-<% form(:action => "http://www.mackframework.com", :id => "my_form", :method => :get) do %>
+<% form("http://www.mackframework.com", :id => "my_form", :method => :get) do %>
 Hello
 <% end %>
     EOF
     assert_equal "<form action=\"http://www.mackframework.com\" class=\"my_form\" id=\"my_form\" method=\"get\">\nHello\n</form>", erb(tmp)
     tmp = <<-EOF
-<% form(:action => "http://www.mackframework.com", :id => "my_form", :method => :put) do %>
+<% form("http://www.mackframework.com", :id => "my_form", :method => :put) do %>
 Hello
 <% end %>
     EOF

@@ -99,8 +99,8 @@ module Mack
         "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS\" href=\"#{url}\">"
       end
       
-      def form(options = {}, &block)
-        options = {:method => :post}.merge(options)
+      def form(action, options = {}, &block)
+        options = {:method => :post, :action => action}.merge(options)
         if options[:id]
           options = {:class => options[:id]}.merge(options)
         end
