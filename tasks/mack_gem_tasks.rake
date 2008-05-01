@@ -58,6 +58,7 @@ namespace :gem do
         s.add_dependency("daemons", "1.0.10")
         s.add_dependency("erubis", "2.5.0")
         s.add_dependency("genosaurus", "1.1.3")
+        s.add_dependency("datamapper", "0.3.2")
         
       
         s.rubyforge_project = gh.project
