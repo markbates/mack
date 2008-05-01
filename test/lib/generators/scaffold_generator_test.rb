@@ -92,8 +92,7 @@ MOD
 
 <%= error_messages_for :zoo %>
 
-<form action="<%= zoos_update_url(:id => @zoo.id) %>" class="edit_zoo" id="edit_zoo" method="post">
-  <input type="hidden" name="_method" value="put">
+<% form(zoos_update_url(:id => @zoo.id), :class => "edit_zoo", :id => "edit_zoo", :method => :put) do %>
   <p>
     <b>Name</b><br />
     <input type="text" name="zoo[name]" id="zoo_name" size="30" value="<%= @zoo.name %>" />
@@ -105,7 +104,7 @@ MOD
   <p>
     <input id="zoo_submit" name="commit" type="submit" value="Update" />
   </p>
-</form>
+<% end %>
 
 <%= link_to("Back", zoos_index_url) %>
 ERB
@@ -209,12 +208,11 @@ ERB
 
 <%= error_messages_for :zoo %>
 
-<form action="<%= zoos_update_url(:id => @zoo.id) %>" class="edit_zoo" id="edit_zoo" method="post">
-  <input type="hidden" name="_method" value="put">
+<% form(zoos_update_url(:id => @zoo.id), :class => "edit_zoo", :id => "edit_zoo", :method => :put) do %>
   <p>
     <input id="zoo_submit" name="commit" type="submit" value="Update" />
   </p>
-</form>
+<% end %>
 
 <%= link_to("Back", zoos_index_url) %>
 ERB

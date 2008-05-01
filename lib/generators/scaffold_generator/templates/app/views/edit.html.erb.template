@@ -2,8 +2,7 @@
 
 <%%= error_messages_for :<%= @name_singular %> %>
 
-<form action="<%%= <%= @name_singular %>s_update_url(:id => @<%= @name_singular %>.id) %>" class="edit_<%= @name_singular %>" id="edit_<%= @name_singular %>" method="post">
-  <input type="hidden" name="_method" value="put">
+<%% form(<%= @name_singular %>s_update_url(:id => @<%= @name_singular %>.id), :class => "edit_<%= @name_singular %>", :id => "edit_<%= @name_singular %>", :method => :put) do %>
 <% for column in columns -%>
 <% unless column.column_name == "created_at" || column.column_name == "updated_at" -%>
   <p>
@@ -15,6 +14,6 @@
   <p>
     <input id="<%= @name_singular %>_submit" name="commit" type="submit" value="Update" />
   </p>
-</form>
+<%% end %>
 
 <%%= link_to("Back", <%= @name_singular %>s_index_url) %>
