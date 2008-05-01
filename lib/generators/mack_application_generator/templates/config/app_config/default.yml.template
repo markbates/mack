@@ -1,5 +1,3 @@
 whiny_config_missing: false
 
 mack::session_id: _<%= @options["app"].downcase %>_session_id
-
-orm: <%= @options["orm"] %>

@@ -15,16 +15,12 @@ application_layout:
   type: file
   template_path: <%= File.join(templates_directory_path, "app", "views", "layouts", "application.html.erb.template") %>
   output_path: <%= File.join(app_name, "app", "views", "layouts", "application.html.erb") %>
-<% ["default", "development", "production", "test"].each do |env| -%>
+<% ["default", "development", "production", "test", "database"].each do |env| -%>
 <%= env %>_yml:
   type: file
   template_path: <%= File.join(templates_directory_path, "config", "app_config", "#{env}.yml.template") %>
   output_path: <%= File.join(app_name, "config", "app_config", "#{env}.yml") %>
 <% end -%>
-database_yml_file:
-  type: file
-  template_path: <%= File.join(templates_directory_path, "config", "#{orm}_database.yml.template") %>
-  output_path: <%= File.join(app_name, "config", "database.yml") %>
 <% ["routes.rb", "thin.ru", "thin.yml"].each do |f| -%>
 <%= f %>_config_file:
   type: file

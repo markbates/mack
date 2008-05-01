@@ -1,4 +1,4 @@
-class <%= param(:name).camelcase %> < <%= app_config.orm.camelcase %>::Migration
+class <%= param(:name).camelcase %> < DataMapper::Migration
 
   def self.up
 <%

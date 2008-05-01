@@ -3,7 +3,7 @@ models_directory:
   output_path: <%= File.join("app", "models") %>
 model_template:
   type: file
-  template_path: <%= File.join(templates_directory_path, "#{app_config.orm}.rb.template") %>
+  template_path: <%= File.join(templates_directory_path, "model.rb.template") %>
   output_path: <%= File.join("app", "models", "#{param(:name).singular.underscore}.rb") %>
 test_template:
   type: file
