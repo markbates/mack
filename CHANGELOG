@@ -1,3 +1,4 @@
+* Added test:stats and test:coverage Rake tasks.
 * Removed support for ActiveRecord
 * Fixed a bug where yields in ERB weren't giving the desired results.
 * DataMapper database.yml file can now be nested, and is generated as such.
@@ -7,6 +8,7 @@
 * gem: mack_ruby_core_extensions 0.1.23
 * gem: genosaurus 1.1.3
 * gem: datamapper 0.3.2
+* gem: rcov 0.8.1.2.0
 
 ===0.4.7
 * Added Mack::Request::UploadedFile class to make dealing with file uploads easy.
