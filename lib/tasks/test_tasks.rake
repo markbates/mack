@@ -10,7 +10,7 @@ namespace :test do
   
   desc "Report code statistics (KLOCs, etc) from the application. Requires the rcov gem."
   task :stats do |t|
-    x = `rcov test/**/*_test.rb -T --no-html`
+    x = `rcov test/**/*_test.rb -T --no-html -x Rakefile,config\/`
     @print = false
     x.each do |line|
       puts line if @print
@@ -24,7 +24,7 @@ namespace :test do
   
   desc "Generates test coverage from the application. Requires the rcov gem."
   task :coverage do |t|
-    `rcov test/**/*_test.rb`
+    `rcov test/**/*_test.rb -x Rakefile,config\/`
     `open coverage/index.html`
   end
   
