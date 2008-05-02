@@ -7,3 +7,5 @@ tmp
 *.pid
 test/fake_application/public/something/logo.gif
 test/fake_application/db/fake_application_test.db
+coverage/**/*.*
+coverage/*.*
