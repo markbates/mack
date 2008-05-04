@@ -12,17 +12,17 @@ app = ARGV[0]
 raise "You must specify a name for this application!" if app.nil?
 
 options = OpenStruct.new
-# options.orm = "data_mapper"
-options.version = "0.4.7.100"
+options.orm = "data_mapper"
+options.version = "0.5.0"
 
 opts = OptionParser.new do |opts|
   
-  # opts.on("-o [ORM]") do |v|
-  #   options.orm = v
-  # end
+  opts.on("-o [ORM]") do |v|
+    options.orm = v
+  end
   
 end
 
 opts.parse!(ARGV)
 
-MackApplicationGenerator.run({"version" => options.version, "app" => app})
+MackApplicationGenerator.run({"version" => options.version, "app" => app, "orm" => options.orm})

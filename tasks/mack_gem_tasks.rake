@@ -60,6 +60,7 @@ namespace :gem do
         s.add_dependency("genosaurus", "1.1.3")
         s.add_dependency("datamapper", "0.3.2")
         s.add_dependency("rcov", "0.8.1.2.0")
+        s.add_dependency("mack-data_mapper", "0.5.0")
         
       
         s.rubyforge_project = gh.project
