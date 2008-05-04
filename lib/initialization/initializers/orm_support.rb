@@ -1,7 +1,9 @@
 #--
 # setup ORM:
 #++
-require 'mack-data_mapper'
+orm = app_config.orm || 'data_mapper'
+require "mack-#{orm}"
+require "mack-#{orm}_tasks"
 # gem "data_objects", "0.2.0"
 # gem 'datamapper', "0.3.2"
 # require 'data_mapper'
