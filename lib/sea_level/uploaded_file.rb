@@ -1,3 +1,4 @@
+require File.join(File.dirname(__FILE__), 'request')
 module Mack
   # Wraps the Hash that Rack creates when you post a file.
   class Request::UploadedFile

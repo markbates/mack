@@ -30,7 +30,6 @@ namespace :test do
   
   task :empty do |t|
     ENV["TEST:EMPTY"] = "true"
-    puts ENV["TEST:EMPTY"]
   end
   
   task :raise_exception do |t|
