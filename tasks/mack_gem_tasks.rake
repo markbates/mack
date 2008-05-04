@@ -59,7 +59,7 @@ namespace :gem do
         s.add_dependency("erubis", "2.5.0")
         s.add_dependency("genosaurus", "1.1.3")
         s.add_dependency("rcov", "0.8.1.2.0")
-        s.add_dependency("mack-data_mapper", "0.5.1")
+        s.add_dependency("mack-data_mapper", gh.version)
         
       
         s.rubyforge_project = gh.project
