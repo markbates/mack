@@ -77,6 +77,8 @@ module Mack
       # An implicit render will happen if one is not specified in the action.
       # 
       # Only :action and :text will get layouts wrapped around them.
+      #
+      # You can also specify the response status code as part of the options hash.
       # 
       # Examples:
       #   class MyAwesomeController < Mack::Controller::Base
@@ -175,9 +177,16 @@ module Mack
       #     def get_index
       #       render(:url => "/")
       #     end
+      #
+      #     # This will render 'application/404' and set the response status code to 404
+      #     def to_the_unknown
+      #       return render(:action => '/application/404', :status => 404)
+      #     end
+      #        
       #   end
       def render(options = {:action => self.action_name})
         raise Mack::Errors::DoubleRender.new if render_performed?
+        response.status = options[:status] unless options[:status].nil?
         unless options[:action] || options[:text]
           options = {:layout => false}.merge(options)
         end
