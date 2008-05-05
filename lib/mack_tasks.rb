@@ -4,7 +4,6 @@ require 'rake/rdoctask'
 require 'rubygems'
 require 'application_configuration'
 
-require File.join(File.dirname(__FILE__), "initialization", "constants.rb")
 require File.join(File.dirname(__FILE__), "initialization", "configuration.rb")
 require File.join(File.dirname(__FILE__), "initialization", "initializers", "orm_support.rb")
 

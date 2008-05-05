@@ -58,7 +58,7 @@ module Mack
     class UnknownLayout < StandardError
       # Takes a layout name.
       def initialize(layout)
-        super("Could not find layout in: #{File.join(MACK_ROOT, "app", "views", layout.to_s + ".html.erb")}")
+        super("Could not find layout in: #{File.join(Mack::Configuration.root, "app", "views", layout.to_s + ".html.erb")}")
       end
     end
     

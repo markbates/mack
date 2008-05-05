@@ -31,7 +31,7 @@ class PluginGeneratorTest < Test::Unit::TestCase
   end
   
   def bandit_dir
-    File.join(MACK_PLUGINS, "bandit")
+    File.join(Mack::Configuration.plugins, "bandit")
   end
   
 end
