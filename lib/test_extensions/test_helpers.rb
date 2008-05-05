@@ -159,12 +159,15 @@ module Mack
     def build_response(res)
       @responses = [res]
       strip_cookies_from_response(res)
-      until res.successful?
-        [res].flatten.each do |r|
-          strip_cookies_from_response(r)
+      # only retry if it's a redirect request
+      if res.redirect? 
+        until res.successful?
+          [res].flatten.each do |r|
+            strip_cookies_from_response(r)
+          end
+          res = request.get(res["Location"])
+          @responses << res
         end
-        res = request.get(res["Location"])
-        @responses << res
       end
     end
     

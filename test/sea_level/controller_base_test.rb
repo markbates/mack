@@ -21,6 +21,9 @@ class ControllerBaseTest < Test::Unit::TestCase
       render(:xml => :on_disk_wants)
     end
     
+    def wants_404
+      render(:action => '/application/404', :status => 404)
+    end
   end
   
   Mack::Routes.build do |r|
@@ -28,6 +31,7 @@ class ControllerBaseTest < Test::Unit::TestCase
     r.on_disk_wants "/odw", :controller => "controller_base_test/wants_test", :action => :on_disk_wants
     r.ren_xml "/ren_xml", :controller => "controller_base_test/wants_test", :action => :ren_xml
     r.on_disk_wants_x "/odw_x", :controller => "controller_base_test/wants_test", :action => :on_disk_wants, :format => :xml
+    r.wants_unknown "/wants_404", :controller => "controller_base_test/wants_test", :action => :wants_404
   end
   
   def test_admin_index
@@ -39,6 +43,12 @@ class ControllerBaseTest < Test::Unit::TestCase
     get on_disk_wants_x_url
     assert_match "<greeting>Hello World</greeting>", response.body
     assert !response.body.match("<html>")
+  end
+  
+  def test_render_404
+    get wants_unknown_url
+    assert response.body.index("404!")
+    assert 404 == response.status
   end
   
   def test_render_xml
