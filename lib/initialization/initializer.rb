@@ -12,33 +12,18 @@ require 'uri'
 require 'drb'
 require 'rinda/ring'
 require 'rinda/tuplespace'
+require 'builder'
+require 'erubis'
+require 'erb'
+require 'genosaurus'
 
-# Set up Mack constants, if they haven't already been set up.
-unless Object.const_defined?("MACK_ENV")
-  (Object::MACK_ENV = (ENV["MACK_ENV"] ||= "development")).to_sym
-end
-(Object::MACK_ROOT = (ENV["MACK_ROOT"] ||= FileUtils.pwd)) unless Object.const_defined?("MACK_ROOT")
+require File.join(File.dirname(__FILE__), "configuration.rb")
 
-Object::MACK_PUBLIC = File.join(MACK_ROOT, "public") unless Object.const_defined?("MACK_PUBLIC")
-Object::MACK_APP = File.join(MACK_ROOT, "app") unless Object.const_defined?("MACK_APP")
-Object::MACK_LIB = File.join(MACK_ROOT, "lib") unless Object.const_defined?("MACK_LIB")
-Object::MACK_CONFIG = File.join(MACK_ROOT, "config") unless Object.const_defined?("MACK_CONFIG")
-Object::MACK_VIEWS = File.join(MACK_APP, "views") unless Object.const_defined?("MACK_VIEWS")
-Object::MACK_LAYOUTS = File.join(MACK_VIEWS, "layouts") unless Object.const_defined?("MACK_LAYOUTS")
-Object::MACK_PLUGINS = File.join(MACK_ROOT, "vendor", "plugins") unless Object.const_defined?("MACK_PLUGINS")
-
-unless Object.const_defined?("MACK_INITIALIZED")
-  puts "Starting application in #{MACK_ENV} mode."
+unless Mack::Configuration.initialized
   
-  Object::MACK_INITIALIZED = true
+  puts "Starting application in #{Mack::Configuration.env} mode."
+  puts "Mack root: #{Mack::Configuration.root}"
   
-  # Set up 'Rails' constants to allow for easier use of existing gems/plugins like application_configuration.
-  # I would like to take these out eventually, but for right now, it's not doing too much harm.
-  # Object::RAILS_ENV = MACK_ENV unless Object.const_defined?("RAILS_ENV")
-  # Object::RAILS_ROOT = MACK_ROOT unless Object.const_defined?("RAILS_ROOT")
-
-  require File.join(File.dirname(__FILE__), "configuration.rb")
-
   require File.join(File.dirname(__FILE__), "initializers", "logging.rb")
   
   require File.join(File.dirname(__FILE__), "initializers", "orm_support.rb")
@@ -60,10 +45,10 @@ unless Object.const_defined?("MACK_INITIALIZED")
   # set up application stuff:
 
   # set up routes:
-  require File.join(MACK_CONFIG, "routes")
+  require File.join(Mack::Configuration.config_directory, "routes")
   
   # set up initializers:
-  Dir.glob(File.join(MACK_CONFIG, "initializers", "**/*.rb")) do |d|
+  Dir.glob(File.join(Mack::Configuration.config_directory, "initializers", "**/*.rb")) do |d|
     require d
   end
   Mack::Utils::GemManager.instance.do_requires
@@ -71,13 +56,32 @@ unless Object.const_defined?("MACK_INITIALIZED")
   # require 'plugins':
   require File.join(File.dirname(__FILE__), "initializers", "plugins.rb")
   
+  # make sure that default_controller is available to other controllers
+  path = File.join(Mack::Configuration.app_directory, "controllers", "default_controller.rb")
+  require path if File.exists?(path) 
+  
   # require 'app' files:
-  Dir.glob(File.join(MACK_APP, "**/*.rb")).each do |d|
-    require d
+  Dir.glob(File.join(Mack::Configuration.app_directory, "**/*.rb")).each do |d|
+    # puts "d: #{d}"
+    begin
+      require d
+    rescue NameError => e
+      if e.message.match("uninitialized constant")
+        mod = e.message.gsub("uninitialized constant ", "")
+        x =%{
+          module ::#{mod}
+          end
+        }
+        eval(x)
+        require d
+      else
+        raise e
+      end
+    end
   end
   
   # require 'lib' files:
-  Dir.glob(File.join(MACK_LIB, "**/*.rb")).each do |d|
+  Dir.glob(File.join(Mack::Configuration.lib_directory, "**/*.rb")).each do |d|
     require d
   end
   
@@ -101,4 +105,6 @@ unless Object.const_defined?("MACK_INITIALIZED")
       h = "Mack::ViewHelpers::#{cont}".constantize
       h.include_safely_into(Mack::ViewBinder)
   end
+  
+  Mack::Configuration.set(:initialized, "true") if Mack::Configuration.initialized.nil?
 end

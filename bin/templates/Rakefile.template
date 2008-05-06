@@ -1,6 +1,0 @@
-require 'rake'
-require 'rake/testtask'
-require 'rake/rdoctask'
-
-gem 'mack', '<%= mack_version %>'
-require 'mack_tasks'

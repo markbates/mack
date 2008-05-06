@@ -22,15 +22,15 @@ namespace :mack do
         d_handler = "thin"
       rescue Exception => e
       end
-
-      MACK_ROOT = FileUtils.pwd unless Object.const_defined?("MACK_ROOT")
+      
+      Mack::Configuration.set(:root, FileUtils.pwd) if Mack::Configuration.root.nil?
 
       options = OpenStruct.new
       options.port = (ENV["PORT"] ||= "3000") # Does NOT work with Thin!! You must edit the thin.yml file!
       options.handler = (ENV["HANDLER"] ||= d_handler)
 
 
-      # require File.join(MACK_ROOT, "config", "boot.rb")
+      # require File.join(Mack::Configuration.root, "config", "boot.rb")
       require 'mack'
 
       if options.handler == "thin"

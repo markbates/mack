@@ -21,6 +21,9 @@ class ControllerBaseTest < Test::Unit::TestCase
       render(:xml => :on_disk_wants)
     end
     
+    def wants_404
+      render(:action => '/application/404', :status => 404)
+    end
   end
   
   Mack::Routes.build do |r|
@@ -28,12 +31,24 @@ class ControllerBaseTest < Test::Unit::TestCase
     r.on_disk_wants "/odw", :controller => "controller_base_test/wants_test", :action => :on_disk_wants
     r.ren_xml "/ren_xml", :controller => "controller_base_test/wants_test", :action => :ren_xml
     r.on_disk_wants_x "/odw_x", :controller => "controller_base_test/wants_test", :action => :on_disk_wants, :format => :xml
+    r.wants_unknown "/wants_404", :controller => "controller_base_test/wants_test", :action => :wants_404
+  end
+  
+  def test_admin_index
+    get admin_users_index_url
+    assert_match "Hello from Admin::UsersController", response.body
   end
   
   def test_format_on_route_definition_sets_initial_format
     get on_disk_wants_x_url
     assert_match "<greeting>Hello World</greeting>", response.body
     assert !response.body.match("<html>")
+  end
+  
+  def test_render_404
+    get wants_unknown_url
+    assert response.body.index("404!")
+    assert 404 == response.status
   end
   
   def test_render_xml
@@ -101,6 +116,16 @@ class ControllerBaseTest < Test::Unit::TestCase
     assert_match "hello from: no_action_in_cont_served_from_public", response.body
     # because it's being served from the public directory we shouldn't wrap a layout around it.
     # assert !response.body.match("<title>Application Layout</title>") 
+  end
+  
+  def test_no_controller_served_from_public
+    get "/something/hello"
+    assert_response :success
+    assert_match "Hi from public/something/hello.html", response.body
+  end
+  
+  def test_no_controller_nothing_in_public
+    assert_raise(Mack::Errors::ResourceNotFound) { get "/dflsjflsdjf/sadlfjsdlfjasldf/sdljsadlsdfl.html" }
   end
   
   def test_basic_redirect_to

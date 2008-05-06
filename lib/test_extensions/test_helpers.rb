@@ -125,6 +125,20 @@ module Mack
       test_cookies.delete(name)
     end
     
+    def method_missing(sym, *args)
+      sym = sym.to_s
+      case sym
+      when /^clean_(.+)/
+        captures = sym.match(/^clean_(.+)/).captures
+        thing = eval(captures.first)
+        if File.exists?(thing)
+          FileUtils.rm_rf(thing)
+        end
+      else
+        raise NoMethodError.new(sym)
+      end
+    end
+    
     private
     def test_cookies
       @test_cookies = {} if @test_cookies.nil?
@@ -145,12 +159,15 @@ module Mack
     def build_response(res)
       @responses = [res]
       strip_cookies_from_response(res)
-      until res.successful?
-        [res].flatten.each do |r|
-          strip_cookies_from_response(r)
+      # only retry if it's a redirect request
+      if res.redirect? 
+        until res.successful?
+          [res].flatten.each do |r|
+            strip_cookies_from_response(r)
+          end
+          res = request.get(res["Location"])
+          @responses << res
         end
-        res = request.get(res["Location"])
-        @responses << res
       end
     end
     

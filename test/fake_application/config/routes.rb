@@ -1,5 +1,7 @@
 Mack::Routes.build do |r|
 
+  r.resource "admin/users"
+
   r.connect "/", :controller => :tst_home_page
   r.connect "foo", :controller => :tst_home_page, :action => :foo
   r.pickles "/pickles", :controller => :tst_another, :action => :foo, :method => :post

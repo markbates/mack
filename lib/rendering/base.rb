@@ -41,7 +41,7 @@ module Mack
       private
       # Used to render a file from disk.
       def render_file(f, options = {})
-        options = {:is_partial => false, :ext => ".#{self.params(:format)}.erb", :dir => MACK_VIEWS}.merge(options)
+        options = {:is_partial => false, :ext => ".#{self.params(:format)}.erb", :dir => Mack::Configuration.views_directory}.merge(options)
         partial = f.to_s
         parts = partial.split("/")
         if parts.size == 1
@@ -53,6 +53,7 @@ module Mack
           parts[parts.size - 1] = "_" << parts.last if options[:is_partial]
           partial = File.join(options[:dir], parts.join("/") + options[:ext])
         end
+        raise Errno::ENOENT.new(partial) unless File.exists?(partial)
         return Mack::ViewBinder.render(File.open(partial).read, self.view_binder.controller, options)
       end
       

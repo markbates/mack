@@ -1,7 +1,6 @@
 rule /\#.*/ do |t|
   env = t.name.match(/\#.*/).to_s.gsub("#", "")
-  Object::MACK_ENV = env
-  ENV["MACK_ENV"] = env
+  Mack::Configuration.set(:env, env)
   name = t.name.gsub("##{env}", "")
   Rake::Task[name].invoke
 end
@@ -22,6 +21,5 @@ rule /^generate:/ do |t|
   klass = t.name.gsub("generate:", '')
   Rake::Task["environment"].invoke
   klass = "#{klass.camelcase}Generator"
-  gen = klass.constantize.new(ENV)
-  gen.run
+  gen = klass.constantize.run(ENV.to_hash)
 end

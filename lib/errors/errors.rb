@@ -42,6 +42,9 @@ module Mack
       end
     end # ResourceNotFound
     
+    class UnknownController < NameError
+    end
+    
     # Raised when a route that matches the pattern of the incoming route AND the method of the request can't be found.
     # It's important to note that BOTH the PATTERN and the HTTP METHOD HAVE to match for a route to be found!
     class UndefinedRoute < StandardError
@@ -55,7 +58,7 @@ module Mack
     class UnknownLayout < StandardError
       # Takes a layout name.
       def initialize(layout)
-        super("Could not find layout in: #{File.join(MACK_ROOT, "app", "views", layout.to_s + ".html.erb")}")
+        super("Could not find layout in: #{File.join(Mack::Configuration.root, "app", "views", layout.to_s + ".html.erb")}")
       end
     end
     
@@ -98,15 +101,6 @@ module Mack
       def initialize(method)
         super("METHOD: #{method.to_s.upcase} is unsupported by render url.")
       end
-    end
-    
-    # Raised if there are migrations that need to be run before a task is performed.
-    class UnrunMigrations < StandardError
-      # Taks the number of migrations that need to be run.
-      def initialize(number)
-        super("You currently have #{number} #{number == 1 ? "migration" : "migrations"} that #{number == 1 ? "needs" : "need"} to be run.")
-      end
-      
     end
     
   end # Errors

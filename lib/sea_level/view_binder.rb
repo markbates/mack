@@ -1,5 +1,3 @@
-require 'builder'
-# require 'erubis'
 # This class is used to do all the view level bindings.
 # It allows for seperation between the controller and the view levels.
 class Mack::ViewBinder
@@ -13,11 +11,6 @@ class Mack::ViewBinder
     transfer_vars(@controller)
     @xml_output = ""
     @xml = Builder::XmlMarkup.new(:target => @xml_output, :indent => 1)
-  end
-  
-  # Returns the binding for this class.
-  def view_binding
-    binding
   end
   
   # If a method can not be found then the :locals key of
@@ -59,6 +52,19 @@ class Mack::ViewBinder
     raise Mack::Errors::UnknownRenderOption.new(options)
   end
   
+  def run(io)
+    # TODO: find a nicer way of doing this:
+    if ((controller.params(:format).to_sym == :xml) || options[:format] == :xml) && (options[:action] || options[:xml])
+      return eval(io, binding)
+    else
+      return Erubis::Eruby.new(io).result(binding)
+    end
+  end
+  
+  def concat(txt, b)
+    eval( "_buf", b) << txt
+  end
+  
   private
   
   # Transfer instance variables from the controller to the view.
@@ -70,17 +76,11 @@ class Mack::ViewBinder
   
   class << self
     
-    # Creates a Mack::ViewBinder and then passes the io through ERB
+    # Creates a Mack::ViewBinder and then passes the io through Erubis::Eruby
     # and returns a String. The io can be either an IO object or a String.
     def render(io, controller, options = {})
       vb = Mack::ViewBinder.new(controller, options)
-      # TODO: find a nicer way of doing this:
-      if ((controller.params(:format).to_sym == :xml) || options[:format] == :xml) && (options[:action] || options[:xml])
-        return eval(io, vb.view_binding)
-      else
-        return ERB.new(io).result(vb.view_binding)
-      end
-      # return Erubis::Eruby.new(io).result(vb.view_binding)
+      vb.run(io)
     end
     
   end

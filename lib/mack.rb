@@ -22,12 +22,17 @@ module Mack
               redirect_to(route)
             else
               # let's handle a normal request:
-              c = "#{route[:controller].to_s.camelcase}Controller".constantize.new(self.request, self.response, self.cookies)
+              begin
+                cont = "#{route[:controller].to_s.camelcase}Controller".constantize
+              rescue NameError => e
+                raise Mack::Errors::ResourceNotFound.new(self.request.path_info)
+              end
+              c = cont.new(self.request, self.response, self.cookies)
               self.response.controller = c
               self.response.write(c.run)
             end
           rescue Mack::Errors::ResourceNotFound, Mack::Errors::UndefinedRoute => e
-            return try_to_find_resource(env, self.request.path_info, e)
+            return try_to_find_resource(env, e)
           end
         end # setup
       rescue Exception => e
@@ -69,9 +74,9 @@ module Mack
             exception = e
           end
         end
-        return self.response.finish unless exception
       end
       raise exception if exception
+      self.response.finish
     end
     
     def session
@@ -102,13 +107,14 @@ module Mack
       id
     end
     
-    def try_to_find_resource(env, path_info, exception)
+    def try_to_find_resource(env, exception)
+      env = env.dup
       # we can't find a route for this, so let's try and see if it's in the public directory:
-      if File.extname(path_info).blank?
-        path_info << ".html"
+      if File.extname(env["PATH_INFO"]).blank?
+        env["PATH_INFO"] << ".html"
       end
-      if File.exists?(File.join(MACK_PUBLIC, path_info))
-        return Rack::File.new(File.join(MACK_PUBLIC)).call(env)
+      if File.exists?(File.join(Mack::Configuration.public_directory, env["PATH_INFO"]))
+        return Rack::File.new(File.join(Mack::Configuration.public_directory)).call(env)
       else
         raise exception
       end

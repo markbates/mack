@@ -1,0 +1,16 @@
+require 'rubygems'
+require "test/unit"
+require 'fileutils'
+
+ENV["_mack_env"] = "test"
+
+# load the mack framework:
+load(File.join(File.dirname(__FILE__), "..", "Rakefile"))
+require 'mack'
+
+# place common methods, assertions, and other type things in this file so
+# other tests will have access to them.
+
+class Test::Unit::TestCase
+  
+end

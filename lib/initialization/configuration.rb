@@ -1,8 +1,30 @@
 module Mack
+  
   # All configuration for the Mack subsystem happens here. Each of the default environments,
   # production, development, and test have their own default configuration options. These
   # get merged with overall default options.
   module Configuration # :nodoc:
+
+    def self.method_missing(sym, *args)
+      ev = "_mack_#{sym}".downcase
+      return ENV[ev]
+    end
+    
+    def self.set(name, value)
+      ENV["_mack_#{name.to_s.downcase}"] = value
+    end
+    
+    self.set(:env, "development") if self.env.nil?
+    self.set(:root, FileUtils.pwd) if self.root.nil?
+    self.set(:public_directory, File.join(self.root, "public")) if self.public_directory.nil?
+    self.set(:app_directory, File.join(self.root, "app")) if self.app_directory.nil?
+    self.set(:lib_directory, File.join(self.root, "lib")) if self.lib_directory.nil?
+    self.set(:config_directory, File.join(self.root, "config")) if self.config_directory.nil?
+    self.set(:views_directory, File.join(self.app_directory, "views")) if self.views_directory.nil?
+    self.set(:layouts_directory, File.join(self.views_directory, "layouts")) if self.layouts_directory.nil?
+    self.set(:plugins, File.join(self.root, "vendor", "plugins")) if self.plugins.nil?
+
+    
 
     # use local memory and store stuff for 24 hours:
     # use file for sessions and store them for 4 hours: 
@@ -15,12 +37,12 @@ module Mack
         "debug" => false,
         "adapter" => "file",
         "store_options" => 
-          {"dir" => File.join(MACK_ROOT, "tmp")},
+          {"dir" => File.join(Mack::Configuration.root, "tmp")},
         "expiry_time" => 14400,
         "logging" => {
           "logger_1" => {
             "type" => "file",
-            "file" => File.join(MACK_ROOT, "log", "cachetastic_caches_mack_session_cache.log")
+            "file" => File.join(Mack::Configuration.root, "log", "cachetastic_caches_mack_session_cache.log")
           }
         }
       }
@@ -37,6 +59,7 @@ module Mack
     DEFAULTS_TEST = {
       "log::level" => "error",
       "run_remote_tests" => true,
+      "mack::drb_timeout" => 0
     } unless self.const_defined?("DEFAULTS_TEST")
     
     unless self.const_defined?("DEFAULTS")
@@ -57,7 +80,7 @@ module Mack
           "logging" => {
             "logger_1" => {
               "type" => "file",
-              "file" => File.join(MACK_ROOT, "log", "cachetastic.log")
+              "file" => File.join(Mack::Configuration.root, "log", "cachetastic.log")
             }
           }
         },
@@ -72,12 +95,12 @@ module Mack
         "log::file" => true,
         "log::console_format" => "%l:\t[%d]\t%M",
         "log::file_format" => "%l:\t[%d]\t%M"
-      }.merge(eval("DEFAULTS_#{MACK_ENV.upcase}"))
+      }.merge(eval("DEFAULTS_#{Mack::Configuration.env.upcase}"))
     end
     
     app_config.load_hash(DEFAULTS, "mack_defaults")
-    app_config.load_file(File.join(MACK_CONFIG, "app_config", "default.yml"))
-    app_config.load_file(File.join(MACK_CONFIG, "app_config", "#{MACK_ENV}.yml"))
+    app_config.load_file(File.join(Mack::Configuration.config_directory, "app_config", "default.yml"))
+    app_config.load_file(File.join(Mack::Configuration.config_directory, "app_config", "#{Mack::Configuration.env}.yml"))
     # app_config.reload
     
   end

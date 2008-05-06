@@ -5,7 +5,7 @@ module Mack
     class Public < Base
       
       def render
-        render_file(options[:public], {:dir => MACK_PUBLIC, :ext => ".html", :layout => false}.merge(options))
+        render_file(options[:public], {:dir => Mack::Configuration.public_directory, :ext => ".html", :layout => false}.merge(options))
       end
       
     end

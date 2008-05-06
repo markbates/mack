@@ -26,7 +26,7 @@ module Mack
     # 
     # <tt>after_render</tt> filters get run after the rendering of the action has happened. At this point
     # there is an instance variable, <tt>@final_rendered_action</tt>, that is available on which work can be done.
-    # This variable will have any layouts rendered to, any ERB will have been processed, etc... It should be the final
+    # This variable will have any layouts rendered to, any Erubis::Eruby will have been processed, etc... It should be the final
     # String that will get rendered to the screen. This is a great place to do things like write a log, gzip, etc...
     class Filter
   

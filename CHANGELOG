@@ -1,5 +1,52 @@
 * Added 'options' banners to the mack and mack_ring_server binaries.
 
+===0.5.0
+* Added rake db:create and db:create:all rake tasks.
+* Refactored out constants, such as MACK_ROOT and MACK_ENV and made them into Mack::Configuration.env, Mack::Configuration.root, etc...
+* Added test:stats and test:coverage Rake tasks.
+* Removed support for ActiveRecord and DataMapper and moved them into their own gems.
+* Fixed a bug where yields in ERB weren't giving the desired results.
+* DataMapper database.yml file can now be nested, and is generated as such.
+* Cleaned up some tests, and refactored the HTML generation stuff.
+* Fixed a bug with the scaffold generating 'bad' methods instead of 'post'
+* Made error_messages_for more compatible with DataMapper.
+* Fixed a bug loading url.rb and uploaded_file.rb found by Phil Darnowsky
+* [dsutedja] Render method (in controller_base) now accepts response status code.
+* gem: mack_ruby_core_extensions 0.1.23
+* gem: genosaurus 1.1.4
+* gem: datamapper 0.3.2
+* gem: rcov 0.8.1.2.0
+* gem: mack-data_mapper 0.5.0
+* gem: erubis 2.6.0
+
+===0.4.7
+* Added Mack::Request::UploadedFile class to make dealing with file uploads easy.
+* Fixed bug where if a controller didn't exist it wasn't checking the public directory.
+* Generated DataMapper models no longer extend DataMapper::Base, but rather 'include DataMapper::Persistence'. This corresponds to the 0.9.0 upcoming release of DataMapper.
+* Fixed a bug in request.params that was making file uploads into strings.
+* Namespaced resourced routes, such as Admin::UserController, now work.
+* Added rake generator:list task to list all the available generators.
+* scaffold generator now creates a stub functional test.
+* model generator now creates a stub unit test.
+* Rake tasks in plugins now show up in the Rake tasks list.
+* All generators, including the 'mack' binary are now using Genosaurus.
+* [dsutedja] initializer will load Mack::Configuration.app_directory/controllers/default_controller.rb if it exists
+* [dsutedja] added link_image_to and image_tag to html helper.
+* gem: thin 0.8.1
+* gem: genosaurus 1.1.1
+
+===0.4.6
+* Mack now uses Erubis, http://www.kuwata-lab.com/erubis/, for it's rendering engine instead of ERB. This makes Mack even faster now! Yippie!
+* Added rake generate:model name=<model_name> (optional: cols=<col_1>:<col_1_type>,<col_2>:<col_2_type>) This will also create a migration for you.
+* Updated rake generate:migration name=<model_name> (optional: cols=<col_1>:<col_1_type>,<col_2>:<col_2_type>) This will create the proper table migration for you.
+* Updated rake generate:scaffold to use the ModelGenerator now.
+* ScaffoldGenerator now create input fields based on the type of columns, if any, passed in.
+* Overall general refactoring of the generator classes.
+* Fixed a bug with request logging not, well, logging.
+* gem: erubis 2.5.0
+* gem: thin 0.8.0
+>>>>>>> master:CHANGELOG
+
 ===0.4.5
 * Removed boot.rb file. It was unnecessary.
 * When a new Mack application is generated the Rakefile that gets generated is stamped with the Mack gem version used to create it. This ties the project to that gem. This can, of course, be upgraded as new Mack gems come out, but it's a good way of tying your app to a specific revision of Mack.

@@ -1,4 +1,5 @@
 require 'net/http'
+require File.join(File.dirname(__FILE__), "..", 'base')
 module Mack
   module Rendering
     # Used when someone calls render(:url => "http://www.mackframework.com")

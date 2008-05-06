@@ -2,8 +2,13 @@ require 'rubygems'
 require "test/unit"
 require 'rake'
 require 'fileutils'
-ENV["MACK_ENV"] = "test"
-ENV["MACK_ROOT"] = File.join(File.dirname(__FILE__), "fake_application")
+ENV["_mack_env"] = "test"
+ENV["_mack_root"] = File.join(File.dirname(__FILE__), "fake_application")
+
+if $genosaurus_output_directory.nil?
+  $genosaurus_output_directory = ENV["_mack_root"]
+  puts "$genosaurus_output_directory: #{$genosaurus_output_directory}"
+end
 
 # load the mack framework:
 require(File.join(File.dirname(__FILE__), "..", "lib", 'mack'))
@@ -36,18 +41,26 @@ end
 
 class Test::Unit::TestCase
   
-  def use_data_mapper
-    temp_app_config("orm" => "data_mapper") do
-      load(File.join(File.dirname(__FILE__), "..", "lib", "initialization", "initializers", "orm_support.rb"))
-      yield
-    end
+  def models_directory
+    File.join(Mack::Configuration.app_directory, "models")
   end
   
-  def use_active_record
-    temp_app_config("orm" => "active_record") do
-      load(File.join(File.dirname(__FILE__), "..", "lib", "initialization", "initializers", "orm_support.rb"))
-      yield
-    end
+  def migrations_directory
+    File.join(database_directory, "migrations")
+  end
+  
+  def database_directory
+    File.join(Mack::Configuration.root, "db")
+  end
+  
+  def test_directory
+    File.join(Mack::Configuration.root, "test")
+  end
+  
+  def model_generator_cleanup
+    clean_test_directory
+    clean_models_directory
+    clean_migrations_directory
   end
   
 end

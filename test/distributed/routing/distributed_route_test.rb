@@ -2,6 +2,18 @@ require File.dirname(__FILE__) + '/../../test_helper.rb'
 class DistributedRouteTest < Test::Unit::TestCase
   
   def setup
+    begin
+      DRb.start_service
+      Rinda::RingServer.new(Rinda::TupleSpace.new)
+      # DRb.thread.join
+    rescue Errno::EADDRINUSE => e
+      # it's fine to ignore this, it's expected that it's already running.
+      # all other exceptions should be thrown
+    end
+    begin
+      rs.take([:testing, :String, nil, nil], 0)
+    rescue Exception => e
+    end
     app_config.load_hash({"mack::use_distributed_routes" => true, "mack::distributed_app_name" => :known_app}, :distributed_route_test)
     Mack::Routes.build do |r| # force the routes to go the DRb server
       r.known "/my_known_app/my_known_url", :controller => :foo, :action => :bar
