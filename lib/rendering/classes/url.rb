@@ -9,7 +9,7 @@ module Mack
         options = {:method => :get, :domain => app_config.mack.site_domain, :raise_exception => false}.merge(self.options)
         case options[:method]
         when :get
-          do_render_url(options) do |uri, options|
+          do_render_remote_url(options) do |uri, options|
             unless options[:parameters].empty?
               uri = uri.to_s
               uri << "?"
@@ -25,7 +25,7 @@ module Mack
             Net::HTTP.get_response(uri)
           end
         when :post
-          do_render_url(options) do |uri, options|
+          do_render_remote_url(options) do |uri, options|
             Net::HTTP.post_form(uri, options[:parameters] || {})
           end
         else
@@ -34,7 +34,7 @@ module Mack
       end
       
       private
-      def do_render_url(options)
+      def do_render_remote_url(options)
         Timeout::timeout(app_config.mack.render_url_timeout || 5) do
           url = options[:url]
           unless url.match(/^[a-zA-Z]+:\/\//)
@@ -54,6 +54,6 @@ module Mack
         end
       end
       
-    end
-  end
-end
+    end # Url
+  end # Rendering
+end # Mack

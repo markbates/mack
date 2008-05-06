@@ -63,6 +63,12 @@ class Mack::ViewBinder
   
   def concat(txt, b)
     eval( "_buf", b) << txt
+  end 
+  
+  def app_for_rendering
+    ivar_cache do
+      Mack::Utils::Server.build_app
+    end
   end
   
   private
