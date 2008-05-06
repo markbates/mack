@@ -17,21 +17,13 @@ require 'erubis'
 require 'erb'
 require 'genosaurus'
 
-require File.join(File.dirname(__FILE__), "constants.rb")
+require File.join(File.dirname(__FILE__), "configuration.rb")
 
-unless Object.const_defined?("MACK_INITIALIZED")
-  puts "Starting application in #{MACK_ENV} mode."
-  puts "Mack root: #{MACK_ROOT}"
+unless Mack::Configuration.initialized
   
-  Object::MACK_INITIALIZED = true
+  puts "Starting application in #{Mack::Configuration.env} mode."
+  puts "Mack root: #{Mack::Configuration.root}"
   
-  # Set up 'Rails' constants to allow for easier use of existing gems/plugins like application_configuration.
-  # I would like to take these out eventually, but for right now, it's not doing too much harm.
-  # Object::RAILS_ENV = MACK_ENV unless Object.const_defined?("RAILS_ENV")
-  # Object::RAILS_ROOT = MACK_ROOT unless Object.const_defined?("RAILS_ROOT")
-
-  require File.join(File.dirname(__FILE__), "configuration.rb")
-
   require File.join(File.dirname(__FILE__), "initializers", "logging.rb")
   
   require File.join(File.dirname(__FILE__), "initializers", "orm_support.rb")
@@ -53,10 +45,10 @@ unless Object.const_defined?("MACK_INITIALIZED")
   # set up application stuff:
 
   # set up routes:
-  require File.join(MACK_CONFIG, "routes")
+  require File.join(Mack::Configuration.config_directory, "routes")
   
   # set up initializers:
-  Dir.glob(File.join(MACK_CONFIG, "initializers", "**/*.rb")) do |d|
+  Dir.glob(File.join(Mack::Configuration.config_directory, "initializers", "**/*.rb")) do |d|
     require d
   end
   Mack::Utils::GemManager.instance.do_requires
@@ -65,11 +57,11 @@ unless Object.const_defined?("MACK_INITIALIZED")
   require File.join(File.dirname(__FILE__), "initializers", "plugins.rb")
   
   # make sure that default_controller is available to other controllers
-  path = File.join(MACK_APP, "controllers", "default_controller.rb")
+  path = File.join(Mack::Configuration.app_directory, "controllers", "default_controller.rb")
   require path if File.exists?(path) 
   
   # require 'app' files:
-  Dir.glob(File.join(MACK_APP, "**/*.rb")).each do |d|
+  Dir.glob(File.join(Mack::Configuration.app_directory, "**/*.rb")).each do |d|
     # puts "d: #{d}"
     begin
       require d
@@ -89,7 +81,7 @@ unless Object.const_defined?("MACK_INITIALIZED")
   end
   
   # require 'lib' files:
-  Dir.glob(File.join(MACK_LIB, "**/*.rb")).each do |d|
+  Dir.glob(File.join(Mack::Configuration.lib_directory, "**/*.rb")).each do |d|
     require d
   end
   
@@ -113,4 +105,6 @@ unless Object.const_defined?("MACK_INITIALIZED")
       h = "Mack::ViewHelpers::#{cont}".constantize
       h.include_safely_into(Mack::ViewBinder)
   end
+  
+  Mack::Configuration.set(:initialized, "true") if Mack::Configuration.initialized.nil?
 end

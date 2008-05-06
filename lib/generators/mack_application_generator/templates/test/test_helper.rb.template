@@ -2,7 +2,7 @@ require 'rubygems'
 require "test/unit"
 require 'fileutils'
 
-ENV["MACK_ENV"] = "test"
+ENV["_mack_env"] = "test"
 
 # load the mack framework:
 load(File.join(File.dirname(__FILE__), "..", "Rakefile"))

@@ -3,7 +3,7 @@
 #++
 include Log4r
 
-log_dir_loc = File.join(MACK_ROOT, "log")
+log_dir_loc = File.join(Mack::Configuration.root, "log")
 FileUtils.mkdir_p(log_dir_loc)
 
 unless Object.const_defined?("MACK_DEFAULT_LOGGER")
@@ -17,7 +17,7 @@ unless Object.const_defined?("MACK_DEFAULT_LOGGER")
   # file:
   if app_config.log.file
     file_format = PatternFormatter.new(:pattern => app_config.log.file_format)
-    log.add(FileOutputter.new('fileOutputter', :filename => File.join(log_dir_loc, "#{MACK_ENV}.log"), :trunc => false, :formatter => file_format))
+    log.add(FileOutputter.new('fileOutputter', :filename => File.join(log_dir_loc, "#{Mack::Configuration.env}.log"), :trunc => false, :formatter => file_format))
   end
   
   Object::MACK_DEFAULT_LOGGER = log

@@ -31,7 +31,7 @@ class TstAnotherController < Mack::Controller::Base
   end
   
   def env
-    "MACK_ENV: #{MACK_ENV}"
+    "Mack::Configuration.env: #{Mack::Configuration.env}"
   end
   
   def kill_kenny_bad
