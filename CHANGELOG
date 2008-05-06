@@ -14,6 +14,7 @@
 * gem: datamapper 0.3.2
 * gem: rcov 0.8.1.2.0
 * gem: mack-data_mapper 0.5.0
+* gem: erubis 2.6.0
 
 ===0.4.7
 * Added Mack::Request::UploadedFile class to make dealing with file uploads easy.
