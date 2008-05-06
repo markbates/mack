@@ -57,7 +57,7 @@ namespace :gem do
         s.add_dependency("crypt", "1.1.4")
         s.add_dependency("daemons", "1.0.10")
         s.add_dependency("erubis", "2.5.0")
-        s.add_dependency("genosaurus", "1.1.3")
+        s.add_dependency("genosaurus", "1.1.4")
         s.add_dependency("rcov", "0.8.1.2.0")
         s.add_dependency("mack-data_mapper", gh.version)
         

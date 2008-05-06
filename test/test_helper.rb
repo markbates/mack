@@ -2,11 +2,11 @@ require 'rubygems'
 require "test/unit"
 require 'rake'
 require 'fileutils'
-ENV["MACK_ENV"] = "test"
-ENV["MACK_ROOT"] = File.join(File.dirname(__FILE__), "fake_application")
+ENV["_mack_env"] = "test"
+ENV["_mack_root"] = File.join(File.dirname(__FILE__), "fake_application")
 
 if $genosaurus_output_directory.nil?
-  $genosaurus_output_directory = ENV["MACK_ROOT"]
+  $genosaurus_output_directory = ENV["_mack_root"]
   puts "$genosaurus_output_directory: #{$genosaurus_output_directory}"
 end
 
@@ -42,7 +42,7 @@ end
 class Test::Unit::TestCase
   
   def models_directory
-    File.join(MACK_APP, "models")
+    File.join(Mack::Configuration.app_directory, "models")
   end
   
   def migrations_directory
@@ -50,11 +50,11 @@ class Test::Unit::TestCase
   end
   
   def database_directory
-    File.join(MACK_ROOT, "db")
+    File.join(Mack::Configuration.root, "db")
   end
   
   def test_directory
-    File.join(MACK_ROOT, "test")
+    File.join(Mack::Configuration.root, "test")
   end
   
   def model_generator_cleanup

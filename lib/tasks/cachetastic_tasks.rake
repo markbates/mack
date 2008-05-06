@@ -10,7 +10,7 @@ namespace :cachetastic do
       when "All"
         puts "About to work on ALL caches!"
         # force all caches to register themselves:
-        ["#{MACK_ROOT}/lib/caches"].each do |dir|
+        ["#{Mack::Configuration.root}/lib/caches"].each do |dir|
           Find.find(dir) do |f|
             # puts f
             if FileTest.directory?(f) and !f.match(/.svn/)
@@ -55,15 +55,15 @@ namespace :cachetastic do
     end
   end
   
-  namespace :page_cache do
-    
-    desc "Expires the page cache."
-    task :expire_all => :environment do
-      running_time do("Cachetastic::Caches::PageCache.expire_all")
-        Cachetastic::Caches::PageCache.expire_all
-      end
-    end
-    
-  end
+  # namespace :page_cache do
+  #   
+  #   desc "Expires the page cache."
+  #   task :expire_all => :environment do
+  #     running_time do("Cachetastic::Caches::PageCache.expire_all")
+  #       Cachetastic::Caches::PageCache.expire_all
+  #     end
+  #   end
+  #   
+  # end
   
 end

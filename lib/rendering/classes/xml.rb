@@ -10,7 +10,7 @@ module Mack
         rescue Errno::ENOENT => e
           begin
             # If the action doesn't exist on disk, try to render it from the public directory:
-            t = render_file(options[:xml], {:dir => MACK_PUBLIC, :ext => ".xml.erb", :layout => false}.merge(options.merge(:format => :xml)))
+            t = render_file(options[:xml], {:dir => Mack::Configuration.public_directory, :ext => ".xml.erb", :layout => false}.merge(options.merge(:format => :xml)))
             return t
           rescue Errno::ENOENT => ex
           end
