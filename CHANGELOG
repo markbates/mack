@@ -8,7 +8,7 @@
 * Fixed a bug with the scaffold generating 'bad' methods instead of 'post'
 * Made error_messages_for more compatible with DataMapper.
 * Fixed a bug loading url.rb and uploaded_file.rb found by Phil Darnowsky
-* Render method (in controller_base) now accepts response status code.
+* [dsutedja] Render method (in controller_base) now accepts response status code.
 * gem: mack_ruby_core_extensions 0.1.23
 * gem: genosaurus 1.1.4
 * gem: datamapper 0.3.2
