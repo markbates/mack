@@ -1,3 +1,4 @@
+* Added rake db:create and db:create:all rake tasks.
 * Refactored out constants, such as MACK_ROOT and MACK_ENV and made them into Mack::Configuration.env, Mack::Configuration.root, etc...
 * Added test:stats and test:coverage Rake tasks.
 * Removed support for ActiveRecord and DataMapper and moved them into their own gems.
