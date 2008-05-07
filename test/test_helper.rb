@@ -41,6 +41,19 @@ end
 
 class Test::Unit::TestCase
   
+  class MockController
+    def params(key)
+      @params[key.to_sym]
+    end
+    def initialize(options = {})
+      @params = {:format => "html"}.merge(options)
+    end
+  end
+  
+  def erb(template)
+    Mack::ViewBinder.render(template, MockController.new)
+  end
+  
   def models_directory
     File.join(Mack::Configuration.app_directory, "models")
   end

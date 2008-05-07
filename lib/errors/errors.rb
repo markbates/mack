@@ -91,7 +91,9 @@ module Mack
     class UnsuccessfulRenderUrl < StandardError
       # Takes the uri trying to be rendered the Net::HTTP response object.
       def initialize(uri, response)
-        super("URI: #{uri}; status: #{response.code}; body: #{response.body}")
+        code = response.code if response.respond_to?(:code)
+        code = response.status if response.respond_to?(:status)
+        super("URI: #{uri}; status: #{code}")
       end
     end
     

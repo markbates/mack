@@ -36,6 +36,10 @@ class ViewBinderTest < Test::Unit::TestCase
       render(:url => "http://testing.mackframework.com/render_url_post_test.php", :method => :delete, :parameters => {:age => 31})
     end
     
+    def say_hi
+      render(:text => "Hello", :layout => false)
+    end
+    
   end
   
   Mack::Routes.build do |r|
@@ -54,6 +58,11 @@ class ViewBinderTest < Test::Unit::TestCase
     
     # deletes
     r.good_delete_local_render "/good_delete_local_render_url", :controller => "view_binder_test/render_url", :action => :good_delete_local_render_url
+    r.connect '/vbt/say_hi', :controller => "view_binder_test/render_url", :action => "say_hi"
+  end
+  
+  def test_render_local_url
+    assert_match(erb('<b><%= render(:url => "/vbt/say_hi", :raise_exception => true) %></b>'), "<b>Hello</b>")
   end
   
   def test_render

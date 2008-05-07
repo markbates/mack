@@ -1,3 +1,5 @@
+* Fixed r.defaults in routes so they are always the last routes to be checked, no matter where they are placed in the routes definitions.
+* render(:url) now recognizes 'local' urls and tries to run them through the app.
 * Added 'options' banners to the mack and mack_ring_server binaries.
 
 ===0.5.0

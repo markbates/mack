@@ -7,26 +7,28 @@ module Mack
       
       def render
         options = {:method => :get, :domain => app_config.mack.site_domain, :raise_exception => false}.merge(self.options)
+        url = options[:url]
+        remote = url.match(/^[a-zA-Z]+:\/\//)
         case options[:method]
         when :get
-          do_render_remote_url(options) do |uri, options|
-            unless options[:parameters].empty?
-              uri = uri.to_s
-              uri << "?"
-              options[:parameters].each_pair do |k,v|
-                uri << URI.encode(k.to_s)
-                uri << "="
-                uri << URI.encode(v.to_s)
-                uri << "&"
-              end
-              uri.gsub!(/&$/, "")
-              uri = URI.parse(uri)
+          if remote
+            do_render_remote_url(url_with_query(url, options[:parameters]), options) do |uri, options|
+              Net::HTTP.get_response(uri)
             end
-            Net::HTTP.get_response(uri)
+          else
+            do_render_local_url(url, options) do |url, options|
+              Rack::MockRequest.new(self.view_binder.app_for_rendering).get(url)
+            end
           end
         when :post
-          do_render_remote_url(options) do |uri, options|
-            Net::HTTP.post_form(uri, options[:parameters] || {})
+          if remote
+            do_render_remote_url(url, options) do |uri, options|
+              Net::HTTP.post_form(uri, options[:parameters] || {})
+            end
+          else
+            do_render_local_url(url, options) do |url, options|
+              Rack::MockRequest.new(self.view_binder.app_for_rendering).post(url)
+            end
           end
         else
           raise Mack::Errors::UnsupportRenderUrlMethodType.new(options[:method])
@@ -34,12 +36,8 @@ module Mack
       end
       
       private
-      def do_render_remote_url(options)
+      def do_render_remote_url(url, options)
         Timeout::timeout(app_config.mack.render_url_timeout || 5) do
-          url = options[:url]
-          unless url.match(/^[a-zA-Z]+:\/\//)
-            url = File.join(options[:domain], options[:url])
-          end
           uri = URI.parse(url)
           response = yield uri, options
           if response.code == "200"
@@ -52,6 +50,30 @@ module Mack
             end
           end
         end
+      end
+      
+      def do_render_local_url(url, options)
+        Timeout::timeout(app_config.mack.render_url_timeout || 5) do
+          response = yield url, options
+          if response.successful?
+            return response.body
+          else
+            if options[:raise_exception]
+              raise Mack::Errors::UnsuccessfulRenderUrl.new(url, response)
+            else
+              return ""
+            end
+          end
+        end
+      end
+      
+      def url_with_query(url, parameters = {})
+        unless parameters.empty?
+          url = url.to_s.dup
+          url << "?"
+          url << parameters.to_params(true)
+        end
+        url
       end
       
     end # Url

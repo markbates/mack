@@ -134,6 +134,7 @@ module Mack
       
       def initialize # :nodoc:
         @routes_list = []
+        @default_routes_list = []
       end
       
       # Creates 'Rails' style default mappings:
@@ -141,21 +142,16 @@ module Mack
       #   "/:controller/:action"
       # These get created for each of the 4 HTTP verbs.
       def defaults
+        @default_routes_list = []
         [:get, :post, :put, :delete].each do |verb|
-          connect("/:controller/:action/:id", :method => verb)
-          connect("/:controller/:action", :method => verb)
+          @default_routes_list << build_route("/:controller/:action/:id", :method => verb)
+          @default_routes_list << build_route("/:controller/:action", :method => verb)
         end
       end
       
       # Connects a url pattern to a controller, an action, and an HTTP verb.
       def connect(pattern, options = {})
-        # set the default options:
-        options = {:action => :index, :method => :get}.merge(options)
-        meth = options[:method].to_sym
-        # if the pattern doesn't start with /, then add it.
-        pattern = "/" << pattern unless pattern.match(/^\//)
-        pt = pattern.downcase
-        route = Route.new(pt, regex_from_pattern(pt), meth, options)
+        route = build_route(pattern, options)
         routes_list << route
         return route
       end
@@ -187,8 +183,11 @@ module Mack
           pattern.chop! if pattern.match(/\/$/)
         end
         meth = (req.params("_method") || req.request_method.downcase).to_sym
+        rt = routes_list.dup
+        rt << @default_routes_list.dup
+        rt.flatten!
         begin
-          routes_list.each do |route|
+          rt.each do |route|
             if pattern.match(route.regex_pattern) && route.method == meth
               r = route
               opts = r.options_with_embedded_parameters(pattern)
@@ -206,6 +205,16 @@ module Mack
       attr_reader :routes_list # :nodoc:
       
       private
+      def build_route(pattern, options = {})
+        # set the default options:
+        options = {:action => :index, :method => :get}.merge(options)
+        meth = options[:method].to_sym
+        # if the pattern doesn't start with /, then add it.
+        pattern = "/" << pattern unless pattern.match(/^\//)
+        pt = pattern.downcase
+        Route.new(pt, regex_from_pattern(pt), meth, options)
+      end
+      
       def connect_with_named_route(n_route, pattern, options = {})
         n_route = n_route.methodize
         route = connect(pattern, options)

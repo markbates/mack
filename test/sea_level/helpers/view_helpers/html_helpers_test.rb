@@ -4,19 +4,6 @@ class HtmlHelpersTest < Test::Unit::TestCase
   
   include Mack::ViewHelpers::HtmlHelpers
   
-  class MockController
-    def params(key)
-      @params[key.to_sym]
-    end
-    def initialize(options = {})
-      @params = {:format => "html"}.merge(options)
-    end
-  end
-  
-  def erb(template)
-    Mack::ViewBinder.render(template, MockController.new)
-  end
-  
   def test_link
     assert_equal a("http://www.mackframework.com"), link_to("http://www.mackframework.com")
     
