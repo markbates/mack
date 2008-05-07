@@ -38,6 +38,12 @@ class MimeTypesTest < Test::Unit::TestCase
     assert_match "IPHONE", response.body
     assert_equal "app/iphone", response["Content-Type"]
     
+    Mack::Utils::MimeTypes.register(:iphone, "application/mac-iphone")
+    
+    get(marceau_url(:format => :iphone))
+    assert_match "IPHONE", response.body
+    assert_equal "app/iphone; application/mac-iphone", response["Content-Type"]
+    
     get(marceau_url(:format => :jpg))
     assert_match "JPG", response.body
     assert_equal "image/jpeg; image/pjpeg", response["Content-Type"]

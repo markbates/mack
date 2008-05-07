@@ -8,7 +8,12 @@ module Mack
       end
       
       def register(name, type)
-        @types[name.to_sym] = type
+        name = name.to_sym
+        if @types.has_key?(name)
+          @types[name] << "; " << type
+        else
+          @types[name] = type
+        end
       end
       
       def get(name)
