@@ -20,8 +20,6 @@ Mack::Routes.build do |r|
     map.kill_kenny_bad "/tst_another/kill_kenny_bad", :action => :kill_kenny_bad
   end
   
-
-  
   r.old_foo "/my_old_foo", :redirect_to => "/tst_another/foo/:id", :status => 301
   
   r.kill_kenny_good "/tst_users/kill_kenny_good", :controller => :tst_users, :action => :kill_kenny_good
