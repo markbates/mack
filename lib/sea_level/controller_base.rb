@@ -187,9 +187,12 @@ module Mack
       def render(options = {:action => self.action_name})
         raise Mack::Errors::DoubleRender.new if render_performed?
         response.status = options[:status] unless options[:status].nil?
+        option = {:content_type => Mack::Utils::MimeTypes[params(:format)]}.merge(options)
         unless options[:action] || options[:text]
           options = {:layout => false}.merge(options)
         end
+        response["Content-Type"] = option[:content_type]
+        option.delete(:content_type)
         @render_options = options
         @render_performed = true
       end
@@ -235,7 +238,6 @@ module Mack
         header_type = header_type.to_sym
         if header_type == params(:format).to_sym
           yield
-          response["Content-Type"] = Mack::Utils::MimeTypes[header_type]
         end
       end
       

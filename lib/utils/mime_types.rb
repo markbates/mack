@@ -3,10 +3,14 @@ module Mack
     class MimeTypes
       include Singleton
       
-      def initialize
+      def initialize # :nodoc:
         @types = YAML.load(File.open(File.join(File.dirname(__FILE__), "mime_types.yml")))
       end
       
+      # Registers a new mime-type to the system.
+      # 
+      # Examples:
+      # Mack::Utils::MimeTypes.register(:iphone, "app/iphone")
       def register(name, type)
         name = name.to_sym
         if @types.has_key?(name)
