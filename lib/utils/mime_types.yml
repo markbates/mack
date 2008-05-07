@@ -1,0 +1,449 @@
+--- 
+:cer: application/pkix-cert; application/x-x509-ca-cert
+:sl: application/x-seelogo
+:mhtml: message/rfc822
+:tsi: audio/tsp-audio
+:naplps: image/naplps
+:elc: application/x-bytecode.elisp (compiled; application/x-elc
+:vrt: x-world/x-vrt
+:pict: image/pict
+:hdf: application/x-hdf
+:xbm: image/x-xbitmap; image/x-xbm; image/xbm
+:aab: application/x-authorware-bin
+:qti: image/x-quicktime
+:ivr: i-world/i-vrml
+:book: application/book
+:sgm: text/sgml; text/x-sgml
+:m2v: video/mpeg
+:log: text/plain
+:dl: video/dl; video/x-dl
+:talk: text/x-speech
+:mpga: audio/mpeg
+:funk: audio/make
+:viv: video/vivo; video/vnd.vivo
+:part: application/pro_eng
+:"x-png": image/png
+:wp: application/wordperfect
+:iefs: image/ief
+:psd: application/octet-stream
+:xpix: application/x-vnd.ls-xpix
+:lha: application/lha; application/octet-stream; application/x-lha
+:asm: text/x-asm
+:rtf: application/rtf; application/x-rtf; text/richtext
+:h: text/plain; text/x-h
+:mod: audio/mod; audio/x-mod
+:crl: application/pkcs-crl; application/pkix-crl
+:sprite: application/x-sprite
+:oda: application/oda
+:f77: text/x-fortran
+:unv: application/i-deas
+:png: image/png
+:hta: application/hta
+:wb1: application/x-qpro
+:xld: application/excel; application/x-excel
+:rgb: image/x-rgb
+:jpe: image/jpeg; image/pjpeg
+:aifc: audio/aiff; audio/x-aiff
+:skm: application/x-koan
+:mcp: application/netmc
+:ccad: application/clariscad
+:tgz: application/gnutar; application/x-compressed
+:f: text/plain; text/x-fortran
+:my: audio/make
+:dxf: application/dxf; image/vnd.dwg; image/x-dwg
+:vqf: audio/x-twinvq
+:g: text/plain
+:pfunk: audio/make; audio/make.my.funk
+:gtar: application/x-gtar
+:"3dmf": x-world/x-3dmf
+:wsc: text/scriplet
+:qif: image/x-quicktime
+:isu: video/x-isvideo
+:zsh: text/x-script.zsh
+:sdp: application/sdp; application/x-sdp
+:lzx: application/lzx; application/octet-stream; application/x-lzx
+:bm: image/bmp
+:svf: image/vnd.dwg; image/x-dwg
+:mpe: video/mpeg
+:der: application/x-x509-ca-cert
+:vda: application/vda
+:p7m: application/pkcs7-mime; application/x-pkcs7-mime
+:for: text/plain; text/x-fortran
+:wmls: text/vnd.wap.wmlscript
+:o: application/octet-stream
+:ppz: application/mspowerpoint
+:ico: image/x-icon
+:xm: audio/xm
+:arj: application/arj; application/octet-stream
+:rp: image/vnd.rn-realpix
+:t: application/x-troff
+:la: audio/nspaudio; audio/x-nspaudio
+:step: application/step
+:cpio: application/x-cpio
+:mm: application/base64; application/x-meme
+:spc: application/x-pkcs7-certificates; text/x-speech
+:mjf: audio/x-vnd.audioexplosion.mjuicemediafile
+:etx: text/x-setext
+:uil: text/x-uil
+:nix: application/x-mix-transfer
+:"jfif-tbnl": image/jpeg
+:hpg: application/vnd.hp-hpgl
+:w61: application/wordperfect6.1
+:pm: image/x-xpixmap; text/x-script.perl-module
+:xla: application/excel; application/x-excel; application/x-msexcel
+:jcm: application/x-java-commerce
+:afl: video/animaflex
+:rast: image/cmu-raster
+:set: application/set
+:sid: audio/x-psid
+:mrc: application/marc
+:dvi: application/x-dvi
+:tex: application/x-tex
+:pcx: image/x-pcx
+:gsm: audio/x-gsm
+:vos: video/vosaic
+:wri: application/mswrite; application/x-wri
+:qcp: audio/vnd.qcelp
+:inf: application/inf
+:xyz: chemical/x-pdb
+:sbk: application/x-tbook
+:lsx: text/x-la-asf
+:avs: video/avs-video
+:stp: application/step
+:mp3: audio/mpeg3; audio/x-mpeg-3; video/mpeg; video/x-mpeg
+:dcr: application/x-director
+:uue: text/x-uuencode
+:p12: application/pkcs-12; application/x-pkcs12
+:flo: image/florian
+:wmf: windows/metafile
+:ppm: image/x-portable-pixmap
+:htt: text/webviewhtml
+:xlt: application/excel; application/x-excel
+:rng: application/ringing-tones; application/vnd.nokia.ringing-tone
+:jut: image/jutvision
+:aos: application/x-nokia-9000-communicator-add-on-software
+:smil: application/smil
+:midi: application/x-midi; audio/midi; audio/x-mid; audio/x-midi; music/crescendo; x-music/x-midi
+:chat: application/x-chat
+:tsv: text/tab-separated-values
+:ncm: application/vnd.nokia.configuration-message
+:env: application/x-envoy
+:vst: application/x-visio
+:pko: application/vnd.ms-pki.pko
+:hgl: application/vnd.hp-hpgl
+:xgz: xgl/drawing
+:aas: application/x-authorware-seg
+:ra: audio/x-pn-realaudio; audio/x-pn-realaudio-plugin; audio/x-realaudio
+:jam: audio/x-jam
+:bsh: application/x-bsh
+:sh: application/x-bsh; application/x-sh; application/x-shar; text/x-script.sh
+:man: application/x-troff-man
+:dp: application/commonground
+:tbk: application/toolbook; application/x-tbook
+:mpt: application/x-project
+:gif: image/gif
+:doc: application/msword
+:vmd: application/vocaltec-media-desc
+:pbm: image/x-portable-bitmap
+:wp6: application/wordperfect
+:igs: application/iges; model/iges
+:pwz: application/vnd.ms-powerpoint
+:lma: audio/nspaudio; audio/x-nspaudio
+:asx: application/x-mplayer2; video/x-ms-asf; video/x-ms-asf-plugin
+:rv: video/vnd.rn-realvideo
+:mov: video/quicktime
+:csh: application/x-csh; text/x-script.csh
+:ssm: application/streamingmedia
+:omcd: application/x-omcdatamaker
+:fdf: application/vnd.fdf
+:uris: text/uri-list
+:pot: application/mspowerpoint; application/vnd.ms-powerpoint
+:htm: text/html
+:web: application/vnd.xara
+:xll: application/excel; application/vnd.ms-excel; application/x-excel
+:jpg: image/jpeg; image/pjpeg
+:aim: application/x-aim
+:rmi: audio/mid
+:mht: message/rfc822
+:"lisp)": lisp)
+:cdf: application/cdf; application/x-cdf; application/x-netcdf
+:skt: application/x-koan
+:nap: image/naplps
+:el: text/x-script.elisp
+:tiff: image/tiff; image/x-tiff
+:pic: image/pict
+:gzip: application/x-gzip; multipart/x-gzip
+:vrml: application/x-vrml; model/vrml; x-world/x-vrml
+:wtk: application/x-wintalk
+:qtc: video/x-qtc
+:iv: application/x-inventor
+:sea: application/sea; application/x-sea
+:m2a: audio/mpeg
+:boo: application/book
+:swf: application/x-shockwave-flash
+:mpg: audio/mpeg; video/mpeg
+:dir: application/x-director
+:vew: application/groupwise
+:p7s: application/pkcs7-signature
+:frl: application/freeloader
+:word: application/msword
+:ps: application/postscript
+:ief: image/ief
+:xmz: xgl/movie
+:asf: video/x-ms-asf
+:rt: text/richtext; text/vnd.rn-realtext
+:latex: application/x-latex
+:cpt: application/mac-compactpro; application/x-compactpro; application/x-cpt
+:spr: application/x-sprite
+:mme: application/base64
+:exe: application/octet-stream
+:unis: text/uri-list
+:nvd: application/x-navidoc
+:hqx: application/binhex; application/binhex4; application/mac-binhex; application/mac-binhex40; application/x-binhex40; application/x-mac-binhex40
+:wav: audio/wav; audio/x-wav
+:pm5: application/x-pagemaker
+:xlc: application/excel; application/vnd.ms-excel; application/x-excel
+:aif: audio/aiff; audio/x-aiff
+:rf: image/vnd.rn-realflash
+:cc: text/plain; text/x-c
+:skd: application/x-koan
+:mcf: image/vasa; text/mcf
+:m: text/plain; text/x-m
+:dwg: application/acad; image/vnd.dwg; image/x-dwg
+:texinfo: application/x-texinfo
+:mv: video/x-sgi-movie
+:gss: application/x-gss
+:"3dm": x-world/x-3dmf
+:vqe: audio/x-twinvq-plugin
+:pdf: application/pdf
+:wrz: model/vrml; x-world/x-vrml
+:ip: application/x-ip2
+:qd3d: x-world/x-3dmf
+:zoo: application/octet-stream
+:lzh: application/octet-stream; application/x-lzh
+:bin: application/mac-binary; application/macbinary; application/octet-stream; application/x-binary; application/x-macbinary
+:sdml: text/plain
+:mpc: application/x-project
+:def: text/plain
+:sv4crc: application/x-sv4crc
+:p7c: application/pkcs7-mime; application/x-pkcs7-mime
+:fmf: video/x-atomic3d-feature
+:vcs: text/x-vcalendar
+:wmlc: application/vnd.wap.wmlc
+:ppt: application/mspowerpoint; application/powerpoint; application/vnd.ms-powerpoint; application/x-mspowerpoint
+:ice: x-conference/x-cooltalk
+:xlw: application/excel; application/vnd.ms-excel; application/x-excel; application/x-msexcel
+:roff: application/x-troff
+:src: application/x-wais-source
+:ksh: application/x-ksh; text/x-script.ksh
+:arc: application/octet-stream
+:text: application/plain; text/plain
+:hh: text/plain; text/x-h
+:sol: application/solids
+:mime: message/rfc822; www/mime
+:conf: text/plain
+:txt: text/plain
+:niff: image/x-niff
+:es: application/x-esrehber
+:zip: application/x-compressed; application/x-zip-compressed; application/zip; multipart/x-zip
+:w60: application/wordperfect6.0
+:plx: application/x-pixclscript
+:hlp: application/hlp; application/x-helpfile; application/x-winhelp
+:xl: application/excel
+:ras: application/x-cmu-raster; image/cmu-raster; image/x-cmu-raster
+:java: text/plain; text/x-java-source
+:acgi: text/html
+:shtml: text/html; text/x-server-parsed-html
+:mbd: application/mbedlet
+:bz2: application/x-bzip2
+:tcsh: text/x-script.tcsh
+:mpx: application/x-project
+:dv: video/x-dv
+:voc: audio/voc; audio/x-voc
+:pct: image/x-pict
+:gsd: audio/x-gsm
+:wq1: application/x-lotus
+:pyc: applicaiton/x-bytecode.python
+:imap: application/x-httpd-imap
+:xwd: image/x-xwd; image/x-xwindowdump
+:avi: application/x-troff-msvideo; video/avi; video/msvideo; video/x-msvideo
+:saveme: application/octet-stream
+:s: text/x-asm
+:lst: text/plain
+:cxx: text/plain
+:stl: application/sla; application/vnd.ms-pki.stl; application/x-navistyle
+:mp2: audio/mpeg; audio/x-mpeg; video/mpeg; video/x-mpeg; video/x-mpeq2a
+:fli: video/fli; video/x-fli
+:uu: application/octet-stream; text/x-uuencode
+:p10: application/pkcs10; application/x-pkcs10
+:htmls: text/html
+:wk1: application/x-123
+:ppa: application/vnd.ms-powerpoint
+:xls: application/excel; application/vnd.ms-excel; application/x-excel; application/x-msexcel
+:js: application/x-javascript
+:ani: application/x-navi-animation
+:rmp: audio/x-pn-realaudio; audio/x-pn-realaudio-plugin
+:pre: application/x-freelance
+:mid: application/x-midi; audio/midi; audio/x-mid; audio/x-midi; music/crescendo; x-music/x-midi
+:cha: application/x-chat
+:dump: application/octet-stream
+:smi: application/smil
+:nc: application/x-netcdf
+:tsp: application/dsptype; audio/tsplayer
+:pkg: application/x-newton-compatible-pkg
+:help: application/x-helpfile
+:vsd: application/x-visio
+:xdr: video/x-amt-demorun
+:qtif: image/x-quicktime
+:ivy: application/x-livescreen
+:aam: application/x-authorware-map
+:sgml: text/sgml; text/x-sgml
+:m3u: audio/x-mpequrl
+:boz: application/x-bzip2
+:tar: application/x-tar
+:mpp: application/vnd.ms-project
+:dot: application/msword
+:vivo: video/vivo; video/vnd.vivo
+:pas: text/pascal
+:a: application/octet-stream
+:g3: image/g3fax
+:wp5: application/wordperfect; application/wordperfect6.0
+:pvu: paleovu/x-pv
+:iges: application/iges; model/iges
+:xpm: image/x-xpixmap; image/xpm
+:rtx: application/rtf; text/richtext
+:lhx: application/octet-stream
+:asp: text/asp
+:ssi: text/x-server-parsed-html
+:moov: video/quicktime
+:crt: application/pkix-cert; application/x-x509-ca-cert; application/x-x509-user-cert
+:uri: text/uri-list
+:omc: application/x-omc
+:f90: text/plain; text/x-fortran
+:wbmp: image/vnd.wap.wbmp
+:pnm: application/x-portable-anymap; image/x-portable-anymap
+:htc: text/x-component
+:xlk: application/excel; application/x-excel
+:aiff: audio/aiff; audio/x-aiff
+:rm: application/vnd.rn-realmedia; audio/x-pn-realaudio
+:class: application/java; application/java-byte-code; application/x-java-class
+:jpeg: image/jpeg; image/pjpeg
+:cco: application/x-cocoa
+:skp: application/x-koan
+:me: application/x-troff-me
+:dxr: application/x-director
+:tif: image/tiff; image/x-tiff
+:mzz: application/x-vnd.audioexplosion.mzz
+:gz: application/x-compressed; application/x-gzip
+:vql: audio/x-twinvq-plugin
+:pgm: image/x-portable-graymap; image/x-portable-greymap
+:wsrc: application/x-wais-source
+:it: audio/it
+:qt: video/quicktime
+:m1v: video/mpeg
+:bmp: image/bmp; image/x-windows-bmp
+:sdr: application/sounder
+:mpeg: video/mpeg
+:dif: video/x-dv
+:svr: application/x-world; x-world/x-svr
+:p7r: application/x-pkcs7-certreqresp
+:fpx: image/vnd.fpx; image/vnd.net-fpx
+:vdo: video/vdo
+:wmlsc: application/vnd.wap.wmlscriptc
+:prt: application/pro_eng
+:idc: text/plain
+:xml: application/xml; text/xml
+:rpm: audio/x-pn-realaudio-plugin
+:lam: audio/x-liveaudio
+:art: image/x-jg
+:spl: application/futuresplash
+:mjpg: video/x-motion-jpeg
+:cpp: text/x-c
+:nsc: application/x-conference
+:evy: application/envoy; application/x-envoy
+:tr: application/x-troff
+:uni: text/uri-list
+:pm4: application/x-pagemaker
+:hpgl: application/vnd.hp-hpgl
+:w6w: application/msword
+:xlb: application/excel; application/vnd.ms-excel; application/x-excel
+:rexx: text/x-script.rexx
+:jfif: image/jpeg; image/pjpeg
+:ai: application/postscript
+:sit: application/x-sit; application/x-stuffit
+:mcd: application/mcad; application/x-mathcad
+:cat: application/vnd.ms-pki.seccat
+:texi: application/x-texinfo
+:ms: application/x-troff-ms
+:dwf: drawing/x-dwf (old); model/vnd.dwf
+:vox: audio/voxware
+:map: application/x-navimap
+:pdb: chemical/x-pdb
+:gsp: application/x-gsp
+:wrl: application/x-world; model/vrml; x-world/x-vrml
+:qd3: x-world/x-3dmf
+:ins: application/x-internett-signup
+:z: application/x-compress; application/x-compressed
+:bcpio: application/x-bcpio
+:scm: application/x-lotusscreencam; text/x-script.guile; text/x-script.scheme; video/x-scm
+:ltx: application/x-latex
+:deepv: application/x-deepv
+:sv4cpio: application/x-sv4cpio
+:mpa: audio/mpeg; video/mpeg
+:flx: text/vnd.fmi.flexstor
+:vcd: application/x-cdlink
+:p7a: application/x-pkcs7-signature
+:wml: text/vnd.wap.wml
+:htx: text/html
+:c: text/plain; text/x-c
+:pps: application/mspowerpoint; application/vnd.ms-powerpoint
+:xlv: application/excel; application/x-excel
+:kar: audio/midi; music/x-karaoke
+:aps: application/mime
+:rnx: application/vnd.rn-realplayer
+:mif: application/x-frame; application/x-mif
+:com: application/octet-stream; text/plain
+:snd: audio/basic; audio/x-adpcm
+:eps: application/postscript
+:turbot: image/florian
+:nif: image/x-niff
+:hlb: text/x-script
+:vsw: application/x-visio
+:pl: text/plain; text/x-script.perl
+:xif: image/vnd.xiff
+:"mc$": application/x-magic-cap-package-1.0
+:jav: text/plain; text/x-java-source
+:"c++": text/plain
+:list: text/plain
+:abc: text/vnd.abc
+:ram: audio/x-pn-realaudio
+:mar: text/plain
+:bz: application/x-bzip
+:shar: application/x-bsh; application/x-shar
+:mpv: application/x-project
+:drw: application/drafting
+:tcl: application/x-tcl; text/x-script.tcl
+:pcl: application/vnd.hp-pcl; application/x-pcl
+:gl: video/gl; video/x-gl
+:vmf: application/vocaltec-media-file
+:wpd: application/wordperfect; application/x-wpwin
+:p: text/x-pascal
+:py: text/x-script.phyton
+:ima: application/x-ima
+:xsr: video/x-amt-showrun
+:s3m: audio/s3m
+:lsp: application/x-lisp; text/x-script.lisp
+:au: audio/basic; audio/x-au
+:sst: application/vnd.ms-pki.certstore
+:movie: video/x-sgi-movie
+:css: application/x-pointplus; text/css
+:ustar: application/x-ustar; multipart/x-ustar
+:omcr: application/x-omcregerator
+:fif: application/fractals; image/fif
+:wiz: application/msword
+:pov: model/x-pov
+:html: text/html
+:xlm: application/excel; application/vnd.ms-excel; application/x-excel
+:aip: text/x-audiosoft-intra
+:rmm: audio/x-pn-realaudio
+:jps: image/x-jps

@@ -235,6 +235,7 @@ module Mack
         header_type = header_type.to_sym
         if header_type == params(:format).to_sym
           yield
+          response["Content-Type"] = Mack::Utils::MimeTypes[header_type]
         end
       end
       
