@@ -16,8 +16,10 @@ module Mack
               Net::HTTP.get_response(uri)
             end
           else
+            MACK_DEFAULT_LOGGER.debug("found a local url: #{url}")
             do_render_local_url(url, options) do |url, options|
-              Rack::MockRequest.new(self.view_binder.app_for_rendering).get(url)
+              MACK_DEFAULT_LOGGER.debug("call the mock request object")
+              Rack::MockRequest.new(self.view_binder.app_for_rendering).get(url, options)
             end
           end
         when :post
@@ -27,7 +29,7 @@ module Mack
             end
           else
             do_render_local_url(url, options) do |url, options|
-              Rack::MockRequest.new(self.view_binder.app_for_rendering).post(url)
+              Rack::MockRequest.new(self.view_binder.app_for_rendering).post(url, options)
             end
           end
         else
@@ -54,6 +56,12 @@ module Mack
       
       def do_render_local_url(url, options)
         Timeout::timeout(app_config.mack.render_url_timeout || 5) do
+          cooks = {}
+          self.view_binder.controller.cookies.all.each do |c,v|
+            cooks[c] = v[:value]
+          end
+          options = {"HTTP_COOKIE" => cooks.join("%s=%s", "; ")}.merge(options)
+          MACK_DEFAULT_LOGGER.debug options.inspect
           response = yield url, options
           if response.successful?
             return response.body

@@ -27,6 +27,7 @@ module Mack
       def initialize(view_binder, options)
         self.view_binder = view_binder
         self.options = {:parameters => {}}.merge(options)
+        # pp self.view_binder.controller.cookies.all
       end
       
       # This is the only method that needs to be implemented by a rendering system.
