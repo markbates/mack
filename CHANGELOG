@@ -50,7 +50,6 @@
 * Fixed a bug with request logging not, well, logging.
 * gem: erubis 2.5.0
 * gem: thin 0.8.0
->>>>>>> master:CHANGELOG
 
 ===0.4.5
 * Removed boot.rb file. It was unnecessary.
