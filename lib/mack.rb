@@ -16,6 +16,7 @@ require 'builder'
 require 'erubis'
 require 'erb'
 require 'genosaurus'
+require 'net/http'
 
 require File.join(File.dirname(__FILE__), "initialization", "configuration.rb")
 
@@ -31,7 +32,7 @@ unless Mack::Configuration.initialized
   fl = File.join(File.dirname(__FILE__))
 
   # Require all the necessary files to make Mack actually work!
-  ["distributed", "errors", "core_extensions", "utils", "test_extensions", "routing", "rendering", "sea_level", "tasks", "initialization/server", "generators"].each do |dir|
+  ["distributed", "errors", "core_extensions", "utils", "test_extensions", "routing", "rendering", "controller", "tasks", "initialization/server", "generators"].each do |dir|
     dir_globs = Dir.glob(File.join(fl, dir, "**/*.rb"))
     dir_globs.each do |d|
       require d
