@@ -3,6 +3,8 @@ module Mack
     # Used when someone calls render(:action => "index")
     class Action < Base
       
+      ENGINES = [:erb, :markaby, :haml]
+      
       def render
         begin
           # Try to render the action:

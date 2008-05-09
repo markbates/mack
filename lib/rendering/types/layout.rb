@@ -1,7 +1,7 @@
 module Mack
   module Rendering
     # Used when someone calls render(:text => "Hello World!")
-    class Text < Base
+    class Layout < Base
       
       ENGINES = [:erb, :markaby, :haml]
       

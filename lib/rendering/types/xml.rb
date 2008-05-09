@@ -3,6 +3,8 @@ module Mack
     # Used when someone calls render(:xml => "rss_feed")
     class Xml < Base
       
+      ENGINES = [:builder]
+      
       def render
         begin
           # Try to render the action:

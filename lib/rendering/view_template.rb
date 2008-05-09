@@ -3,11 +3,9 @@ module Mack
     class ViewTemplate
       
       attr_accessor :options
-      attr_accessor :view_binder
       
       def initialize(options = {})
-        self.view_binder = Mack::Rendering::ViewBinder.new
-        self.options = {:engine => "erb"}.merge(options)
+        self.options = {:engine => :erb}.merge(options)
       end
       
       def add_options(opts)
@@ -19,12 +17,55 @@ module Mack
       end
       
       def compile
-        engine = eval("Mack::Rendering::Engines::#{self.engine.camelcase}").render(self, binding)
-        # engine.render(File.open(File.join(self.options[:file_path], "app", "views", self.options[:controller], self.options[:action] + ".#{self.format}.#{self.engine}")).read, binding)
+        self.options.symbolize_keys!
+        pp self.options
+        transfer_vars(self.controller)
       end
       
       def compile_and_render
-        
+        self.compile
+        if self.options[:action]
+          Mack::Rendering::Action::ENGINES.each do |e|
+            f = File.join(Mack::Configuration.views_directory, self.controller.controller_name, "#{self.action}.#{self.format}.#{e}")
+            if File.exists?(f)
+              puts "found: #{f}"
+              puts "Mack::Rendering::Engines::#{e.to_s.camelcase}"
+              @content_for_layout = eval("Mack::Rendering::Engines::#{e.to_s.camelcase}").render(File.open(f).read, binding)
+            end
+          end
+        elsif self.options[:text]
+          @content_for_layout = eval("Mack::Rendering::Engines::#{self.engine.to_s.camelcase}").render(self.text, binding)
+        elsif self.options[:partial]
+          
+        elsif self.options[:public]
+          
+        elsif self.options[:url]
+          
+        elsif self.options[:xml]
+          
+        else
+          
+        end
+        if self.layout
+          Mack::Rendering::Layout::ENGINES.each do |e|
+            f = File.join(Mack::Configuration.views_directory, "layouts", "#{self.layout}.#{self.format}.#{e}")
+            if File.exists?(f)
+              puts "found: #{f}"
+              puts "Mack::Rendering::Engines::#{e.to_s.camelcase}"
+              @content_for_layout = eval("Mack::Rendering::Engines::#{e.to_s.camelcase}").render(File.open(f).read, binding)
+            end
+          end
+        end
+        return @content_for_layout
+      end
+      
+      private
+  
+      # Transfer instance variables from the controller to the view.
+      def transfer_vars(x)
+        x.instance_variables.each do |v|
+          self.instance_variable_set(v, x.instance_variable_get(v))
+        end
       end
       
     end # ViewTemplate
