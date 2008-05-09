@@ -1,8 +1,8 @@
 # This class is used to do all the view level bindings.
 # It allows for seperation between the controller and the view levels.
-class Mack
+module Mack
   module Rendering
-    module ViewBinder
+    class ViewBinder
   
       attr_accessor :controller # Allows access to the controller.
       attr_accessor :options # Allows access to any options passed into the Binder.

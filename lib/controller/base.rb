@@ -255,54 +255,9 @@ module Mack
       private
       def do_render
         @view_template.add_options(:controller => self)
+        @view_template.compile_and_render
       end
 
-      def complete_action_render
-        if render_performed?
-          return Mack::Rendering::ViewBinder.new(self, @render_options).render(@render_options)
-        else
-          begin
-            # try action.html.erb
-            return Mack::Rendering::ViewBinder.new(self).render({:action => self.action_name})
-          rescue Errno::ENOENT => e
-            if @result_of_action_called.is_a?(String)
-              @render_options[:text] = @result_of_action_called
-              return Mack::Rendering::ViewBinder.new(self).render(@render_options)
-            else
-              raise e
-            end
-          end
-        end
-      end # complete_action_render      
-      
-      def complete_layout_render(action_content)
-        @content_for_layout = action_content
-        # if @render_options[:action] || @render_options[:text]
-          # only action and text should get a layout.
-          # if a layout is specified, use that:
-          # i use has_key? here because we want people
-          # to be able to override layout with nil/false.
-          if @render_options.has_key?(:layout)
-            if @render_options[:layout]
-              return Mack::Rendering::ViewBinder.new(self).render(@render_options.merge({:action => "layouts/#{@render_options[:layout]}"}))
-            else
-              # someone has specified NO layout via nil/false
-              return @content_for_layout
-            end
-          else layout
-            # use the layout specified by the layout method
-            begin
-              return Mack::Rendering::ViewBinder.new(self).render(@render_options.merge({:action => "layouts/#{layout}"}))
-            rescue Errno::ENOENT => e
-              # if the layout doesn't exist, we don't care.
-            rescue Exception => e
-              raise e
-            end
-          end
-        # end
-        @content_for_layout
-      end
-      
       def layout
         :application
       end
