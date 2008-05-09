@@ -5,9 +5,9 @@
 # * Mack::TestHelpers
 # * Mack::Routes::Urls
 
-require File.join(File.dirname(__FILE__), "initializer")
-
 fl = File.join(File.dirname(__FILE__), "..")
+
+require File.join(fl, "mack")
 
 require File.join(fl, "test_extensions", "test_helpers")
 
