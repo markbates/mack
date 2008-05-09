@@ -1,12 +1,10 @@
-require 'net/http'
-require File.join(File.dirname(__FILE__), "..", 'base')
 module Mack
   module Rendering
     # Used when someone calls render(:url => "http://www.mackframework.com")
     class Url < Base
       
       def render
-        options = {:method => :get, :domain => app_config.mack.site_domain, :raise_exception => false}.merge(self.options)
+        options = {:method => :get, :raise_exception => false}.merge(self.options)
         url = options[:url]
         remote = url.match(/^[a-zA-Z]+:\/\//)
         case options[:method]
@@ -16,9 +14,7 @@ module Mack
               Net::HTTP.get_response(uri)
             end
           else
-            MACK_DEFAULT_LOGGER.debug("found a local url: #{url}")
             do_render_local_url(url, options) do |url, options|
-              MACK_DEFAULT_LOGGER.debug("call the mock request object")
               Rack::MockRequest.new(self.view_binder.app_for_rendering).get(url, options)
             end
           end
@@ -60,8 +56,13 @@ module Mack
           self.view_binder.controller.cookies.all.each do |c,v|
             cooks[c] = v[:value]
           end
-          options = {"HTTP_COOKIE" => cooks.join("%s=%s", "; ")}.merge(options)
-          MACK_DEFAULT_LOGGER.debug options.inspect
+          request = self.view_binder.controller.request
+          # MACK_DEFAULT_LOGGER.debug "ORIGINAL REQUEST: #{request.env.inspect}"
+          env = request.env.dup
+          env - ["rack.input", "rack.errors", "PATH_INFO", "REQUEST_PATH", "REQUEST_URI", "REQUEST_METHOD"]
+          env["rack.request.query_hash"].merge!(options[:parameters]) if options[:parameters]
+          options = env.merge(options)
+          # MACK_DEFAULT_LOGGER.debug "NEW OPTIONS: #{options.inspect}"
           response = yield url, options
           if response.successful?
             return response.body
