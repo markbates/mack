@@ -4,7 +4,7 @@ module Mack
     class Text < Base
       
       def render
-        Mack::ViewBinder.render(options[:text], self.view_binder.controller, options)
+        Mack::Rendering::ViewBinder.render(options[:text], self.view_binder.controller, options)
       end
       
     end

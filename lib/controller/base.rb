@@ -32,6 +32,7 @@ module Mack
         @action_name = params(:action)
         @cookies = cookies
         @wants_list = []
+        @view_template = Mack::Rendering::ViewTemplate.new(:format => params(:format).to_sym)
       end
       
       # Gives access to all the parameters for this request.
@@ -60,9 +61,63 @@ module Mack
         end
         run_filters(:after)
         # do the work of rendering.
-        @final_rendered_action = complete_layout_render(complete_action_render)
+        @final_rendered_action = do_render
         run_filters(:after_render)
         @final_rendered_action
+      end
+
+      # This will redirect the request to the specified url. A default status of
+      # 302, Moved Temporarily, is set if no status is specified. A simple HTML
+      # page is rendered in case the redirect does not occur. A server side
+      # redirect is also possible by using the option :server_side => true.
+      # When a server side redirect occurs the url must be a 'local' url, not an
+      # external url. The 'original' url of the request will NOT change.
+      def redirect_to(url, options = {})
+        options = {:status => 302}.merge(options)
+        raise Rack::ForwardRequest.new(url) if options[:server_side]
+        response.status = options[:status]
+        response[:location] = url
+        render(:text => redirect_html(request.path_info, url, options[:status]))
+      end
+      
+      # In an action wants will run blocks of code based on the content type that has
+      # been requested.
+      # 
+      # Examples:
+      #   class MyAwesomeController < Mack::Controller::Base
+      #     def hello
+      #       wants(:html) do
+      #         render(:text => "<html>Hello World</html>")
+      #       end
+      #       wants(:xml) do
+      #         render(:text => "<xml><greeting>Hello World</greeting></xml>")
+      #       end
+      #     end
+      #   end
+      # 
+      # If you were to go to: /my_awesome/hello you would get:
+      #   "<html>Hello World</html>"
+      # 
+      # If you were to go to: /my_awesome/hello.html you would get:
+      #   "<html>Hello World</html>"
+      # 
+      # If you were to go to: /my_awesome/hello.xml you would get:
+      #   "<xml><greeting>Hello World</greeting></xml>"
+      def wants(header_type, &block)
+        header_type = header_type.to_sym
+        if header_type == params(:format).to_sym
+          yield
+        end
+      end
+
+      # Returns true/false depending on whether the render action has been called yet.
+      def render_performed?
+        @render_performed
+      end
+      
+      # Gives access to the MACK_DEFAULT_LOGGER.
+      def logger
+        MACK_DEFAULT_LOGGER
       end
       
       # This method can be called from within an action. This 'registers' the render that you
@@ -187,82 +242,38 @@ module Mack
       def render(options = {:action => self.action_name})
         raise Mack::Errors::DoubleRender.new if render_performed?
         response.status = options[:status] unless options[:status].nil?
-        option = {:content_type => Mack::Utils::MimeTypes[params(:format)]}.merge(options)
+        option = {:content_type => Mack::Utils::MimeTypes[params(:format)], :layout => layout}.merge(options)
         unless options[:action] || options[:text]
           options = {:layout => false}.merge(options)
         end
         response["Content-Type"] = option[:content_type]
         option.delete(:content_type)
-        @render_options = options
+        @view_template.add_options(options)
         @render_performed = true
       end
       
-      # This will redirect the request to the specified url. A default status of
-      # 302, Moved Temporarily, is set if no status is specified. A simple HTML
-      # page is rendered in case the redirect does not occur. A server side
-      # redirect is also possible by using the option :server_side => true.
-      # When a server side redirect occurs the url must be a 'local' url, not an
-      # external url. The 'original' url of the request will NOT change.
-      def redirect_to(url, options = {})
-        options = {:status => 302}.merge(options)
-        raise Rack::ForwardRequest.new(url) if options[:server_side]
-        response.status = options[:status]
-        response[:location] = url
-        render(:text => redirect_html(request.path_info, url, options[:status]))
-      end
-      
-      # In an action wants will run blocks of code based on the content type that has
-      # been requested.
-      # 
-      # Examples:
-      #   class MyAwesomeController < Mack::Controller::Base
-      #     def hello
-      #       wants(:html) do
-      #         render(:text => "<html>Hello World</html>")
-      #       end
-      #       wants(:xml) do
-      #         render(:text => "<xml><greeting>Hello World</greeting></xml>")
-      #       end
-      #     end
-      #   end
-      # 
-      # If you were to go to: /my_awesome/hello you would get:
-      #   "<html>Hello World</html>"
-      # 
-      # If you were to go to: /my_awesome/hello.html you would get:
-      #   "<html>Hello World</html>"
-      # 
-      # If you were to go to: /my_awesome/hello.xml you would get:
-      #   "<xml><greeting>Hello World</greeting></xml>"
-      def wants(header_type, &block)
-        header_type = header_type.to_sym
-        if header_type == params(:format).to_sym
-          yield
-        end
-      end
-      
-      # Returns true/false depending on whether the render action has been called yet.
-      def render_performed?
-        @render_performed
-      end
-      
-      # Gives access to the MACK_DEFAULT_LOGGER.
-      def logger
-        MACK_DEFAULT_LOGGER
-      end
-      
       private
-      
-      def run_filters(type)
-        filters = self.class.controller_filters[type]
-        return true if filters.empty?
-        filters.each do |filter|
-          if filter.run?(self.action_name.to_sym)
-            r = self.send(filter.filter_method)
-            raise Mack::Errors::FilterChainHalted.new(filter.filter_method) unless r
+      def do_render
+        @view_template.add_options(:controller => self)
+      end
+
+      def complete_action_render
+        if render_performed?
+          return Mack::Rendering::ViewBinder.new(self, @render_options).render(@render_options)
+        else
+          begin
+            # try action.html.erb
+            return Mack::Rendering::ViewBinder.new(self).render({:action => self.action_name})
+          rescue Errno::ENOENT => e
+            if @result_of_action_called.is_a?(String)
+              @render_options[:text] = @result_of_action_called
+              return Mack::Rendering::ViewBinder.new(self).render(@render_options)
+            else
+              raise e
+            end
           end
         end
-      end
+      end # complete_action_render      
       
       def complete_layout_render(action_content)
         @content_for_layout = action_content
@@ -273,7 +284,7 @@ module Mack
           # to be able to override layout with nil/false.
           if @render_options.has_key?(:layout)
             if @render_options[:layout]
-              return Mack::ViewBinder.new(self).render(@render_options.merge({:action => "layouts/#{@render_options[:layout]}"}))
+              return Mack::Rendering::ViewBinder.new(self).render(@render_options.merge({:action => "layouts/#{@render_options[:layout]}"}))
             else
               # someone has specified NO layout via nil/false
               return @content_for_layout
@@ -281,7 +292,7 @@ module Mack
           else layout
             # use the layout specified by the layout method
             begin
-              return Mack::ViewBinder.new(self).render(@render_options.merge({:action => "layouts/#{layout}"}))
+              return Mack::Rendering::ViewBinder.new(self).render(@render_options.merge({:action => "layouts/#{layout}"}))
             rescue Errno::ENOENT => e
               # if the layout doesn't exist, we don't care.
             rescue Exception => e
@@ -291,27 +302,20 @@ module Mack
         # end
         @content_for_layout
       end
-
-      def complete_action_render
-        if render_performed?
-          return Mack::ViewBinder.new(self, @render_options).render(@render_options)
-        else
-          begin
-            # try action.html.erb
-            return Mack::ViewBinder.new(self).render({:action => self.action_name})
-          rescue Errno::ENOENT => e
-            if @result_of_action_called.is_a?(String)
-              @render_options[:text] = @result_of_action_called
-              return Mack::ViewBinder.new(self).render(@render_options)
-            else
-              raise e
-            end
-          end
-        end
-      end # complete_action_render
       
       def layout
         :application
+      end
+      
+      def run_filters(type)
+        filters = self.class.controller_filters[type]
+        return true if filters.empty?
+        filters.each do |filter|
+          if filter.run?(self.action_name.to_sym)
+            r = self.send(filter.filter_method)
+            raise Mack::Errors::FilterChainHalted.new(filter.filter_method) unless r
+          end
+        end
       end
       
       public

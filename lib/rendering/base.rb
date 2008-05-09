@@ -21,7 +21,7 @@ module Mack
     #   end
     class Base
       
-      attr_accessor :view_binder # The Mack::ViewBinder that called this rendering system.
+      attr_accessor :view_binder # The Mack::Rendering::ViewBinder that called this rendering system.
       attr_accessor :options # The options associated with this render call
       
       def initialize(view_binder, options)
@@ -33,7 +33,7 @@ module Mack
       # It should return a String.
       needs_method :render
       
-      # Maps to the view_binder's param method. See also Mack::ViewBinder params.
+      # Maps to the view_binder's param method. See also Mack::Rendering::ViewBinder params.
       def params(key)
         self.view_binder.params(key)
       end
@@ -54,7 +54,7 @@ module Mack
           partial = File.join(options[:dir], parts.join("/") + options[:ext])
         end
         raise Errno::ENOENT.new(partial) unless File.exists?(partial)
-        return Mack::ViewBinder.render(File.open(partial).read, self.view_binder.controller, options)
+        return Mack::Rendering::ViewBinder.render(File.open(partial).read, self.view_binder.controller, options)
       end
       
     end # Base
