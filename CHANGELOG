@@ -2,7 +2,7 @@
 * Fixed r.defaults in routes so they are always the last routes to be checked, no matter where they are placed in the routes definitions.
 * render(:url) now recognizes 'local' urls and tries to run them through the app.
 * Added 'options' banners to the mack and mack_ring_server binaries.
-* gem: mack_ruby_core_extensions 0.1.26
+* gem: mack_ruby_core_extensions 0.1.27
 
 ===0.5.0
 * Added rake db:create and db:create:all rake tasks.
