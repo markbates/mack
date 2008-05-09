@@ -1,7 +1,7 @@
 * Fixed bug with cookies not merging with configured app_config parameters.
 * Added mime-types. The 'Content-Type' header is now being set based on the format that is requested. Default is text/html.
 * Fixed r.defaults in routes so they are always the last routes to be checked, no matter where they are placed in the routes definitions.
-* render(:url) now recognizes 'local' urls and tries to run them through the app.
+* render(:url) now recognizes 'local' urls and tries to run them through the app, mimicking most headers from the original request.
 * Added 'options' banners to the mack and mack_ring_server binaries.
 * gem: mack_ruby_core_extensions 0.1.27
 

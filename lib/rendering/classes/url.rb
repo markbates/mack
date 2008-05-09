@@ -60,7 +60,8 @@ module Mack
           # MACK_DEFAULT_LOGGER.debug "ORIGINAL REQUEST: #{request.env.inspect}"
           env = request.env.dup
           env - ["rack.input", "rack.errors", "PATH_INFO", "REQUEST_PATH", "REQUEST_URI", "REQUEST_METHOD"]
-          env["rack.request.query_hash"].merge!(options[:parameters]) if options[:parameters]
+          env["rack.request.query_hash"] = options[:parameters]
+          env["HTTP_COOKIE"] = "#{app_config.mack.session_id}=#{request.session.id};" if env["HTTP_COOKIE"].nil?
           options = env.merge(options)
           # MACK_DEFAULT_LOGGER.debug "NEW OPTIONS: #{options.inspect}"
           response = yield url, options
