@@ -46,6 +46,8 @@ Mack::Routes.build do |r|
     map.public_found '/vtt/public_found', :action => :public_found
     map.public_not_found '/vtt/public_not_found', :action => :public_not_found
     map.public_found_nested '/vtt/public_found_nested', :action => :public_found_nested
+    map.partial_local '/vtt/partial_local', :action => :partial_local
+    map.partial_outside '/vtt/partial_outside', :action => :partial_outside
   end
   
   r.old_foo "/my_old_foo", :redirect_to => "/tst_another/foo/:id", :status => 301

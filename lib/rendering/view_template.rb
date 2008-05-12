@@ -29,6 +29,17 @@ module Mack
         self.controller.cookies
       end
       
+      # If a method can not be found then the :locals key of
+      # the options is used to find the variable.
+      def method_missing(sym, *args)
+        self.options[:locals][sym]
+      end
+      
+      # Maps to the controller's param method. See also Mack::Controller::Base params.
+      def params(key)
+        self.controller.params(key)
+      end
+      
       def render(options)
         options = {:controller => self.controller, :layout => false}.merge(options)
         Mack::Rendering::ViewTemplate.new(options).compile_and_render
@@ -102,7 +113,24 @@ module Mack
           return engine(options[:engine]).render(self.options[:text], binding)
         elsif self.options[:partial]
           self.options[:layout] = false
-          raise "UNIMPLEMENTED!!"
+          partial = self.options[:partial].to_s
+          parts = partial.split("/")
+          if parts.size == 1
+            # it's local to this controller
+            partial = "_" << partial
+            partial = File.join(controller_view_path, partial)
+            # partial = File.join(options[:dir], self.view_binder.controller.controller_name, partial + options[:ext])
+          else
+            # it's elsewhere
+            parts[parts.size - 1] = "_" << parts.last
+            partial = File.join(Mack::Configuration.views_directory, parts)
+          end
+          
+          Mack::Rendering::Action::ENGINES.each do |e|
+            find_file(partial + ".#{self.options[:format]}.#{e}") do |f|
+              return engine(e).render(File.open(f).read, binding)
+            end
+          end
         elsif self.options[:public]
           self.options[:layout] = false
           p_file = "#{self.options[:public]}.#{self.options[:format]}"
@@ -123,12 +151,11 @@ module Mack
           end
         else
           raise Mack::Errors::UnknownRenderOption.new(options.inspect)
-        end        
+        end
       end
       
       def find_file(*path)
         f = File.join(path)
-        puts f
         if File.exists?(f)
           yield f
         end
