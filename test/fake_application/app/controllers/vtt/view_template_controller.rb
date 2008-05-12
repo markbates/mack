@@ -39,4 +39,36 @@ class Vtt::ViewTemplateController < Mack::Controller::Base
     render(:xml => "homer", :layout => "my_cool")
   end
   
+  def good_get_url
+    render(:url => "http://testing.mackframework.com/render_url_get_test.php", :parameters => {:age => 31})
+  end
+  
+  def bad_get_url
+    render(:url => "http://testing.mackframework.com/i_dont_exist.html", :parameters => {:age => 31})
+  end
+  
+  def bad_with_raise_url
+    render(:url => "http://testing.mackframework.com/i_dont_exist.html", :raise_exception => true, :parameters => {:age => 31})
+  end
+  
+  def good_post_url
+    render(:url => "http://testing.mackframework.com/render_url_post_test.php", :method => :post, :parameters => {:age => 31})
+  end
+  
+  def bad_post_url
+    render(:url => "http://testing.mackframework.com/i_dont_exist.php", :method => :post, :parameters => {:age => 31})
+  end
+  
+  def bad_post_with_raise_url
+    render(:url => "http://testing.mackframework.com/i_dont_exist.php", :raise_exception => true, :method => :post, :parameters => {:age => 31})
+  end
+  
+  def good_put_url
+    render(:url => "http://testing.mackframework.com/render_url_post_test.php", :method => :put, :parameters => {:age => 31})
+  end
+  
+  def good_delete_url
+    render(:url => "http://testing.mackframework.com/render_url_post_test.php", :method => :delete, :parameters => {:age => 31})
+  end
+  
 end

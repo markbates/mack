@@ -17,6 +17,18 @@ module Mack
         self.options[:controller]
       end
       
+      def request
+        self.controller.request
+      end
+      
+      def session
+        self.request.session
+      end
+      
+      def cookies
+        self.controller.cookies
+      end
+      
       def xml
         @xml_builder.xml
       end
@@ -55,11 +67,13 @@ module Mack
         elsif self.options[:text]
           content_for(:view, engine(options[:engine]).render(self.options[:text], binding))
         elsif self.options[:partial]
-          
+          self.options[:layout] = false
         elsif self.options[:public]
-          
+          self.options[:layout] = false
         elsif self.options[:url]
-          
+          self.options[:layout] = false
+          e = Mack::Rendering::Engines::Url.new(self, self.options)
+          content_for(:view, e.render)
         elsif self.options[:xml]
           Mack::Rendering::Xml::ENGINES.each do |e|
             f = File.join(controller_view_path, "#{self.options[:xml]}.#{self.options[:format]}.#{e}")
@@ -80,6 +94,16 @@ module Mack
           end
         end
         return yield_to :view
+      end
+      
+      def concat(txt, b)
+        eval( "_buf", b) << txt
+      end
+      
+      def app_for_rendering
+        ivar_cache do
+          Mack::Utils::Server.build_app
+        end
       end
       
       private

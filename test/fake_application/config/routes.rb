@@ -32,6 +32,16 @@ Mack::Routes.build do |r|
       x.homer_xml_without_layout "/vtt/homer_xml_without_layout", :action => :homer_xml_without_layout
       x.homer_xml_with_special_layout "/vtt/homer_xml_with_special_layout", :action => :homer_xml_with_special_layout
     end
+    map.good_get "/vtt/good_get", :action => :good_get_url
+    map.bad_get "/vtt/bad_get", :action => :bad_get_url
+    map.bad_with_raise "/vtt/bad_with_raise", :action => :bad_with_raise_url
+    map.with_options(:method => :post) do |x|
+      x.good_post "/vtt/good_post", :action => :good_post_url
+      x.bad_post "/vtt/bad_post", :action => :bad_post_url
+      x.bad_post_with_raise "/vtt/bad_post_with_raise", :action => :bad_post_with_raise_url
+    end
+    map.good_put "/vtt/good_put", :action => :good_put_url, :method => :put
+    map.good_put "/vtt/good_delete", :action => :good_delete_url, :method => :delete
   end
   
   r.old_foo "/my_old_foo", :redirect_to => "/tst_another/foo/:id", :status => 301

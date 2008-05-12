@@ -243,9 +243,6 @@ module Mack
         raise Mack::Errors::DoubleRender.new if render_performed?
         response.status = options[:status] unless options[:status].nil?
         options = {:content_type => Mack::Utils::MimeTypes[params(:format)], :layout => layout}.merge(options)
-        unless options[:action] || options[:text]
-          options = {:layout => false}.merge(options)
-        end
         response["Content-Type"] = options[:content_type]
         options.delete(:content_type)
         @view_template.add_options(options)
