@@ -20,6 +20,20 @@ Mack::Routes.build do |r|
     map.kill_kenny_bad "/tst_another/kill_kenny_bad", :action => :kill_kenny_bad
   end
   
+  r.with_options(:controller => "vtt/view_template") do |map|
+    map.bart_html_erb_with_layout "/vtt/bart_html_erb_with_layout", :action => :bart_html_erb_with_layout
+    map.bart_html_erb_without_layout "/vtt/bart_html_erb_without_layout", :action => :bart_html_erb_without_layout
+    map.bart_html_erb_with_special_layout "/vtt/bart_html_erb_with_special_layout", :action => :bart_html_erb_with_special_layout
+    map.lisa_text_erb_with_layout "/vtt/lisa_text_erb_with_layout", :action => :lisa_text_erb_with_layout
+    map.lisa_text_erb_without_layout "/vtt/lisa_text_erb_without_layout", :action => :lisa_text_erb_without_layout
+    map.lisa_text_erb_with_special_layout "/vtt/lisa_text_erb_with_special_layout", :action => :lisa_text_erb_with_special_layout
+    map.with_options(:format => :xml) do |x|
+      x.homer_xml_with_layout "/vtt/homer_xml_with_layout", :action => :homer_xml_with_layout
+      x.homer_xml_without_layout "/vtt/homer_xml_without_layout", :action => :homer_xml_without_layout
+      x.homer_xml_with_special_layout "/vtt/homer_xml_with_special_layout", :action => :homer_xml_with_special_layout
+    end
+  end
+  
   r.old_foo "/my_old_foo", :redirect_to => "/tst_another/foo/:id", :status => 301
   
   r.kill_kenny_good "/tst_users/kill_kenny_good", :controller => :tst_users, :action => :kill_kenny_good

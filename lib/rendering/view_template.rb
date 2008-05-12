@@ -12,13 +12,21 @@ module Mack
         self.options.merge!(opts)
       end
       
-      def method_missing(sym, *args)
-        self.options[sym]
+      # def method_missing(sym, *args)
+      #   self.options[sym]
+      # end
+      
+      def controller
+        self.options[:controller]
+      end
+      
+      def xml
+        @xml_builder.xml
       end
       
       def compile
         self.options.symbolize_keys!
-        pp self.options
+        # pp self.options
         transfer_vars(self.controller)
       end
       
@@ -26,7 +34,7 @@ module Mack
         self.compile
         if self.options[:action]
           Mack::Rendering::Action::ENGINES.each do |e|
-            f = File.join(Mack::Configuration.views_directory, self.controller.controller_name, "#{self.action}.#{self.format}.#{e}")
+            f = File.join(Mack::Configuration.views_directory, self.controller.controller_name, "#{self.options[:action]}.#{self.options[:format]}.#{e}")
             if File.exists?(f)
               puts "found: #{f}"
               puts "Mack::Rendering::Engines::#{e.to_s.camelcase}"
@@ -34,7 +42,7 @@ module Mack
             end
           end
         elsif self.options[:text]
-          @content_for_layout = eval("Mack::Rendering::Engines::#{self.engine.to_s.camelcase}").render(self.text, binding)
+          @content_for_layout = eval("Mack::Rendering::Engines::#{self.options[:engine].to_s.camelcase}").render(self.options[:text], binding)
         elsif self.options[:partial]
           
         elsif self.options[:public]
@@ -42,17 +50,26 @@ module Mack
         elsif self.options[:url]
           
         elsif self.options[:xml]
-          
-        else
-          
-        end
-        if self.layout
-          Mack::Rendering::Layout::ENGINES.each do |e|
-            f = File.join(Mack::Configuration.views_directory, "layouts", "#{self.layout}.#{self.format}.#{e}")
+          Mack::Rendering::Xml::ENGINES.each do |e|
+            f = File.join(Mack::Configuration.views_directory, self.controller.controller_name, "#{self.options[:xml]}.#{self.options[:format]}.#{e}")
+            puts "f: #{f}"
             if File.exists?(f)
               puts "found: #{f}"
               puts "Mack::Rendering::Engines::#{e.to_s.camelcase}"
-              @content_for_layout = eval("Mack::Rendering::Engines::#{e.to_s.camelcase}").render(File.open(f).read, binding)
+              @xml_builder = eval("Mack::Rendering::Engines::#{e.to_s.camelcase}").new
+              @content_for_layout = @xml_builder.render(File.open(f).read, binding)
+            end
+          end
+        else
+          raise Mack::Errors::UnknownRenderOption.new(options.inspect)
+        end
+        if self.options[:layout]
+          Mack::Rendering::Layout::ENGINES.each do |e|
+            f = File.join(Mack::Configuration.views_directory, "layouts", "#{self.options[:layout]}.#{self.options[:format]}.#{e}")
+            if File.exists?(f)
+              puts "found: #{f}"
+              puts "Mack::Rendering::Engines::#{e.to_s.camelcase}"
+              return eval("Mack::Rendering::Engines::#{e.to_s.camelcase}").render(File.open(f).read, binding)
             end
           end
         end
