@@ -1,7 +1,10 @@
 module Mack
   module Rendering
+    # This class is used to do all the view level bindings.
+    # It allows for seperation between the controller and the view levels.
     class ViewTemplate
       
+      # Allows access to any options passed into the template.
       attr_accessor :options
       
       def initialize(options = {})
@@ -13,6 +16,7 @@ module Mack
         self.options.merge!(opts)
       end
       
+      # Allows access to the controller.
       def controller
         self.options[:controller]
       end
@@ -32,6 +36,7 @@ module Mack
       # If a method can not be found then the :locals key of
       # the options is used to find the variable.
       def method_missing(sym, *args)
+        raise NoMethodError.new(sym.to_s) unless self.options[:locals]
         self.options[:locals][sym]
       end
       
@@ -40,6 +45,16 @@ module Mack
         self.controller.params(key)
       end
       
+      # Handles rendering calls both in the controller and in the view.
+      # For full details of render examples see Mack::Controller::Base render.
+      # Although the examples there are all in controllers, they idea is still
+      # the same for views.
+      # 
+      # Examples in the view:
+      #   <%= render(:text => "Hello") %>
+      #   <%= render(:action => "show") %>
+      #   <%= render(:partial => :latest_news) %>
+      #   <%= render(:url => "http://www.mackframework.com") %>
       def render(options)
         options = {:controller => self.controller, :layout => false}.merge(options)
         Mack::Rendering::ViewTemplate.new(options).compile_and_render

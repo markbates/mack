@@ -6,7 +6,7 @@ module Mack
       ENGINES = [:erb, :markaby, :haml]
       
       def render
-        Mack::Rendering::ViewBinder.render(options[:text], self.view_binder.controller, options)
+        Mack::Rendering::ViewTemplate.render(options[:text], self.view_binder.controller, options)
       end
       
     end

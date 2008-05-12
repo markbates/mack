@@ -91,20 +91,20 @@ unless Mack::Configuration.initialized
   
   # Include ApplicationHelper into all controllers:
   if Object.const_defined?("ApplicationHelper")
-    ApplicationHelper.include_safely_into(Mack::Controller::Base, Mack::Rendering::ViewBinder)
+    ApplicationHelper.include_safely_into(Mack::Controller::Base, Mack::Rendering::ViewTemplate)
   end
   # Find other Helpers and include them into their respective controllers.
   Object.constants.collect {|c| c if c.match(/Controller$/)}.compact.each do |cont|
     if Object.const_defined?("#{cont}Helper")
       h = "#{cont}Helper".constantize
-      h.include_safely_into(cont, Mack::Rendering::ViewBinder)
+      h.include_safely_into(cont, Mack::Rendering::ViewTemplate)
     end
   end
   
-  # Find view level Helpers and include them into the Mack::Rendering::ViewBinder
+  # Find view level Helpers and include them into the Mack::Rendering::ViewTemplate
   Mack::ViewHelpers.constants.each do |cont|
       h = "Mack::ViewHelpers::#{cont}".constantize
-      h.include_safely_into(Mack::Rendering::ViewBinder)
+      h.include_safely_into(Mack::Rendering::ViewTemplate)
   end
   
   Mack::Configuration.set(:initialized, "true") if Mack::Configuration.initialized.nil?

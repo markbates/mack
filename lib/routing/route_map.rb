@@ -9,7 +9,7 @@ module Mack
     def self.build
       yield Mack::Routes::RouteMap.instance
       Mack::Routes::Urls.include_safely_into(Mack::Controller::Base, 
-                                             Mack::Rendering::ViewBinder, 
+                                             Mack::Rendering::ViewTemplate, 
                                              Test::Unit::TestCase, 
                                              Mack::Distributed::Routes::Urls)
       if app_config.mack.use_distributed_routes
