@@ -75,4 +75,16 @@ class Vtt::ViewTemplateController < Mack::Controller::Base
     render(:text => "Hello", :layout => false)
   end
   
+  def public_found
+    render(:public => "vtt_public_test")
+  end
+  
+  def public_not_found
+    render(:public => "vtt_public_not_found_test")
+  end
+  
+  def public_found_nested
+    render(:public => "vtt/vtt_public_nested_test")
+  end
+  
 end

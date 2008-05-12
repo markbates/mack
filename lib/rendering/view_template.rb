@@ -62,7 +62,9 @@ module Mack
       
       def compile_and_render
         self.compile
-        render_view
+        content_for(:view) do
+          render_view
+        end
         render_layout
       end
       
@@ -93,26 +95,30 @@ module Mack
         if self.options[:action]
           Mack::Rendering::Action::ENGINES.each do |e|
             find_file(controller_view_path, "#{self.options[:action]}.#{self.options[:format]}.#{e}") do |f|
-              return content_for(:view, engine(e).render(File.open(f).read, binding))
+              return engine(e).render(File.open(f).read, binding)
             end
           end
         elsif self.options[:text]
-          return content_for(:view, engine(options[:engine]).render(self.options[:text], binding))
+          return engine(options[:engine]).render(self.options[:text], binding)
         elsif self.options[:partial]
           self.options[:layout] = false
           raise "UNIMPLEMENTED!!"
         elsif self.options[:public]
           self.options[:layout] = false
-          raise "UNIMPLEMENTED!!"
+          p_file = "#{self.options[:public]}.#{self.options[:format]}"
+          find_file(Mack::Configuration.public_directory, p_file) do |f|
+            return File.open(f).read
+          end
+          raise Mack::Errors::ResourceNotFound.new(p_file)
         elsif self.options[:url]
           self.options[:layout] = false
           e = Mack::Rendering::Engines::Url.new(self, self.options)
-          return content_for(:view, e.render)
+          return e.render
         elsif self.options[:xml]
           Mack::Rendering::Xml::ENGINES.each do |e|
             find_file(controller_view_path, "#{self.options[:xml]}.#{self.options[:format]}.#{e}") do |f|
               @xml_builder = engine(e).new
-              return content_for(:view, @xml_builder.render(File.open(f).read, binding))
+              return @xml_builder.render(File.open(f).read, binding)
             end
           end
         else
@@ -122,7 +128,7 @@ module Mack
       
       def find_file(*path)
         f = File.join(path)
-        # puts f
+        puts f
         if File.exists?(f)
           yield f
         end

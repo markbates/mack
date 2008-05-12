@@ -43,6 +43,9 @@ Mack::Routes.build do |r|
     map.good_url_put "/vtt/good_put", :action => :good_put_url, :method => :put
     map.good_url_delete "/vtt/good_delete", :action => :good_delete_url, :method => :delete
     map.connect '/vtt/say_hi', :action => "say_hi"
+    map.public_found '/vtt/public_found', :action => :public_found
+    map.public_not_found '/vtt/public_not_found', :action => :public_not_found
+    map.public_found_nested '/vtt/public_found_nested', :action => :public_found_nested
   end
   
   r.old_foo "/my_old_foo", :redirect_to => "/tst_another/foo/:id", :status => 301
