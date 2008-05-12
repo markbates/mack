@@ -187,12 +187,12 @@ module Mack
       def render(options = {:action => self.action_name})
         raise Mack::Errors::DoubleRender.new if render_performed?
         response.status = options[:status] unless options[:status].nil?
-        option = {:content_type => Mack::Utils::MimeTypes[params(:format)]}.merge(options)
+        options = {:content_type => Mack::Utils::MimeTypes[params(:format)]}.merge(options)
         unless options[:action] || options[:text]
           options = {:layout => false}.merge(options)
         end
-        response["Content-Type"] = option[:content_type]
-        option.delete(:content_type)
+        response["Content-Type"] = options[:content_type]
+        options.delete(:content_type)
         @render_options = options
         @render_performed = true
       end
