@@ -25,8 +25,9 @@ module Mack
         @yield_to_cache[key.to_sym]
       end
       
-      def content_for_yield(key)
-        @yield_to_cache[key.to_sym] = yield
+      def content_for(key, value = nil)
+        @yield_to_cache[key.to_sym] = value unless value.nil?
+        @yield_to_cache[key.to_sym] = yield if block_given?
       end
 
       def controller_view_path
@@ -48,15 +49,11 @@ module Mack
           Mack::Rendering::Action::ENGINES.each do |e|
             f = File.join(controller_view_path, "#{self.options[:action]}.#{self.options[:format]}.#{e}")
             if File.exists?(f)
-              content_for_yield(:view) do
-                engine(e).render(File.open(f).read, binding)
-              end
+              content_for(:view, engine(e).render(File.open(f).read, binding))
             end
           end
         elsif self.options[:text]
-          content_for_yield(:view) do
-            engine(options[:engine]).render(self.options[:text], binding)
-          end
+          content_for(:view, engine(options[:engine]).render(self.options[:text], binding))
         elsif self.options[:partial]
           
         elsif self.options[:public]
@@ -68,9 +65,7 @@ module Mack
             f = File.join(controller_view_path, "#{self.options[:xml]}.#{self.options[:format]}.#{e}")
             if File.exists?(f)
               @xml_builder = engine(e).new
-              content_for_yield(:view) do
-                @xml_builder.render(File.open(f).read, binding)
-              end
+              content_for(:view, @xml_builder.render(File.open(f).read, binding))
             end
           end
         else
