@@ -71,4 +71,8 @@ class Vtt::ViewTemplateController < Mack::Controller::Base
     render(:url => "http://testing.mackframework.com/render_url_post_test.php", :method => :delete, :parameters => {:age => 31})
   end
   
+  def say_hi
+    render(:text => "Hello", :layout => false)
+  end
+  
 end
