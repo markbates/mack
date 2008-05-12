@@ -1,8 +1,8 @@
 <html>
   <head>
-    <title>Application Layout</title>
+    <title><%= @page_title || "Application Layout" %></title>
   </head>
   <body>
-    <%= @content_for_layout %>
+    <%= yield_to :view %>
   </body>
 </html>

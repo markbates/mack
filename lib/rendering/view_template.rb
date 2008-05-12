@@ -6,15 +6,12 @@ module Mack
       
       def initialize(options = {})
         self.options = {:engine => :erb}.merge(options)
+        @yield_to_cache = {}
       end
       
       def add_options(opts)
         self.options.merge!(opts)
       end
-      
-      # def method_missing(sym, *args)
-      #   self.options[sym]
-      # end
       
       def controller
         self.options[:controller]
@@ -24,25 +21,42 @@ module Mack
         @xml_builder.xml
       end
       
+      def yield_to(key)
+        @yield_to_cache[key.to_sym]
+      end
+      
+      def content_for_yield(key)
+        @yield_to_cache[key.to_sym] = yield
+      end
+
+      def controller_view_path
+        ivar_cache do
+          File.join(Mack::Configuration.views_directory, self.controller.controller_name)
+        end
+      end
+      
       def compile
-        self.options.symbolize_keys!
-        # pp self.options
-        transfer_vars(self.controller)
+        ivar_cache("compiled_template") do
+          self.options.symbolize_keys!
+          transfer_vars(self.controller)
+        end
       end
       
       def compile_and_render
         self.compile
         if self.options[:action]
           Mack::Rendering::Action::ENGINES.each do |e|
-            f = File.join(Mack::Configuration.views_directory, self.controller.controller_name, "#{self.options[:action]}.#{self.options[:format]}.#{e}")
+            f = File.join(controller_view_path, "#{self.options[:action]}.#{self.options[:format]}.#{e}")
             if File.exists?(f)
-              puts "found: #{f}"
-              puts "Mack::Rendering::Engines::#{e.to_s.camelcase}"
-              @content_for_layout = eval("Mack::Rendering::Engines::#{e.to_s.camelcase}").render(File.open(f).read, binding)
+              content_for_yield(:view) do
+                engine(e).render(File.open(f).read, binding)
+              end
             end
           end
         elsif self.options[:text]
-          @content_for_layout = eval("Mack::Rendering::Engines::#{self.options[:engine].to_s.camelcase}").render(self.options[:text], binding)
+          content_for_yield(:view) do
+            engine(options[:engine]).render(self.options[:text], binding)
+          end
         elsif self.options[:partial]
           
         elsif self.options[:public]
@@ -51,13 +65,12 @@ module Mack
           
         elsif self.options[:xml]
           Mack::Rendering::Xml::ENGINES.each do |e|
-            f = File.join(Mack::Configuration.views_directory, self.controller.controller_name, "#{self.options[:xml]}.#{self.options[:format]}.#{e}")
-            puts "f: #{f}"
+            f = File.join(controller_view_path, "#{self.options[:xml]}.#{self.options[:format]}.#{e}")
             if File.exists?(f)
-              puts "found: #{f}"
-              puts "Mack::Rendering::Engines::#{e.to_s.camelcase}"
-              @xml_builder = eval("Mack::Rendering::Engines::#{e.to_s.camelcase}").new
-              @content_for_layout = @xml_builder.render(File.open(f).read, binding)
+              @xml_builder = engine(e).new
+              content_for_yield(:view) do
+                @xml_builder.render(File.open(f).read, binding)
+              end
             end
           end
         else
@@ -67,13 +80,11 @@ module Mack
           Mack::Rendering::Layout::ENGINES.each do |e|
             f = File.join(Mack::Configuration.views_directory, "layouts", "#{self.options[:layout]}.#{self.options[:format]}.#{e}")
             if File.exists?(f)
-              puts "found: #{f}"
-              puts "Mack::Rendering::Engines::#{e.to_s.camelcase}"
-              return eval("Mack::Rendering::Engines::#{e.to_s.camelcase}").render(File.open(f).read, binding)
+              return engine(e).render(File.open(f).read, binding)
             end
           end
         end
-        return @content_for_layout
+        return yield_to :view
       end
       
       private
@@ -83,6 +94,10 @@ module Mack
         x.instance_variables.each do |v|
           self.instance_variable_set(v, x.instance_variable_get(v))
         end
+      end
+      
+      def engine(e)
+        eval("Mack::Rendering::Engines::#{e.to_s.camelcase}")
       end
       
     end # ViewTemplate

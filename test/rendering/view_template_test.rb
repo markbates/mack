@@ -7,10 +7,11 @@ class ViewTemplateTest < Test::Unit::TestCase
     body = <<-EOF
 <html>
   <head>
-    <title>Application Layout</title>
+    <title>Bart's Page!</title>
   </head>
   <body>
     Bart Simpson: HTML, ERB
+
   </body>
 </html>
 EOF
@@ -26,6 +27,7 @@ EOF
   </head>
   <body>
     Bart Simpson: HTML, ERB
+
   </body>
 </html>
 EOF
@@ -34,7 +36,7 @@ EOF
   
   def test_action_html_erb_with_layout_url
     get bart_html_erb_without_layout_url
-    assert_equal "Bart Simpson: HTML, ERB", response.body
+    assert_equal "Bart Simpson: HTML, ERB\n", response.body
   end
   
   def test_text_erb_with_layout
