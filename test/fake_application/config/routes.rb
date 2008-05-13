@@ -24,9 +24,9 @@ Mack::Routes.build do |r|
     map.bart_html_erb_with_layout "/vtt/bart_html_erb_with_layout", :action => :bart_html_erb_with_layout
     map.bart_html_erb_without_layout "/vtt/bart_html_erb_without_layout", :action => :bart_html_erb_without_layout
     map.bart_html_erb_with_special_layout "/vtt/bart_html_erb_with_special_layout", :action => :bart_html_erb_with_special_layout
-    map.lisa_text_erb_with_layout "/vtt/lisa_text_erb_with_layout", :action => :lisa_text_erb_with_layout
-    map.lisa_text_erb_without_layout "/vtt/lisa_text_erb_without_layout", :action => :lisa_text_erb_without_layout
-    map.lisa_text_erb_with_special_layout "/vtt/lisa_text_erb_with_special_layout", :action => :lisa_text_erb_with_special_layout
+    map.lisa_inline_erb_with_layout "/vtt/lisa_inline_erb_with_layout", :action => :lisa_inline_erb_with_layout
+    map.lisa_inline_erb_without_layout "/vtt/lisa_inline_erb_without_layout", :action => :lisa_inline_erb_without_layout
+    map.lisa_inline_erb_with_special_layout "/vtt/lisa_inline_erb_with_special_layout", :action => :lisa_inline_erb_with_special_layout
     map.with_options(:format => :xml) do |x|
       x.homer_xml_with_layout "/vtt/homer_xml_with_layout", :action => :homer_xml_with_layout
       x.homer_xml_without_layout "/vtt/homer_xml_without_layout", :action => :homer_xml_without_layout

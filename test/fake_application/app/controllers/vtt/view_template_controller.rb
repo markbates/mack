@@ -12,16 +12,16 @@ class Vtt::ViewTemplateController < Mack::Controller::Base
     render(:action => "bart", :layout => false)
   end
   
-  def lisa_text_erb_with_layout
-    render(:text => %{Lisa <%= "Simpson" %>: TEXT, ERB})
+  def lisa_inline_erb_with_layout
+    render(:inline => %{Lisa <%= "Simpson" %>: INLINE, ERB})
   end
   
-  def lisa_text_erb_with_special_layout
-    render(:text => %{Lisa <%= "Simpson" %>: TEXT, ERB}, :layout => "my_cool")
+  def lisa_inline_erb_with_special_layout
+    render(:inline => %{Lisa <%= "Simpson" %>: INLINE, ERB}, :layout => "my_cool")
   end
   
-  def lisa_text_erb_without_layout
-    render(:text => %{Lisa <%= "Simpson" %>: TEXT, ERB}, :layout => false)
+  def lisa_inline_erb_without_layout
+    render(:inline => %{Lisa <%= "Simpson" %>: INLINE, ERB}, :layout => false)
   end
   
   def homer_xml_with_layout

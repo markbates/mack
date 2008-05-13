@@ -32,7 +32,6 @@ module Mack
         @action_name = params(:action)
         @cookies = cookies
         @wants_list = []
-        @view_template = Mack::Rendering::ViewTemplate.new(:format => params(:format).to_sym)
       end
       
       # Gives access to all the parameters for this request.
@@ -245,7 +244,7 @@ module Mack
         options = {:content_type => Mack::Utils::MimeTypes[params(:format)], :layout => layout}.merge(options)
         response["Content-Type"] = options[:content_type]
         options.delete(:content_type)
-        @view_template.add_options(options)
+        @view_template = Mack::Rendering::ViewTemplate.new({:format => params(:format).to_sym}.merge(options))
         @render_performed = true
       end
       

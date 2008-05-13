@@ -125,7 +125,9 @@ module Mack
             end
           end
         elsif self.options[:text]
-          return engine(options[:engine]).render(self.options[:text], binding)
+          return self.options[:text]
+        elsif self.options[:inline]
+          return engine(options[:engine]).render(self.options[:inline], binding)
         elsif self.options[:partial]
           self.options[:layout] = false
           partial = self.options[:partial].to_s
