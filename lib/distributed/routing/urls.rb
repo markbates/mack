@@ -13,7 +13,7 @@ module Mack
         def put
           Mack::Distributed::Utils::Rinda.register_or_renew(:space => app_config.mack.distributed_app_name.to_sym, 
                                                             :klass_def => :distributed_routes, 
-                                                            :object => self)
+                                                            :object => self, :timeout => 0)
         end
         
         def run(meth, options)
