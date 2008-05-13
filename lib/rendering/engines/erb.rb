@@ -1,10 +1,14 @@
 module Mack
   module Rendering
     module Engines
-      module Erb
+      class Erb < Mack::Rendering::Engines::Base
         
-        def self.render(io, binding)
-          Erubis::Eruby.new(io).result(binding)
+        # def self.render(io, binding)
+        #   Erubis::Eruby.new(io).result(binding)
+        # end
+        
+        def render
+          
         end
         
       end # Erb

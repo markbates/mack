@@ -1,19 +1,22 @@
 module Mack
   module Rendering
     module Engines
-      class Url
+      class Url < Mack::Rendering::Engines::Base
         
-        attr_accessor :view_template
         attr_accessor :options
         
-        def initialize(view_template, options = {})
-          self.view_template = view_template
-          self.options = options
+        def use_layout?
+          false
+        end
+        
+        def initialize(view_template, engine_settings)
+          super
+          self.options = self.view_template.options
         end
         
         def render
           options = {:method => :get, :raise_exception => false}.merge(self.options)
-          url = options[:url]
+          url = self.view_template.engine_type_value
           remote = url.match(/^[a-zA-Z]+:\/\//)
           case options[:method]
           when :get

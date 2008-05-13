@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper.rb'
 
-class ViewTemplatePubliTest < Test::Unit::TestCase
+class ViewTemplatePublicTest < Test::Unit::TestCase
   
   def test_public_found
     get public_found_url
