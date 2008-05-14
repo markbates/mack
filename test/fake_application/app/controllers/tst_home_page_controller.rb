@@ -54,22 +54,22 @@ class TstHomePageController < Mack::Controller::Base
   end
   
   def hello_from_render_text
-    render(:text => "hello")
+    render(:text, "hello")
   end
   
   def foo_from_render_action
-    render(:action => :foo)
+    render(:action, :foo)
     @pickles = "rock!!"
     @time = Time.now
   end
   
   def blow_from_bad_render_action
-    render(:action => :i_dont_exist)
+    render(:action, :i_dont_exist)
   end
   
   def blow_up_from_double_render
-    render(:text => "text to render...")
-    render(:action => :foo)
+    render(:text, "text to render...")
+    render(:action, :foo)
   end
   
   def hello_world_url_test

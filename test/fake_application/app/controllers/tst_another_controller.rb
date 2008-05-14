@@ -15,19 +15,19 @@ class TstAnotherController < Mack::Controller::Base
   end
   
   def act_level_layout_test_action
-    render(:text => "I've changed the layout in the action!", :layout => :my_super_cool)
+    render(:text, "I've changed the layout in the action!", :layout => :my_super_cool)
   end
   
   def layout_set_to_nil_in_action
-    render(:text => "I've set my layout to nil!", :layout => nil)
+    render(:text, "I've set my layout to nil!", :layout => nil)
   end
   
   def layout_set_to_false_in_action
-    render(:text => "I've set my layout to false!", :layout => false)
+    render(:text, "I've set my layout to false!", :layout => false)
   end
   
   def layout_set_to_unknown_in_action
-    render(:text => "I've set my layout to some layout that don't exist!", :layout => :i_dont_exist)
+    render(:text, "I've set my layout to some layout that don't exist!", :layout => :i_dont_exist)
   end
   
   def env
