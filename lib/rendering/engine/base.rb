@@ -1,8 +1,9 @@
 module Mack
   module Rendering
-    module Engines
-      class Haml
-      end # Haml
+    module Engine
+      class Base
+        
+      end # Erb
     end # Engines
   end # Rendering
 end # Mack

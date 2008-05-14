@@ -1,31 +1,37 @@
 module Mack
   module Rendering
-    module Engines
+    module Type
       class Base
         
         attr_reader :view_template
-        attr_reader :engine_settings
         
-        def initialize(view_template, engine_settings)
+        def initialize(view_template)
           @view_template = view_template
-          @engine_settings = engine_settings
-          self.view_template.options[:layout] = false unless self.use_layout?
         end
         
         needs_method :render
         
         def find_file(*path)
           f = File.join(path)
+          puts f
           if File.exists?(f)
             yield f
           end
         end
         
-        def use_layout?
+        def allow_layout?
           true
         end
         
-      end # Erb
-    end # Engines
-  end # Rendering
-end # Mack
+        def options
+          self.view_template.options
+        end
+        
+        def engine(e)
+          eval("Mack::Rendering::Engine::#{e.to_s.camelcase}")
+        end
+        
+      end
+    end
+  end
+end

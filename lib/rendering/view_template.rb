@@ -12,7 +12,7 @@ module Mack
       def initialize(engine_type, engine_type_value, options = {})
         self.engine_type = engine_type
         self.engine_type_value = engine_type_value
-        self.options = {:engine => :erb}.merge(options)
+        self.options = options
         @yield_to_cache = {}
       end
       
@@ -115,21 +115,16 @@ module Mack
       private
       
       def render_layout
-        if self.options[:layout]
-          Mack::Rendering::Layout::ENGINES.each do |e|
-            find_file(Mack::Configuration.views_directory, "layouts", "#{self.options[:layout]}.#{self.options[:format]}.#{e}") do |f|
-              return engine(e).render(File.open(f).read, binding)
-            end
-          end
+        if @render_type.allow_layout? && self.options[:layout]
+          return Mack::Rendering::Type::Layout.new(self).render
         end
         return yield_to(:view)
       end
       
       def render_view
-        Mack::Rendering::Engines::Registry.engines[self.engine_type].each do |e|
-          eng = e[:engine].new(self, e)
-          return eng.render
-        end
+        puts render_type(self.engine_type)
+        @render_type = render_type(self.engine_type).new(self)
+        @render_type.render
       end
       
       # def render_view
@@ -200,8 +195,8 @@ module Mack
         end
       end
       
-      def engine(e)
-        eval("Mack::Rendering::Engines::#{e.to_s.camelcase}")
+      def render_type(e)
+        eval("Mack::Rendering::Type::#{e.to_s.camelcase}")
       end
       
     end # ViewTemplate

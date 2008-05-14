@@ -1,19 +1,12 @@
 module Mack
   module Rendering
-    module Engines
-      class Url < Mack::Rendering::Engines::Base
-        
-        attr_accessor :options
-        
-        def use_layout?
+    module Type
+      class Url < Base
+
+        def allow_layout?
           false
         end
-        
-        def initialize(view_template, engine_settings)
-          super
-          self.options = self.view_template.options
-        end
-        
+
         def render
           options = {:method => :get, :raise_exception => false}.merge(self.options)
           url = self.view_template.engine_type_value

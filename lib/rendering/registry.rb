@@ -8,13 +8,14 @@ module Mack
       
         def initialize
           @engines = {
-            :action => [{:engine => Mack::Rendering::Engines::Erb, :extension => :erb}],
-            :partial => [{:engine => Mack::Rendering::Engines::Erb, :extension => :erb}],
-            :layout => [{:engine => Mack::Rendering::Engines::Erb, :extension => :erb}],
-            :public => [{:engine => Mack::Rendering::Engines::Public}],
-            :text => [{:engine => Mack::Rendering::Engines::Text}],
-            :url => [{:engine => Mack::Rendering::Engines::Url}],
-            :xml => [{:engine => Mack::Rendering::Engines::Builder, :extension => :builder}]
+            :action => [{:engine => :erubis, :extension => :erb}],
+            :partial => [{:engine => :erubis, :extension => :erb}],
+            :layout => [{:engine => :erubis, :extension => :erb}],
+            :public => [{:engine => :public}],
+            :text => [{:engine => :text}],
+            :url => [{:engine => :url}],
+            :xml => [{:engine => :builder}],
+            :inline => [{:engine => :erubis}]
           }
         end
       
