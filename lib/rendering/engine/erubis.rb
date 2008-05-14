@@ -11,6 +11,10 @@ module Mack
           :erb
         end
         
+        def concat(txt, b)
+          eval( "_buf", b) << txt
+        end
+        
       end # ErubisInMemory
     end # Engines
   end # Rendering

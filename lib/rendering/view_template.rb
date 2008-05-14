@@ -99,7 +99,7 @@ module Mack
       end
       
       def concat(txt, b)
-        eval( "_buf", b) << txt
+        @render_type.concat(txt, b)
       end
       
       def app_for_rendering
@@ -125,60 +125,6 @@ module Mack
         @render_type = render_type(self.engine_type).new(self)
         @render_type.render
       end
-      
-      # def render_view
-      #   if self.options[:action]
-      #     Mack::Rendering::Action::ENGINES.each do |e|
-      #       find_file(controller_view_path, "#{self.options[:action]}.#{self.options[:format]}.#{e}") do |f|
-      #         return engine(e).render(File.open(f).read, binding)
-      #       end
-      #     end
-      #   elsif self.options[:text]
-      #     return self.options[:text]
-      #   elsif self.options[:inline]
-      #     return engine(options[:engine]).render(self.options[:inline], binding)
-      #   elsif self.options[:partial]
-      #     self.options[:layout] = false
-      #     partial = self.options[:partial].to_s
-      #     parts = partial.split("/")
-      #     if parts.size == 1
-      #       # it's local to this controller
-      #       partial = "_" << partial
-      #       partial = File.join(controller_view_path, partial)
-      #       # partial = File.join(options[:dir], self.view_binder.controller.controller_name, partial + options[:ext])
-      #     else
-      #       # it's elsewhere
-      #       parts[parts.size - 1] = "_" << parts.last
-      #       partial = File.join(Mack::Configuration.views_directory, parts)
-      #     end
-      #     
-      #     Mack::Rendering::Action::ENGINES.each do |e|
-      #       find_file(partial + ".#{self.options[:format]}.#{e}") do |f|
-      #         return engine(e).render(File.open(f).read, binding)
-      #       end
-      #     end
-      #   elsif self.options[:public]
-      #     self.options[:layout] = false
-      #     p_file = "#{self.options[:public]}.#{self.options[:format]}"
-      #     find_file(Mack::Configuration.public_directory, p_file) do |f|
-      #       return File.open(f).read
-      #     end
-      #     raise Mack::Errors::ResourceNotFound.new(p_file)
-      #   elsif self.options[:url]
-      #     self.options[:layout] = false
-      #     e = Mack::Rendering::Engines::Url.new(self, self.options)
-      #     return e.render
-      #   elsif self.options[:xml]
-      #     Mack::Rendering::Xml::ENGINES.each do |e|
-      #       find_file(controller_view_path, "#{self.options[:xml]}.#{self.options[:format]}.#{e}") do |f|
-      #         @xml_builder = engine(e).new
-      #         return @xml_builder.render(File.open(f).read, binding)
-      #       end
-      #     end
-      #   else
-      #     raise Mack::Errors::UnknownRenderOption.new(options.inspect)
-      #   end
-      # end
       
       def find_file(*path)
         f = File.join(path)

@@ -6,13 +6,17 @@ module Mack
         
         def render
           Mack::Rendering::Engine::Registry.engines[:action].each do |e|
-            engine = engine(e).new
+            @engine = engine(e).new
             
-            find_file(self.view_template.controller_view_path, "#{self.view_template.engine_type_value}.#{self.options[:format]}.#{engine.extension}") do |f|
-              return engine.render(File.open(f).read, self.view_template.binder)
+            find_file(self.view_template.controller_view_path, "#{self.view_template.engine_type_value}.#{self.options[:format]}.#{@engine.extension}") do |f|
+              return @engine.render(File.open(f).read, self.view_template.binder)
             end
             
           end
+        end
+        
+        def concat(txt, b)
+          @engine.concat(txt, b)
         end
         
       end
