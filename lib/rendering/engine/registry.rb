@@ -1,6 +1,6 @@
 module Mack
   module Rendering
-    module Engines
+    module Engine
       class Registry
         include Singleton
       
@@ -8,14 +8,10 @@ module Mack
       
         def initialize
           @engines = {
-            :action => [{:engine => :erubis, :extension => :erb}],
-            :partial => [{:engine => :erubis, :extension => :erb}],
-            :layout => [{:engine => :erubis, :extension => :erb}],
-            :public => [{:engine => :public}],
-            :text => [{:engine => :text}],
-            :url => [{:engine => :url}],
-            :xml => [{:engine => :builder}],
-            :inline => [{:engine => :erubis}]
+            :action => [:erubis, :haml, :markaby],
+            :partial => [:erubis, :haml, :markaby],
+            :layout => [:erubis, :haml, :markaby],
+            :xml => [:builder]
           }
         end
       
@@ -31,7 +27,7 @@ module Mack
         class << self
         
           def method_missing(sym, *args)
-            Mack::Rendering::Engines::Registry.instance.send(sym, *args)
+            Mack::Rendering::Engine::Registry.instance.send(sym, *args)
           end
         
         end

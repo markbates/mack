@@ -1,7 +1,7 @@
 module Mack
   module Rendering
     module Engine
-      class Builder < Base
+      class Builder
         
         def initialize(view_template)
           @xml = ::Builder::XmlMarkup.new(:target => @xml_output, :indent => 1)

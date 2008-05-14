@@ -4,7 +4,7 @@ module Mack
       class Layout < Mack::Rendering::Type::Base
         
         def render
-          Mack::Rendering::Type::Layout.engines.each do |e|
+          Mack::Rendering::Engine::Registry.engines[:layout].each do |e|
             engine = engine(e).new
             
             find_file(Mack::Configuration.views_directory, 'layouts', "#{self.options[:layout]}.#{self.options[:format]}.#{engine.extension}") do |f|
@@ -12,14 +12,6 @@ module Mack
             end
             
           end
-        end
-        
-        class << self
-          
-          def engines
-            [:erubis, :haml, :markaby]
-          end
-          
         end
         
       end

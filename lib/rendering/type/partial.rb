@@ -16,7 +16,7 @@ module Mack
             parts[parts.size - 1] = "_" << parts.last
             partial = File.join(Mack::Configuration.views_directory, parts)
           end
-          Mack::Rendering::Type::Partial.engines.each do |e|
+          Mack::Rendering::Engine::Registry.engines[:partial].each do |e|
             engine = engine(e).new
             find_file("#{partial}.#{self.options[:format]}.#{engine.extension}") do |f|
               return engine.render(File.open(f).read, self.view_template.binder)
@@ -27,14 +27,6 @@ module Mack
         
         def allow_layout?
           false
-        end
-        
-        class << self
-          
-          def engines
-            [:erubis, :haml, :markaby]
-          end
-          
         end
         
       end

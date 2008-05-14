@@ -122,7 +122,6 @@ module Mack
       end
       
       def render_view
-        puts render_type(self.engine_type)
         @render_type = render_type(self.engine_type).new(self)
         @render_type.render
       end

@@ -13,7 +13,6 @@ module Mack
         
         def find_file(*path)
           f = File.join(path)
-          puts f
           if File.exists?(f)
             yield f
           end
