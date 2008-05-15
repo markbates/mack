@@ -50,9 +50,10 @@ module Mack
         run_filters(:before)
         # check to see if this controller responds to this action.
         # only run public methods!
+        puts "self.action_name: #{self.action_name}"
         if self.public_methods.include?(self.action_name)
           # call the action and capture the results to a variable.
-          @result_of_action_called = self.send(self.action_name)
+          self.send(self.action_name)
         else
           # there is no action on this controller, so call the render method
           # which will check the view directory and run action.html.erb if it exists.
@@ -76,7 +77,8 @@ module Mack
         raise Rack::ForwardRequest.new(url) if options[:server_side]
         response.status = options[:status]
         response[:location] = url
-        render(:text => redirect_html(request.path_info, url, options[:status]))
+        puts "response[:location]: #{response[:location]}"
+        render(:text, redirect_html(request.path_info, url, options[:status]))
       end
       
       # In an action wants will run blocks of code based on the content type that has
@@ -246,12 +248,14 @@ module Mack
         options.delete(:content_type)
         @view_template = Mack::Rendering::ViewTemplate.new(engine_type, engine_type_value, 
                                                            {:format => params(:format).to_sym, :controller => self}.merge(options))
+        puts "@view_template: #{@view_template.engine_type}, #{@view_template.engine_type_value}"
         @render_performed = true
       end
       
       private
       def do_render
-        @view_template.compile_and_render
+        render unless @view_template
+        @rendered_action = @view_template.compile_and_render
       end
 
       def layout

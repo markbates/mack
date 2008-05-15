@@ -10,7 +10,7 @@ class TstHomePageController < Mack::Controller::Base
   end
   
   def hello_world
-    "Hello World"
+    render(:text, "Hello World")
   end
   
   def world_hello
@@ -18,6 +18,7 @@ class TstHomePageController < Mack::Controller::Base
   end
   
   def yahoo
+    puts "yahoo"
     redirect_to("http://www.yahoo.com", :status => 301)
   end
   
@@ -26,7 +27,7 @@ class TstHomePageController < Mack::Controller::Base
   end
   
   def read_session_id_cookie
-    "session_id: #{cookies[Mack::Configuration[:session_id]]}"
+    render(:text, "session_id: #{cookies[Mack::Configuration[:session_id]]}")
   end
   
   def read_param_from_session
@@ -35,11 +36,11 @@ class TstHomePageController < Mack::Controller::Base
       session[:my_time] = Time.now
       t = session[:my_time]
     end
-    "time from session: #{t}"
+    render(:text, "time from session: #{t}")
   end
   
   def read_cookie
-    "cookies[:bourne]: #{cookies[:bourne]}"
+    render(:text, "cookies[:bourne]: #{cookies[:bourne]}")
   end
   
   def write_cookie
@@ -73,22 +74,22 @@ class TstHomePageController < Mack::Controller::Base
   end
   
   def hello_world_url_test
-    hello_world_url
+    render(:text, hello_world_url)
   end
   
   def hello_world_url_test_in_view
   end
   
   def named_route_full_url
-    hello_world_full_url
+    render(:text, hello_world_full_url)
   end
   
   def request_full_host
-    request.full_host
+    render(:text, request.full_host)
   end
   
   def request_full_host_with_port
-    request.full_host_with_port
+    render(:text, request.full_host_with_port)
   end
   
 end

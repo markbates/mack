@@ -5,10 +5,10 @@ class ControllerBaseTest < Test::Unit::TestCase
   class WantsTestController < Mack::Controller::Base
     def you_want_what
       wants(:html) do
-        render(:text => "<html>Hello World</html>")
+        render(:text, "<html>Hello World</html>")
       end
       wants(:xml) do
-        render(:text => "<xml><greeting>Hello World</greeting></xml>")
+        render(:text, "<xml><greeting>Hello World</greeting></xml>")
       end
     end
     
@@ -18,11 +18,11 @@ class ControllerBaseTest < Test::Unit::TestCase
     
     def ren_xml
       @greeting = "Hello World"
-      render(:xml => :on_disk_wants)
+      render(:xml, :on_disk_wants)
     end
     
     def wants_404
-      render(:action => '/application/404', :status => 404)
+      render(:action, '/application/404', :status => 404)
     end
   end
   

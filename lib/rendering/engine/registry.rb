@@ -8,9 +8,9 @@ module Mack
       
         def initialize
           @engines = {
-            :action => [:erubis, :haml, :markaby],
-            :partial => [:erubis, :haml, :markaby],
-            :layout => [:erubis, :haml, :markaby],
+            :action => [:erubis],
+            :partial => [:erubis],
+            :layout => [:erubis],
             :xml => [:builder]
           }
         end

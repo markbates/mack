@@ -13,6 +13,7 @@ module Mack
             end
             
           end
+          raise Errno::ENOENT.new(File.join(self.view_template.controller_view_path, "#{self.view_template.engine_type_value}.#{self.options[:format]}"))
         end
         
         def concat(txt, b)
