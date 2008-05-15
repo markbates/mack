@@ -4,14 +4,14 @@ module Mack
       class Layout < Mack::Rendering::Type::Base
         
         def render
+          l_file = File.join(Mack::Configuration.views_directory, 'layouts', "#{self.options[:layout]}.#{self.options[:format]}")
           Mack::Rendering::Engine::Registry.engines[:layout].each do |e|
-            engine = engine(e).new
-            
-            find_file(Mack::Configuration.views_directory, 'layouts', "#{self.options[:layout]}.#{self.options[:format]}.#{engine.extension}") do |f|
+            engine = engine(e).new(self.view_template)
+            find_file(l_file + ".#{engine.extension}") do |f|
               return engine.render(File.open(f).read, self.view_template.binder)
             end
-            
           end
+          raise Mack::Errors::ResourceNotFound.new(l_file)
         end
         
       end

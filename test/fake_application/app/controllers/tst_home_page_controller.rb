@@ -1,7 +1,7 @@
 class TstHomePageController < Mack::Controller::Base
 
   def index
-    "tst_home_page: <%= 'index' %>"
+    render(:inline, "tst_home_page: <%= 'index' %>")
   end
   
   def foo
@@ -18,7 +18,6 @@ class TstHomePageController < Mack::Controller::Base
   end
   
   def yahoo
-    puts "yahoo"
     redirect_to("http://www.yahoo.com", :status => 301)
   end
   

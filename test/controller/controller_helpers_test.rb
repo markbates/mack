@@ -8,7 +8,7 @@ class ControllerHelpersTest < Test::Unit::TestCase
   end
   
   def test_url_helper_blows_up_because_its_not_public
-    assert_raise(Errno::ENOENT) { get kill_kenny_no_meth_url }
+    assert_raise(Mack::Errors::ResourceNotFound) { get kill_kenny_no_meth_url }
   end
   
   def test_url_helper_blows_up_in_wrong_controller

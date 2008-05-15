@@ -12,7 +12,7 @@ class ResourceRoutingTest < Test::Unit::TestCase
   end
   
   def test_update
-    assert_raise(Errno::ENOENT) { get "/tst_resources/1/update"}
+    assert_raise(Mack::Errors::ResourceNotFound) { get "/tst_resources/1/update"}
     put "/tst_resources/1"
     assert_match "tst_resources: update: id: 1", response.body
   end

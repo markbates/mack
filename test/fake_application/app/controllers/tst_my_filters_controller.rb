@@ -10,15 +10,15 @@ class TstMyFiltersController < Mack::Controller::Base
   after_render_filter :make_everything_a, :only => :make_all_a
   
   def index
-    "Date: #{@date}; Hi: '#{@hi}'; Goodbye: '#{@goodbye}'"
+    render(:text, "Date: #{@date}; Hi: '#{@hi}'; Goodbye: '#{@goodbye}'")
   end
   
   def hello
-    "Hi: '#{@hi}'; Goodbye: '#{@goodbye}'"
+    render(:text, "Hi: '#{@hi}'; Goodbye: '#{@goodbye}'")
   end
   
   def please_blow_up
-    "You should never see me!"
+    render(:text, "You should never see me!")
   end
   
   def me
@@ -26,7 +26,7 @@ class TstMyFiltersController < Mack::Controller::Base
   end
   
   def make_all_a
-    "i'm big"
+    render(:text, "i'm big")
   end
   
   protected

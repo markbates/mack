@@ -1,7 +1,7 @@
 module Mack
   module Rendering
     module Engine
-      class Erubis
+      class Erubis < Mack::Rendering::Engine::Base
         
         def render(io, binding)
           ::Erubis::Eruby.new(io).result(binding)

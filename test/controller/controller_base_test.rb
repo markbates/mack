@@ -22,14 +22,14 @@ class ControllerBaseTest < Test::Unit::TestCase
     end
     
     def wants_404
-      render(:action, '/application/404', :status => 404)
+      render(:template, '/application/404', :status => 404)
     end
   end
   
   Mack::Routes.build do |r|
     r.you_want_what "/yww", :controller => "controller_base_test/wants_test", :action => :you_want_what
     r.on_disk_wants "/odw", :controller => "controller_base_test/wants_test", :action => :on_disk_wants
-    r.ren_xml "/ren_xml", :controller => "controller_base_test/wants_test", :action => :ren_xml
+    r.ren_xml "/ren_xml", :controller => "controller_base_test/wants_test", :action => :ren_xml, :format => :xml
     r.on_disk_wants_x "/odw_x", :controller => "controller_base_test/wants_test", :action => :on_disk_wants, :format => :xml
     r.wants_unknown "/wants_404", :controller => "controller_base_test/wants_test", :action => :wants_404
   end
@@ -98,7 +98,7 @@ class ControllerBaseTest < Test::Unit::TestCase
   end
   
   def test_blow_from_bad_render_action
-    assert_raise(Errno::ENOENT) { get "/blow_from_bad_render_action" }
+    assert_raise(Mack::Errors::ResourceNotFound) { get "/blow_from_bad_render_action" }
   end
   
   def test_blow_up_from_double_render

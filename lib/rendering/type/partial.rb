@@ -17,12 +17,12 @@ module Mack
             partial = File.join(Mack::Configuration.views_directory, parts)
           end
           Mack::Rendering::Engine::Registry.engines[:partial].each do |e|
-            engine = engine(e).new
+            engine = engine(e).new(self.view_template)
             find_file("#{partial}.#{self.options[:format]}.#{engine.extension}") do |f|
               return engine.render(File.open(f).read, self.view_template.binder)
             end
-            
           end
+          raise Mack::Errors::ResourceNotFound.new("#{partial}.#{self.options[:format]}")
         end
         
         def allow_layout?

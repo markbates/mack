@@ -1,17 +1,17 @@
 class TstAnotherController < Mack::Controller::Base
   
   def foo
-    "tst_another_controller: foo: id: '#{params(:id)}' pickles: '#{params(:pickles)}'"
+    render(:text, "tst_another_controller: foo: id: '#{params(:id)}' pickles: '#{params(:pickles)}'")
   end
   
   def bar
-    %{
+    render(:text, %{
       <form action="<%= pickles_url %>" method="post">
         <input type="text" name="id"/ ><br>
         <textarea name="pickles"></textarea><br>
         <input type="submit" name="submit">
       </form>
-    }
+    })
   end
   
   def act_level_layout_test_action
@@ -31,22 +31,22 @@ class TstAnotherController < Mack::Controller::Base
   end
   
   def env
-    "Mack::Configuration.env: #{Mack::Configuration.env}"
+    render(:text, "Mack::Configuration.env: #{Mack::Configuration.env}")
   end
   
   def kill_kenny_bad
-    kill_kenny
+    render(:text, kill_kenny)
   end
   
   def say_love_you
-    love_you
+    render(:text, love_you)
   end
   
   def regardless_of_string_or_symbol
     x = ""
     x << "from_string: foo=#{params("foo")}\n"
     x << "from_symbol: foo=#{params(:foo)}\n"
-    x
+    render(:text, x)
   end
   
   def params_return_as_hash
@@ -54,7 +54,7 @@ class TstAnotherController < Mack::Controller::Base
     x = ""
     x << "class: #{params(:foo).class}]\n"
     x << "inspect: #{params(:foo).inspect}"
-    x
+    render(:text, x)
   end
   
 end

@@ -6,16 +6,16 @@ class MimeTypesTest < Test::Unit::TestCase
     
     def index
       wants(:html) do
-        render(:text => "HTML")
+        render(:text, "HTML")
       end
       wants(:xml) do
-        render(:text => "XML")
+        render(:text, "XML")
       end
       wants(:iphone) do
-        render(:text => "IPHONE")
+        render(:text, "IPHONE", :layout => false)
       end
       wants(:jpg) do
-        render(:text => "JPG")
+        render(:text, "JPG", :layout => false)
       end
     end
     

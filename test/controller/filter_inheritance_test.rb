@@ -21,7 +21,7 @@ class FilterInheritanceTest < Test::Unit::TestCase
   class BottomController < MiddleController
     before_filter :say_bye
     def bf_index
-      render(:text => "i'm in the bottom controller")
+      render(:text, "i'm in the bottom controller")
     end
     protected
     def say_bye

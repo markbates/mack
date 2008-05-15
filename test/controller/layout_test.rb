@@ -39,7 +39,7 @@ class LayoutTest < Test::Unit::TestCase
   end
   
   def test_unknown_layout
-    assert_raise(Errno::ENOENT) { get "/tst_another/layout_set_to_unknown_in_action" }
+    assert_raise(Mack::Errors::ResourceNotFound) { get "/tst_another/layout_set_to_unknown_in_action" }
   end
   
 end
