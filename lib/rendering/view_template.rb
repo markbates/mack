@@ -59,9 +59,9 @@ module Mack
       #   <%= render(:action => "show") %>
       #   <%= render(:partial => :latest_news) %>
       #   <%= render(:url => "http://www.mackframework.com") %>
-      def render(options)
+      def render(engine_type, engine_type_value, options = {})
         options = {:controller => self.controller, :layout => false}.merge(options)
-        Mack::Rendering::ViewTemplate.new(options).compile_and_render
+        Mack::Rendering::ViewTemplate.new(engine_type, engine_type_value, options).compile_and_render
       end
       
       def xml

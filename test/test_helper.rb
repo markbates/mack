@@ -78,7 +78,7 @@ class Test::Unit::TestCase
   end
   
   def erb(template)
-    Mack::Rendering::ViewTemplate.new(:text => template).compile_and_render
+    Mack::Rendering::ViewTemplate.new(:inline, template, :controller => MockController.new).compile_and_render
   end
   
   def models_directory
