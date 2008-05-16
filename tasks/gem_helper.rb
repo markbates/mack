@@ -42,7 +42,7 @@ class GemHelper # :nodoc:
   end
   
   def install
-    puts `sudo gem install #{File.join("pkg", full_gem_name)}`
+    sh %{sudo gem install --local #{File.join("pkg", full_gem_name)} --no-update-sources}
   end
   
 end

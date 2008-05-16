@@ -9,7 +9,7 @@ module Mack
           begin
             ring_server.take([options[:space], options[:klass_def], nil, nil], options[:timeout])
           rescue Exception => e
-            puts e.message
+            # MACK_DEFAULT_LOGGER.error(e)
           end
           register(options)
         end
