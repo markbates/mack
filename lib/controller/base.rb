@@ -238,13 +238,13 @@ module Mack
       #     end
       #        
       #   end
-      def render(engine_type = :action, engine_type_value = self.action_name, options = {})
+      def render(render_type = :action, render_value = self.action_name, options = {})
         raise Mack::Errors::DoubleRender.new if render_performed?
         response.status = options[:status] unless options[:status].nil?
         options = {:content_type => Mack::Utils::MimeTypes[params(:format)], :layout => layout}.merge(options)
         response["Content-Type"] = options[:content_type]
         options.delete(:content_type)
-        @view_template = Mack::Rendering::ViewTemplate.new(engine_type, engine_type_value, 
+        @view_template = Mack::Rendering::ViewTemplate.new(render_type, render_value, 
                                                            {:format => params(:format).to_sym, :controller => self}.merge(options))
         @render_performed = true
       end
