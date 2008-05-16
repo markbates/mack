@@ -4,7 +4,7 @@ module Mack
       class Partial < Mack::Rendering::Type::Base
         
         def render
-          partial = self.view_template.engine_type_value.to_s
+          partial = self.view_template.desired_render_value.to_s
           parts = partial.split("/")
           if parts.size == 1
             # it's local to this controller

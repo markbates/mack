@@ -25,8 +25,8 @@ class Vtt::ViewTemplateController < Mack::Controller::Base
   end
   
   def homer_xml_with_layout
-    @name = "Homer Simpson"
     render(:xml, "homer")
+    @name = "Homer Simpson"
   end
   
   def homer_xml_without_layout

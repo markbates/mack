@@ -4,7 +4,7 @@ module Mack
       class Text < Mack::Rendering::Type::Base
         
         def render
-          self.view_template.engine_type_value
+          self.view_template.desired_render_value
         end
         
       end

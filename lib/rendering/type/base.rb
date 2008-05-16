@@ -22,12 +22,12 @@ module Mack
           true
         end
         
-        def options
-          self.view_template.options
-        end
-        
         def engine(e)
           eval("Mack::Rendering::Engine::#{e.to_s.camelcase}")
+        end
+        
+        def method_missing(sym, *args)
+          self.view_template.send(sym, *args)
         end
         
       end

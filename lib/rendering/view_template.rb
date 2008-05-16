@@ -6,12 +6,12 @@ module Mack
       
       # Allows access to any options passed into the template.
       attr_accessor :options
-      attr_accessor :engine_type
-      attr_accessor :engine_type_value
+      attr_accessor :desired_render_type
+      attr_accessor :desired_render_value
       
-      def initialize(engine_type, engine_type_value, options = {})
-        self.engine_type = engine_type
-        self.engine_type_value = engine_type_value
+      def initialize(desired_render_type, desired_render_value, options = {})
+        self.desired_render_type = desired_render_type
+        self.desired_render_value = desired_render_value
         self.options = options
         @yield_to_cache = {}
       end
@@ -59,9 +59,9 @@ module Mack
       #   <%= render(:action, "show") %>
       #   <%= render(:partial, :latest_news) %>
       #   <%= render(:url, "http://www.mackframework.com") %>
-      def render(engine_type, engine_type_value, options = {})
+      def render(desired_render_type, desired_render_value, options = {})
         options = self.options.merge({:layout => false}).merge(options)
-        Mack::Rendering::ViewTemplate.new(engine_type, engine_type_value, options).compile_and_render
+        Mack::Rendering::ViewTemplate.new(desired_render_type, desired_render_value, options).compile_and_render
       end
       
       def xml
@@ -120,7 +120,7 @@ module Mack
       end
       
       def render_view
-        @render_type = render_type(self.engine_type).new(self)
+        @render_type = render_type(self.desired_render_type).new(self)
         @render_type.render
       end
       
