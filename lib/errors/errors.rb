@@ -86,7 +86,7 @@ module Mack
       end
     end
     
-    # Potentially raised if a render(:url => "....") is a status other than 200.
+    # Potentially raised if a render(:url, "....") is a status other than 200.
     # This is only raised if :raise_exception is passed in as true to the render options.
     class UnsuccessfulRenderUrl < StandardError
       # Takes the uri trying to be rendered the Net::HTTP response object.

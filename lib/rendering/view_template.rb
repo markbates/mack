@@ -57,8 +57,8 @@ module Mack
       # Examples in the view:
       #   <%= render(:text,  "Hello") %>
       #   <%= render(:action, "show") %>
-      #   <%= render(:partial => :latest_news) %>
-      #   <%= render(:url => "http://www.mackframework.com") %>
+      #   <%= render(:partial, :latest_news) %>
+      #   <%= render(:url, "http://www.mackframework.com") %>
       def render(engine_type, engine_type_value, options = {})
         options = self.options.merge({:layout => false}).merge(options)
         Mack::Rendering::ViewTemplate.new(engine_type, engine_type_value, options).compile_and_render
