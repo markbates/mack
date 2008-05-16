@@ -22,12 +22,18 @@ module Mack
           true
         end
         
-        def engine(e)
+        def find_engine(e)
           eval("Mack::Rendering::Engine::#{e.to_s.camelcase}")
         end
         
         def method_missing(sym, *args)
           self.view_template.send(sym, *args)
+        end
+        
+        def controller_view_path
+          ivar_cache do
+            File.join(Mack::Configuration.views_directory, self.controller.controller_name)
+          end
         end
         
       end

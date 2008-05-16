@@ -16,7 +16,7 @@ module Mack
             partial = File.join(Mack::Configuration.views_directory, parts)
           end
           Mack::Rendering::Engine::Registry.engines[:partial].each do |e|
-            engine = engine(e).new(self.view_template)
+            engine = find_engine(e).new(self.view_template)
             find_file("#{partial}.#{self.options[:format]}.#{engine.extension}") do |f|
               return engine.render(File.open(f).read, self.binder)
             end

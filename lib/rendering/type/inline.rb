@@ -4,7 +4,7 @@ module Mack
       class Inline < Mack::Rendering::Type::Base
         
         def render
-          @engine = engine((self.options[:engine] || :erubis)).new(self.view_template)
+          @engine = find_engine((self.options[:engine] || :erubis)).new(self.view_template)
           return @engine.render(self.render_value, self.binder)
         end
         

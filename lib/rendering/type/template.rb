@@ -6,7 +6,7 @@ module Mack
         def render
           t_file = File.join(Mack::Configuration.views_directory, "#{self.render_value}.#{self.options[:format]}")
           Mack::Rendering::Engine::Registry.engines[:action].each do |e|
-            @engine = engine(e).new(self.view_template)
+            @engine = find_engine(e).new(self.view_template)
             
             find_file(t_file + ".#{@engine.extension}") do |f|
               return @engine.render(File.open(f).read, self.binder)

@@ -1,7 +1,7 @@
 module Mack
-  module Rendering
+  module Rendering # :nodoc:
     # This class is used to do all the view level bindings.
-    # It allows for seperation between the controller and the view levels.
+    # It allows for seperation between the Mack::Controller::Base and the view levels.
     class ViewTemplate
       
       # Allows access to any options passed into the template.
@@ -16,19 +16,22 @@ module Mack
         @_yield_to_cache = {}
       end
       
-      # Allows access to the controller.
+      # Allows access to the current Mack::Controller::Base object.
       def controller
         self.options[:controller]
       end
       
+      # Returns the Mack::Request associated with the current Mack::Controller::Base object.
       def request
         self.controller.request
       end
       
+      # Returns the Mack::Session associated with the current Mack::Request.
       def session
         self.request.session
       end
       
+      # Returns the Mack::CookieJar associated with the current Mack::Controller::Base object.
       def cookies
         self.controller.cookies
       end
@@ -60,25 +63,38 @@ module Mack
         Mack::Rendering::ViewTemplate.new(render_type, render_value, options).compile_and_render
       end
       
-      def xml
-        @_xml
-      end
-      
+      # Returns a string stored using content_for.
+      # 
+      # Example:
+      #   <% content_for(:hello, "Hello World") %>
+      #   <%= yield_to :hello %> # => "Hello World"
+      #   
+      #   <% content_for(:bye) do %>
+      #     Ah, it's so sad to say goodbye.
+      #   <% end %>
+      #   <%= yield_to :bye %> # => "Ah, it's so sad to say goodbye."
       def yield_to(key)
         @_yield_to_cache[key.to_sym]
       end
       
+      # Stores a string that can be retrieved using yield_to.
+      # 
+      # Example:
+      #   <% content_for(:hello, "Hello World") %>
+      #   <%= yield_to :hello %> # => "Hello World"
+      #   
+      #   <% content_for(:bye) do %>
+      #     Ah, it's so sad to say goodbye.
+      #   <% end %>
+      #   <%= yield_to :bye %> # => "Ah, it's so sad to say goodbye."
       def content_for(key, value = nil)
         @_yield_to_cache[key.to_sym] = value unless value.nil?
         @_yield_to_cache[key.to_sym] = yield if block_given?
       end
 
-      def controller_view_path
-        ivar_cache do
-          File.join(Mack::Configuration.views_directory, self.controller.controller_name)
-        end
-      end
-      
+      # Transfers all the instance variables from the controller to the current instance of
+      # the view template. This call is cached, so it only happens once, regardless of the number
+      # of times it is called.
       def compile
         ivar_cache("compiled_template") do
           self.options.symbolize_keys!
@@ -86,22 +102,31 @@ module Mack
         end
       end
       
+      # Fully compiles and renders the view and, if applicable, it's layout.
       def compile_and_render
         self.compile
         content_for(:view, render_view)
         render_layout
       end
       
+      # Passes concatenation messages through to the Mack::Rendering::Type object.
+      # This should append the text, using the passed in binding, to the final output
+      # of the render.
       def concat(txt, b)
         @_render_type.concat(txt, b)
       end
       
+      # Primarily used by Mack::Rendering::Type::Url when dealing with 'local' urls.
+      # This returns an instance of the current application to run additional requests
+      # through.
       def app_for_rendering
         ivar_cache do
           Mack::Utils::Server.build_app
         end
       end
       
+      # Returns the binding of the current view template to be used with
+      # the engines to render.
       def binder
         binding
       end
