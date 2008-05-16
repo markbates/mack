@@ -8,12 +8,12 @@ module Mack
           Mack::Rendering::Engine::Registry.engines[:action].each do |e|
             @engine = engine(e).new(self.view_template)
             
-            find_file(self.controller_view_path, "#{self.desired_render_value}.#{self.options[:format]}.#{@engine.extension}") do |f|
+            find_file(self.controller_view_path, "#{self.render_value}.#{self.options[:format]}.#{@engine.extension}") do |f|
               return @engine.render(File.open(f).read, self.binder)
             end
             
           end
-          raise Mack::Errors::ResourceNotFound.new(File.join(self.controller_view_path, "#{self.desired_render_value}.#{self.options[:format]}"))
+          raise Mack::Errors::ResourceNotFound.new(File.join(self.controller_view_path, "#{self.render_value}.#{self.options[:format]}"))
         end
         
         def concat(txt, b)

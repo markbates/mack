@@ -4,7 +4,7 @@ module Mack
       class Text < Mack::Rendering::Type::Base
         
         def render
-          self.desired_render_value
+          self.render_value
         end
         
       end

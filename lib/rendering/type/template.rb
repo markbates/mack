@@ -4,7 +4,7 @@ module Mack
       class Template < Mack::Rendering::Type::Base
         
         def render
-          t_file = File.join(Mack::Configuration.views_directory, "#{self.desired_render_value}.#{self.options[:format]}")
+          t_file = File.join(Mack::Configuration.views_directory, "#{self.render_value}.#{self.options[:format]}")
           Mack::Rendering::Engine::Registry.engines[:action].each do |e|
             @engine = engine(e).new(self.view_template)
             

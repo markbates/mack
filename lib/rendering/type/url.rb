@@ -9,7 +9,7 @@ module Mack
 
         def render
           options = {:method => :get, :raise_exception => false}.merge(self.options)
-          url = self.desired_render_value
+          url = self.render_value
           remote = url.match(/^[a-zA-Z]+:\/\//)
           case options[:method]
           when :get

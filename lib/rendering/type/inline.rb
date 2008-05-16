@@ -5,7 +5,7 @@ module Mack
         
         def render
           @engine = engine((self.options[:engine] || :erubis)).new(self.view_template)
-          return @engine.render(self.desired_render_value, self.binder)
+          return @engine.render(self.render_value, self.binder)
         end
         
         def concat(txt, b)
