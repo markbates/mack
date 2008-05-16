@@ -92,9 +92,7 @@ module Mack
       
       def compile_and_render
         self.compile
-        content_for(:view) do
-          render_view
-        end
+        content_for(:view, render_view)
         render_layout
       end
       
