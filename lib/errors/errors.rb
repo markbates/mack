@@ -6,8 +6,8 @@ module Mack
     # Example:
     #   class FooController < Mack::Controller::Base
     #     def index
-    #       render(:text => "Hello World")
-    #       render(:action => "edit")
+    #       render(:text,  "Hello World")
+    #       render(:action, "edit")
     #     end
     #   end
     class DoubleRender < StandardError

@@ -7,7 +7,7 @@ module Mack
     # Example:
     #   class MyAwesomeController < Mack::Controller::Base
     #     def index
-    #       render(:text => "Hello World!")
+    #       render(:text, "Hello World!")
     #     end
     #   end
     class Base
@@ -86,10 +86,10 @@ module Mack
       #   class MyAwesomeController < Mack::Controller::Base
       #     def hello
       #       wants(:html) do
-      #         render(:text => "<html>Hello World</html>")
+      #         render(:text, "<html>Hello World</html>")
       #       end
       #       wants(:xml) do
-      #         render(:text => "<xml><greeting>Hello World</greeting></xml>")
+      #         render(:text, "<xml><greeting>Hello World</greeting></xml>")
       #       end
       #     end
       #   end
@@ -138,18 +138,18 @@ module Mack
       #   class MyAwesomeController < Mack::Controller::Base
       #     # This will render the text 'Hello World!' to the screen.
       #     def index
-      #       render(:text => "Hello World!")
+      #       render(:text, "Hello World!")
       #     end
       # 
       #     # This will render Mack::Configuration.root/views/my_awesome_controller/foo.html.erb
       #     def show
-      #       render(:action => :foo)
+      #       render(:action, :foo)
       #     end
       # 
       #     # This will raise a Mack::Errors::DoubleRender error.
       #     def edit
-      #       render(:text => "Hello World!")
-      #       render(:action => :foo)
+      #       render(:text, "Hello World!")
+      #       render(:action, :foo)
       #     end
       # 
       #     # This will render Mack::Configuration.root/views/my_awesome_controller/delete.html.erb
@@ -173,7 +173,7 @@ module Mack
       #     # This will raise a Errno::ENOENT error. Assuming that
       #     # there is no file: Mack::Configuration.root/views/my_awesome_controller/bar.html.erb
       #     def bar
-      #       render(:action => "bar")
+      #       render(:action, "bar")
       #     end
       #     
       #     # This will render a file from the public directory. Files served from the
@@ -181,7 +181,7 @@ module Mack
       #     # served from the public directory is .html. This can be overridden with the
       #     # :ext => ".<ext>" option.
       #     def show_public_file
-      #       render(:public => "my/files/foo")
+      #       render(:public, "my/files/foo")
       #     end
       # 
       #     # This will render a file from the public directory. Files served from the
@@ -189,39 +189,39 @@ module Mack
       #     # served from the public directory is .html. This can be overridden with the
       #     # :ext => ".<ext>" option. 
       #     def show_public_xml_file
-      #       render(:public => "my/files/foo", :ext => ".xml")
+      #       render(:public, "my/files/foo", :ext => ".xml")
       #     end
       # 
       #     # This will render a partial. In this case it will look for:
       #     # Mack::Configuration.root/views/my_awesome_controller/_latest_news.html.erb
       #     # Partials do NOT get wrapped in layouts.
       #     def latest_news
-      #       render(:partial => :latest_news)
+      #       render(:partial, :latest_news)
       #     end
       # 
       #     # This will render a partial. In this case it will look for:
       #     # Mack::Configuration.root/views/some_other/_old_news.html.erb
       #     # Partials do NOT get wrapped in layouts.
       #     def latest_news
-      #       render(:partial => "some_other/old_news")
+      #       render(:partial, "some_other/old_news")
       #     end
       # 
       #     # This will render a url. If the url does not return a status code of '200',
       #     # an empty string will be returned by default. The default method for rendering
       #     # urls is a get.
       #     def yahoo
-      #       render(:url => "http://www.yahoo.com")
+      #       render(:url, "http://www.yahoo.com")
       #     end
       # 
       #     # This will render a url. If the url does not return a status code of '200',
       #     # a Mack::Errors::UnsuccessfulRenderUrl exception will be raised.
       #     def idontexist
-      #       render(:url => "http://www.idontexist.com", :raise_exception => true)
+      #       render(:url, "http://www.idontexist.com", :raise_exception => true)
       #     end
       # 
       #     # This will render a url with a post.
       #     def post_to_somewhere
-      #       render(:url => "http://www.mackframework.com/post_to_me", :method => :post, 
+      #       render(:url, "http://www.mackframework.com/post_to_me", :method => :post, 
       #              :parameters => {:id => 1, :user => "markbates"})
       #     end
       # 
@@ -229,12 +229,12 @@ module Mack
       #     # reach out for the config parameter "mack::site_domain" and prepend that
       #     # to the url. This can be overridden locally with the :domain option.
       #     def get_index
-      #       render(:url => "/")
+      #       render(:url, "/")
       #     end
       #
       #     # This will render 'application/404' and set the response status code to 404
       #     def to_the_unknown
-      #       return render(:action => '/application/404', :status => 404)
+      #       return render(:action, '/application/404', :status => 404)
       #     end
       #        
       #   end
@@ -318,12 +318,12 @@ module Mack
         # 
         #     def index
         #       # Sets this action to use: "#{Mack::Configuration.root}/app/views/layouts/bright.html.erb" as it's layout.
-        #       render(:text => "Welcome...", :layout => :bright)
+        #       render(:text, "Welcome...", :layout => :bright)
         #     end
         # 
         #     def index
         #       # This will no use a layout.
-        #       render(:text => "Welcome...", :layout => false)
+        #       render(:text, "Welcome...", :layout => false)
         #     end
         #   end
         # 

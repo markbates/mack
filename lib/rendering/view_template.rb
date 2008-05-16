@@ -55,8 +55,8 @@ module Mack
       # the same for views.
       # 
       # Examples in the view:
-      #   <%= render(:text => "Hello") %>
-      #   <%= render(:action => "show") %>
+      #   <%= render(:text,  "Hello") %>
+      #   <%= render(:action, "show") %>
       #   <%= render(:partial => :latest_news) %>
       #   <%= render(:url => "http://www.mackframework.com") %>
       def render(engine_type, engine_type_value, options = {})

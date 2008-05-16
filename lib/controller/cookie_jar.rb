@@ -4,11 +4,11 @@ module Mack
   #   class MyAwesomeController < Mack::Controller::Base
   #     def index
   #       cookies[:id] = 1
-  #       render(:text => "Hello!")
+  #       render(:text,  "Hello!")
   #     end
   # 
   #     def show
-  #       render(:text => "The id in the cookie is: #{cookies[:id]}")
+  #       render(:text,  "The id in the cookie is: #{cookies[:id]}")
   #     end
   #   end
   class CookieJar
