@@ -5,8 +5,8 @@ module Mack
         
         def initialize(view_template)
           super
-          @xml = ::Builder::XmlMarkup.new(:target => @xml_output, :indent => 1)
-          view_template.instance_variable_set("@xml", @xml)
+          @_xml = ::Builder::XmlMarkup.new(:target => @_xml_output, :indent => 1)
+          view_template.instance_variable_set("@_xml", @_xml)
         end
         
         def render(io, binding)

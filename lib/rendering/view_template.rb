@@ -13,11 +13,7 @@ module Mack
         self.desired_render_type = desired_render_type
         self.desired_render_value = desired_render_value
         self.options = options
-        @yield_to_cache = {}
-      end
-      
-      def add_options(opts)
-        self.options.merge!(opts)
+        @_yield_to_cache = {}
       end
       
       # Allows access to the controller.
@@ -65,16 +61,16 @@ module Mack
       end
       
       def xml
-        @xml
+        @_xml
       end
       
       def yield_to(key)
-        @yield_to_cache[key.to_sym]
+        @_yield_to_cache[key.to_sym]
       end
       
       def content_for(key, value = nil)
-        @yield_to_cache[key.to_sym] = value unless value.nil?
-        @yield_to_cache[key.to_sym] = yield if block_given?
+        @_yield_to_cache[key.to_sym] = value unless value.nil?
+        @_yield_to_cache[key.to_sym] = yield if block_given?
       end
 
       def controller_view_path
@@ -97,7 +93,7 @@ module Mack
       end
       
       def concat(txt, b)
-        @render_type.concat(txt, b)
+        @_render_type.concat(txt, b)
       end
       
       def app_for_rendering
@@ -113,15 +109,15 @@ module Mack
       private
       
       def render_layout
-        if @render_type.allow_layout? && self.options[:layout]
+        if @_render_type.allow_layout? && self.options[:layout]
           return Mack::Rendering::Type::Layout.new(self).render
         end
         return yield_to(:view)
       end
       
       def render_view
-        @render_type = render_type(self.desired_render_type).new(self)
-        @render_type.render
+        @_render_type = find_render_type(self.desired_render_type).new(self)
+        @_render_type.render
       end
       
       def find_file(*path)
@@ -138,7 +134,7 @@ module Mack
         end
       end
       
-      def render_type(e)
+      def find_render_type(e)
         eval("Mack::Rendering::Type::#{e.to_s.camelcase}")
       end
       
