@@ -2,6 +2,7 @@ module Mack
   module Rendering # :nodoc:
     module Engine # :nodoc:
       # Engines are used to transform a IO, using a supplied binding to a String.
+      # 
       # The method 'render' needs to be implemented as render(io, binding) in all subclasses.
       class Base
 

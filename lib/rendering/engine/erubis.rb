@@ -1,6 +1,7 @@
 module Mack
-  module Rendering
-    module Engine
+  module Rendering # :nodoc:
+    module Engine # :nodoc:
+      # Allows use of the Builder::XmlMarkup engine to be used with rendering.
       class Erubis < Mack::Rendering::Engine::Base
         
         def render(io, binding)
@@ -15,7 +16,7 @@ module Mack
           eval( "_buf", b) << txt
         end
         
-      end # ErubisInMemory
+      end # Erubis
     end # Engines
   end # Rendering
 end # Mack
