@@ -9,7 +9,7 @@ module Mack
 
         def render
           options = {:method => :get, :raise_exception => false}.merge(self.options)
-          url = self.view_template.desired_render_value
+          url = self.desired_render_value
           remote = url.match(/^[a-zA-Z]+:\/\//)
           case options[:method]
           when :get
@@ -19,7 +19,7 @@ module Mack
               end
             else
               do_render_local_url(url, options) do |url, options|
-                Rack::MockRequest.new(self.view_template.app_for_rendering).get(url, options)
+                Rack::MockRequest.new(self.app_for_rendering).get(url, options)
               end
             end
           when :post
@@ -29,7 +29,7 @@ module Mack
               end
             else
               do_render_local_url(url, options) do |url, options|
-                Rack::MockRequest.new(self.view_template.app_for_rendering).post(url, options)
+                Rack::MockRequest.new(self.app_for_rendering).post(url, options)
               end
             end
           else
@@ -57,7 +57,7 @@ module Mack
         def do_render_local_url(url, options)
           Timeout::timeout(app_config.mack.render_url_timeout || 5) do
             cooks = {}
-            self.view_template.cookies.all.each do |c,v|
+            self.cookies.all.each do |c,v|
               cooks[c] = v[:value]
             end
             request = self.view_template.request

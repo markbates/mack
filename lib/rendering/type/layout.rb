@@ -8,7 +8,7 @@ module Mack
           Mack::Rendering::Engine::Registry.engines[:layout].each do |e|
             engine = engine(e).new(self.view_template)
             find_file(l_file + ".#{engine.extension}") do |f|
-              return engine.render(File.open(f).read, self.view_template.binder)
+              return engine.render(File.open(f).read, self.binder)
             end
           end
           raise Mack::Errors::ResourceNotFound.new(l_file)

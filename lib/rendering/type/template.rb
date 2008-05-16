@@ -4,12 +4,12 @@ module Mack
       class Template < Mack::Rendering::Type::Base
         
         def render
-          t_file = File.join(Mack::Configuration.views_directory, "#{self.view_template.desired_render_value}.#{self.options[:format]}")
+          t_file = File.join(Mack::Configuration.views_directory, "#{self.desired_render_value}.#{self.options[:format]}")
           Mack::Rendering::Engine::Registry.engines[:action].each do |e|
             @engine = engine(e).new(self.view_template)
             
             find_file(t_file + ".#{@engine.extension}") do |f|
-              return @engine.render(File.open(f).read, self.view_template.binder)
+              return @engine.render(File.open(f).read, self.binder)
             end
             
           end
