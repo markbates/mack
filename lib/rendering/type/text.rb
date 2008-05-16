@@ -1,13 +1,17 @@
 module Mack
-  module Rendering
-    module Type
+  module Rendering # :nodoc:
+    module Type # :nodoc:
+      # This is pretty damn brain dead, it just returns the text you supplied to it.
+      # 
+      # Example:
+      #   <%= render(:text, "Hello World") %> # => "Hello World"
       class Text < Mack::Rendering::Type::Base
         
         def render
           self.render_value
         end
         
-      end
-    end
-  end
-end
+      end # Text
+    end # Type
+  end # Rendering
+end # Mack

@@ -1,0 +1,1 @@
+hello from /public/vtt/vtt_public_with_extension_test.txt

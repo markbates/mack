@@ -87,6 +87,10 @@ class Vtt::ViewTemplateController < Mack::Controller::Base
     render(:public, "vtt/vtt_public_nested_test")
   end
   
+  def public_with_extension
+    render(:public, 'vtt/vtt_public_with_extension_test.txt')
+  end
+  
   def partial_local
     render(:partial, :local_part)
   end

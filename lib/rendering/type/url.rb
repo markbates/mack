@@ -1,12 +1,35 @@
 module Mack
-  module Rendering
-    module Type
-      class Url < Base
-
+  module Rendering # :nodoc:
+    module Type # :nodoc:
+      # This class will render the contents of a url.
+      # 
+      # Examples:
+      # This is considered a 'remote' request and will be made using GET.
+      #   <%= render(:url, "http://www.mackframework.com") %>
+      # This is considered a 'remote' request and will be made using POST.
+      #   <%= render(:url, "http://www.mackframework.com", :method => :post) %>
+      # This is considered a 'remote' request and will be made using GET, and will have query string parameters.
+      #   <%= render(:url, "http://www.mackframework.com", :parameters => {:name => "mark"}) %> # http://www.mackframework.com?name=mark
+      # This is considered a 'remote' request and will be made using POST, and will have form parameters.
+      #   <%= render(:url, "http://www.mackframework.com", :method => :post, :parameters => {:name => "mark"}) %>
+      # 
+      # 'Local' requests can also be made:
+      # This is considered a 'local' request and will be made using GET.
+      #   <%= render(:url, "/users") %>
+      # This is considered a 'local' request and will be made using POST.
+      #   <%= render(:url, "/users", :method => :post) %>
+      # This is considered a 'local' request and will be made using GET, and will have query string parameters.
+      #   <%= render(:url, "/users", :parameters => {:name => "mark"}) %> # /users?name=mark
+      # This is considered a 'local' request and will be made using POST, and will have form parameters.
+      #   <%= render(:url, "/users", :method => :post, :parameters => {:name => "mark"}) %>
+      class Url < Mack::Rendering::Type::Base
+        
+        # No layouts should be used with this Mack::Rendering::Type
         def allow_layout?
           false
         end
-
+        
+        # Retrieves the contents of the url using either GET or POST, passing along any specified parameters.
         def render
           options = {:method => :get, :raise_exception => false}.merge(self.options)
           url = self.render_value

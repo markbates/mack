@@ -15,6 +15,7 @@ module Mack
         def initialize
           @engines = {
             :action => [:erubis, :builder],
+            :template => [:erubis, :builder],
             :partial => [:erubis, :builder],
             :layout => [:erubis],
             :xml => [:builder]

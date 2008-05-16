@@ -1,8 +1,18 @@
 module Mack
-  module Rendering
-    module Type
-      class Partial < Mack::Rendering::Type::Base
+  module Rendering # :nodoc:
+    module Type # :nodoc:
+      # Used to render partials. Partials are small reusable templates. They have to start with an _.
+      # 
+      # Example:
+      #   <%= render(:partial, "users/form") %> # => /users/_form.html.erb
+      class Partial < Mack::Rendering::Type::FileBase
         
+        # See Mack::Rendering::Type::FileBase render_file for more information.
+        # 
+        # The path to the file is built like such:
+        #   app/views/#{controller name}/#{partial name with prefixed _}.#{format (html, xml, js, etc...)}.#{extension defined in the engine}
+        # Example:
+        #   app/views/users/_form.html.erb 
         def render
           partial = self.render_value.to_s
           parts = partial.split("/")
@@ -15,20 +25,16 @@ module Mack
             parts[parts.size - 1] = "_" << parts.last
             partial = File.join(Mack::Configuration.views_directory, parts)
           end
-          Mack::Rendering::Engine::Registry.engines[:partial].each do |e|
-            engine = find_engine(e).new(self.view_template)
-            find_file("#{partial}.#{self.options[:format]}.#{engine.extension}") do |f|
-              return engine.render(File.open(f).read, self.binder)
-            end
-          end
-          raise Mack::Errors::ResourceNotFound.new("#{partial}.#{self.options[:format]}")
+          partial = "#{partial}.#{self.options[:format]}"
+          render_file(partial, :partial)
         end
         
+        # No layouts should be used with this Mack::Rendering::Type
         def allow_layout?
           false
         end
         
-      end
-    end
-  end
-end
+      end # Partial
+    end # Type
+  end # Rendering
+end # Mack

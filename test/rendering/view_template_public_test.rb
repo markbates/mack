@@ -16,4 +16,9 @@ class ViewTemplatePublicTest < Test::Unit::TestCase
     assert_equal "<b>hello from /public/vtt/vtt_public_nested_test.html</b>", response.body
   end
   
+  def test_public_with_extension
+    get public_with_extension_url
+    assert_equal "hello from /public/vtt/vtt_public_with_extension_test.txt", response.body
+  end
+  
 end

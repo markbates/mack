@@ -1,20 +1,21 @@
 module Mack
-  module Rendering
-    module Type
-      class Layout < Mack::Rendering::Type::Base
+  module Rendering # :nodoc:
+    module Type # :nodoc:
+      # Used to render layouts around views.
+      class Layout < Mack::Rendering::Type::FileBase
         
+        # See Mack::Rendering::Type::FileBase render_file for more information.
+        # 
+        # The path to the file is built like such:
+        #   app/views/layouts/#{options[:layout] || "application"}.#{format (html, xml, js, etc...)}.#{extension defined in the engine}
+        # Example:
+        #   app/views/layouts/application.html.erb 
         def render
           l_file = File.join(Mack::Configuration.views_directory, 'layouts', "#{self.options[:layout]}.#{self.options[:format]}")
-          Mack::Rendering::Engine::Registry.engines[:layout].each do |e|
-            engine = find_engine(e).new(self.view_template)
-            find_file(l_file + ".#{engine.extension}") do |f|
-              return engine.render(File.open(f).read, self.binder)
-            end
-          end
-          raise Mack::Errors::ResourceNotFound.new(l_file)
+          render_file(l_file, :layout)
         end
         
-      end
-    end
-  end
-end
+      end # Layout
+    end # Type
+  end # Rendering
+end # Mack
