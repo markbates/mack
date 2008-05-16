@@ -1,4 +1,5 @@
 * Ripped apart the ENTIRE rendering engine and rewrote it from the ground up.
+* Added render(:inline) and render(:template) support.
 * Refactored, and reorganized some files to clean up the gem.
 * Fixed bug with cookies not merging with configured app_config parameters.
 * Added mime-types. The 'Content-Type' header is now being set based on the format that is requested. Default is text/html.
