@@ -12,7 +12,12 @@ module Mack
         #   app/views/layouts/application.html.erb 
         def render
           l_file = File.join(Mack::Configuration.views_directory, 'layouts', "#{self.options[:layout]}.#{self.options[:format]}")
-          render_file(l_file, :layout)
+          begin
+            render_file(l_file, :layout)
+          rescue Mack::Errors::ResourceNotFound => e
+            MACK_DEFAULT_LOGGER.warn(e)
+            self.view_template.yield_to :view
+          end
         end
         
       end # Layout
