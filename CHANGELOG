@@ -1,4 +1,6 @@
-* Ripped apart the ENTIRE rendering engine and rewrote it from the ground up.
+* INCOMPATIBILITY NOTICE: Ripped apart the ENTIRE rendering engine and rewrote it from the ground up. This means that wherever you are using 'render' calls in your views and controllers need to be changed. The new format is render(type, value, options). Examples: render(:action, :show), render(:url, "http://www.mackframework.com"), etc...
+* INCOMPATIBILITY NOTICE: Files named *.xml.erb need to be changed to *.xml.builder to use the Builder::XmlMarkup library. If you leave the .erb extension on there the file will be run through Erubis.
+* Added Markaby support.
 * Added render(:inline) and render(:template) support.
 * Refactored, and reorganized some files to clean up the gem.
 * Fixed bug with cookies not merging with configured app_config parameters.
@@ -8,6 +10,7 @@
 * Added 'options' banners to the mack and mack_ring_server binaries.
 * gem: genosaurus 1.1.8
 * gem: mack_ruby_core_extensions 0.1.27
+* gem: markaby 0.5.0
 
 ===0.5.0
 * Added rake db:create and db:create:all rake tasks.

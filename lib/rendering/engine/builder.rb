@@ -1,3 +1,4 @@
+require File.join(File.dirname(__FILE__), "..", "view_template")
 module Mack
   module Rendering # :nodoc:
     module Engine # :nodoc:
@@ -14,7 +15,16 @@ module Mack
           :builder
         end
         
+        # Used to give XmlBuilder templates access to a 'root' xml object.
+        module ViewTemplateHelpers
+          def xml
+            @_xml
+          end
+        end # ViewTemplateHelpers
+        
       end # Builder
     end # Engine
   end # Rendering
 end # Mack
+
+Mack::Rendering::ViewTemplate.send(:include, Mack::Rendering::Engine::Builder::ViewTemplateHelpers)

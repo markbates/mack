@@ -39,7 +39,8 @@ class LayoutTest < Test::Unit::TestCase
   end
   
   def test_unknown_layout
-    assert_raise(Mack::Errors::ResourceNotFound) { get "/tst_another/layout_set_to_unknown_in_action" }
+    get "/tst_another/layout_set_to_unknown_in_action"
+    assert_equal "I've set my layout to some layout that don't exist!", response.body
   end
   
 end

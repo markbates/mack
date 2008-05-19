@@ -26,16 +26,7 @@ module Mack
           render_file(x_file, :xml)
         end
         
-        # Used to give XmlBuilder templates access to a 'root' xml object.
-        module ViewTemplateHelpers
-          def xml
-            @_xml
-          end
-        end # ViewTemplateHelpers
-        
       end # Xml
     end # Type
   end # Rendering
 end # Mack
-
-Mack::Rendering::ViewTemplate.send(:include, Mack::Rendering::Type::Xml::ViewTemplateHelpers)

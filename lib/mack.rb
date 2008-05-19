@@ -15,6 +15,7 @@ require 'rinda/tuplespace'
 require 'builder'
 require 'erubis'
 require 'erb'
+require 'markaby'
 require 'genosaurus'
 require 'net/http'
 
