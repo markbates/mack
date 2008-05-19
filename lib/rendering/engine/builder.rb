@@ -4,13 +4,9 @@ module Mack
       # Allows use of the Builder::XmlMarkup engine to be used with rendering.
       class Builder < Mack::Rendering::Engine::Base
         
-        def initialize(view_template)
-          super
+        def render(io, binding)
           @_xml = ::Builder::XmlMarkup.new(:target => @_xml_output, :indent => 1)
           view_template.instance_variable_set("@_xml", @_xml)
-        end
-        
-        def render(io, binding)
           eval(io, binding)
         end
         
