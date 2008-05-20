@@ -16,6 +16,7 @@ require 'builder'
 require 'erubis'
 require 'erb'
 require 'markaby'
+require 'haml'
 require 'genosaurus'
 require 'net/http'
 
