@@ -12,6 +12,7 @@ class ViewTemplateXmlBuilderTest < Test::Unit::TestCase
 </app>
 EOF
     assert_equal body.strip, response.body
+    assert_equal "application/xml; text/xml", response["Content-Type"]
   end
 
   def test_xml_with_special_layout
@@ -24,11 +25,13 @@ EOF
 </my_cool>
 EOF
     assert_equal body.strip, response.body
+    assert_equal "application/xml; text/xml", response["Content-Type"]
   end
 
   def test_xml_with_layout_url
     get homer_xml_without_layout_url
     assert_equal "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<name>Homer Simpson</name>\n", response.body
+    assert_equal "application/xml; text/xml", response["Content-Type"]
   end
   
 end

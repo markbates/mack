@@ -13,7 +13,7 @@ module Mack
       #     # /users
       #     def index
       #       @users = User.all
-      #       render(:action, :list)
+      #       render(:xml, :list)
       #     end
       #   end
       # When some calls /users/1.xml the file: app/views/users/show.xml.builder will be rendered.
@@ -23,6 +23,7 @@ module Mack
         # See Mack::Rendering::Type::FileBase render_file for more information.
         def render
           self.options[:format] = "xml"
+          self.controller.response["Content-Type"] = Mack::Utils::MimeTypes[self.options[:format]]
           x_file = File.join(self.controller_view_path, "#{self.render_value}.#{self.options[:format]}")
           render_file(x_file, :xml)
         end
