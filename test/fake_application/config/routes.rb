@@ -27,11 +27,11 @@ Mack::Routes.build do |r|
     map.lisa_inline_erb_with_layout "/vtt/lisa_inline_erb_with_layout", :action => :lisa_inline_erb_with_layout
     map.lisa_inline_erb_without_layout "/vtt/lisa_inline_erb_without_layout", :action => :lisa_inline_erb_without_layout
     map.lisa_inline_erb_with_special_layout "/vtt/lisa_inline_erb_with_special_layout", :action => :lisa_inline_erb_with_special_layout
-    map.with_options(:format => :xml) do |x|
-      x.homer_xml_with_layout "/vtt/homer_xml_with_layout", :action => :homer_xml_with_layout
-      x.homer_xml_without_layout "/vtt/homer_xml_without_layout", :action => :homer_xml_without_layout
-      x.homer_xml_with_special_layout "/vtt/homer_xml_with_special_layout", :action => :homer_xml_with_special_layout
-    end
+    # map.with_options(:format => :xml) do |x|
+      map.homer_xml_with_layout "/vtt/homer_xml_with_layout", :action => :homer_xml_with_layout
+      map.homer_xml_without_layout "/vtt/homer_xml_without_layout", :action => :homer_xml_without_layout
+      map.homer_xml_with_special_layout "/vtt/homer_xml_with_special_layout", :action => :homer_xml_with_special_layout
+    # end
     map.good_url_get "/vtt/good_get", :action => :good_get_url
     map.bad_url_get "/vtt/bad_get", :action => :bad_get_url
     map.bad_url_get_with_raise "/vtt/bad_with_raise", :action => :bad_with_raise_url

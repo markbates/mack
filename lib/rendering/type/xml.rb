@@ -22,6 +22,7 @@ module Mack
         
         # See Mack::Rendering::Type::FileBase render_file for more information.
         def render
+          self.options[:format] = "xml"
           x_file = File.join(self.controller_view_path, "#{self.render_value}.#{self.options[:format]}")
           render_file(x_file, :xml)
         end
