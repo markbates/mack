@@ -5,7 +5,12 @@ module Mack
       class Erubis < Mack::Rendering::Engine::Base
         
         def render(io, binding)
-          ::Erubis::Eruby.new(io).result(binding)
+          src = Mack::Rendering::Engine::Erubis::TemplateCache.instance.cache[io]
+          if src.nil?
+            src = ::Erubis::Eruby.new(io).src
+            Mack::Rendering::Engine::Erubis::TemplateCache.instance.cache[io] = src
+          end
+          eval(src, binding)
         end
         
         def extension
@@ -14,6 +19,18 @@ module Mack
         
         def concat(txt, b)
           eval( "_buf", b) << txt
+        end
+        
+        private
+        class TemplateCache
+          include Singleton
+          
+          attr_reader :cache
+          
+          def initialize
+            @cache = {}
+          end
+          
         end
         
       end # Erubis
