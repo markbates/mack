@@ -9,7 +9,7 @@
 * render(:url) now recognizes 'local' urls and tries to run them through the app, mimicking most headers from the original request.
 * Added 'options' banners to the mack and mack_ring_server binaries.
 * gem: genosaurus 1.1.8
-* gem: mack_ruby_core_extensions 0.1.27
+* gem: mack_ruby_core_extensions 0.1.28
 * gem: markaby 0.5.0
 
 ===0.5.0
