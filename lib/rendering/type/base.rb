@@ -41,6 +41,11 @@ module Mack
           self.view_template.send(sym, *args)
         end
         
+        # See Mack::Rendering::ViewTemplate content_for for more details.
+        def capture(*args, &block)
+          @engine.capture(*args, &block)
+        end
+        
         # Returns the directory path for the current controller.
         def controller_view_path
           ivar_cache do

@@ -2,6 +2,7 @@
 * INCOMPATIBILITY NOTICE: Files named *.xml.erb need to be changed to *.xml.builder to use the Builder::XmlMarkup library. If you leave the .erb extension on there the file will be run through Erubis.
 * INCOMPATIBILITY NOTICE: <%= @content_for_layout %> is now <%= yield_to :view %>
 * Added Markaby support.
+* Added content_for and yield_to methods in views.
 * Erubis compiled templates are now cached for increased performance.
 * Added render(:inline) and render(:template) support.
 * Refactored, and reorganized some files to clean up the gem.

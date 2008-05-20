@@ -87,9 +87,9 @@ module Mack
       #     Ah, it's so sad to say goodbye.
       #   <% end %>
       #   <%= yield_to :bye %> # => "Ah, it's so sad to say goodbye."
-      def content_for(key, value = nil)
-        @_yield_to_cache[key.to_sym] = value unless value.nil?
-        @_yield_to_cache[key.to_sym] = yield if block_given?
+      def content_for(key, value = nil, &block)
+        return @_yield_to_cache[key.to_sym] = value unless value.nil?
+        return @_yield_to_cache[key.to_sym] = @_render_type.capture(&block) if block_given?
       end
 
       # Transfers all the instance variables from the controller to the current instance of

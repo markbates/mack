@@ -12,6 +12,11 @@ module Mack
         def initialize(view_template)
           @view_template = view_template
         end
+        
+        # See Mack::Rendering::ViewTemplate content_for for more details.
+        def capture(*args, &block)
+          yield
+        end
 
         needs_method :render
 
