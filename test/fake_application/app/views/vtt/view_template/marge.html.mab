@@ -1,0 +1,4 @@
+mab.div do
+  h1 "Marge #{@last_name}"
+  h2 "HTML, MARKABY"
+end

@@ -24,14 +24,15 @@ Mack::Routes.build do |r|
     map.bart_html_erb_with_layout "/vtt/bart_html_erb_with_layout", :action => :bart_html_erb_with_layout
     map.bart_html_erb_without_layout "/vtt/bart_html_erb_without_layout", :action => :bart_html_erb_without_layout
     map.bart_html_erb_with_special_layout "/vtt/bart_html_erb_with_special_layout", :action => :bart_html_erb_with_special_layout
+    map.marge_html_markaby_with_layout "/vtt/marge_html_markaby_with_layout", :action => :marge_html_markaby_with_layout
+    map.marge_html_markaby_without_layout "/vtt/marge_html_markaby_without_layout", :action => :marge_html_markaby_without_layout
+    map.marge_html_markaby_with_special_layout "/vtt/marge_html_markaby_with_special_layout", :action => :marge_html_markaby_with_special_layout
     map.lisa_inline_erb_with_layout "/vtt/lisa_inline_erb_with_layout", :action => :lisa_inline_erb_with_layout
     map.lisa_inline_erb_without_layout "/vtt/lisa_inline_erb_without_layout", :action => :lisa_inline_erb_without_layout
     map.lisa_inline_erb_with_special_layout "/vtt/lisa_inline_erb_with_special_layout", :action => :lisa_inline_erb_with_special_layout
-    # map.with_options(:format => :xml) do |x|
-      map.homer_xml_with_layout "/vtt/homer_xml_with_layout", :action => :homer_xml_with_layout
-      map.homer_xml_without_layout "/vtt/homer_xml_without_layout", :action => :homer_xml_without_layout
-      map.homer_xml_with_special_layout "/vtt/homer_xml_with_special_layout", :action => :homer_xml_with_special_layout
-    # end
+    map.homer_xml_with_layout "/vtt/homer_xml_with_layout", :action => :homer_xml_with_layout
+    map.homer_xml_without_layout "/vtt/homer_xml_without_layout", :action => :homer_xml_without_layout
+    map.homer_xml_with_special_layout "/vtt/homer_xml_with_special_layout", :action => :homer_xml_with_special_layout
     map.good_url_get "/vtt/good_get", :action => :good_get_url
     map.bad_url_get "/vtt/bad_get", :action => :bad_get_url
     map.bad_url_get_with_raise "/vtt/bad_with_raise", :action => :bad_with_raise_url
