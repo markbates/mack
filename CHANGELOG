@@ -16,6 +16,7 @@
 * gem: genosaurus 1.1.8
 * gem: mack_ruby_core_extensions 0.1.28
 * gem: markaby 0.5.0
+* gem: mack-data_mapper 0.5.5
 
 ===0.5.0
 * Added rake db:create and db:create:all rake tasks.
