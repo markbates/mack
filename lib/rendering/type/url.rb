@@ -106,7 +106,7 @@ module Mack
         end
 
         def url_with_query(url, parameters = {})
-          unless parameters.empty?
+          unless (parameters || {}).empty?
             url = url.to_s.dup
             url << "?"
             url << parameters.to_params(true)
