@@ -19,6 +19,7 @@ require 'markaby'
 require 'haml'
 require 'genosaurus'
 require 'net/http'
+require 'pp'
 
 require File.join(File.dirname(__FILE__), "initialization", "configuration.rb")
 

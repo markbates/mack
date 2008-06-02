@@ -129,12 +129,25 @@ module Mack
     #   hello_world_url # => "/"
     #   hello_world_full_url # => "http://example.org/"
     # These methods act just like the ones created when you use the resource method.
+    # 
+    # === Exception Routes:
+    # You can define a route that will catch exceptions that are raised in other controllers.
+    # 
+    #   Mack::Routes.build do |r|
+    #     r.handle_error Mack::ResourceNotFound, :controller => :oops, :action => :404
+    #     r.handle_error HollyCrapError, :controller => :oops, :action => :500
+    #   end
+    # In the example if an action raises a Mack::ResourceNotFound it will be caught and rendered
+    # using the OopsController and the 404 action.
+    # If A HollyCrapError is thrown it will be caught and rendered using the OopsController and the 500 action.
+    # You can catch all exceptions using Exception.
     class RouteMap
       include Singleton
       
       def initialize # :nodoc:
         @routes_list = []
         @default_routes_list = []
+        @handle_error_routes = {}
       end
       
       # Creates 'Rails' style default mappings:
@@ -158,7 +171,6 @@ module Mack
       
       # Sets up mappings and named routes for a resource.
       def resource(controller)
-        
         connect_with_named_route("#{controller}_index", "/#{controller}", {:controller => controller, :action => :index, :method => :get})
         connect_with_named_route("#{controller}_create", "/#{controller}", {:controller => controller, :action => :create, :method => :post})
         connect_with_named_route("#{controller}_new", "/#{controller}/new", {:controller => controller, :action => :new, :method => :get})
@@ -166,6 +178,10 @@ module Mack
         connect_with_named_route("#{controller}_edit", "/#{controller}/:id/edit", {:controller => controller, :action => :edit, :method => :get})
         connect_with_named_route("#{controller}_update", "/#{controller}/:id", {:controller => controller, :action => :update, :method => :put})
         connect_with_named_route("#{controller}_delete", "/#{controller}/:id", {:controller => controller, :action => :delete, :method => :delete})
+      end
+      
+      def handle_error(error, options = {})
+        @handle_error_routes[error] = options
       end
       
       def method_missing(sym, *args) # :nodoc:
@@ -202,6 +218,12 @@ module Mack
         raise Mack::Errors::UndefinedRoute.new(req)
       end # get
       
+      # Given an error class name it will return a routing options Hash, or nil, if one
+      # has not been mapped.
+      def get_route_from_error(error)
+        @handle_error_routes[error]
+      end
+      
       attr_reader :routes_list # :nodoc:
       
       private
@@ -212,7 +234,8 @@ module Mack
         # if the pattern doesn't start with /, then add it.
         pattern = "/" << pattern unless pattern.match(/^\//)
         pt = pattern.downcase
-        Route.new(pt, regex_from_pattern(pt), meth, options)
+        route = Route.new(pt, regex_from_pattern(pt), meth, options)
+        route
       end
       
       def connect_with_named_route(n_route, pattern, options = {})

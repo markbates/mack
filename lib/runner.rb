@@ -19,18 +19,23 @@ module Mack
               # because the route is specified to be a redirect, let's do that:
               redirect_to(route)
             else
-              # let's handle a normal request:
-              begin
-                cont = "#{route[:controller].to_s.camelcase}Controller".constantize
-              rescue NameError => e
-                raise Mack::Errors::ResourceNotFound.new(self.request.path_info)
-              end
-              c = cont.new(self.request, self.response, self.cookies)
-              self.response.controller = c
-              self.response.write(c.run)
+              self.request.all_params[:original_controller] = route[:controller]
+              self.request.all_params[:original_action] = route[:action]
+              run_controller(route)
             end
-          rescue Mack::Errors::ResourceNotFound, Mack::Errors::UndefinedRoute => e
-            return try_to_find_resource(env, e)
+          # rescue Mack::Errors::ResourceNotFound, Mack::Errors::UndefinedRoute => e
+          #   return try_to_find_resource(env, e)
+          rescue Exception => e
+            route = Mack::Routes::RouteMap.instance.get_route_from_error(e.class)
+            unless route.nil?
+              run_controller(route, e)
+            else
+              if e.class == Mack::Errors::ResourceNotFound || e.class == Mack::Errors::UndefinedRoute
+                return try_to_find_resource(env, e)
+              else
+                raise e
+              end
+            end
           end
         end # setup
       rescue Exception => e
@@ -45,7 +50,26 @@ module Mack
       yield
     end
     
-    private
+    #private
+    def run_controller(route, e = nil)
+      # let's handle a normal request:
+      begin
+        cont = "#{route[:controller].to_s.camelcase}Controller".constantize
+      rescue NameError => e
+        raise Mack::Errors::ResourceNotFound.new(self.request.path_info)
+      end
+      self.request.all_params[:controller] = route[:controller]
+      self.request.all_params[:action] = route[:action]
+      self.request.instance_variable_set("@params_controller", nil)
+      self.request.instance_variable_set("@params_action", nil)
+      
+      c = cont.new(self.request, self.response, self.cookies)
+      c.caught_exception = e unless e.nil?
+
+      self.response.controller = c
+      self.response.write(c.run)
+    end
+    
     def log_request
       s_time = Time.now
       x = yield

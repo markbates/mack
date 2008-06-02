@@ -22,6 +22,8 @@ module Mack
       attr_reader :action_name
       # See Mack::CookieJar for more information.
       attr_reader :cookies
+      # If an exception was thrown by a request this represents that error.
+      attr_accessor :caught_exception
 
       def initialize(request, response, cookies)
         @request = request
