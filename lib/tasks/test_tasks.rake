@@ -1,12 +1,26 @@
-desc "Run test code."
-Rake::TestTask.new(:default) do |t|
-  # Rake::Task["log:clear"].invoke
-  t.libs << "test"
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
-end
+require 'rake'
+require 'pathname'
+require 'spec'
+require 'spec/rake/spectask'
+
+task :default  => ["test:test_case", "test:spec"]
 
 namespace :test do
+  
+  desc "Run test code."
+  Rake::TestTask.new(:test_case) do |t|
+    # Rake::Task["log:clear"].invoke
+    t.libs << "test"
+    t.pattern = 'test/**/*_test.rb'
+    t.verbose = true
+  end
+  
+  desc 'Run specifications'
+  Spec::Rake::SpecTask.new(:spec) do |t|
+    t.spec_opts << '--options' << 'test/spec/spec.opts' if File.exists?('test/spec/spec.opts')
+    puts Dir.glob('test/spec/**/*_spec.rb')
+    t.spec_files = Dir.glob('test/spec/**/*_spec.rb')
+  end
   
   desc "Report code statistics (KLOCs, etc) from the application. Requires the rcov gem."
   task :stats do |t|
@@ -38,6 +52,7 @@ namespace :test do
   
 end
 
-alias_task :test, :default
+
+# alias_task :default, ["test:test_case", "test:spec"]
 alias_task :stats, "test:stats"
 alias_task :coverage, "test:coverage"
