@@ -39,6 +39,12 @@ module Mack
       end
     end
     
+    # This method gets called after the session has been established. Override this method
+    # to add custom code around requests.
+    def custom_dispatch_wrapper
+      yield
+    end
+    
     private
     def log_request
       s_time = Time.now
@@ -67,7 +73,9 @@ module Mack
         @cookies = Mack::CookieJar.new(self.request, self.response)
         session do
           begin
-            yield
+            custom_dispatch_wrapper do
+              yield
+            end
           rescue Exception => e
             exception = e
           end

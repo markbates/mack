@@ -5,7 +5,10 @@ require 'rubygems'
 require 'application_configuration'
 
 require File.join(File.dirname(__FILE__), "initialization", "configuration.rb")
-require File.join(File.dirname(__FILE__), "initialization", "orm_support.rb")
+orm = app_config.orm || 'data_mapper'
+unless orm.nil?
+  require "mack-#{orm}_tasks"
+end
 
 # Requires all rake tasks that ship with the Mack framework.
 [File.join(File.dirname(__FILE__)), File.join(FileUtils.pwd, "lib"), File.join(FileUtils.pwd, "vendor", "plugins")].each do |dir|
