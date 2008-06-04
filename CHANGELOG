@@ -1,6 +1,7 @@
 * Added a custom_dispatch_wrapper to allow for wrapping a request with customized code.
 * In routing you can now define a route that will catch an Exception from another controller.
 * gem: cachetastic 1.7.0
+* gem: application_configuration 1.5.0
 
 ===0.5.5.2
 * Fixed an issue where if there are no parameters for render(:url) it will blow up.
