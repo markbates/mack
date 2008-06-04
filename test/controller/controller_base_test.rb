@@ -48,7 +48,8 @@ class ControllerBaseTest < Test::Unit::TestCase
   def test_render_404
     get wants_unknown_url
     assert response.body.index("404!")
-    assert 404 == response.status
+    assert_equal 404, response.status
+    assert_response :not_found
   end
   
   def test_render_xml
