@@ -1,4 +1,3 @@
-require 'singleton'
 module Mack
   
   module Routes

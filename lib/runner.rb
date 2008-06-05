@@ -1,3 +1,4 @@
+require File.join(File.dirname(__FILE__), 'routing', 'urls')
 module Mack
   # This is the heart and soul of the Mack framework! This class interfaces with the Rack framework.
   # It handles all the dispatching back and forth between the Rack framework and a Mack application.
