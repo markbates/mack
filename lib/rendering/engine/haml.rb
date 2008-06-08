@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), "base")
+require File.join(File.dirname(__FILE__), 'base')
 module Mack
   module Rendering
     module Engine

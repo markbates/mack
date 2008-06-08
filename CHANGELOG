@@ -3,6 +3,10 @@
 * gem: cachetastic 1.7.0
 * gem: application_configuration 1.5.0
 
+===0.5.5.3
+* Restored compatibility with Passenger and the next version of Thin.
+* Fixed 'requires' out of order in certain flavors or unix. Hopefully.
+
 ===0.5.5.2
 * Fixed an issue where if there are no parameters for render(:url) it will blow up.
 
