@@ -5,6 +5,11 @@ module Mack
   # get merged with overall default options.
   module Configuration # :nodoc:
 
+    def self.env
+      ENV["_mack_env"] ||= ENV["MACK_ENV"]
+    end
+    
+
     def self.method_missing(sym, *args)
       ev = "_mack_#{sym}".downcase
       return ENV[ev]
