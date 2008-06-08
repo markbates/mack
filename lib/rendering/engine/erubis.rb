@@ -1,3 +1,4 @@
+require File.join(File.dirname(__FILE__), 'base')
 module Mack
   module Rendering # :nodoc:
     module Engine # :nodoc:

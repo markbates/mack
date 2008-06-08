@@ -4,6 +4,10 @@ module Mack
   # production, development, and test have their own default configuration options. These
   # get merged with overall default options.
   module Configuration # :nodoc:
+    
+    def self.env
+      ENV["_mack_env"] ||= ENV["MACK_ENV"]
+    end
 
     def self.method_missing(sym, *args)
       ev = "_mack_#{sym}".downcase
