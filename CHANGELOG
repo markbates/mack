@@ -1,3 +1,6 @@
+===0.5.5.4
+* Fixed the damn Lint error some people were facing! 
+
 ===0.5.5.3
 * Restored compatibility with Passenger and the next version of Thin.
 * Fixed 'requires' out of order in certain flavors or unix. Hopefully.
