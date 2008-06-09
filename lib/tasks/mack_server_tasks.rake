@@ -11,23 +11,13 @@ namespace :mack do
       require 'ostruct'
       require 'fileutils'
 
-      d_handler = "WEBrick"
-      begin
-        require 'mongrel'
-        d_handler = "mongrel"
-      rescue Exception => e
-      end
-      begin
-        require 'thin'
-        d_handler = "thin"
-      rescue Exception => e
-      end
+      require 'thin'
       
       Mack::Configuration.set(:root, FileUtils.pwd) if Mack::Configuration.root.nil?
 
       options = OpenStruct.new
       options.port = (ENV["PORT"] ||= "3000") # Does NOT work with Thin!! You must edit the thin.yml file!
-      options.handler = (ENV["HANDLER"] ||= d_handler)
+      options.handler = (ENV["HANDLER"] ||= "thin")
 
 
       # require File.join(Mack::Configuration.root, "config", "boot.rb")
