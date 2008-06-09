@@ -10,7 +10,7 @@ class GemHelper # :nodoc:
     self.project = "magrathea"
     self.package = "mack"
     self.gem_name = "mack"
-    self.version = "0.5.5.3"
+    self.version = "0.5.5.4"
   end
   
   def gem_name_with_version
