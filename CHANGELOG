@@ -2,6 +2,7 @@
 * In routing you can now define a route that will catch an Exception from another controller.
 * gem: cachetastic 1.7.0
 * gem: application_configuration 1.5.0
+* gem: mack_ruby_core_extensions 0.2.0
 
 ===0.5.5.4
 * Fixed the damn Lint error some people were facing! 
