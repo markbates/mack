@@ -1,3 +1,5 @@
+* Added a set of Rake tasks to update existing Mack applications.
+* thin.ru now gets generated as rackup.ru
 * Added a custom_dispatch_wrapper to allow for wrapping a request with customized code.
 * In routing you can now define a route that will catch an Exception from another controller.
 * gem: cachetastic 1.7.0
