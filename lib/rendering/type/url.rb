@@ -85,14 +85,14 @@ module Mack
               cooks[c] = v[:value]
             end
             request = self.view_template.request
-            # MACK_DEFAULT_LOGGER.debug "ORIGINAL REQUEST: #{request.env.inspect}"
+            # Mack.logger.debug "ORIGINAL REQUEST: #{request.env.inspect}"
             env = request.env.dup
             env - ["rack.input", "rack.errors", "PATH_INFO", "REQUEST_PATH", "REQUEST_URI", "REQUEST_METHOD"]
             env["rack.request.query_hash"] = options[:parameters] || {}
             env["HTTP_COOKIE"] = "#{app_config.mack.session_id}=#{request.session.id};" if env["HTTP_COOKIE"].nil?
             options = env.merge(options)
-            # MACK_DEFAULT_LOGGER.debug "NEW OPTIONS: #{options.inspect}"
-            # MACK_DEFAULT_LOGGER.debug "url: #{url}"
+            # Mack.logger.debug "NEW OPTIONS: #{options.inspect}"
+            # Mack.logger.debug "url: #{url}"
             response = yield url, options
             if response.successful?
               return response.body

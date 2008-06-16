@@ -16,7 +16,7 @@ module Mack
           begin
             render_file(l_file, :layout)
           rescue Mack::Errors::ResourceNotFound => e
-            MACK_DEFAULT_LOGGER.warn(e)
+            Mack.logger.warn(e)
             self.view_template.yield_to :view
           end
         end

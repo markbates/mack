@@ -40,7 +40,7 @@ module Mack
           end
         end # setup
       rescue Exception => e
-        MACK_DEFAULT_LOGGER.error(e)
+        Mack.logger.error(e)
         raise e
       end
     end
@@ -84,7 +84,7 @@ module Mack
       else
         msg = "[#{@request.request_method.upcase}] '#{@request.path_info}' (#{p_time})"
       end
-      MACK_DEFAULT_LOGGER.info(msg)
+      Mack.logger.info(msg)
       x
     end
     

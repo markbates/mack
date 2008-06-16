@@ -1,24 +1,31 @@
 #--
 # Configure logging
 #++
-include Log4r
 
-log_dir_loc = File.join(Mack::Configuration.root, "log")
-FileUtils.mkdir_p(log_dir_loc)
-
-unless Object.const_defined?("MACK_DEFAULT_LOGGER")
-  log = Log4r::Logger.new('')
-  log.level =  Module.instance_eval("Log4r::#{app_config.log.level.to_s.upcase}")
-  # console:
-  if app_config.log.console
-    console_format = PatternFormatter.new(:pattern => app_config.log.console_format)
-    log.add(Log4r::StdoutOutputter.new('console', :formatter => console_format))
-  end
-  # file:
-  if app_config.log.file
-    file_format = PatternFormatter.new(:pattern => app_config.log.file_format)
-    log.add(FileOutputter.new('fileOutputter', :filename => File.join(log_dir_loc, "#{Mack::Configuration.env}.log"), :trunc => false, :formatter => file_format))
+module Mack
+  
+  def self.logger
+    $mack_default_logger
   end
   
-  Object::MACK_DEFAULT_LOGGER = log
+end
+
+unless Mack.logger
+  log_directory = app_config.log_root || File.join(Mack::Configuration.root, "log")
+  FileUtils.mkdir_p(log_directory)
+
+  log = Log4r::Logger.new('')
+  log.level =  Module.instance_eval("Log4r::#{(app_config.log_level || :info).to_s.upcase}")
+  
+  format = Log4r::PatternFormatter.new(:pattern => "%l:\t[%d]\t%M")
+  
+  if Mack::Configuration.env == "development"
+    # console:
+    log.add(Log4r::StdoutOutputter.new('console', :formatter => format))
+  end
+  
+  # file:
+  log.add(Log4r::FileOutputter.new('fileOutputter', :filename => File.join(log_directory, "#{Mack::Configuration.env}.log"), :trunc => false, :formatter => format))
+  
+  $mack_default_logger = log
 end
