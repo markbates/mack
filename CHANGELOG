@@ -7,6 +7,7 @@
 * ORM will not be initialized if the app never specify which ORM to use.
 * gem: cachetastic 1.7.1
 * gem: application_configuration 1.5.0
+* gem: erubis 2.6.2
 
 ===0.5.5.4
 * Fixed the damn Lint error some people were facing! 
