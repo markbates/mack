@@ -4,6 +4,15 @@ module Mack
   # production, development, and test have their own default configuration options. These
   # get merged with overall default options.
   module Configuration # :nodoc:
+    
+    def self.env
+      ENV["_mack_env"] ||= ENV["MACK_ENV"]
+    end
+
+    def self.env
+      ENV["_mack_env"] ||= ENV["MACK_ENV"]
+    end
+    
 
     def self.method_missing(sym, *args)
       ev = "_mack_#{sym}".downcase
@@ -31,7 +40,7 @@ module Mack
     DEFAULTS_PRODUCTION = {
       "mack::use_lint" => false,
       "mack::show_exceptions" => false,
-      "log::level" => "info",
+      "log_level" => "info",
       "log::detailed_requests" => false,
       "cachetastic_caches_mack_session_cache_options" => {
         "debug" => false,
@@ -51,13 +60,12 @@ module Mack
     # use local memory and store stuff for 5 minutes:
     DEFAULTS_DEVELOPMENT = {
       "mack::cache_classes" => false,
-      "log::level" => "debug",
-      "log::console" => true,
+      "log_level" => "debug"
     } unless self.const_defined?("DEFAULTS_DEVELOPMENT")
     
     # use local memory and store stuff for 1 hour:
     DEFAULTS_TEST = {
-      "log::level" => "error",
+      "log_level" => "error",
       "run_remote_tests" => true,
       "mack::drb_timeout" => 0,
       "mack::cookie_values" => {}
@@ -92,11 +100,7 @@ module Mack
         "mack::drb_timeout" => 1,
         "mack::default_respository_name" => "default",
         "log::detailed_requests" => true,
-        "log::level" => "info",
-        "log::console" => false,
-        "log::file" => true,
-        "log::console_format" => "%l:\t[%d]\t%M",
-        "log::file_format" => "%l:\t[%d]\t%M"
+        "log_level" => "info"
       }.merge(eval("DEFAULTS_#{Mack::Configuration.env.upcase}"))
     end
     

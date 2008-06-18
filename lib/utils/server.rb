@@ -16,9 +16,9 @@ module Mack
         # This will reload any edited classes if the cache_classes config setting is set to true.
         app = Rack::Reloader.new(app, 1) unless app_config.mack.cache_classes
         # TODO: Not sure about this logger, investigate better ones.
-        # TODO: Depends on MACK_DEFAULT_LOGGER already being configured.
+        # TODO: Depends on Mack.logger already being configured.
         # This makes it a drag run this 'standalone' in another Ruby program.
-        # app = Rack::CommonLogger.new(app, MACK_DEFAULT_LOGGER)
+        # app = Rack::CommonLogger.new(app, Mack.logger)
         app
       end
     

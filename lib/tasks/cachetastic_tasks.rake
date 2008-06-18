@@ -48,7 +48,7 @@ namespace :cachetastic do
     rescue MethodNotImplemented => e
       msg = "Cachetastic.rake Warning: cache #{cache} does not implement #{action}. This is probably an error."
       puts msg
-      MACK_DEFAULT_LOGGER.warning(msg)
+      Mack.logger.warning(msg)
     rescue NoMethodError => e
     rescue Exception => e
       raise e

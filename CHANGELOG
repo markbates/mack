@@ -1,5 +1,19 @@
+* Dropped mack_ruby_core_extensions in favor or mack-facets
+* Added a dependency on mack-more
+* Added a set of Rake tasks to update existing Mack applications.
+* thin.ru now gets generated as rackup.ru
 * Added a custom_dispatch_wrapper to allow for wrapping a request with customized code.
 * In routing you can now define a route that will catch an Exception from another controller.
+* ORM will not be initialized if the app never specify which ORM to use.
+* gem: cachetastic 1.7.1
+* gem: application_configuration 1.5.0
+
+===0.5.5.4
+* Fixed the damn Lint error some people were facing! 
+
+===0.5.5.3
+* Restored compatibility with Passenger and the next version of Thin.
+* Fixed 'requires' out of order in certain flavors or unix. Hopefully.
 
 ===0.5.5.2
 * Fixed an issue where if there are no parameters for render(:url) it will blow up.

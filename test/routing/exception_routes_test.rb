@@ -25,7 +25,7 @@ class ExceptionRoutesTest < Test::Unit::TestCase
   class HandleErrorsController < Mack::Controller::Base
     
     def handle_hell_errors
-      render(:text, "We're sorry for your hell: #{caught_exception.message}", :layout => false)
+      render(:text, "We're sorry for your hell: #{caught_exception.message}", :layout => false, :status => 500)
     end
     
   end
@@ -39,6 +39,7 @@ class ExceptionRoutesTest < Test::Unit::TestCase
   def test_a_raised_exception_is_caught_and_handled
     get raise_hell_url
     assert_equal "We're sorry for your hell: Oh Hell!!", response.body
+    assert_response :error
   end
   
   def test_a_raised_exception_is_not_caught_if_its_not_supposed_to

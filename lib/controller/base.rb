@@ -1,4 +1,3 @@
-require 'erubis'
 module Mack
   module Controller # :nodoc:
     # All controllers in a Mack application have to extend this class. I'll be honest, if they don't extend this class
@@ -116,9 +115,9 @@ module Mack
         @render_performed
       end
       
-      # Gives access to the MACK_DEFAULT_LOGGER.
+      # Gives access to the Mack.logger.
       def logger
-        MACK_DEFAULT_LOGGER
+        Mack.logger
       end
       
       # This method can be called from within an action. This 'registers' the render that you

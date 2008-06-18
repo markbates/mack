@@ -93,12 +93,12 @@ class Test::Unit::TestCase
     File.join(Mack::Configuration.root, "db")
   end
   
-  def test_directory
+  def unit_test_directory
     File.join(Mack::Configuration.root, "test")
   end
   
   def model_generator_cleanup
-    clean_test_directory
+    clean_unit_test_directory
     clean_models_directory
     clean_migrations_directory
   end

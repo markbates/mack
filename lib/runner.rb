@@ -1,3 +1,4 @@
+require File.join(File.dirname(__FILE__), 'routing', 'urls')
 module Mack
   # This is the heart and soul of the Mack framework! This class interfaces with the Rack framework.
   # It handles all the dispatching back and forth between the Rack framework and a Mack application.
@@ -39,7 +40,7 @@ module Mack
           end
         end # setup
       rescue Exception => e
-        MACK_DEFAULT_LOGGER.error(e)
+        Mack.logger.error(e)
         raise e
       end
     end
@@ -83,7 +84,7 @@ module Mack
       else
         msg = "[#{@request.request_method.upcase}] '#{@request.path_info}' (#{p_time})"
       end
-      MACK_DEFAULT_LOGGER.info(msg)
+      Mack.logger.info(msg)
       x
     end
     
