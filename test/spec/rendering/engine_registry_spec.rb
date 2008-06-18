@@ -1,26 +1,38 @@
-# require File.dirname(__FILE__) + '/../test_helper.rb'
-# 
-# class EngineTest < Test::Unit::TestCase
-#   
-#   def test_register_new
-#     assert !Mack::Rendering::Engine::Registry.engines.has_key?(:foo)
-#     Mack::Rendering::Engine::Registry.register(:foo, :erb)
-#     assert Mack::Rendering::Engine::Registry.engines.has_key?(:foo)
-#     assert_equal [:erb], Mack::Rendering::Engine::Registry.engines[:foo]
-#   end
-#   
-#   def test_register_existing
-#     Mack::Rendering::Engine::Registry.register(:bar, :erb)
-#     assert Mack::Rendering::Engine::Registry.engines.has_key?(:bar)
-#     Mack::Rendering::Engine::Registry.register(:bar, :sass)
-#     assert_equal [:sass, :erb], Mack::Rendering::Engine::Registry.engines[:bar]
-#   end
-#   
-# end
-
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent + 'spec_helper'
 
-describe Mack::Rendering::Engine::Registry do
+describe "Rendering Engine Registry" do
   
+  describe "=> register new engine" do
+    
+    before(:all) do
+      @reg = Mack::Rendering::Engine::Registry
+    end
+    
+    it "should return false when has_key is called with invalid key" do
+      @reg.engines.should_not have_key(:foo)
+    end
+  
+    it "should successfully register a new engine" do
+      @reg.register(:foo, :erb)
+      @reg.engines.should have_key(:foo)
+    end
+    
+    it "should be return correct engine when passed a valid key" do
+      @reg.engines[:foo].should == [:erb]
+    end
+  end
+  
+  describe "=> register existing engine" do
+    before(:all) do
+      @reg = Mack::Rendering::Engine::Registry
+    end
+    
+    it "should append newest engine to the registered list" do
+      @reg.register(:bar, :erb)
+      @reg.engines.should have_key(:bar)
+      @reg.register(:bar, :sass)
+      @reg.engines[:bar].should == [:sass, :erb]
+    end
+  end
 end

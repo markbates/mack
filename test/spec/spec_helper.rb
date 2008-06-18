@@ -21,3 +21,15 @@ require(File.join(File.dirname(__FILE__), "..",  "fake_application", "config", "
 
 self.send(:include, Mack::Routes::Urls)
 self.send(:include, Mack::TestHelpers)
+
+module CommonHelpers
+  def check_exception(klass, &block)
+    valid = false
+    begin
+      yield
+    rescue klass
+      valid = true
+    end
+    return valid
+  end
+end
