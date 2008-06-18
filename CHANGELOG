@@ -2,6 +2,7 @@
 * thin.ru now gets generated as rackup.ru
 * Added a custom_dispatch_wrapper to allow for wrapping a request with customized code.
 * In routing you can now define a route that will catch an Exception from another controller.
+* ORM will not be initialized if the app never specify which ORM to use.
 * gem: cachetastic 1.7.0
 * gem: application_configuration 1.5.0
 * gem: mack_ruby_core_extensions 0.2.0

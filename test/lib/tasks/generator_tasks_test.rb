@@ -5,7 +5,21 @@ class GeneratorTasksTest < Test::Unit::TestCase
   def test_list
     rake_task("generator:list") do
       assert_not_nil ENV["__generator_list"]
-      list = <<-LIST
+      
+      if app_config.orm.nil?
+        list = <<-LIST
+
+Available Generators:
+
+MackApplicationGenerator
+	rake generate:mack_application_generator
+PluginGenerator
+	rake generate:plugin_generator
+
+
+        LIST
+      else
+        list = <<-LIST
 
 Available Generators:
 
@@ -21,7 +35,9 @@ ScaffoldGenerator
 	rake generate:scaffold_generator
 
 
-LIST
+        LIST
+      end
+      
       assert_equal list, ENV["__generator_list"]
     end
   end
