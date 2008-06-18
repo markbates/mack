@@ -48,9 +48,9 @@ namespace :gem do
         s.rdoc_options << '--title' << 'Mack' << '--main' << 'README' << '--line-numbers' << "--inline-source"
         
         s.add_dependency("rack", "0.3.0")
-        s.add_dependency("mack_ruby_core_extensions", "0.2.0")
+        s.add_dependency("mack-more", gh.version)
         s.add_dependency("application_configuration", "1.5.0")
-        s.add_dependency("cachetastic", "1.7.0")
+        s.add_dependency("cachetastic", "1.7.1")
         s.add_dependency("log4r", "1.0.5")
         s.add_dependency("thin", "0.8.1")
         s.add_dependency("builder", "2.1.2")
@@ -61,7 +61,6 @@ namespace :gem do
         s.add_dependency("haml", "1.8.2")
         s.add_dependency("genosaurus", "1.1.8")
         s.add_dependency("rcov", "0.8.1.2.0")
-        s.add_dependency("mack-data_mapper", "0.5.5.100")
         
       
         s.rubyforge_project = gh.project
