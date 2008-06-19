@@ -1,0 +1,8 @@
+<html>
+  <head>
+    <title>Application Layout</title>
+  </head>
+  <body>
+    Lisa Simpson: INLINE, ERB
+  </body>
+</html>

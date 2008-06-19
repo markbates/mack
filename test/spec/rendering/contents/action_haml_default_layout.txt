@@ -1,0 +1,10 @@
+<html>
+  <head>
+    <title>Application Layout</title>
+  </head>
+  <body>
+    <div id='name'>Maggie Simpson</div>
+<div id='type'>HTML, HAML</div>
+
+  </body>
+</html>

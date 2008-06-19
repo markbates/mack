@@ -1,0 +1,9 @@
+<html>
+  <head>
+    <title>Bart's Page!</title>
+  </head>
+  <body>
+    Bart Simpson: HTML, ERB
+
+  </body>
+</html>

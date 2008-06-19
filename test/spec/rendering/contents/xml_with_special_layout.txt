@@ -1,0 +1,5 @@
+<my_cool>
+  <?xml version="1.0" encoding="UTF-8"?>
+<name>Homer Simpson</name>
+
+</my_cool>

@@ -23,6 +23,7 @@ self.send(:include, Mack::Routes::Urls)
 self.send(:include, Mack::TestHelpers)
 
 module CommonHelpers
+  
   def check_exception(klass, &block)
     valid = false
     begin
@@ -32,4 +33,9 @@ module CommonHelpers
     end
     return valid
   end
+  
+  def view_template
+    Mack::Rendering::ViewTemplate
+  end
+  
 end

@@ -1,0 +1,8 @@
+<html>
+  <head>
+    <title>Application Layout</title>
+  </head>
+  <body>
+    <div><h1>Marge Simpson</h1><h2>HTML, MARKABY</h2></div>
+  </body>
+</html>
