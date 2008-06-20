@@ -24,6 +24,16 @@ self.send(:include, Mack::TestHelpers)
 
 module CommonHelpers
   
+  # The View template's compile_and_render doesn't really need full controller.
+  # it's actually only needing it to get the instance variables.
+  # so in our test case, we can safely pass mock object into it
+  class MockController
+  end
+  
+  def erb(template)
+    Mack::Rendering::ViewTemplate.new(:inline, template, :controller => MockController.new).compile_and_render
+  end
+  
   def check_exception(klass, &block)
     valid = false
     begin
