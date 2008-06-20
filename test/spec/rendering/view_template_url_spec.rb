@@ -1,10 +1,6 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent + 'spec_helper'
 
-class MyController < Mack::Controller::Base
-  
-end
-
 describe "render(:url)" do
   include CommonHelpers
   
