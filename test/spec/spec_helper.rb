@@ -24,10 +24,41 @@ self.send(:include, Mack::TestHelpers)
 
 module CommonHelpers
   
-  # The View template's compile_and_render doesn't really need full controller.
-  # it's actually only needing it to get the instance variables.
-  # so in our test case, we can safely pass mock object into it
+  # TODO: find out how to get away from using mock***
+  class MockCookieJar
+    def all
+      {}
+    end
+  end
+  
+  class MockSession
+    def id
+      1
+    end
+  end
+  
+  class MockRequest
+    def env
+      {}
+    end
+    def session
+      MockSession.new
+    end
+  end
+  
   class MockController
+    def params(key)
+      @params[key.to_sym]
+    end
+    def initialize(options = {})
+      @params = {:format => "html"}.merge(options)
+    end
+    def cookies
+      MockCookieJar.new
+    end
+    def request
+      MockRequest.new
+    end
   end
   
   def erb(template)

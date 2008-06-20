@@ -81,7 +81,7 @@ module Mack
         def do_render_local_url(url, options)
           Timeout::timeout(app_config.mack.render_url_timeout || 5) do
             cooks = {}
-            self.cookies.all.each do |c,v|
+            self.view_template.cookies.all.each do |c,v|
               cooks[c] = v[:value]
             end
             request = self.view_template.request
