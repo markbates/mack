@@ -3,7 +3,7 @@ require 'pathname'
 require 'spec'
 require 'spec/rake/spectask'
 
-task :default  => ["test:test_case", "test:spec"]
+task :default  => "test:spec" #["test:test_case", "test:spec"]
 
 namespace :test do
   
