@@ -38,20 +38,6 @@ describe "Route Map" do
     get "/tst_users/Who%27s+Your+Daddy%21%3F%21"
     response.body.should match(/tst_users: show: id: who's your daddy!?!/)
   end
-  #   
-  #   def test_redirect
-  #     get "/my_old_foo"
-  #     assert_response :redirect
-  #     assert_redirected_to "/tst_another/foo/:id"
-  #     
-  #     get "/my_old_foo?id=1"
-  #     assert_response :redirect
-  #     assert_redirected_to "/tst_another/foo/1"
-  #     
-  #     get "/my_old_foo?id=1&pickles=yummy"
-  #     assert_response :redirect
-  #     assert_redirected_to "/tst_another/foo/1?pickles=yummy"
-  #   end
   
   it "should handle redirect" do
     get "/my_old_foo"
