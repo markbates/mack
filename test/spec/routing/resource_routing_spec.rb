@@ -27,11 +27,6 @@ describe "Resource Routing" do
     response.body.should match(/tst_resources: delete: id: 1/)
   end
 
-  #   def test_edit
-  #     get "/tst_resources/1/edit"
-  #     assert_match "tst_resources: edit: id: 1", response.body
-  #   end
-
   it "should route to edit" do
     get "/tst_resources/1/edit"
     response.body.should match(/tst_resources: edit: id: 1/)

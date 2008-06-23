@@ -103,4 +103,14 @@ module Assertions
     responses.first.location.should == url
   end
   
+  # Asserts that the specified cookie has been set to the specified value.
+  def assert_cookie(name, value)
+    cookies[name.to_s].should_not be_nil
+    cookies[name.to_s].should == value
+  end
+  
+  # Asserts that there is no cookie set for the specified cookie
+  def assert_no_cookie(name)
+    cookies[name.to_s].should be_nil
+  end
 end
