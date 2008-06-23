@@ -15,7 +15,7 @@ describe "render(:url)" do
       response.body.should match(/age: 31/)
       get bad_url_get_url
       response.body.should == ""
-      check_exception(Mack::Errors::UnsuccessfulRenderUrl) { get bad_url_get_with_raise_url }
+      lambda { get bad_url_get_with_raise_url }.should raise_error(Mack::Errors::UnsuccessfulRenderUrl)
     end
   end
   
@@ -25,7 +25,7 @@ describe "render(:url)" do
       response.body.should match(/age: 31/)
       post bad_url_post_url
       response.body.should == "" 
-      check_exception(Mack::Errors::UnsuccessfulRenderUrl) { post bad_url_post_with_raise_url }
+      lambda { post bad_url_post_with_raise_url }.should raise_error(Mack::Errors::UnsuccessfulRenderUrl)
     end
   end
 end

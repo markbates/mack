@@ -10,7 +10,7 @@ describe "public render" do
   end
   
   it "should raise error if request is to file that doesn't exists" do
-    check_exception(Mack::Errors::ResourceNotFound) { get public_not_found_url }
+    lambda { get public_not_found_url }.should raise_error(Mack::Errors::ResourceNotFound)
   end
   
   it "should find nested url" do

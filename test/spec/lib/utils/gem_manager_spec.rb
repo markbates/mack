@@ -80,7 +80,7 @@ describe "Gem Manager" do
     g = add_gem(:redgreen, :version => "1.2.2")
     g = add_gem(:redgreen, :version => "1.2.3", :libs => :redgreen)
     gem_manager.required_gem_list.last.to_s.should == "redgreen-1.2.3"
-    check_exception(Gem::LoadError) { gem_manager.do_requires }
+    lambda { gem_manager.do_requires }.should raise_error(Gem::LoadError)
   end
   
   private

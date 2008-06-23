@@ -22,6 +22,8 @@ require(File.join(File.dirname(__FILE__), "..",  "fake_application", "config", "
 self.send(:include, Mack::Routes::Urls)
 self.send(:include, Mack::TestHelpers)
 
+#-------------- HELPER MODULES --------------------------#
+
 module CommonHelpers
   
   # TODO: find out how to get away from using mock***
@@ -65,18 +67,40 @@ module CommonHelpers
     Mack::Rendering::ViewTemplate.new(:inline, template, :controller => MockController.new).compile_and_render
   end
   
-  def check_exception(klass, &block)
-    valid = false
-    begin
-      yield
-    rescue klass
-      valid = true
-    end
-    return valid
-  end
-  
   def view_template
     Mack::Rendering::ViewTemplate
+  end
+
+end
+
+module Assertions
+  include CommonHelpers
+  
+  # Takes either a Symbol or a Fixnum and assert the response matches it.
+  # The symbols it will match are :success, :redirect, :not_found, :error.
+  # If a Fixnum is passed it will assert the response status equals that Fixnum
+  def assert_response(status)
+    if status.is_a?(Symbol)
+      case status
+      when :success
+        responses.first.should be_successful
+      when :redirect
+        responses.first.should be_redirect
+      when :not_found
+        responses.first.should_not be_found
+      when :error
+        responses.first.should be_server_error
+      else
+        false.should == true
+      end
+    elsif status.is_a?(Fixnum)
+      response.first.status.should == status
+    end
+  end
+  
+  # Asserts that the request has been redirected to the specified url.
+  def assert_redirected_to(url)
+    responses.first.location.should == url
   end
   
 end
