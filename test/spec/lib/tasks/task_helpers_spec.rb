@@ -1,3 +1,6 @@
+require 'pathname'
+require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
+
 # require File.dirname(__FILE__) + '/../../test_helper.rb'
 # 
 # class TaskHelpersTest < Test::Unit::TestCase

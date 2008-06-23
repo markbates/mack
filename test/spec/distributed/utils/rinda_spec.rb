@@ -1,9 +1,10 @@
-require File.dirname(__FILE__) + '/../../test_helper.rb'
+require 'pathname'
+require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 require 'rinda/ring'
 require 'rinda/tuplespace'
-class RindaTest < Test::Unit::TestCase
-  
-  def setup
+
+describe "Rinda" do
+  before(:all) do 
     begin
       DRb.start_service
       Rinda::RingServer.new(Rinda::TupleSpace.new)
@@ -18,42 +19,41 @@ class RindaTest < Test::Unit::TestCase
     end
   end
   
-  def test_ring_server
+  it "should have access to the ring server" do
     rs = Mack::Distributed::Utils::Rinda.ring_server
-    assert_not_nil rs
-    assert rs.is_a?(Rinda::TupleSpace)
+    rs.should_not be_nil
+    rs.is_a?(Rinda::TupleSpace).should == true
   end
   
-  def test_register
+  it "should be able to register new service" do
     str = String.randomize(40)
     rs = Mack::Distributed::Utils::Rinda.ring_server
     serv = nil
-    assert_raise(Rinda::RequestExpiredError) { rs.read([:testing, :String, nil, "test_register-#{str}"], 0)[2] }
+    lambda { rs.read([:testing, :String, nil, "test_register-#{str}"], 0)[2] }.should raise_error(Rinda::RequestExpiredError)
     Mack::Distributed::Utils::Rinda.register(:space => :testing, :klass_def => :String, :object => str, :description => "test_register-#{str}")
     serv = nil
     serv = rs.read([:testing, :String, nil, "test_register-#{str}"], 1)[2]
-    assert_not_nil serv
-    assert_equal str, serv
+    serv.should_not be_nil
+    serv.should == str
   end
   
-  def test_register_or_renew
+  it "should be able to register or renew service(s)" do
     str = String.randomize(40)
     rs = Mack::Distributed::Utils::Rinda.ring_server
     serv = nil
-    assert_raise(Rinda::RequestExpiredError) { rs.read([:testing, :String, nil, "test_register_or_renew"], 0)[2] }
+    lambda { rs.read([:testing, :String, nil, "test_register_or_renew"], 0)[2] }.should raise_error(Rinda::RequestExpiredError)
     Mack::Distributed::Utils::Rinda.register_or_renew(:space => :testing, :klass_def => :String, :object => str, :description => "test_register_or_renew")
     serv = nil
     serv = rs.read([:testing, :String, nil, "test_register_or_renew"], 1)[2]
-    assert_not_nil serv
-    assert_equal str, serv
+    serv.should_not be_nil
+    serv.should == str
     
     str2 = String.randomize(40)
     Mack::Distributed::Utils::Rinda.register_or_renew(:space => :testing, :klass_def => :String, :object => str2, :description => "test_register_or_renew")
     serv = nil
     serv = rs.read([:testing, :String, nil, "test_register_or_renew"], 1)[2]
-    assert_not_nil serv
-    assert_equal str2, serv
-    assert serv != str
+    serv.should_not be_nil
+    serv.should == str2
+    serv.should_not == str
   end
-  
 end

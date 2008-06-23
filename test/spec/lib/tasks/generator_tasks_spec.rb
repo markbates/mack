@@ -1,11 +1,11 @@
-require File.dirname(__FILE__) + '/../../test_helper.rb'
+require 'pathname'
+require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
-class GeneratorTasksTest < Test::Unit::TestCase
-  
-  def test_list
+describe "Generator Tasks" do
+  it "should generate a list of tasks" do
     rake_task("generator:list") do
-      assert_not_nil ENV["__generator_list"]
-      
+      ENV["__generator_list"].should_not be_nil
+
       if app_config.orm.nil?
         list = <<-LIST
 
@@ -37,9 +37,8 @@ ScaffoldGenerator
 
         LIST
       end
-      
-      assert_equal list, ENV["__generator_list"]
+
+      ENV["__generator_list"].should == list
     end
   end
-  
 end
