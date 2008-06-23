@@ -3,7 +3,7 @@ require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
 describe "D-Route" do
   
-  before(:each) do
+  before(:all) do
     begin
       DRb.start_service
       Rinda::RingServer.new(Rinda::TupleSpace.new)
@@ -23,7 +23,7 @@ describe "D-Route" do
     end
   end
   
-  after(:each) do
+  after(:all) do
     app_config.revert
   end
   

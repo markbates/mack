@@ -24,6 +24,13 @@ self.send(:include, Mack::TestHelpers)
 
 #-------------- HELPER MODULES --------------------------#
 
+class Object
+  alias_method :old_puts, :puts
+  def puts(*args)
+    old_puts args
+  end
+end
+
 module CommonHelpers
   
   # TODO: find out how to get away from using mock***
@@ -87,14 +94,14 @@ module Assertions
       when :redirect
         responses.first.should be_redirect
       when :not_found
-        responses.first.should_not be_found
+        responses.first.should be_not_found
       when :error
         responses.first.should be_server_error
       else
         false.should == true
       end
     elsif status.is_a?(Fixnum)
-      response.first.status.should == status
+      responses.first.status.should == status
     end
   end
   
