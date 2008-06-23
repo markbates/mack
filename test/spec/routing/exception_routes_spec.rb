@@ -53,19 +53,3 @@ describe "Routes Exceptions" do
   end
 end
 
-# require File.dirname(__FILE__) + '/../test_helper.rb'
-# class ExceptionRoutesTest < Test::Unit::TestCase
-#   
-#   
-#   
-#   def test_a_raised_exception_is_caught_and_handled
-#     get raise_hell_url
-#     assert_equal , response.body
-#     assert_response :error
-#   end
-#   
-#   def test_a_raised_exception_is_not_caught_if_its_not_supposed_to
-#     assert_raise(ExceptionRoutesTest::DrunkError) 
-#   end
-#   
-# end
