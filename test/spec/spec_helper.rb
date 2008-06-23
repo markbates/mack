@@ -27,7 +27,7 @@ self.send(:include, Mack::TestHelpers)
 class Object
   alias_method :old_puts, :puts
   def puts(*args)
-    old_puts args
+    #old_puts args
   end
 end
 
