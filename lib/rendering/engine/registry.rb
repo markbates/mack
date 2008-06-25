@@ -14,11 +14,11 @@ module Mack
       
         def initialize
           @engines = {
-            :action => [:erubis, :builder, :markaby, :haml],
-            :template => [:erubis, :builder, :markaby, :haml],
-            :partial => [:erubis, :builder, :markaby, :haml],
-            :layout => [:erubis, :markaby, :haml],
-            :xml => [:builder, :erubis, :markaby, :haml]
+            :action => [:erubis, :builder, :markaby],
+            :template => [:erubis, :builder, :markaby],
+            :partial => [:erubis, :builder, :markaby],
+            :layout => [:erubis, :markaby],
+            :xml => [:builder, :erubis, :markaby]
           }
         end
         
