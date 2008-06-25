@@ -24,9 +24,6 @@ Mack::Routes.build do |r|
     map.bart_html_erb_with_layout "/vtt/bart_html_erb_with_layout", :action => :bart_html_erb_with_layout
     map.bart_html_erb_without_layout "/vtt/bart_html_erb_without_layout", :action => :bart_html_erb_without_layout
     map.bart_html_erb_with_special_layout "/vtt/bart_html_erb_with_special_layout", :action => :bart_html_erb_with_special_layout
-    map.marge_html_markaby_with_layout "/vtt/marge_html_markaby_with_layout", :action => :marge_html_markaby_with_layout
-    map.marge_html_markaby_without_layout "/vtt/marge_html_markaby_without_layout", :action => :marge_html_markaby_without_layout
-    map.marge_html_markaby_with_special_layout "/vtt/marge_html_markaby_with_special_layout", :action => :marge_html_markaby_with_special_layout
     map.lisa_inline_erb_with_layout "/vtt/lisa_inline_erb_with_layout", :action => :lisa_inline_erb_with_layout
     map.lisa_inline_erb_without_layout "/vtt/lisa_inline_erb_without_layout", :action => :lisa_inline_erb_without_layout
     map.lisa_inline_erb_with_special_layout "/vtt/lisa_inline_erb_with_special_layout", :action => :lisa_inline_erb_with_special_layout

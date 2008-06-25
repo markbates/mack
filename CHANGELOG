@@ -7,6 +7,7 @@
 * ORM will not be initialized if the app never specify which ORM to use.
 * All Mack unit tests are now written using rspec-1.1.4.
 * Haml renderer is now part of mack-more.
+* Markaby renderer is now part of mack-more.
 * gem: cachetastic 1.7.1
 * gem: application_configuration 1.5.0
 * gem: erubis 2.6.2
