@@ -1,7 +1,8 @@
 module Mack
   
   # Examples:
-  #   class MyAwesomeController < Mack::Controller::Base
+  #   class MyAwesomeController
+  #     include Mack::Controller
   #     def index
   #       cookies[:id] = 1
   #       render(:text,  "Hello!")

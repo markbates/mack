@@ -1,7 +1,9 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent + 'spec_helper'
 
-class TopController < Mack::Controller::Base
+class TopController
+  include Mack::Controller
+  
   before_filter :say_hi
   protected
   def say_hi

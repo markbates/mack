@@ -1,4 +1,5 @@
-class DefaultController < Mack::Controller::Base
+class DefaultController
+  include Mack::Controller
   
   # /
   def index

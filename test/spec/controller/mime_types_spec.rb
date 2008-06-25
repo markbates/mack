@@ -1,7 +1,8 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent + 'spec_helper'
 
-class MimeController < Mack::Controller::Base
+class MimeController
+  include Mack::Controller
 
   def index
     wants(:html) do

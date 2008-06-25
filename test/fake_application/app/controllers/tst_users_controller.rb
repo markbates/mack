@@ -1,4 +1,5 @@
-class TstUsersController < Mack::Controller::Base
+class TstUsersController
+  include Mack::Controller
   
   def index
     render(:text, "tst_users: index")

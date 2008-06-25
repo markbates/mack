@@ -1,7 +1,9 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent + 'spec_helper'
 
-class WantsTestController < Mack::Controller::Base
+class WantsTestController
+  include Mack::Controller
+  
   def you_want_what
     wants(:html) do
       render(:text, "<html>Hello World</html>")

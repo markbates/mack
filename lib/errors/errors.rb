@@ -4,7 +4,8 @@ module Mack
     # Raised when someone calls render twice in one action
     # 
     # Example:
-    #   class FooController < Mack::Controller::Base
+    #   class FooController
+    #     include Mack::Controller
     #     def index
     #       render(:text,  "Hello World")
     #       render(:action, "edit")
@@ -16,7 +17,8 @@ module Mack
     # Raised when an action returns something other then a string.
     # 
     # Example:
-    #   class FooController < Mack::Controller::Base
+    #   class FooController
+    #     include Mack::Controller
     #     def index
     #       [1,2,3,4]
     #     end

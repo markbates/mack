@@ -1,4 +1,5 @@
-class TstHomePageController < Mack::Controller::Base
+class TstHomePageController
+  include Mack::Controller
 
   def index
     render(:inline, "tst_home_page: <%= 'index' %>")

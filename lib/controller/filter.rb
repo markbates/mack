@@ -2,10 +2,11 @@ module Mack
   module Controller
     # A wrapper class to hold calls to filter methods for Controllers.
     # This class should never be called by itself. Instead there are helper
-    # methods in Mack::Controller::Base to do this for.
+    # methods in Mack::Controller to do this for.
     # 
     # Examples:
-    #   class MyAwesomeController < Mack::Controller::Base
+    #   class MyAwesomeController
+    #     include Mack::Controller
     #     # all actions in this controller will have this filter run:
     #     before_filter: authenticate
     #     # only the show and index actions in this controller will have this filter run:

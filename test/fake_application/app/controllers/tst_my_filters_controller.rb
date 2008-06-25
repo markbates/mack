@@ -1,4 +1,5 @@
-class TstMyFiltersController < Mack::Controller::Base
+class TstMyFiltersController
+  include Mack::Controller
   
   before_filter :set_date
   before_filter :say_hi, :only => :hello

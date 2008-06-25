@@ -4,5 +4,5 @@ module SomeRandomHelper
     String.random
   end
   
-  self.include_safely_into(Mack::Controller::Base)
+  self.include_safely_into(Mack::Controller)
 end

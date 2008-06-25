@@ -1,4 +1,5 @@
-class TstResourcesController < Mack::Controller::Base
+class TstResourcesController
+  include Mack::Controller
   
   layout :my_cool
   

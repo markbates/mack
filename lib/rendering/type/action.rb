@@ -5,7 +5,8 @@ module Mack
       # Used to render a template that's relative to a controller.
       # 
       # Example:
-      #   class UsersController < Mack::Controller::Base
+      #   class UsersController
+      #     include Mack::Controller
       #     # /users/:id
       #     def show
       #       @user = User.first(params(:id))

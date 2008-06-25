@@ -1,7 +1,7 @@
 module Mack
   module Rendering # :nodoc:
     # This class is used to do all the view level bindings.
-    # It allows for seperation between the Mack::Controller::Base and the view levels.
+    # It allows for seperation between the Mack::Controller and the view levels.
     class ViewTemplate
       
       # Allows access to any options passed into the template.
@@ -16,12 +16,12 @@ module Mack
         @_yield_to_cache = {}
       end
       
-      # Allows access to the current Mack::Controller::Base object.
+      # Allows access to the current Mack::Controller object.
       def controller
         self.options[:controller]
       end
       
-      # Returns the Mack::Request associated with the current Mack::Controller::Base object.
+      # Returns the Mack::Request associated with the current Mack::Controller object.
       def request
         self.controller.request
       end
@@ -31,7 +31,7 @@ module Mack
         self.request.session
       end
       
-      # Returns the Mack::CookieJar associated with the current Mack::Controller::Base object.
+      # Returns the Mack::CookieJar associated with the current Mack::Controller object.
       def cookies
         self.controller.cookies
       end
@@ -43,13 +43,13 @@ module Mack
         self.options[:locals][sym]
       end
       
-      # Maps to the controller's param method. See also Mack::Controller::Base params.
+      # Maps to the controller's param method. See also Mack::Controller params.
       def params(key)
         self.controller.params(key)
       end
       
       # Handles rendering calls both in the controller and in the view.
-      # For full details of render examples see Mack::Controller::Base render.
+      # For full details of render examples see Mack::Controller render.
       # Although the examples there are all in controllers, they idea is still
       # the same for views.
       # 

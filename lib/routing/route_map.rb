@@ -7,7 +7,7 @@ module Mack
     # See Mack::Routes::RouteMap for more information.
     def self.build
       yield Mack::Routes::RouteMap.instance
-      Mack::Routes::Urls.include_safely_into(Mack::Controller::Base, 
+      Mack::Routes::Urls.include_safely_into(Mack::Controller, 
                                              Mack::Rendering::ViewTemplate, 
                                              Test::Unit::TestCase, 
                                              Mack::Distributed::Routes::Urls)

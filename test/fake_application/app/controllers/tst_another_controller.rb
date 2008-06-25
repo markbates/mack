@@ -1,4 +1,5 @@
-class TstAnotherController < Mack::Controller::Base
+class TstAnotherController
+  include Mack::Controller
   
   def foo
     render(:text, "tst_another_controller: foo: id: '#{params(:id)}' pickles: '#{params(:pickles)}'")

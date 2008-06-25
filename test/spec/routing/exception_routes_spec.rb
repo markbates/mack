@@ -10,7 +10,8 @@ end
 class DrunkError < StandardError
 end
 
-class ExceptForMeController < Mack::Controller::Base
+class ExceptForMeController
+  include Mack::Controller
 
   def raise_hell
     raise HellError.new
@@ -22,7 +23,8 @@ class ExceptForMeController < Mack::Controller::Base
 
 end
 
-class HandleErrorsController < Mack::Controller::Base
+class HandleErrorsController
+  include Mack::Controller
 
   def handle_hell_errors
     render(:text, "We're sorry for your hell: #{caught_exception.message}", :layout => false, :status => 500)

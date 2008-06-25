@@ -1,4 +1,5 @@
-class Vtt::ViewTemplateController < Mack::Controller::Base
+class Vtt::ViewTemplateController
+  include Mack::Controller
   
   def bart_html_erb_with_layout
     render(:action, "bart")
