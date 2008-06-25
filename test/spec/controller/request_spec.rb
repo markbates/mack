@@ -19,7 +19,7 @@ describe "Request" do
       session.should_not be_nil
       t = session[:my_time]
       t.should_not be_nil
-      response.body.should match(/#{t.to_s}/)
+      response.body.should match(/#{t.strftime("%m/%d/%Y %H:%M:%S")}/)
       sleep(1)
       get "/tst_home_page/read_param_from_session"
       session.should_not be_nil

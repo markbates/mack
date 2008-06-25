@@ -18,7 +18,6 @@ namespace :test do
   desc 'Run specifications'
   Spec::Rake::SpecTask.new(:spec) do |t|
     t.spec_opts << '--options' << 'test/spec/spec.opts' if File.exists?('test/spec/spec.opts')
-    puts Dir.glob('test/spec/**/*_spec.rb')
     t.spec_files = Dir.glob('test/spec/**/*_spec.rb')
   end
   

@@ -24,13 +24,6 @@ self.send(:include, Mack::TestHelpers)
 
 #-------------- HELPER MODULES --------------------------#
 
-class Object
-  alias_method :old_puts, :puts
-  def puts(*args)
-    #old_puts args
-  end
-end
-
 module CommonHelpers
   
   # TODO: find out how to get away from using mock***

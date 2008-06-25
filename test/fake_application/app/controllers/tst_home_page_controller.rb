@@ -35,7 +35,7 @@ class TstHomePageController < Mack::Controller::Base
       session[:my_time] = Time.now
       t = session[:my_time]
     end
-    render(:text, "time from session: #{t}")
+    render(:text, "time from session: #{t.strftime("%m/%d/%Y %H:%M:%S")}")
   end
   
   def read_cookie
