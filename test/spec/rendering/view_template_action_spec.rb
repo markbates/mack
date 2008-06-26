@@ -29,45 +29,5 @@ describe "render(:action)" do
     end
 
   end # erb
-  
-  describe "haml" do
-    include RenderActionHelper
     
-    it "should render with a default layout" do
-      get maggie_html_haml_with_layout_url
-      validate_content("action_haml_default_layout.txt")
-    end
-
-    it "should render with a special layout if told to do so" do
-      get maggie_html_haml_with_special_layout_url
-      validate_content("action_haml_special_layout.txt")
-    end
-
-    it "should render with no layout if told to do so" do
-      get maggie_html_haml_without_layout_url
-      response.body.should == "<div id='name'>Maggie Simpson</div>\n<div id='type'>HTML, HAML</div>\n"
-    end
-
-  end # haml
-  
-  describe "markaby" do
-    include RenderActionHelper
-    
-    it "should render with a default layout" do
-      get marge_html_markaby_with_layout_url
-      validate_content("action_markaby_default_layout.txt")
-    end
-
-    it "should render with a special layout if told to do so" do
-      get marge_html_markaby_with_special_layout_url
-      validate_content("action_markaby_special_layout.txt")
-    end
-
-    it "should render with no layout if told to do so" do
-      get marge_html_markaby_without_layout_url
-      response.body.should == "<div><h1>Marge Simpson</h1><h2>HTML, MARKABY</h2></div>"
-    end
-
-  end # markaby
-  
 end
