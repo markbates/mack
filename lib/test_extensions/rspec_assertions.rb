@@ -1,3 +1,5 @@
+require File.join(File.dirname(__FILE__), "test_helpers")
+
 module Mack
   module RSpecAssertions
     # include CommonHelpers
@@ -40,4 +42,10 @@ module Mack
       cookies[name.to_s].should be_nil
     end
   end
+end
+
+if Object.const_defined?("Spec")
+  include Mack::Routes::Urls
+  include Mack::TestHelpers
+  include Mack::RSpecAssertions
 end

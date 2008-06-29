@@ -19,13 +19,6 @@ require(File.join(File.dirname(__FILE__), "..", "..", "lib", 'mack'))
 # to be a problem when running script/server or when running an individual test.
 require(File.join(File.dirname(__FILE__), "..",  "fake_application", "config", "routes.rb"))
 
-# self.send(:include, Mack::Routes::Urls)
-include Mack::Routes::Urls
-# self.send(:include, Mack::TestHelpers) 
-include Mack::TestHelpers
-# self.send(:include, Mack::RSpecAssertions)
-include Mack::RSpecAssertions
-
 #-------------- HELPER MODULES --------------------------#
 
 module CommonHelpers
