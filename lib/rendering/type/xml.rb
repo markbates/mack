@@ -8,7 +8,7 @@ module Mack
       #   class UsersController < Mack::Controller::Base
       #     # /users/:id
       #     def show
-      #       @user = User.first(params(:id))
+      #       @user = User.first(params[:id])
       #     end
       #     # /users
       #     def index

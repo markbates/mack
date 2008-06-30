@@ -5,19 +5,19 @@ class TstUsersController < Mack::Controller::Base
   end
   
   def show
-    render(:text, "tst_users: show: id: #{params(:id)}")
+    render(:text, "tst_users: show: id: #{params[:id]}")
   end
   
   def update
-    render(:text, "tst_users: update: id: #{params(:id)}")
+    render(:text, "tst_users: update: id: #{params[:id]}")
   end
   
   def delete
-    render(:text, "tst_users: delete: id: #{params(:id)}")
+    render(:text, "tst_users: delete: id: #{params[:id]}")
   end
   
   def edit
-    @user_id = params(:id)
+    @user_id = params[:id]
   end
   
   def kill_kenny_good

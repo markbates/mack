@@ -197,7 +197,7 @@ module Mack
         unless pattern == "/"
           pattern.chop! if pattern.match(/\/$/)
         end
-        meth = (req.params("_method") || req.request_method.downcase).to_sym
+        meth = (req.params["_method"] || req.request_method.downcase).to_sym
         rt = routes_list.dup
         rt << @default_routes_list.dup
         rt.flatten!

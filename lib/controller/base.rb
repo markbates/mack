@@ -29,15 +29,15 @@ module Mack
         @response = response
         @render_options = {}
         @render_performed = false
-        @controller_name = params(:controller)
-        @action_name = params(:action)
+        @controller_name = params[:controller]
+        @action_name = params[:action]
         @cookies = cookies
         @wants_list = []
       end
       
       # Gives access to all the parameters for this request.
-      def params(key)
-        self.request.params(key)
+      def params
+        self.request.params
       end
       
       # Gives access to the session. See Mack::Session for more information.
@@ -105,7 +105,7 @@ module Mack
       #   "<xml><greeting>Hello World</greeting></xml>"
       def wants(header_type, &block)
         header_type = header_type.to_sym
-        if header_type == params(:format).to_sym
+        if header_type == params[:format].to_sym
           yield
         end
       end
@@ -242,11 +242,11 @@ module Mack
       def render(render_type = :action, render_value = self.action_name, options = {})
         raise Mack::Errors::DoubleRender.new if render_performed?
         response.status = options[:status] unless options[:status].nil?
-        options = {:content_type => Mack::Utils::MimeTypes[params(:format)], :layout => layout}.merge(options)
+        options = {:content_type => Mack::Utils::MimeTypes[params[:format]], :layout => layout}.merge(options)
         response["Content-Type"] = options[:content_type]
         options.delete(:content_type)
         @view_template = Mack::Rendering::ViewTemplate.new(render_type, render_value, 
-                                                           {:format => params(:format).to_sym, :controller => self}.merge(options))
+                                                           {:format => params[:format].to_sym, :controller => self}.merge(options))
         @render_performed = true
       end
       

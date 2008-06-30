@@ -53,8 +53,8 @@ module CommonHelpers
   end
   
   class MockController
-    def params(key)
-      @params[key.to_sym]
+    def params
+      @params
     end
     def initialize(options = {})
       @params = {:format => "html"}.merge(options)
