@@ -1,4 +1,5 @@
 module Mack
+  
   class MackParams < Hash
     alias_method :old_hash, :[]
     def [](key)
@@ -7,6 +8,7 @@ module Mack
       return data
     end
   end
+  
   class Request < Rack::Request
     
     def initialize(env) # :nodoc:
@@ -16,12 +18,7 @@ module Mack
     end
     
     alias_method :rack_params, :params # :nodoc:
-    
-    # Returns all parameters associated with this request.
-    def all_params
-      @mack_params
-    end
-    
+        
     # Merges another Hash with the parameters for this request.
     def merge_params(opts = {})
       parse_params(opts)
@@ -60,14 +57,11 @@ module Mack
     #   uri: '/users/1?foo=bar'
     #   route: '/users/:id' => {:controller => 'users', :action => 'show'}
     #   parameters: {:controller => 'users', :action => 'show', :id => 1, :foo => "bar"}
-    # def params(key)
-    #   p = (@mack_params[key.to_sym] || @mack_params[key.to_s])
-    #   p = p.to_s if p.is_a?(Symbol)
-    #   return p
-    # end
     def params
       @mack_params
     end
+    
+    alias_method :all_params, :params
     
     # Returns a Mack::Request::UploadedFile object.
     def file(key)
