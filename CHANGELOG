@@ -1,3 +1,5 @@
+* RSpec assertions are now automatically added.
+* moved test_extensions to testing and added the module Testing to the files in it.
 * Dropped mack_ruby_core_extensions in favor or mack-facets
 * Added a dependency on mack-more
 * Added a set of Rake tasks to update existing Mack applications.
@@ -11,6 +13,7 @@
 * gem: cachetastic 1.7.1
 * gem: application_configuration 1.5.0
 * gem: erubis 2.6.2
+* gem: genosaurus 1.2.0
 
 ===0.5.5.4
 * Fixed the damn Lint error some people were facing! 
