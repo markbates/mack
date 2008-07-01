@@ -11,7 +11,7 @@
 * Haml renderer is now part of mack-more.
 * Markaby renderer is now part of mack-more.
 * Changed request param's accessor routine, from params(key) to params[key]
-* gem: cachetastic 1.7.1
+* gem: cachetastic 1.7.2
 * gem: application_configuration 1.5.0
 * gem: erubis 2.6.2
 * gem: genosaurus 1.2.0
