@@ -12,6 +12,8 @@
 * Haml renderer is now part of mack-more.
 * Markaby renderer is now part of mack-more.
 * Changed request param's accessor routine, from params(key) to params[key]
+* mack command now takes an optional -t flag to determine which testing framework to use--value could be test_case or rspec [default]
+* new setting added to app_config: testing_framework
 * gem: cachetastic 1.7.2
 * gem: application_configuration 1.5.0
 * gem: erubis 2.6.2
