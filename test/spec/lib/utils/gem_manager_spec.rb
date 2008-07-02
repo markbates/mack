@@ -5,13 +5,11 @@ describe "Gem Manager" do
   include CommonHelpers
   
   before(:each) do
-    puts "before(:all)"
     @required_gems = gem_manager.required_gem_list.dup
     gem_manager.required_gem_list = []
   end
   
   after(:each) do
-    puts "after(:all)"
     gem_manager.required_gem_list = @required_gems
   end
   
