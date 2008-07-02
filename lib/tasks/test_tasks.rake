@@ -3,7 +3,7 @@ require 'pathname'
 require 'spec'
 require 'spec/rake/spectask'
 
-task :default  => "test:spec" #["test:test_case", "test:spec"]
+task :default  => "test:rspec" #["test:test_case", "test:spec"]
 
 namespace :test do
   
@@ -16,7 +16,7 @@ namespace :test do
   end
   
   desc 'Run specifications'
-  Spec::Rake::SpecTask.new(:spec) do |t|
+  Spec::Rake::SpecTask.new(:rspec) do |t|
     t.spec_opts << '--options' << 'test/spec/spec.opts' if File.exists?('test/spec/spec.opts')
     t.spec_files = Dir.glob('test/spec/**/*_spec.rb')
   end
