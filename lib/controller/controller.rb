@@ -351,7 +351,6 @@ module Mack
     # Make sure that all the class level methods got included into the receiver's class
     #
     def self.included(base)
-      puts "extending ClassMethods to base: #{base}"
       base.extend(ClassMethods)
     end
     
