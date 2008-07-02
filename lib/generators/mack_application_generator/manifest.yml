@@ -47,10 +47,6 @@ rakefile:
   type: file
   template_path: <%= File.join(templates_directory_path, "Rakefile.template") %>
   output_path: <%= File.join(app_name, "Rakefile") %>
-test_helper:
-  type: file
-  template_path: <%= File.join(templates_directory_path, "test", "test_helper.rb.template") %>
-  output_path: <%= File.join(app_name, "test", "test_helper.rb") %>
 
 # Directories:
 models:
@@ -64,12 +60,37 @@ public_<%= f %>:
   type: directory
   output_path: <%= File.join(app_name, "public", f) %>
 <% end -%>
+
+# Test
+<% if testing_framework == "test_case" %>
+test_helper:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "test", "test_helper.rb.template") %>
+  output_path: <%= File.join(app_name, "test", "test_helper.rb") %>
 test_functional:
   type: directory
   output_path: <%= File.join(app_name, "test", "functional") %>
 test_unit:
   type: directory
   output_path: <%= File.join(app_name, "test", "unit") %>
+<% elsif testing_framework == "rspec" %>
+test_spec:
+  type: directory
+  output_path: <%= File.join(app_name, "test", "spec") %>
+test_spec_helper:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "test", "spec.template", "spec_helper.rb.template") %>
+  output_path: <%= File.join(app_name, "test", "spec", "spec_helper.rb") %>
+test_spec_opts:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "test", "spec.template", "spec.opts.template") %>
+  output_path: <%= File.join(app_name, "test", "spec", "spec.opts") %>  
+test_spec_lib:
+  type: directory
+  output_path: <%= File.join(app_name, "test", "spec", "lib") %>
+<% end %>
+
+# Plugins
 vendor_plugins:
   type: directory
   output_path: <%= File.join(app_name, "vendor", "plugins") %>

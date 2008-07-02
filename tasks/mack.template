@@ -13,6 +13,7 @@ raise "You must specify a name for this application!" if app.nil?
 
 options = OpenStruct.new
 options.orm = "data_mapper"
+options.testing_framework = "rspec"
 options.version = "<%= gh.version %>"
 
 opts = OptionParser.new do |opts|
@@ -22,8 +23,12 @@ opts = OptionParser.new do |opts|
     options.orm = v
   end
   
+  opts.on("-t [rspec|test_case]") do |v|
+    options.testing_framework = v
+  end
+  
 end
 
 opts.parse!(ARGV)
 
-MackApplicationGenerator.run({"version" => options.version, "app" => app, "orm" => options.orm})
+MackApplicationGenerator.run({"version" => options.version, "app" => app, "orm" => options.orm, "testing_framework" => options.testing_framework})
