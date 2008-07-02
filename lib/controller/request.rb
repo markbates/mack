@@ -1,19 +1,24 @@
 module Mack
+  
+  class MackParams < Hash
+    alias_method :old_hash, :[]
+    def [](key)
+      data = old_hash(key.to_sym) || old_hash(key.to_s)
+      data = data.to_s if data.is_a?(Symbol)
+      return data
+    end
+  end
+  
   class Request < Rack::Request
     
     def initialize(env) # :nodoc:
       super(env)
-      @mack_params = {}
+      @mack_params = MackParams.new
       parse_params(rack_params)
     end
     
     alias_method :rack_params, :params # :nodoc:
-    
-    # Returns all parameters associated with this request.
-    def all_params
-      @mack_params
-    end
-    
+        
     # Merges another Hash with the parameters for this request.
     def merge_params(opts = {})
       parse_params(opts)
@@ -52,29 +57,16 @@ module Mack
     #   uri: '/users/1?foo=bar'
     #   route: '/users/:id' => {:controller => 'users', :action => 'show'}
     #   parameters: {:controller => 'users', :action => 'show', :id => 1, :foo => "bar"}
-    def params(key)
-      ivar_cache("params_#{key}") do
-        p = (@mack_params[key.to_sym] || @mack_params[key.to_s])
-        unless p.nil?
-          p = p.to_s if p.is_a?(Symbol)
-          if p.is_a?(String)
-            p = p.to_s.uri_unescape
-          elsif p.is_a?(Hash)
-            p.each_pair do |k,v|
-              if v.is_a?(String)
-                p[k] = v.to_s.uri_unescape
-              end
-            end
-          end
-        end
-        p
-      end
+    def params
+      @mack_params
     end
+    
+    alias_method :all_params, :params
     
     # Returns a Mack::Request::UploadedFile object.
     def file(key)
       ivar_cache("file_#{key}") do
-        Mack::Request::UploadedFile.new(params(key))
+        Mack::Request::UploadedFile.new(params[key])
       end
     end
     
@@ -85,9 +77,9 @@ module Mack
           nv = k.to_s.match(/.+\[(.+)\]/).captures.first
           nk = k.to_s.match(/(.+)\[.+\]/).captures.first
           @mack_params[nk.to_sym] = {} if @mack_params[nk.to_sym].nil?
-          @mack_params[nk.to_sym].merge!(nv.to_sym => v)
+          @mack_params[nk.to_sym].merge!(nv.to_sym => v.to_s.uri_unescape)
         else
-          @mack_params[k.to_sym] = v
+          @mack_params[k.to_sym] = v.to_s.uri_unescape
         end
       end
     end

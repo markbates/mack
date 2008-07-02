@@ -2,7 +2,7 @@ class TstAnotherController
   include Mack::Controller
   
   def foo
-    render(:text, "tst_another_controller: foo: id: '#{params(:id)}' pickles: '#{params(:pickles)}'")
+    render(:text, "tst_another_controller: foo: id: '#{params[:id]}' pickles: '#{params[:pickles]}'")
   end
   
   def bar
@@ -45,16 +45,16 @@ class TstAnotherController
   
   def regardless_of_string_or_symbol
     x = ""
-    x << "from_string: foo=#{params("foo")}\n"
-    x << "from_symbol: foo=#{params(:foo)}\n"
+    x << "from_string: foo=#{params["foo"]}\n"
+    x << "from_symbol: foo=#{params[:foo]}\n"
     render(:text, x)
   end
   
   def params_return_as_hash
-    @foo = params(:foo)
+    @foo = params[:foo]
     x = ""
-    x << "class: #{params(:foo).class}]\n"
-    x << "inspect: #{params(:foo).inspect}"
+    x << "class: #{params[:foo].class}]\n"
+    x << "inspect: #{params[:foo].inspect}"
     render(:text, x)
   end
   

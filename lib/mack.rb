@@ -15,8 +15,6 @@ require 'rinda/tuplespace'
 require 'builder'
 require 'erubis'
 require 'erb'
-require 'markaby'
-require 'haml'
 require 'genosaurus'
 require 'net/http'
 require 'pp'
@@ -36,7 +34,7 @@ unless Mack::Configuration.initialized
 
   Mack.logger.info "Initializing core classes..."
   # Require all the necessary files to make Mack actually work!
-  ["distributed", "errors", "core_extensions", "utils", "test_extensions", "routing", "view_helpers", "rendering", "controller", "tasks", "initialization/server", "generators"].each do |dir|
+  ["distributed", "errors", "core_extensions", "utils", "routing", "view_helpers", "rendering", "controller", "tasks", "initialization/server", "generators", "testing"].each do |dir|
     dir_globs = Dir.glob(File.join(fl, dir, "**/*.rb"))
     dir_globs.each do |d|
       require d

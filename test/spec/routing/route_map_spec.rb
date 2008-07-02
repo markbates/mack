@@ -2,7 +2,7 @@ require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent + 'spec_helper'
 
 describe "Route Map" do
-  include Assertions
+  # include Assertions
   it "should route to homepage" do
     get "/"
     response.body.should match(/tst_home_page: index/)

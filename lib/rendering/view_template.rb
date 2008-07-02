@@ -43,9 +43,9 @@ module Mack
         self.options[:locals][sym]
       end
       
-      # Maps to the controller's param method. See also Mack::Controller params.
-      def params(key)
-        self.controller.params(key)
+      # Maps to the controller's param method. See also Mack::Controller::Base params.
+      def params
+        self.controller.params
       end
       
       # Handles rendering calls both in the controller and in the view.

@@ -8,15 +8,15 @@ class TstResourcesController
   end
   
   def show
-    render(:text, "tst_resources: show: id: #{params(:id)}")
+    render(:text, "tst_resources: show: id: #{params[:id]}")
   end
   
   def update
-    render(:text, "tst_resources: update: id: #{params(:id)}")
+    render(:text, "tst_resources: update: id: #{params[:id]}")
   end
   
   def delete
-    render(:text, "tst_resources: delete: id: #{params(:id)}")
+    render(:text, "tst_resources: delete: id: #{params[:id]}")
   end
   
   def create
@@ -28,7 +28,7 @@ class TstResourcesController
   end
   
   def edit
-    @res_id = params(:id)
+    @res_id = params[:id]
   end
   
 end

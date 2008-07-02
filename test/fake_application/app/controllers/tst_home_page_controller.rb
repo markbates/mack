@@ -36,7 +36,7 @@ class TstHomePageController
       session[:my_time] = Time.now
       t = session[:my_time]
     end
-    render(:text, "time from session: #{t}")
+    render(:text, "time from session: #{t.strftime("%m/%d/%Y %H:%M:%S")}")
   end
   
   def read_cookie
@@ -44,13 +44,13 @@ class TstHomePageController
   end
   
   def write_cookie
-    cookies[:bourne] = (params(:bourne) || "Jason Bourne Rocks! #{Time.now}")
+    cookies[:bourne] = (params[:bourne] || "Jason Bourne Rocks! #{Time.now}")
     redirect_to("/tst_home_page/read_cookie")
   end
   
   def write_two_cookies
-    cookies[:bourne] = (params(:bourne) || "Jason Bourne Rocks! #{Time.now}")
-    cookies[:woody] = (params(:woody) || "Woody Allen's Funny! #{Time.now}")
+    cookies[:bourne] = (params[:bourne] || "Jason Bourne Rocks! #{Time.now}")
+    cookies[:woody] = (params[:woody] || "Woody Allen's Funny! #{Time.now}")
     redirect_to("/tst_home_page/read_cookie")
   end
   

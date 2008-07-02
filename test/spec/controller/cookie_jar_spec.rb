@@ -2,7 +2,7 @@ require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent + 'spec_helper'
 
 describe "Cookie Jar" do
-  include Assertions
+  # include Assertions
   
   it "should be able to set 1 cookie" do
     get "/tst_home_page/write_cookie?bourne=the_bourne_identity"

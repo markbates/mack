@@ -50,16 +50,14 @@ namespace :gem do
         s.add_dependency("rack", "0.3.0")
         s.add_dependency("mack-more", gh.version)
         s.add_dependency("application_configuration", "1.5.0")
-        s.add_dependency("cachetastic", "1.7.1")
+        s.add_dependency("cachetastic", "1.7.2")
         s.add_dependency("log4r", "1.0.5")
         s.add_dependency("thin", "0.8.1")
         s.add_dependency("builder", "2.1.2")
         s.add_dependency("crypt", "1.1.4")
         s.add_dependency("daemons", "1.0.10")
         s.add_dependency("erubis", "2.6.2")
-        s.add_dependency("markaby", "0.5.0")
-        s.add_dependency("haml", "1.8.2")
-        s.add_dependency("genosaurus", "1.1.8")
+        s.add_dependency("genosaurus", "1.2.0")
         s.add_dependency("rcov", "0.8.1.2.0")
         
       
