@@ -5,7 +5,6 @@ class MackApplicationGenerator < Genosaurus
   end
   
   def testing_framework
-    puts @options["testing_framework"]
     @options["testing_framework"]
   end
   
