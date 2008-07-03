@@ -1,17 +1,17 @@
 * RSpec assertions are now automatically added.
 * moved test_extensions to testing and added the module Testing to the files in it.
-* Dropped mack_ruby_core_extensions in favor or mack-facets
+* INCOMPATIBILITY NOTICE: Dropped mack_ruby_core_extensions in favor or mack-facets
 * Added a dependency on mack-more
 * Added a set of Rake tasks to update existing Mack applications.
-* thin.ru now gets generated as rackup.ru
+* INCOMPATIBILITY NOTICE: thin.ru now gets generated as rackup.ru
 * Added a custom_dispatch_wrapper to allow for wrapping a request with customized code.
 * In routing you can now define a route that will catch an Exception from another controller.
 * ORM will not be initialized if the app never specify which ORM to use.
 * All Mack unit tests are now written using rspec-1.1.4.
-* Mack::Controller::Base is now Mack::Controller (and it's now a module)
-* Haml renderer is now part of mack-more.
-* Markaby renderer is now part of mack-more.
-* Changed request param's accessor routine, from params(key) to params[key]
+* INCOMPATIBILITY NOTICE: Mack::Controller::Base is now Mack::Controller (and it's now a module)
+* INCOMPATIBILITY NOTICE: Haml renderer is now part of mack-more.
+* INCOMPATIBILITY NOTICE: Markaby renderer is now part of mack-more.
+* INCOMPATIBILITY NOTICE: Changed request param's accessor routine, from params(key) to params[key]
 * mack command now takes an optional -t flag to determine which testing framework to use--value could be test_case or rspec [default]
 * new setting added to app_config: testing_framework
 * gem: cachetastic 1.7.2
