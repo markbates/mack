@@ -1,8 +1,0 @@
-# This is a sample rspec file.  You can safely delete this file.
-require File.join(File.dirname(__FILE__), "..", "spec_helper.rb")
-
-describe "My First Spec Test" do
-  it "should run without error" do
-    true
-  end
-end

@@ -72,8 +72,8 @@ test_functional:
   output_path: <%= File.join(app_name, "test", "functional") %>
 test_example:
   type: file
-  template_path: <%= File.join(templates_directory_path, "test", "functional.template", "simple_test.rb.template") %>
-  output_path: <%= File.join(app_name, "test", "functional", "simple_test.rb") %>
+  template_path: <%= File.join(templates_directory_path, "test", "functional.template", "default_controller_test.rb.template") %>
+  output_path: <%= File.join(app_name, "test", "functional", "default_controller_test.rb") %>
 test_unit:
   type: directory
   output_path: <%= File.join(app_name, "test", "unit") %>
@@ -91,8 +91,8 @@ test_spec_opts:
   output_path: <%= File.join(app_name, "test", "spec", "spec.opts") %>
 test_spec_example:
   type: file
-  template_path: <%= File.join(templates_directory_path, "test", "spec.template", "lib.template", "simple_spec.rb.template") %>
-  output_path: <%= File.join(app_name, "test", "spec", "lib", "simple_spec.rb") %>
+  template_path: <%= File.join(templates_directory_path, "test", "spec.template", "lib.template", "default_controller_spec.rb.template") %>
+  output_path: <%= File.join(app_name, "test", "spec", "lib", "default_controller_spec.rb") %>
 test_spec_lib:
   type: directory
   output_path: <%= File.join(app_name, "test", "spec", "lib") %>

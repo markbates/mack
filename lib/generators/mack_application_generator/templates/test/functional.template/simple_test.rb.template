@@ -1,8 +1,0 @@
-# This is a sample TestCase file.  You can safely delete this file
-require File.join(File.dirname(__FILE__), "..", "test_helper.rb")
-
-class MyFirstTest < Test::Unit::TestCase
-  def test_truth
-    assert true
-  end
-end
