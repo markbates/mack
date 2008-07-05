@@ -4,7 +4,7 @@ development:
     
 test:
   adapter: sqlite3
-  database: <%= File.join(Mack::Configuration.root, "db", "fake_application_test.db") %>
+  database: <%= File.join(Mack.root, "db", "fake_application_test.db") %>
 
 production:
   adapter: sqlite3

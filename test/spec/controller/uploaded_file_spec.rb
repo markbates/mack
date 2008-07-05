@@ -4,35 +4,35 @@ require Pathname(__FILE__).dirname.expand_path.parent + 'spec_helper'
 describe Mack::Request::UploadedFile do
   
   before(:each) do
-    FileUtils.cp(File.join(Mack::Configuration.root, "public", "images", "logo.gif"), 
-                 File.join(Mack::Configuration.root, "public", "something", "logo.gif"))
+    FileUtils.cp(File.join(Mack.root, "public", "images", "logo.gif"), 
+                 File.join(Mack.root, "public", "something", "logo.gif"))
     @uploaded_file = 
     Mack::Request::UploadedFile.new(:type => "image/gif", 
                                     :filename => "logo.gif", 
                                     :head => "Content-Disposition: form-data; name=\"my_new_file\"; filename=\"logo.gif\"\r\nContent-Type: image/gif\r\n", 
-                                    :tempfile => File.open(File.join(Mack::Configuration.root, "public", "something", "logo.gif")), 
+                                    :tempfile => File.open(File.join(Mack.root, "public", "something", "logo.gif")), 
                                     :name=>"my_new_file")
   end
   
   after(:each) do
-    FileUtils.rm_rf(File.join(Mack::Configuration.root, "tmp"))
+    FileUtils.rm_rf(File.join(Mack.root, "tmp"))
   end
   
   it "should be able to save to..." do
-    @uploaded_file.save_to(File.join(Mack::Configuration.root, "tmp", @uploaded_file.file_name))
-    File.exists?(File.join(Mack::Configuration.root, "tmp", @uploaded_file.file_name)).should == true
+    @uploaded_file.save_to(File.join(Mack.root, "tmp", @uploaded_file.file_name))
+    File.exists?(File.join(Mack.root, "tmp", @uploaded_file.file_name)).should == true
     File.exists?(@uploaded_file.temp_file.path).should_not == true
   end
   
   it "should be able to save to... (path constructed with array)" do
-    @uploaded_file.save_to([Mack::Configuration.root, "tmp", @uploaded_file.file_name])
-    File.exists?(File.join(Mack::Configuration.root, "tmp", @uploaded_file.file_name)).should == true
+    @uploaded_file.save_to([Mack.root, "tmp", @uploaded_file.file_name])
+    File.exists?(File.join(Mack.root, "tmp", @uploaded_file.file_name)).should == true
     File.exists?(@uploaded_file.temp_file.path).should_not == true
   end
   
   it "should be able to save to... (path constructed with implied array)" do
-    @uploaded_file.save_to(Mack::Configuration.root, "tmp", @uploaded_file.file_name)
-    File.exists?(File.join(Mack::Configuration.root, "tmp", @uploaded_file.file_name)).should == true
+    @uploaded_file.save_to(Mack.root, "tmp", @uploaded_file.file_name)
+    File.exists?(File.join(Mack.root, "tmp", @uploaded_file.file_name)).should == true
     File.exists?(@uploaded_file.temp_file.path).should_not == true
   end
   
@@ -46,10 +46,10 @@ describe Mack::Request::UploadedFile do
   end
   
   it "should be able to save" do
-    path = File.join(Mack::Configuration.root, "tmp", @uploaded_file.file_name)
+    path = File.join(Mack.root, "tmp", @uploaded_file.file_name)
     @uploaded_file.destination_path = path
     @uploaded_file.save
-    File.exists?(File.join(Mack::Configuration.root, "tmp", @uploaded_file.file_name)).should == true
+    File.exists?(File.join(Mack.root, "tmp", @uploaded_file.file_name)).should == true
     File.exists?(@uploaded_file.temp_file.path).should_not == true
   end
   

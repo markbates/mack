@@ -13,14 +13,14 @@ namespace :mack do
 
       require 'thin'
       
-      Mack::Configuration.set(:root, FileUtils.pwd) if Mack::Configuration.root.nil?
+      Mack::Configuration.set(:root, FileUtils.pwd) if Mack.root.nil?
 
       options = OpenStruct.new
       options.port = (ENV["PORT"] ||= "3000") # Does NOT work with Thin!! You must edit the thin.yml file!
       options.handler = (ENV["HANDLER"] ||= "thin")
 
 
-      # require File.join(Mack::Configuration.root, "config", "boot.rb")
+      # require File.join(Mack.root, "config", "boot.rb")
       require 'mack'
 
       if options.handler == "thin"

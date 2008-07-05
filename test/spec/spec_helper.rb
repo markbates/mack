@@ -5,7 +5,9 @@ require 'spec'
 require 'rake'
 require 'fileutils'
 ENV["_mack_env"] = "test"
+ENV["MACK_ENV"] = ENV["_mack_env"]
 ENV["_mack_root"] = File.join(File.dirname(__FILE__), "..", "fake_application")
+ENV["MACK_ROOT"] = ENV["_mack_root"]
 
 if $genosaurus_output_directory.nil?
   $genosaurus_output_directory = ENV["_mack_root"]

@@ -1,7 +1,11 @@
 module Mack
   
   def self.root
-    ENV["_mack_root"] ||= ENV["MACK_ROOT"]
+    ((ENV["_mack_root"] ||= ENV["MACK_ROOT"]) || FileUtils.pwd)
+  end
+  
+  def self.env
+    ((ENV["_mack_env"] ||= ENV["MACK_ENV"]) || "development")
   end
   
   # All configuration for the Mack subsystem happens here. Each of the default environments,
@@ -9,10 +13,14 @@ module Mack
   # get merged with overall default options.
   module Configuration # :nodoc:
     
-    def self.env
-      ENV["_mack_env"] ||= ENV["MACK_ENV"]
+    def self.root
+      raise NoMethodError.new("root")
     end
-
+    
+    def self.env
+      raise NoMethodError.new("env")
+    end
+    
     def self.method_missing(sym, *args)
       ev = "_mack_#{sym}".downcase
       return ENV[ev]
@@ -22,14 +30,13 @@ module Mack
       ENV["_mack_#{name.to_s.downcase}"] = value
     end
     
-    self.set(:env, "development") if self.env.nil?
-    self.set(:public_directory, File.join(self.root, "public")) if self.public_directory.nil?
-    self.set(:app_directory, File.join(self.root, "app")) if self.app_directory.nil?
-    self.set(:lib_directory, File.join(self.root, "lib")) if self.lib_directory.nil?
-    self.set(:config_directory, File.join(self.root, "config")) if self.config_directory.nil?
+    self.set(:public_directory, File.join(Mack.root, "public")) if self.public_directory.nil?
+    self.set(:app_directory, File.join(Mack.root, "app")) if self.app_directory.nil?
+    self.set(:lib_directory, File.join(Mack.root, "lib")) if self.lib_directory.nil?
+    self.set(:config_directory, File.join(Mack.root, "config")) if self.config_directory.nil?
     self.set(:views_directory, File.join(self.app_directory, "views")) if self.views_directory.nil?
     self.set(:layouts_directory, File.join(self.views_directory, "layouts")) if self.layouts_directory.nil?
-    self.set(:plugins, File.join(self.root, "vendor", "plugins")) if self.plugins.nil?
+    self.set(:plugins, File.join(Mack.root, "vendor", "plugins")) if self.plugins.nil?
 
     
 
@@ -44,12 +51,12 @@ module Mack
         "debug" => false,
         "adapter" => "file",
         "store_options" => 
-          {"dir" => File.join(Mack::Configuration.root, "tmp")},
+          {"dir" => File.join(Mack.root, "tmp")},
         "expiry_time" => 14400,
         "logging" => {
           "logger_1" => {
             "type" => "file",
-            "file" => File.join(Mack::Configuration.root, "log", "cachetastic_caches_mack_session_cache.log")
+            "file" => File.join(Mack.root, "log", "cachetastic_caches_mack_session_cache.log")
           }
         }
       }
@@ -87,7 +94,7 @@ module Mack
           "logging" => {
             "logger_1" => {
               "type" => "file",
-              "file" => File.join(Mack::Configuration.root, "log", "cachetastic.log")
+              "file" => File.join(Mack.root, "log", "cachetastic.log")
             }
           }
         },
@@ -99,12 +106,12 @@ module Mack
         "mack::default_respository_name" => "default",
         "log::detailed_requests" => true,
         "log_level" => "info"
-      }.merge(eval("DEFAULTS_#{Mack::Configuration.env.upcase}"))
+      }.merge(eval("DEFAULTS_#{Mack.env.upcase}"))
     end
     
     app_config.load_hash(DEFAULTS, "mack_defaults")
     app_config.load_file(File.join(Mack::Configuration.config_directory, "app_config", "default.yml"))
-    app_config.load_file(File.join(Mack::Configuration.config_directory, "app_config", "#{Mack::Configuration.env}.yml"))
+    app_config.load_file(File.join(Mack::Configuration.config_directory, "app_config", "#{Mack.env}.yml"))
     # app_config.reload
     
   end

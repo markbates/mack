@@ -15,7 +15,7 @@ module Mack
 end
 
 unless Mack.logger
-  log_directory = app_config.log_root || File.join(Mack::Configuration.root, "log")
+  log_directory = app_config.log_root || File.join(Mack.root, "log")
   FileUtils.mkdir_p(log_directory)
 
   Mack.logger = Log4r::Logger.new('')
@@ -23,11 +23,11 @@ unless Mack.logger
   
   format = Log4r::PatternFormatter.new(:pattern => "%l:\t[%d]\t%M")
   
-  if Mack::Configuration.env == "development"
+  if Mack.env == "development"
     # console:
     Mack.logger.add(Log4r::StdoutOutputter.new('console', :formatter => format))
   end
   
   # file:
-  Mack.logger.add(Log4r::FileOutputter.new('fileOutputter', :filename => File.join(log_directory, "#{Mack::Configuration.env}.log"), :trunc => false, :formatter => format))
+  Mack.logger.add(Log4r::FileOutputter.new('fileOutputter', :filename => File.join(log_directory, "#{Mack.env}.log"), :trunc => false, :formatter => format))
 end

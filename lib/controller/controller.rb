@@ -147,7 +147,7 @@ module Mack
     #       render(:text, "Hello World!")
     #     end
     # 
-    #     # This will render Mack::Configuration.root/views/my_awesome_controller/foo.html.erb
+    #     # This will render Mack.root/views/my_awesome_controller/foo.html.erb
     #     def show
     #       render(:action, :foo)
     #     end
@@ -158,12 +158,12 @@ module Mack
     #       render(:action, :foo)
     #     end
     # 
-    #     # This will render Mack::Configuration.root/views/my_awesome_controller/delete.html.erb
+    #     # This will render Mack.root/views/my_awesome_controller/delete.html.erb
     #     def delete
     #     end
     # 
     #     # This will render the text 'Hello World!' to the screen. Assuming that
-    #     # there is no file: Mack::Configuration.root/views/my_awesome_controller/update.html.erb
+    #     # there is no file: Mack.root/views/my_awesome_controller/update.html.erb
     #     # The reason for this is if the view for the action doesn't exist, and the
     #     # last thing returned from the action is a String, that string will be returned.
     #     def update
@@ -171,13 +171,13 @@ module Mack
     #     end
     # 
     #     # This will raise a Mack::Errors::InvalidRenderType error. Assuming that
-    #     # there is no file: Mack::Configuration.root/views/my_awesome_controller/create.html.erb
+    #     # there is no file: Mack.root/views/my_awesome_controller/create.html.erb
     #     def create
     #       @user = User.find(1)
     #     end
     # 
     #     # This will raise a Errno::ENOENT error. Assuming that
-    #     # there is no file: Mack::Configuration.root/views/my_awesome_controller/bar.html.erb
+    #     # there is no file: Mack.root/views/my_awesome_controller/bar.html.erb
     #     def bar
     #       render(:action, "bar")
     #     end
@@ -199,14 +199,14 @@ module Mack
     #     end
     # 
     #     # This will render a partial. In this case it will look for:
-    #     # Mack::Configuration.root/views/my_awesome_controller/_latest_news.html.erb
+    #     # Mack.root/views/my_awesome_controller/_latest_news.html.erb
     #     # Partials do NOT get wrapped in layouts.
     #     def latest_news
     #       render(:partial, :latest_news)
     #     end
     # 
     #     # This will render a partial. In this case it will look for:
-    #     # Mack::Configuration.root/views/some_other/_old_news.html.erb
+    #     # Mack.root/views/some_other/_old_news.html.erb
     #     # Partials do NOT get wrapped in layouts.
     #     def latest_news
     #       render(:partial, "some_other/old_news")
@@ -320,11 +320,11 @@ module Mack
       #   class MyAwesomeController
       #     include Mack::Controller
       #
-      #     # Sets all actions to use: "#{Mack::Configuration.root}/app/views/layouts/dark.html.erb" as they're layout.
+      #     # Sets all actions to use: "#{Mack.root}/app/views/layouts/dark.html.erb" as they're layout.
       #     layout :dark
       # 
       #     def index
-      #       # Sets this action to use: "#{Mack::Configuration.root}/app/views/layouts/bright.html.erb" as it's layout.
+      #       # Sets this action to use: "#{Mack.root}/app/views/layouts/bright.html.erb" as it's layout.
       #       render(:text, "Welcome...", :layout => :bright)
       #     end
       # 
@@ -334,7 +334,7 @@ module Mack
       #     end
       #   end
       # 
-      # The default layout is "#{Mack::Configuration.root}/app/views/layouts/application.html.erb".
+      # The default layout is "#{Mack.root}/app/views/layouts/application.html.erb".
       # 
       # If a layout is specified, and it doesn't exist a Mack::Errors::UnknownLayout error will be raised.
       def layout(lay)

@@ -10,7 +10,7 @@ namespace :cachetastic do
       when "All"
         puts "About to work on ALL caches!"
         # force all caches to register themselves:
-        ["#{Mack::Configuration.root}/lib/caches"].each do |dir|
+        ["#{Mack.root}/lib/caches"].each do |dir|
           Find.find(dir) do |f|
             # puts f
             if FileTest.directory?(f) and !f.match(/.svn/)

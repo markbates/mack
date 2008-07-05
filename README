@@ -20,7 +20,7 @@ It will try and run the app using the following servers in this order:
   * WEBrick
 
 rake script:server takes the following options:
-  $ rake script:server PORT=<port> Mack::Configuration.env=<environment> HANDLER=<rack_handler>
+  $ rake script:server PORT=<port> Mack.env=<environment> HANDLER=<rack_handler>
   
 The port and rack_handler flags don't apply if you're using Thin[http://code.macournoyer.com/thin] to run the app, which is the default if it is installed. Use the thin.yml file in your application's config directory to configure Thin. The rack_handler one will allow you to switch which server is used to run the app. See Rack for more Rack::Handlers.
   

@@ -29,8 +29,8 @@ unless Mack::Configuration.initialized
   
   fl = File.join(File.dirname(__FILE__))
 
-  Mack.logger.info "Starting application in #{Mack::Configuration.env} mode."
-  Mack.logger.info "Mack root: #{Mack::Configuration.root}"
+  Mack.logger.info "Starting application in #{Mack.env} mode."
+  Mack.logger.info "Mack root: #{Mack.root}"
 
   Mack.logger.info "Initializing core classes..."
   # Require all the necessary files to make Mack actually work!

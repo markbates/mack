@@ -32,7 +32,7 @@ class TstAnotherController
   end
   
   def env
-    render(:text, "Mack::Configuration.env: #{Mack::Configuration.env}")
+    render(:text, "Mack.env: #{Mack.env}")
   end
   
   def kill_kenny_bad
