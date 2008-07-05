@@ -1,5 +1,9 @@
 module Mack
   
+  def self.root
+    ENV["_mack_root"] ||= ENV["MACK_ROOT"]
+  end
+  
   # All configuration for the Mack subsystem happens here. Each of the default environments,
   # production, development, and test have their own default configuration options. These
   # get merged with overall default options.
@@ -8,11 +12,6 @@ module Mack
     def self.env
       ENV["_mack_env"] ||= ENV["MACK_ENV"]
     end
-
-    def self.env
-      ENV["_mack_env"] ||= ENV["MACK_ENV"]
-    end
-    
 
     def self.method_missing(sym, *args)
       ev = "_mack_#{sym}".downcase
@@ -24,7 +23,6 @@ module Mack
     end
     
     self.set(:env, "development") if self.env.nil?
-    self.set(:root, FileUtils.pwd) if self.root.nil?
     self.set(:public_directory, File.join(self.root, "public")) if self.public_directory.nil?
     self.set(:app_directory, File.join(self.root, "app")) if self.app_directory.nil?
     self.set(:lib_directory, File.join(self.root, "lib")) if self.lib_directory.nil?

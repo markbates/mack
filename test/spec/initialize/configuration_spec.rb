@@ -1,7 +1,19 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent + 'spec_helper'
 
-describe "Configuration" do
+describe Mack do
+  
+  describe "root" do
+    
+    it "should return the path to the application's root" do
+      Mack.root.should == ENV["_mack_root"]
+    end
+    
+  end
+  
+end
+
+describe Mack::Configuration do
   
   describe "Existence Check" do
     
