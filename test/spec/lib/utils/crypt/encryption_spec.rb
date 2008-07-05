@@ -1,7 +1,7 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent.parent.parent + 'spec_helper'
 
-describe "Encryption Engine" do
+describe Mack::Utils::Crypt do
   
   it "should be able to encrypt/decrypt using default worker" do
     Mack::Utils::Crypt::Keeper.instance.worker.is_a?(Mack::Utils::Crypt::DefaultWorker).should == true

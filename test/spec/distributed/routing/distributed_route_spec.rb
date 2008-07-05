@@ -1,7 +1,7 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
-describe "D-Route" do
+describe "droute_url" do
   
   before(:all) do
     begin
@@ -57,4 +57,5 @@ describe "D-Route" do
       droute_url(:known_app, :known_url).should be_nil
     end
   end
-end 
+  
+end

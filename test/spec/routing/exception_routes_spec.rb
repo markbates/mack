@@ -34,7 +34,6 @@ end
 
 
 describe "Routes Exceptions" do
-  # include Assertions
   
   before(:all) do
     Mack::Routes.build do |r|
@@ -53,5 +52,5 @@ describe "Routes Exceptions" do
   it "should not catch and handle a raised exception if it's not supposed to" do
     lambda { get raise_drunk_url }.should raise_error(DrunkError)
   end
+  
 end
-

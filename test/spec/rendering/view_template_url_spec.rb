@@ -28,4 +28,5 @@ describe "render(:url)" do
       lambda { post bad_url_post_with_raise_url }.should raise_error(Mack::Errors::UnsuccessfulRenderUrl)
     end
   end
+  
 end

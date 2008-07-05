@@ -4,9 +4,9 @@ require Pathname(__FILE__).dirname.expand_path.parent + 'spec_helper'
 class Foo
 end
 
-describe "Filter" do
+describe Mack::Controller::Filter do
 
-  describe "->before" do
+  describe "before" do
     #   def test_before_all_actions
     #   end
     it "should handle before_all actions" do
@@ -35,7 +35,8 @@ describe "Filter" do
     end
   end
 
-  describe "->run" do
+  describe "run" do
+    
     before(:all) do
       @filter = Mack::Controller::Filter
     end
@@ -70,9 +71,11 @@ describe "Filter" do
       f.run?(:my_other_action).should_not == true
       f.run?(:some_other_action).should == true
     end
+    
   end
 
-  describe "->after" do
+  describe "after" do
+    
     it "should handle after_filter simple :only" do
       get "/tst_my_filters/me"
       response.body.should match(/'ME'/)
@@ -82,9 +85,10 @@ describe "Filter" do
       get "/tst_my_filters/make_all_a"
       response.body.should match(/aaa/)
     end
+    
   end
 
-  describe "->misc" do
+  describe "misc" do
 
     it "should respond to to_s" do
       f = Mack::Controller::Filter.new(:log_action, Foo)
@@ -105,6 +109,8 @@ describe "Filter" do
     it "should raise error if false filter is called" do
       lambda { get "/tst_my_filters/please_blow_up" }.should raise_error(Mack::Errors::FilterChainHalted)
     end
+    
   end
+  
 end
 

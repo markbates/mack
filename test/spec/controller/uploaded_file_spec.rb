@@ -1,7 +1,8 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent + 'spec_helper'
 
-describe "Uploaded Files" do
+describe Mack::Request::UploadedFile do
+  
   before(:each) do
     FileUtils.cp(File.join(Mack::Configuration.root, "public", "images", "logo.gif"), 
                  File.join(Mack::Configuration.root, "public", "something", "logo.gif"))

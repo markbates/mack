@@ -1,7 +1,7 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent + 'spec_helper'
 
-describe "public render" do
+describe "render(:public)" do
   include CommonHelpers
   
   it "should render file from public if it exists" do
@@ -22,4 +22,5 @@ describe "public render" do
     get public_with_extension_url
     response.body == "hello from /public/vtt/vtt_public_with_extension_test.txt"
   end
+  
 end

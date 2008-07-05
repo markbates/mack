@@ -1,7 +1,7 @@
 # This is a sample rspec file.  You can safely delete this file.
 require File.join(File.dirname(__FILE__), "..", "spec_helper.rb")
 
-describe "My first Mack application" do
+describe DefaultController do
   it "should be able to successfully connect to home page" do
     get home_page_url
     assert_response :success

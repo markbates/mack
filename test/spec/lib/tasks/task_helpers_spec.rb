@@ -2,6 +2,7 @@ require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
 describe "Task Helper" do
+  
   it "should handle rake_task" do
     old_user = ENV["USER"]
     old_user.should_not == "foobar"
@@ -20,4 +21,5 @@ describe "Task Helper" do
     ENV["USER"].should_not == "foobar"
     ENV["USER"].should == old_user
   end
+  
 end

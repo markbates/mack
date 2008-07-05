@@ -30,7 +30,7 @@ class BottomController < MiddleController
   end
 end
 
-describe "Filter Inheritance" do
+describe "Mack::Controller::Filter Inheritance" do
   
   before(:all) do
     Mack::Routes.build do |r|

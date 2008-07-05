@@ -28,11 +28,9 @@ class WantsTestController
 end
 
 
-describe "Base Controller" do
-  # include Assertions
+describe Mack::Controller do
   
   before(:all) do
-    puts "building routes"
     Mack::Routes.build do |r|
       r.you_want_what "/yww", :controller => "wants_test", :action => :you_want_what
       r.on_disk_wants "/odw", :controller => "wants_test", :action => :on_disk_wants
@@ -122,8 +120,6 @@ describe "Base Controller" do
     get "/tst_another/no_action_in_cont_served_from_public"
     assert_response :success
     response.body.should match(/hello from: no_action_in_cont_served_from_public/)
-    # because it's being served from the public directory we shouldn't wrap a layout around it.
-    # assert !response.body.match("<title>Application Layout</title>") 
   end
   
   it "should render from public folder if there's no controller associated with the action" do
@@ -156,4 +152,5 @@ describe "Base Controller" do
     assert_response :success
     response.body.should match(/Hello World/)
   end
+  
 end

@@ -1,8 +1,7 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent + 'spec_helper'
 
-describe "Cookie Jar" do
-  # include Assertions
+describe Mack::CookieJar do
   
   it "should be able to set 1 cookie" do
     get "/tst_home_page/write_cookie?bourne=the_bourne_identity"
@@ -15,4 +14,5 @@ describe "Cookie Jar" do
     assert_cookie(:bourne, "the_bourne_identity")
     assert_cookie(:woody, "annie_hall")
   end
+  
 end

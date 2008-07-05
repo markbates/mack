@@ -3,7 +3,8 @@ require Pathname(__FILE__).dirname.expand_path.parent + 'spec_helper'
 
 describe "Configuration" do
   
-  describe "=> Existence Check" do
+  describe "Existence Check" do
+    
     it "should have valid reference to app_config" do
       app_config.should_not be_nil
     end
@@ -19,6 +20,7 @@ describe "Configuration" do
     it "should return valid reference if requested config key is valid" do
       app_config.mack.cache_classes.should == true
     end
+    
   end
   
 end

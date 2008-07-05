@@ -10,10 +10,10 @@ module HTMLSpecHelpers
   
 end
 
-describe "HTML Helpers" do
+describe Mack::ViewHelpers::HtmlHelpers do
   include HTMLSpecHelpers
       
-  describe "=> A" do
+  describe "a" do
     
     it "should return content when a(...) is called" do
       link_to(my_url).should_not be_nil
@@ -37,7 +37,7 @@ describe "HTML Helpers" do
     end
   end
   
-  describe "=> link_to" do
+  describe "link_to" do
     it "should return content when link_to(...) is called" do
       a(my_url).should_not be_nil
       a(my_url).should_not be_empty
@@ -53,7 +53,7 @@ describe "HTML Helpers" do
     end
   end
   
-  describe "=> RSS" do
+  describe "rss_tag" do
     it "should return content when rss() is called" do
       rss_tag("foo_bar").should_not be_nil
       rss_tag("foo_bar").should_not be_empty
@@ -64,7 +64,7 @@ describe "HTML Helpers" do
     end
   end
   
-  describe "=> link_image_to" do
+  describe "link_image_to" do
 
     it "should return content when link_to_image to is called" do
       link_image_to("foo.jpg", "foo.com").should_not be_nil
@@ -86,7 +86,7 @@ describe "HTML Helpers" do
     end
   end
   
-  describe "==> img" do
+  describe "img" do
     it "should generate content when img is called" do
       img("foo.jpg").should_not be_nil
       img("foo.jpg").should_not be_empty
@@ -98,7 +98,7 @@ describe "HTML Helpers" do
     end
   end
   
-  describe "=> Form" do
+  describe "form" do
     include CommonHelpers
     
     it "should generate proper form tags" do

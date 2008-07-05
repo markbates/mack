@@ -1,13 +1,18 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
-describe "Generator Tasks" do
-  it "should generate a list of tasks" do
-    rake_task("generator:list") do
-      ENV["__generator_list"].should_not be_nil
+describe "rake" do
+  
+  describe "generator" do
+    
+    describe "list" do
+  
+      it "should generate a list of tasks" do
+        rake_task("generator:list") do
+          ENV["__generator_list"].should_not be_nil
 
-      if app_config.orm.nil?
-        list = <<-LIST
+          if app_config.orm.nil?
+            list = <<-LIST
 
 Available Generators:
 
@@ -17,9 +22,9 @@ PluginGenerator
 	rake generate:plugin_generator
 
 
-        LIST
-      else
-        list = <<-LIST
+            LIST
+          else
+            list = <<-LIST
 
 Available Generators:
 
@@ -35,10 +40,15 @@ ScaffoldGenerator
 	rake generate:scaffold_generator
 
 
-        LIST
-      end
+            LIST
+          end
 
-      ENV["__generator_list"].should == list
+          ENV["__generator_list"].should == list
+        end
+      end
+      
     end
+    
   end
+  
 end

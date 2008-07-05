@@ -23,5 +23,6 @@ describe "render(:xml)" do
     get homer_xml_without_layout_url
     validate_content_and_type(@base_dir, "xml_without_layout.txt", :xml)
   end
+  
 end
 

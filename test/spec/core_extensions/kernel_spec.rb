@@ -19,9 +19,10 @@ module Mack
   end
 end
 
-describe "Kernel Extension" do
+describe Kernel do
   
-  describe "=> Encryption Engine" do
+  describe "Encryption Engine" do
+    
     it "should be able to encrypt text using the reverse worker" do
       _encrypt("hello world", :reverse).should == "dlrow olleh"
     end
@@ -29,6 +30,7 @@ describe "Kernel Extension" do
     it "should be able to decrypt text using the reverse worker" do
       _decrypt("dlrow olleh", :reverse).should == "hello world"
     end
+    
   end
   
 end

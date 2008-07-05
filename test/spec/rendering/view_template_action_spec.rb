@@ -4,6 +4,7 @@ require Pathname(__FILE__).dirname.expand_path.parent + 'spec_helper'
 describe "render(:action)" do
   
   describe "erb" do
+    
     include ContentValidationHelper
     
     before(:all) do

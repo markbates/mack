@@ -21,15 +21,16 @@ class MimeController
 
 end
 
-describe "MIME Types" do
+describe Mack::Utils::MimeTypes do
   
-  describe "=> Pre-defined Types" do
+  describe "Pre-defined Types" do
     
     before(:each) do
       Mack::Routes.build do |r|
         r.marceau "/marceau/marceau", :controller => "mime"
       end
     end
+    
     it "should handle HTML type" do
       get(marceau_url(:format => :html))
       response.body.should match(/HTML/)
@@ -53,8 +54,10 @@ describe "MIME Types" do
       response.body.should match(/JPG/)
       response["Content-Type"].should == "image/jpeg; image/pjpeg"
     end
+    
   end
-  describe "=> Newly Defined Types" do
+  
+  describe "Newly Defined Types" do
     
     before(:each) do
       Mack::Routes.build do |r|
@@ -69,5 +72,7 @@ describe "MIME Types" do
       response.body.should match(/IPHONE/)
       response["Content-Type"].should == "app/iphone; application/mac-iphone"
     end
+    
   end
+  
 end

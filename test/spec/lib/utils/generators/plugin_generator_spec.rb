@@ -1,7 +1,7 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent.parent.parent + 'spec_helper'
 
-describe "Plugin Generator" do
+describe PluginGenerator do
   
   after(:all) do
     clean_bandit_dir  
@@ -35,4 +35,5 @@ describe "Plugin Generator" do
   def bandit_dir
     File.join(Mack::Configuration.plugins, "bandit")
   end
+  
 end

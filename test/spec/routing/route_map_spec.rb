@@ -1,8 +1,8 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent + 'spec_helper'
 
-describe "Route Map" do
-  # include Assertions
+describe Mack::Routes::RouteMap do
+
   it "should route to homepage" do
     get "/"
     response.body.should match(/tst_home_page: index/)
@@ -61,4 +61,5 @@ describe "Route Map" do
     post "/pickles", {:id => 1, :pickles => big_text}
     response.body.should match(/tst_another_controller: foo: id: '1' pickles: '#{big_text}'/)
   end
+  
 end

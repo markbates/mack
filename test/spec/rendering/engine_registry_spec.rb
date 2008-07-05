@@ -1,9 +1,9 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent + 'spec_helper'
 
-describe "Rendering Engine Registry" do
+describe Mack::Rendering::Engine::Registry do
   
-  describe "=> register new engine" do
+  describe "register" do
     
     before(:all) do
       @reg = Mack::Rendering::Engine::Registry
@@ -21,9 +21,11 @@ describe "Rendering Engine Registry" do
     it "should be return correct engine when passed a valid key" do
       @reg.engines[:foo].should == [:erb]
     end
+    
   end
   
-  describe "=> register existing engine" do
+  describe "register existing engine" do
+    
     before(:all) do
       @reg = Mack::Rendering::Engine::Registry
     end
@@ -34,5 +36,7 @@ describe "Rendering Engine Registry" do
       @reg.register(:bar, :sass)
       @reg.engines[:bar].should == [:sass, :erb]
     end
+    
   end
+  
 end

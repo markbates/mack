@@ -2,6 +2,7 @@ require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent + 'spec_helper'
 
 describe "Layout" do
+  
   it "should use default layout" do
     get hello_world_url
     response.body.should match(//)

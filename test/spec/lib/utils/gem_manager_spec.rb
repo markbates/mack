@@ -1,7 +1,7 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
-describe "Gem Manager" do
+describe Mack::Utils::GemManager do
   include CommonHelpers
   
   before(:each) do

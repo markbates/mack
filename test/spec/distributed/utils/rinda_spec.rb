@@ -3,7 +3,8 @@ require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 require 'rinda/ring'
 require 'rinda/tuplespace'
 
-describe "Rinda" do
+describe Mack::Distributed::Utils::Rinda do
+  
   before(:all) do 
     begin
       DRb.start_service
@@ -56,4 +57,5 @@ describe "Rinda" do
     serv.should == str2
     serv.should_not == str
   end
+  
 end
