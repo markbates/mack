@@ -93,6 +93,9 @@ test_spec_example:
   type: file
   template_path: <%= File.join(templates_directory_path, "test", "spec", "lib", "default_controller_spec.rb.template") %>
   output_path: <%= File.join(app_name, "test", "spec", "functional", "default_controller_spec.rb") %>
+test_spec_unit:
+  type: directory
+  output_path: <%= File.join(app_name, "test", "spec", "unit") %>
 <% end %>
 
 # Plugins
