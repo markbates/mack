@@ -17,8 +17,8 @@ namespace :test do
   
   desc 'Run specifications'
   Spec::Rake::SpecTask.new(:rspec) do |t|
-    t.spec_opts << '--options' << 'test/spec/spec.opts' if File.exists?('test/spec/spec.opts')
-    t.spec_files = Dir.glob('test/spec/**/*_spec.rb')
+    t.spec_opts << '--options' << 'test/spec.opts' if File.exists?('test/spec.opts')
+    t.spec_files = Dir.glob('test/**/*_spec.rb')
   end
   
   desc "Report code statistics (KLOCs, etc) from the application. Requires the rcov gem."
