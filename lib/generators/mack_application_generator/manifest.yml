@@ -78,24 +78,21 @@ test_unit:
   type: directory
   output_path: <%= File.join(app_name, "test", "unit") %>
 <% elsif testing_framework == "rspec" %>
-test_spec:
-  type: directory
-  output_path: <%= File.join(app_name, "test", "spec") %>
 test_spec_helper:
   type: file
   template_path: <%= File.join(templates_directory_path, "test", "spec", "spec_helper.rb.template") %>
-  output_path: <%= File.join(app_name, "test", "spec", "spec_helper.rb") %>
+  output_path: <%= File.join(app_name, "test", "spec_helper.rb") %>
 test_spec_opts:
   type: file
   template_path: <%= File.join(templates_directory_path, "test", "spec", "spec.opts.template") %>
-  output_path: <%= File.join(app_name, "test", "spec", "spec.opts") %>
+  output_path: <%= File.join(app_name, "test", "spec.opts") %>
 test_spec_example:
   type: file
   template_path: <%= File.join(templates_directory_path, "test", "spec", "lib", "default_controller_spec.rb.template") %>
-  output_path: <%= File.join(app_name, "test", "spec", "functional", "default_controller_spec.rb") %>
+  output_path: <%= File.join(app_name, "test", "functional", "default_controller_spec.rb") %>
 test_spec_unit:
   type: directory
-  output_path: <%= File.join(app_name, "test", "spec", "unit") %>
+  output_path: <%= File.join(app_name, "test", "unit") %>
 <% end %>
 
 # Plugins
