@@ -51,11 +51,11 @@ unless Mack::Configuration.initialized
 
   # set up routes:
   Mack.logger.info "Initializing routes..."
-  require File.join(Mack::Configuration.config_directory, "routes")
+  require File.join(Mack.root, "config", "routes")
   
   # set up initializers:
   Mack.logger.info "Initializing custom initializers..."
-  Dir.glob(File.join(Mack::Configuration.config_directory, "initializers", "**/*.rb")) do |d|
+  Dir.glob(File.join(Mack.root, "config", "initializers", "**/*.rb")) do |d|
     require d
   end
   Mack.logger.info "Initializing custom gems..."
@@ -66,12 +66,12 @@ unless Mack::Configuration.initialized
   require File.join(File.dirname(__FILE__), "initialization", "plugins.rb")
   
   # make sure that default_controller is available to other controllers
-  path = File.join(Mack::Configuration.app_directory, "controllers", "default_controller.rb")
+  path = File.join(Mack.root, "app", "controllers", "default_controller.rb")
   require path if File.exists?(path) 
   
   # require 'app' files:
   Mack.logger.info "Initializing 'app' classes..."
-  Dir.glob(File.join(Mack::Configuration.app_directory, "**/*.rb")).each do |d|
+  Dir.glob(File.join(Mack.root, "app", "**/*.rb")).each do |d|
     # puts "d: #{d}"
     begin
       require d
@@ -92,7 +92,7 @@ unless Mack::Configuration.initialized
   
   # require 'lib' files:
   Mack.logger.info "Initializing lib classes..."
-  Dir.glob(File.join(Mack::Configuration.lib_directory, "**/*.rb")).each do |d|
+  Dir.glob(File.join(Mack.root, "lib", "**/*.rb")).each do |d|
     require d
   end
   
@@ -120,7 +120,7 @@ unless Mack::Configuration.initialized
       h.include_safely_into(Mack::Rendering::ViewTemplate)
   end
   
-  Mack::Configuration.set(:initialized, "true") if Mack::Configuration.initialized.nil?
+  Mack::Configuration.initialized = true if Mack::Configuration.initialized.nil?
 
   Mack.logger.info "Initialization finished."
 end

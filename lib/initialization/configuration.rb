@@ -14,33 +14,10 @@ module Mack
   # production, development, and test have their own default configuration options. These
   # get merged with overall default options.
   module Configuration # :nodoc:
-    
-    def self.root
-      raise NoMethodError.new("root")
-    end
-    
-    def self.env
-      raise NoMethodError.new("env")
-    end
-    
-    def self.method_missing(sym, *args)
-      ev = "_mack_#{sym}".downcase
-      return ENV[ev]
-    end
-    
-    def self.set(name, value)
-      ENV["_mack_#{name.to_s.downcase}"] = value
-    end
-    
-    self.set(:public_directory, File.join(Mack.root, "public")) if self.public_directory.nil?
-    self.set(:app_directory, File.join(Mack.root, "app")) if self.app_directory.nil?
-    self.set(:lib_directory, File.join(Mack.root, "lib")) if self.lib_directory.nil?
-    self.set(:config_directory, File.join(Mack.root, "config")) if self.config_directory.nil?
-    self.set(:views_directory, File.join(self.app_directory, "views")) if self.views_directory.nil?
-    self.set(:layouts_directory, File.join(self.views_directory, "layouts")) if self.layouts_directory.nil?
-    self.set(:plugins, File.join(Mack.root, "vendor", "plugins")) if self.plugins.nil?
 
-    
+    class << self
+      attr_accessor :initialized
+    end
 
     # use local memory and store stuff for 24 hours:
     # use file for sessions and store them for 4 hours: 
@@ -112,8 +89,8 @@ module Mack
     end
     
     app_config.load_hash(DEFAULTS, "mack_defaults")
-    app_config.load_file(File.join(Mack::Configuration.config_directory, "app_config", "default.yml"))
-    app_config.load_file(File.join(Mack::Configuration.config_directory, "app_config", "#{Mack.env}.yml"))
+    app_config.load_file(File.join(Mack.root, "config", "app_config", "default.yml"))
+    app_config.load_file(File.join(Mack.root, "config", "app_config", "#{Mack.env}.yml"))
     # app_config.reload
     
   end

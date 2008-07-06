@@ -5,11 +5,11 @@ namespace :mack do
     desc "Renames thin.ru to rackup.ru and updates your thin.yml, if necessary."
     task :rackup do
       require 'fileutils'
-      ru = File.join(Mack::Configuration.config_directory, "thin.ru")
+      ru = File.join(Mack.root, "config", "thin.ru")
       if File.exists?(ru)
-        FileUtils.mv(ru, File.join(Mack::Configuration.config_directory, "rackup.ru"))
+        FileUtils.mv(ru, File.join(Mack.root, "config", "rackup.ru"))
       end
-      thin_yml = File.join(Mack::Configuration.config_directory, "thin.yml")
+      thin_yml = File.join(Mack.root, "config", "thin.yml")
       if File.exists?(thin_yml)
         contents = File.open(thin_yml).read
         contents.gsub!("thin.ru", "rackup.ru")

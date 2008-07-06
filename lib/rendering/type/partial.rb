@@ -24,7 +24,7 @@ module Mack
           else
             # it's elsewhere
             parts[parts.size - 1] = "_" << parts.last
-            partial = File.join(Mack::Configuration.views_directory, parts)
+            partial = File.join(Mack.root, "app", "views", parts)
           end
           partial = "#{partial}.#{self.options[:format]}"
           render_file(partial, :partial)

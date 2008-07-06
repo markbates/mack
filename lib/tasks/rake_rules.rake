@@ -1,6 +1,6 @@
 rule /\#.*/ do |t|
   env = t.name.match(/\#.*/).to_s.gsub("#", "")
-  Mack::Configuration.set(:env, env)
+  ENV["MACK_ENV"] = env
   name = t.name.gsub("##{env}", "")
   Rake::Task[name].invoke
 end

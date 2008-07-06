@@ -144,8 +144,8 @@ module Mack
       if File.extname(env["PATH_INFO"]).blank?
         env["PATH_INFO"] << ".html"
       end
-      if File.exists?(File.join(Mack::Configuration.public_directory, env["PATH_INFO"]))
-        return Rack::File.new(File.join(Mack::Configuration.public_directory)).call(env)
+      if File.exists?(File.join(Mack.root, "public", env["PATH_INFO"]))
+        return Rack::File.new(File.join(Mack.root, "public")).call(env)
       else
         raise exception
       end

@@ -1,5 +1,5 @@
 plugins = [] # a list of all plugins
-Dir.glob(File.join(Mack::Configuration.plugins, "*")).each do |d|
+Dir.glob(File.join(Mack.root, "vendor", "plugins", "*")).each do |d|
   plugins << d
   $: << File.join(d, "lib") # add the lib for this plugin to the global load path
 end

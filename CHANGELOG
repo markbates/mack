@@ -1,5 +1,6 @@
 * INCOMPATIBILITY NOTICE: Moved Mack::Configuration.root to Mack.root
 * INCOMPATIBILITY NOTICE: Moved Mack::Configuration.env to Mack.env
+* INCOMPATIBILITY NOTICE: Mack::Configuration.* path methods no longer exist. Use mack-paths instead.
 * INCOMPATIBILITY NOTICE: Dropped mack_ruby_core_extensions in favor or mack-facets
 * INCOMPATIBILITY NOTICE: thin.ru now gets generated as rackup.ru
 * INCOMPATIBILITY NOTICE: Mack::Controller::Base is now Mack::Controller (and it's now a module)

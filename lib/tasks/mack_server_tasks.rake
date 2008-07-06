@@ -12,8 +12,6 @@ namespace :mack do
       require 'fileutils'
 
       require 'thin'
-      
-      Mack::Configuration.set(:root, FileUtils.pwd) if Mack.root.nil?
 
       options = OpenStruct.new
       options.port = (ENV["PORT"] ||= "3000") # Does NOT work with Thin!! You must edit the thin.yml file!
