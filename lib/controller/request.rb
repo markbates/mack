@@ -1,19 +1,20 @@
 module Mack
   
-  class MackParams < Hash
-    alias_method :old_hash, :[]
-    def [](key)
-      data = old_hash(key.to_sym) || old_hash(key.to_s)
-      data = data.to_s if data.is_a?(Symbol)
-      return data
-    end
-  end
-  
   class Request < Rack::Request
+    
+    class Parameters < Hash # :nodoc:
+      alias_method :old_hash, :[]
+      def [](key)
+        data = old_hash(key.to_sym) || old_hash(key.to_s)
+        data = data.to_s if data.is_a?(Symbol)
+        return data
+      end
+    end
+    
     
     def initialize(env) # :nodoc:
       super(env)
-      @mack_params = MackParams.new
+      @mack_params = Mack::Request::Parameters.new
       parse_params(rack_params)
     end
     
