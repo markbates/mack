@@ -21,6 +21,7 @@
 * gem: application_configuration 1.5.0
 * gem: erubis 2.6.2
 * gem: genosaurus 1.2.1
+* gem: thin 0.8.2
 
 ===0.5.5.4
 * Fixed the damn Lint error some people were facing! 
