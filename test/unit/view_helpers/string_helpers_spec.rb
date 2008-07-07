@@ -1,10 +1,10 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
-describe "String Helpers" do
+describe Mack::ViewHelpers::StringHelpers do
   include Mack::ViewHelpers::StringHelpers
   
-  describe "=> Inflection" do
+  describe "Inflection" do
     it "should be able to pluralize word" do
       pluralize_word(1, "error").should == "1 error"
       pluralize_word(2, "error").should == "2 errors"
