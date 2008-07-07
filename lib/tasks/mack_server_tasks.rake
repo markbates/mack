@@ -23,7 +23,7 @@ namespace :mack do
 
       if options.handler == "thin"
         # thin_opts = ["start", "-r", "config/thin.ru"]
-        thin_opts = ["start", "-C", "config/thin.yml"]
+        thin_opts = ["start"]
         Thin::Runner.new(thin_opts.flatten).run!
       else
         Mack::SimpleServer.run(options)

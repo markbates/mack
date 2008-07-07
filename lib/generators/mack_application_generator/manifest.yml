@@ -25,7 +25,7 @@ database_yml:
   type: file
   template_path: <%= File.join(templates_directory_path, "config", "database.yml.template") %>
   output_path: <%= File.join(app_name, "config", "database.yml") %>
-<% ["routes.rb", "rackup.ru", "thin.yml"].each do |f| -%>
+<% ["routes.rb"].each do |f| -%>
 <%= f %>_config_file:
   type: file
   template_path: <%= File.join(templates_directory_path, "config", "#{f}.template") %>
@@ -80,15 +80,15 @@ test_unit:
 <% elsif testing_framework == "rspec" %>
 test_spec_helper:
   type: file
-  template_path: <%= File.join(templates_directory_path, "test", "spec", "spec_helper.rb.template") %>
+  template_path: <%= File.join(templates_directory_path, "test", "spec_helper.rb.template") %>
   output_path: <%= File.join(app_name, "test", "spec_helper.rb") %>
 test_spec_opts:
   type: file
-  template_path: <%= File.join(templates_directory_path, "test", "spec", "spec.opts.template") %>
+  template_path: <%= File.join(templates_directory_path, "test", "spec.opts.template") %>
   output_path: <%= File.join(app_name, "test", "spec.opts") %>
 test_spec_example:
   type: file
-  template_path: <%= File.join(templates_directory_path, "test", "spec", "lib", "default_controller_spec.rb.template") %>
+  template_path: <%= File.join(templates_directory_path, "test", "functional", "default_controller_spec.rb.template") %>
   output_path: <%= File.join(app_name, "test", "functional", "default_controller_spec.rb") %>
 test_spec_unit:
   type: directory
