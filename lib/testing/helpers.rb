@@ -5,12 +5,14 @@ module Mack
     module Helpers
     
       # Runs the given rake task. Takes an optional hash that mimics command line parameters.
-      def rake_task(name, env = {}, tasks = File.join(File.dirname(__FILE__), "..", "mack_tasks.rb"))
+      def rake_task(name, env = {}, tasks = [])
         # set up the Rake application
         rake = Rake::Application.new
         Rake.application = rake
       
-        load(tasks)
+        [File.join(File.dirname(__FILE__), "..", "mack_tasks.rb"), tasks].flatten.each do |task|
+          load(task)
+        end
       
         # save the old ENV so we can revert it
         old_env = ENV.to_hash

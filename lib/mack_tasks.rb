@@ -5,7 +5,7 @@ require 'rubygems'
 require 'application_configuration'
 
 require File.join(File.dirname(__FILE__), "initialization", "configuration.rb")
-orm = app_config.orm || 'data_mapper'
+orm = app_config.orm
 unless orm.nil?
   require "mack-#{orm}_tasks"
 end
