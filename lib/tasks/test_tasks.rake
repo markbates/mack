@@ -39,7 +39,9 @@ namespace :test do
   
   desc "Generates test coverage from the application. Requires the rcov gem."
   task :coverage do |t|
-    `rcov test/**/*_test.rb -x Rakefile,config\/`
+    ENV["MACK_ENV"] = "test"
+    Rake::Task["mack:environment"].invoke
+    `rcov test/**/*_#{app_config.mack.testing_framework == "rspec" ? "spec" : "test"}.rb -x Rakefile,config\/`
     `open coverage/index.html`
   end
   
