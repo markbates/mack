@@ -10,24 +10,24 @@ module Mack
         if status.is_a?(Symbol)
           case status
           when :success
-            assert(responses.first.successful?)
+            assert(response.successful?)
           when :redirect
-            assert(responses.first.redirect?)
+            assert(response.redirect?)
           when :not_found
-            assert(responses.first.not_found?)
+            assert(response.not_found?)
           when :error
-            assert(responses.first.server_error?)
+            assert(response.server_error?)
           else
             assert(false)
           end
         elsif status.is_a?(Fixnum)
-          assert_equal(status, responses.first.status)
+          assert_equal(status, response.status)
         end
       end
     
       # Asserts that the request has been redirected to the specified url.
       def assert_redirected_to(url)
-        assert_equal(url, responses.first.location)
+        assert response.redirected_to?(url)
       end
     
       # Asserts that the specified cookie has been set to the specified value.
