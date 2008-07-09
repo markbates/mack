@@ -12,6 +12,26 @@ module Mack
         self.responses.last.send(sym, *args)
       end
       
+      def successful?
+        self.responses.first.successful?
+      end
+      
+      def redirect?
+        self.responses.first.redirect?
+      end
+      
+      def not_found?
+        self.responses.first.not_found?
+      end
+      
+      def server_error?
+        self.responses.first.server_error?
+      end
+      
+      def status
+        self.responses.first.status
+      end
+      
     end # Response
   end # Testing
 end # Mack

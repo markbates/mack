@@ -54,7 +54,7 @@ describe Mack::Controller do
   it "should render 404" do
     get wants_unknown_url
     response.body.should match(/404!/)
-    assert_response(:not_found)
+    response.should be_not_found
   end
   
   it "should render xml" do
@@ -118,13 +118,13 @@ describe Mack::Controller do
   
   it "should render contnet from public folder if no action in controller" do
     get "/tst_another/no_action_in_cont_served_from_public"
-    assert_response :success
+    response.should be_successful
     response.body.should match(/hello from: no_action_in_cont_served_from_public/)
   end
   
   it "should render from public folder if there's no controller associated with the action" do
     get "/something/hello"
-    assert_response :success
+    response.should be_successful
     response.body.should match(/Hi from public\/something\/hello.html/)
   end 
 
@@ -134,22 +134,22 @@ describe Mack::Controller do
   
   it "should redirect" do
     get "/tst_home_page/world_hello"
-    assert_response :redirect
-    assert_response 302
+    response.should be_redirect
+    response.status.should == 302
     assert_redirected_to("/hello/world")
     response.body.should match(/Hello World/)
   end
    
   it "should handle external redirect" do
     get "/tst_home_page/yahoo"
-    assert_response :redirect
-    assert_response 301
+    response.should be_redirect
+    response.status.should == 301
     assert_redirected_to("http://www.yahoo.com")
   end
      
   it "should handle server-side redirect" do
     get "/tst_home_page/server_side_world_hello"
-    assert_response :success
+    response.should be_successful
     response.body.should match(/Hello World/)
   end
   
