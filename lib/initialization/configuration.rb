@@ -2,12 +2,12 @@ module Mack
   
   # Returns the root of the current Mack application
   def self.root
-    ((ENV["_mack_root"] ||= ENV["MACK_ROOT"]) || FileUtils.pwd)
+    ENV["MACK_ROOT"] ||= FileUtils.pwd
   end
   
   # Returns the environment of the current Mack application
   def self.env
-    ((ENV["_mack_env"] ||= ENV["MACK_ENV"]) || "development")
+    ENV["MACK_ENV"] ||= "development"
   end
   
   # All configuration for the Mack subsystem happens here. Each of the default environments,
