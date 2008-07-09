@@ -136,7 +136,7 @@ describe Mack::Controller do
     get "/tst_home_page/world_hello"
     response.should be_redirect
     response.status.should == 302
-    assert_redirected_to("/hello/world")
+    response.should be_redirected_to("/hello/world")
     response.body.should match(/Hello World/)
   end
    
@@ -144,7 +144,7 @@ describe Mack::Controller do
     get "/tst_home_page/yahoo"
     response.should be_redirect
     response.status.should == 301
-    assert_redirected_to("http://www.yahoo.com")
+    response.should be_redirected_to("http://www.yahoo.com")
   end
      
   it "should handle server-side redirect" do

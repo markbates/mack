@@ -32,6 +32,10 @@ module Mack
         self.responses.first.status
       end
       
+      def redirected_to?(loc)
+        self.responses.first.location == loc
+      end
+      
     end # Response
   end # Testing
 end # Mack

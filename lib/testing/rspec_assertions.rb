@@ -4,11 +4,6 @@ module Mack
   module Testing
     module RSpecAssertions
 
-      # Asserts that the request has been redirected to the specified url.
-      def assert_redirected_to(url)
-        responses.first.location.should == url
-      end
-
       # Asserts that the specified cookie has been set to the specified value.
       def assert_cookie(name, value)
         cookies[name.to_s].should_not be_nil
