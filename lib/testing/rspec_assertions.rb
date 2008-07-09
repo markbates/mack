@@ -22,7 +22,7 @@ module Spec
   module Example
     module ExampleMethods
       include Mack::Routes::Urls
-      # include Mack::Testing::Helpers
+      include Mack::Testing::Helpers
       # include Mack::Testing::RSpecAssertions
     end
   end
@@ -30,6 +30,6 @@ end
 
 if Object.const_defined?("Spec")
   # include Mack::Routes::Urls
-  include Mack::Testing::Helpers
+  # include Mack::Testing::Helpers
   include Mack::Testing::RSpecAssertions
 end

@@ -127,20 +127,6 @@ module Mack
         test_cookies.delete(name)
       end
     
-      def method_missing(sym, *args)
-        sym = sym.to_s
-        case sym
-        when /^clean_(.+)/
-          captures = sym.match(/^clean_(.+)/).captures
-          thing = eval(captures.first)
-          if File.exists?(thing)
-            FileUtils.rm_rf(thing)
-          end
-        else
-          raise NoMethodError.new(sym)
-        end
-      end
-    
       private
       def test_cookies
         @test_cookies = {} if @test_cookies.nil?
