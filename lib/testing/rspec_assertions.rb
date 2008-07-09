@@ -46,18 +46,18 @@ module Mack
   end # Testing
 end # Mack
 
-# module Spec
-#   module Example
-#     module ExampleMethods
-#       include Mack::Routes::Urls
-#       include Mack::Testing::Helpers
-#       include Mack::Testing::RSpecAssertions
-#     end
-#   end
-# end
+module Spec
+  module Example
+    module ExampleMethods
+      include Mack::Routes::Urls
+      # include Mack::Testing::Helpers
+      # include Mack::Testing::RSpecAssertions
+    end
+  end
+end
 
 if Object.const_defined?("Spec")
-  include Mack::Routes::Urls
+  # include Mack::Routes::Urls
   include Mack::Testing::Helpers
   include Mack::Testing::RSpecAssertions
 end
