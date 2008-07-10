@@ -51,10 +51,6 @@ unless Mack::Configuration.initialized
 
   # set up application stuff:
 
-  # set up routes:
-  Mack.logger.info "Initializing routes..."
-  require File.join(Mack.root, "config", "routes")
-  
   # set up initializers:
   Mack.logger.info "Initializing custom initializers..."
   Dir.glob(File.join(Mack.root, "config", "initializers", "**/*.rb")) do |d|
@@ -76,6 +72,10 @@ unless Mack::Configuration.initialized
   Dir.glob(File.join(Mack.root, "lib", "**/*.rb")).each do |d|
     require d
   end
+  
+  # set up routes:
+  Mack.logger.info "Initializing routes..."
+  require File.join(Mack.root, "config", "routes")
   
   # require 'app' files:
   Mack.logger.info "Initializing 'app' classes..."
