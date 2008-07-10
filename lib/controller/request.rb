@@ -78,7 +78,8 @@ module Mack
           nv = k.to_s.match(/.+\[(.+)\]/).captures.first
           nk = k.to_s.match(/(.+)\[.+\]/).captures.first
           @mack_params[nk.to_sym] = {} if @mack_params[nk.to_sym].nil?
-          @mack_params[nk.to_sym].merge!(nv.to_sym => v.to_s.uri_unescape)
+          v = v.uri_unescape if v.is_a?(String)
+          @mack_params[nk.to_sym].merge!(nv.to_sym => v)
         else
           v = v.uri_unescape if v.is_a?(String)
           @mack_params[k.to_sym] = v#.to_s.uri_unescape
