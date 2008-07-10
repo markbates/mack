@@ -67,7 +67,7 @@ module Mack
     # Returns a Mack::Request::UploadedFile object.
     def file(key)
       ivar_cache("file_#{key}") do
-        Mack::Request::UploadedFile.new(params[key])
+        Mack::Request::UploadedFile.new(params[key] ||= {})
       end
     end
     
