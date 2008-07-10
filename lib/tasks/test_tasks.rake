@@ -7,9 +7,12 @@ task :default  => "test:rspec" #["test:test_case", "test:spec"]
 
 namespace :test do
   
+  task :setup do
+  end
+  
   desc "Run test code."
   Rake::TestTask.new(:test_case) do |t|
-    # Rake::Task["log:clear"].invoke
+    Rake::Task["test:setup"].invoke
     t.libs << "test"
     t.pattern = 'test/**/*_test.rb'
     t.verbose = true
@@ -17,6 +20,7 @@ namespace :test do
   
   desc 'Run specifications'
   Spec::Rake::SpecTask.new(:rspec) do |t|
+    Rake::Task["test:setup"].invoke
     t.spec_opts << '--options' << 'test/spec.opts' if File.exists?('test/spec.opts')
     t.spec_files = Dir.glob('test/**/*_spec.rb')
   end
