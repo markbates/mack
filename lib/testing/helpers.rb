@@ -95,7 +95,13 @@ module Mack
     
       # Returns a Mack::Session from the request.
       def session # :nodoc:
-        Cachetastic::Caches::MackSessionCache.get(cookies[app_config.mack.session_id])
+        Cachetastic::Caches::MackSessionCache.get(cookies[app_config.mack.session_id]) do
+          id = String.randomize(40).downcase
+          set_cookie(app_config.mack.session_id, id)
+          sess = Mack::Session.new(id)
+          Cachetastic::Caches::MackSessionCache.set(id, sess)
+          sess
+        end
       end
     
       # Used to create a 'session' around a block of code. This is great of 'integration' tests.
