@@ -34,7 +34,9 @@ unless Mack::Configuration.initialized
 
   Mack.logger.info "Initializing core classes..."
   # Require all the necessary files to make Mack actually work!
-  ["distributed", "errors", "core_extensions", "utils", "routing", "view_helpers", "rendering", "controller", "tasks", "initialization/server", "generators", "testing"].each do |dir|
+  lib_dirs = ["distributed", "errors", "core_extensions", "utils", "routing", "view_helpers", "rendering", "controller", "tasks", "initialization/server", "generators"]
+  lib_dirs << "testing" if Mack.env == "test"
+  lib_dirs.each do |dir|
     dir_globs = Dir.glob(File.join(fl, dir, "**/*.rb"))
     dir_globs.each do |d|
       require d
