@@ -55,6 +55,9 @@ models:
 lib_tasks:
   type: directory
   output_path: <%= File.join(app_name, "lib", "tasks") %>
+db_migrations:
+  type: directory
+  output_path: <%= File.join(app_name, "db", "migrations") %>
 <% ["images", "javascripts"].each do |f| -%>
 public_<%= f %>:
   type: directory
