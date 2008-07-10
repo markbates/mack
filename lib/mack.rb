@@ -70,6 +70,12 @@ unless Mack::Configuration.initialized
   # make sure that default_controller is available to other controllers
   path = File.join(Mack.root, "app", "controllers", "default_controller.rb")
   require path if File.exists?(path) 
+
+  # require 'lib' files:
+  Mack.logger.info "Initializing lib classes..."
+  Dir.glob(File.join(Mack.root, "lib", "**/*.rb")).each do |d|
+    require d
+  end
   
   # require 'app' files:
   Mack.logger.info "Initializing 'app' classes..."
@@ -90,12 +96,6 @@ unless Mack::Configuration.initialized
         raise e
       end
     end
-  end
-  
-  # require 'lib' files:
-  Mack.logger.info "Initializing lib classes..."
-  Dir.glob(File.join(Mack.root, "lib", "**/*.rb")).each do |d|
-    require d
   end
   
 
