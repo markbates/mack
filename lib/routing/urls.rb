@@ -17,6 +17,7 @@ module Mack
       #     # => "/blog/1?n_id=2
       def url_for_pattern(url, options = {})
         u = url.dup
+        u = "/" if url.blank?
         unused_params = []
         format = nil
         options.each_pair do |k, v|
