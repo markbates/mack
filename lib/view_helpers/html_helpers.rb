@@ -84,6 +84,10 @@ module Mack
         non_content_tag(:img, {:src => image_src}.merge(options))
       end
       
+      # Builds an HTML submit tag
+      def submit_tag(value = "Submit", options = {})
+        non_content_tag(:input, {:type => :submit, :value => value}.merge(options))
+      end
       
       # Wraps an image tag with a link tag.
       # 

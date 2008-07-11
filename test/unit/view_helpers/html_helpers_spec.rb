@@ -12,7 +12,23 @@ end
 
 describe Mack::ViewHelpers::HtmlHelpers do
   include HTMLSpecHelpers
-      
+  
+  describe "submit_tag" do
+    
+    it "should build a simple submit tag" do
+      submit_tag.should == %{<input type="submit" value="Submit" />}
+    end
+    
+    it "should allow you to change the value" do
+      submit_tag("Login").should == %{<input type="submit" value="Login" />}
+    end
+    
+    it "should take options" do
+      submit_tag("Login", {:class => :foo}).should == %{<input class="foo" type="submit" value="Login" />}
+    end
+    
+  end
+  
   describe "a" do
     
     it "should return content when a(...) is called" do
