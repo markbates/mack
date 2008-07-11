@@ -49,22 +49,35 @@ module Mack
     # This does the heavy lifting for controllers. It calls the action, and then completes the rendering
     # of the action to a String to send back to Rack.
     def run
-      run_filters(:before)
-      # check to see if this controller responds to this action.
-      # only run public methods!
-      if self.public_methods.include?(self.action_name)
-        # call the action and capture the results to a variable.
-        self.send(self.action_name)
-      else
-        # there is no action on this controller, so call the render method
-        # which will check the view directory and run action.html.erb if it exists.
-        render(:action, self.action_name)
+      begin
+        run_filters(:before)
+        # check to see if this controller responds to this action.
+        # only run public methods!
+        if self.public_methods.include?(self.action_name)
+          # call the action and capture the results to a variable.
+          self.send(self.action_name)
+        else
+          # there is no action on this controller, so call the render method
+          # which will check the view directory and run action.html.erb if it exists.
+          render(:action, self.action_name)
+        end
+        run_filters(:after)
+        # do the work of rendering.
+        @final_rendered_action = do_render
+        run_filters(:after_render)
+        return @final_rendered_action
+      rescue Mack::Errors::FilterChainHalted => e
+        if render_performed?
+          run_filters(:after)
+          # do the work of rendering.
+          @final_rendered_action = do_render
+          run_filters(:after_render)
+          return @final_rendered_action
+        else
+          raise e
+        end
       end
-      run_filters(:after)
-      # do the work of rendering.
-      @final_rendered_action = do_render
-      run_filters(:after_render)
-      @final_rendered_action
+
     end
 
     # This will redirect the request to the specified url. A default status of

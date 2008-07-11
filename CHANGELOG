@@ -10,9 +10,10 @@
   Test::Unit::TestCase add the following config parameter to your config/app_config/default.yml file:
   mack::testing_framework: test_case
 * INCOMPATIBILITY NOTICE: ENV["_mack_env"] and ENV["_mack_root"] are no longer supported, please use ENV["MACK_ENV"] and ENV["MACK_ROOT"], or just Mack.env and Mack.root
-
+* INCOMPATIBILITY NOTICE: MACK_DEFAULT_LOGGER constant is no longer available. Please use Mack.logger instead.
 * thin.ru and thin.yml are no longer needed, you may delete them.
 * RSpec assertions are now automatically added.
+* Added a Mack::Testing::Response class to make testing of responses easier.
 * moved test_extensions to testing and added the module Testing to the files in it.
 * Added a dependency on mack-more
 * Added a set of Rake tasks to update existing Mack applications.

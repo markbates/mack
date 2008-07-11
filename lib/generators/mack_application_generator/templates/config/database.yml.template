@@ -29,17 +29,17 @@ when "data_mapper"
 development:
   default:
     adapter: sqlite3
-    database: <%= File.join(Mack.root, "db", "<%= @options["app"].downcase %>_development.db") %>
+    database: <%%= File.join(Mack.root, "db", "<%= @options["app"].downcase %>_development.db") %>
  
 test:
   default:
     adapter: sqlite3
-    database: <%= File.join(Mack.root, "db", "<%= @options["app"].downcase %>_test.db") %>
+    database: <%%= File.join(Mack.root, "db", "<%= @options["app"].downcase %>_test.db") %>
  
 production:
   default:
     adapter: sqlite3
-    database: <%= File.join(Mack.root, "db", "<%= @options["app"].downcase %>_production.db") %>
+    database: <%%= File.join(Mack.root, "db", "<%= @options["app"].downcase %>_production.db") %>
 
 <% else -%>
 # development:
@@ -65,13 +65,13 @@ production:
 
 development:
   adapter: sqlite3
-  database: <%= File.join(Mack.root, "db", "<%= @options["app"].downcase %>_development.db") %>
+  database: <%%= File.join(Mack.root, "db", "<%= @options["app"].downcase %>_development.db") %>
  
 test:
   adapter: sqlite3
-  database: <%= File.join(Mack.root, "db", "<%= @options["app"].downcase %>_test.db") %>
+  database: <%%= File.join(Mack.root, "db", "<%= @options["app"].downcase %>_test.db") %>
  
 production:
   adapter: sqlite3
-  database: <%= File.join(Mack.root, "db", "<%= @options["app"].downcase %>_production.db") %>
+  database: <%%= File.join(Mack.root, "db", "<%= @options["app"].downcase %>_production.db") %>
 <% end -%>

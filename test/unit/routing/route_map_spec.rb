@@ -41,16 +41,16 @@ describe Mack::Routes::RouteMap do
   
   it "should handle redirect" do
     get "/my_old_foo"
-    assert_response(:redirect)
-    assert_redirected_to "/tst_another/foo/:id"
+    response.should be_redirect
+    response.should be_redirected_to("/tst_another/foo/:id")
     
     get "/my_old_foo?id=1"
-    assert_response(:redirect)
-    assert_redirected_to "/tst_another/foo/1"
+    response.should be_redirect
+    response.should be_redirected_to("/tst_another/foo/1")
     
     get "/my_old_foo?id=1&pickles=yummy"
-    assert_response(:redirect)
-    assert_redirected_to "/tst_another/foo/1?pickles=yummy"
+    response.should be_redirect
+    response.should be_redirected_to("/tst_another/foo/1?pickles=yummy")
   end
   
   it "should not downcase post params" do

@@ -46,7 +46,7 @@ describe "Routes Exceptions" do
   it "should catch and handle a raised exception" do
     get raise_hell_url
     response.body.should == "We're sorry for your hell: Oh Hell!!"
-    assert_response :error
+    response.should be_server_error
   end
   
   it "should not catch and handle a raised exception if it's not supposed to" do

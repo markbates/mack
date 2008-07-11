@@ -3,8 +3,8 @@ require Pathname(__FILE__).dirname.expand_path.parent.parent.parent.parent + 'sp
 
 describe PluginGenerator do
   
-  after(:all) do
-    clean_bandit_dir  
+  after(:each) do
+    FileUtils.rm_rf(bandit_dir)
   end
   
   it "should be able to properly generate the plugin files" do 
