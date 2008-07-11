@@ -17,11 +17,10 @@ end
 # Find controller level Helpers and include them into their respective controllers
 Mack::ControllerHelpers.constants.each do |cont|
   h = "Mack::ControllerHelpers::#{cont}"
-  c_name = h.match(/Mack::ControllerHelpers::(.+)Helper/)[1]
-  if Object.const_defined?(c_name)
-    h.constantize.include_safely_into(c_name.constantize)
+  if Object.const_defined?(cont)
+    h.constantize.include_safely_into(cont.constantize)
   else
-    Mack.logger.warn("Could not find: #{c_name} controller for helper: #{h}")
+    Mack.logger.warn("Could not find: #{cont} controller for helper: #{h}")
   end
 end
 
