@@ -11,6 +11,7 @@
   mack::testing_framework: test_case
 * INCOMPATIBILITY NOTICE: ENV["_mack_env"] and ENV["_mack_root"] are no longer supported, please use ENV["MACK_ENV"] and ENV["MACK_ROOT"], or just Mack.env and Mack.root
 * INCOMPATIBILITY NOTICE: MACK_DEFAULT_LOGGER constant is no longer available. Please use Mack.logger instead.
+* INCOMPATIBILITY NOTICE: The ApplicationHelper module is now deprecated. Please move view level helpers into Mack::ViewHelpers::* and controller helpers into Mack::ControllerHelpers::<controller_name>
 * thin.ru and thin.yml are no longer needed, you may delete them.
 * RSpec assertions are now automatically added.
 * Added a Mack::Testing::Response class to make testing of responses easier.
