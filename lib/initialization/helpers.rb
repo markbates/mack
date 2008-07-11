@@ -15,6 +15,6 @@ end
 
 # Find view level Helpers and include them into the Mack::Rendering::ViewTemplate
 Mack::ViewHelpers.constants.each do |cont|
-    h = "Mack::ViewHelpers::#{cont}".constantize
-    h.include_safely_into(Mack::Rendering::ViewTemplate)
+  h = "Mack::ViewHelpers::#{cont}".constantize
+  h.include_safely_into(Mack::Rendering::ViewTemplate)
 end
