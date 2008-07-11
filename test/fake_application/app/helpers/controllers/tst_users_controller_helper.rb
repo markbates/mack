@@ -1,6 +1,6 @@
 module Mack
   module ControllerHelpers
-    module TstUsersControllerHelper
+    module TstUsersController
   
       def kill_kenny
         "You killed Kenny!"
