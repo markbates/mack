@@ -5,8 +5,12 @@ default_controller:
   output_path: <%= File.join(app_name, "app", "controllers", "default_controller.rb") %>
 application_helper:
   type: file
-  template_path: <%= File.join(templates_directory_path, "app", "helpers", "application_helper.rb.template") %>
-  output_path: <%= File.join(app_name, "app", "helpers", "application_helper.rb") %>
+  template_path: <%= File.join(templates_directory_path, "app", "helpers", "views", "application_helper.rb.template") %>
+  output_path: <%= File.join(app_name, "app", "helpers", "views", "application_helper.rb") %>
+default_controller_helper:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "app", "helpers", "controllers", "default_controller_helper.rb.template") %>
+  output_path: <%= File.join(app_name, "app", "helpers", "controllers", "default_controller_helper.rb") %>
 index_view:
   type: file
   template_path: <%= File.join(templates_directory_path, "app", "views", "default", "index.html.erb.template") %>

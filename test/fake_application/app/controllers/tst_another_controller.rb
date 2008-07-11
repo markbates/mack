@@ -1,5 +1,6 @@
 class TstAnotherController
   include Mack::Controller
+  include Mack::ViewHelpers::ApplicationHelper
   
   def foo
     render(:text, "tst_another_controller: foo: id: '#{params[:id]}' pickles: '#{params[:pickles]}'")
