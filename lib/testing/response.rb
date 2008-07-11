@@ -28,6 +28,10 @@ module Mack
         self.responses.first.server_error?
       end
       
+      def forbidden?
+        self.responses.first.forbidden?
+      end
+      
       def status
         self.responses.first.status
       end
