@@ -25,6 +25,11 @@ module Mack
       sess_hash[key.to_sym] = value
     end
     
+    # Clears out the session.
+    def reset!
+      @sess_hash = {}
+    end
+    
     private
     attr_reader :sess_hash # :nodoc:
     
