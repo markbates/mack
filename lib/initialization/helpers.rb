@@ -7,10 +7,10 @@ if Object.const_defined?("ApplicationHelper")
 end
 
 module Mack
-  module ControllerHelpers
+  module ControllerHelpers # :nodoc:
   end
   
-  module ViewHelpers
+  module ViewHelpers # :nodoc:
   end
 end
 

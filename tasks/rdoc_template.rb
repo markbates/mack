@@ -1,5 +1,5 @@
-module RDoc
-module Page
+module RDoc # :nodoc:
+module Page # :nodoc:
 
 FONTS = "Verdana, Arial, Helvetica, sans-serif"
 

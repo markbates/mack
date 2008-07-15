@@ -1,4 +1,4 @@
-module Test
+module Test # :nodoc:
   module Unit # :nodoc:
     class TestCase # :nodoc:
       

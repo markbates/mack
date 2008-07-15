@@ -1,7 +1,7 @@
 require "test/unit"
 
 module Mack
-  module Testing
+  module Testing # :nodoc:
     module Helpers
     
       # Runs the given rake task. Takes an optional hash that mimics command line parameters.
