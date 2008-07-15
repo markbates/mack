@@ -14,5 +14,5 @@ require File.join(fl, "testing", "helpers")
 # self.send(:include, Mack::TestHelpers)
 self.send(:include, Mack::Routes::Urls)
 
-# Prevent AutoRunner from getting executed when user exit out of console
-Test::Unit.run=true
+# Prevent AutoRunner from getting executed when user exits out of console
+Test::Unit.run = true
