@@ -14,12 +14,14 @@ module Test
       # run a cleanup method if it exists
       def run(result, &progress_block) # :nodoc:
         super_run(result) do |state, name|
-          if state == Test::Unit::TestCase::STARTED
-            cleanup if self.respond_to?(:cleanup)
-            log_start(name)
-          else
-            cleanup if self.respond_to?(:cleanup)
-            log_end(name)
+          in_session do
+            if state == Test::Unit::TestCase::STARTED
+              cleanup if self.respond_to?(:cleanup)
+              log_start(name)
+            else
+              cleanup if self.respond_to?(:cleanup)
+              log_end(name)
+            end
           end
         end
       end

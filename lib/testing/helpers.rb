@@ -106,11 +106,11 @@ module Mack
     
       # Used to create a 'session' around a block of code. This is great of 'integration' tests.
       def in_session
-        @in_session = true
+        @_mack_in_session = true
         clear_session
         yield
         clear_session
-        @in_session = false
+        @_mack_in_session = false
       end
     
       # Clears all the sessions.
@@ -173,7 +173,7 @@ module Mack
             name = spt.first
             value = spt.last
             if name == app_config.mack.session_id
-              value = nil unless @in_session
+              value = nil unless @_mack_in_session
             end
             set_cookie(name, value)
           end
