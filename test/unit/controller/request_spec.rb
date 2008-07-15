@@ -1,7 +1,7 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
-describe "Request" do
+describe Mack::Request do
   
   it "should handle request to full host" do
     get "/tst_home_page/request_full_host"
@@ -38,6 +38,32 @@ describe "Request" do
     response.body.should match(/class: Hash/)
     foo = assigns(:foo)
     foo.should_not be_nil
+  end
+  
+  describe Mack::Request::Parameters do
+    
+    describe "to_s" do
+      
+      it "should filter out stuff on the Mack::Logging::Filter list" do
+        params = Mack::Request::Parameters.new
+        params[:foo] = 'f"o"o'
+        params[:password] = "123456"
+        params[:user] = {:password_confirmation => "123456"}
+        params.to_s.should match(/:user=>{:password_confirmation=>"<FILTERED>"/)
+        params.to_s.should match(/:password=>"<FILTERED>"/)
+        params.to_s.should match(/:foo=>"f\\"o\\"o"/)
+      end
+      
+      it "should work" do
+        get "/tst_another/show_all_params?password=123456&foo=fubar"
+        f = ':foo=>"fubar"'
+        response.body.should match(/#{f}/)
+        p = ':password=>"<FILTERED>"'
+        response.body.should match(/#{p}/)
+      end 
+      
+    end
+    
   end
   
 end

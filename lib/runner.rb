@@ -45,11 +45,13 @@ module Mack
       end
     end
     
+    #--
     # This method gets called after the session has been established. Override this method
     # to add custom code around requests.
-    def custom_dispatch_wrapper
-      yield
-    end
+    # def custom_dispatch_wrapper
+    #   yield
+    # end
+    #++
     
     #private
     def run_controller(route, e = nil)
@@ -79,7 +81,7 @@ module Mack
       if app_config.log.detailed_requests
         msg = "\n\t[#{@request.request_method.upcase}] '#{@request.path_info}'\n"
         msg << "\tSession ID: #{@request.session.id}\n"
-        msg << "\tParameters: #{@request.all_params.inspect}\n"
+        msg << "\tParameters: #{@request.all_params}\n"
         msg << "\tCompleted in #{p_time} (#{(1 / p_time).round} reqs/sec) | #{@response.status} [#{@request.full_host}]"
       else
         msg = "[#{@request.request_method.upcase}] '#{@request.path_info}' (#{p_time})"
@@ -98,9 +100,9 @@ module Mack
         @cookies = Mack::CookieJar.new(self.request, self.response)
         session do
           begin
-            custom_dispatch_wrapper do
+            # custom_dispatch_wrapper do
               yield
-            end
+            # end
           rescue Exception => e
             exception = e
           end

@@ -16,6 +16,10 @@ class TstAnotherController
     })
   end
   
+  def show_all_params
+    render(:text, request.all_params)
+  end
+  
   def act_level_layout_test_action
     render(:text, "I've changed the layout in the action!", :layout => :my_super_cool)
   end

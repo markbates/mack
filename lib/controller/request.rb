@@ -9,6 +9,15 @@ module Mack
         data = data.to_s if data.is_a?(Symbol)
         return data
       end
+      
+      def to_s
+        s = self.inspect
+        Mack::Logging::Filter.list.each do |p|
+          s.gsub!(/:#{p}=>\"[^\"]+\"/, ":#{p}=>\"<FILTERED>\"")
+        end
+        s
+      end
+      
     end
     
     

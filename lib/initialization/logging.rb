@@ -31,3 +31,48 @@ unless Mack.logger
   # file:
   Mack.logger.add(Log4r::FileOutputter.new('fileOutputter', :filename => File.join(log_directory, "#{Mack.env}.log"), :trunc => false, :formatter => format))
 end
+
+module Mack
+  module Logging # :nodoc:
+    # Used to house a list of filters for parameter logging. The initial list
+    # includes password and password_confirmation
+    class Filter
+      include Singleton
+      
+      # The list of parameters you want filtered for logging.
+      attr_reader :list
+      
+      def initialize
+        @list = [:password, :password_confirmation]
+      end
+      
+      # Adds 'n' number of parameter names to the list
+      def add(*args)
+        @list << args
+        @list.flatten!
+      end
+      
+      # Removes 'n' number of parameter names from the list
+      def remove(*args)
+        @list.delete_values(*args)
+      end
+      
+      class << self
+        
+        def remove(*args)
+          Mack::Logging::Filter.instance.remove(*args)
+        end
+        
+        def add(*args)
+          Mack::Logging::Filter.instance.add(*args)
+        end
+        
+        def list
+          Mack::Logging::Filter.instance.list
+        end
+        
+      end
+      
+    end
+  end
+end
