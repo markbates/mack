@@ -1,6 +1,7 @@
 module Mack
   
   module Routes
+    include Mack::Utils::Hookable
     
     # This method yields up Mack::Routes::RouteMap and allows for the creation of routes in the system.
     # 
@@ -11,13 +12,6 @@ module Mack
                                              Mack::Rendering::ViewTemplate, 
                                              Test::Unit::TestCase, 
                                              Mack::Distributed::Routes::Urls)
-      if app_config.mack.use_distributed_routes
-        raise Mack::Distributed::Errors::ApplicationNameUndefined.new if app_config.mack.distributed_app_name.nil?
-        
-        d_urls = Mack::Distributed::Routes::Urls.new(app_config.mack.distributed_site_domain)
-        d_urls.put
-      end
-      # puts "Finished compiling routes: #{Mack::Routes::RouteMap.instance.routes_list.inspect}"
     end
     
     # Routes are the back bone of the Mack framework. They are used to map incoming urls to controllers.
