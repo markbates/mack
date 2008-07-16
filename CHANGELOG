@@ -1,3 +1,4 @@
+===0.6.0
 * INCOMPATIBILITY NOTICE: Moved Mack::Configuration.root to Mack.root
 * INCOMPATIBILITY NOTICE: Moved Mack::Configuration.env to Mack.env
 * INCOMPATIBILITY NOTICE: Mack::Configuration.* path methods no longer exist. Use mack-paths instead.
