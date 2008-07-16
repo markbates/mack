@@ -18,7 +18,6 @@ require 'erb'
 require 'genosaurus'
 require 'net/http'
 require 'pp'
-require 'ruby-debug'
 require 'test/unit'
 
 require File.join(File.dirname(__FILE__), "initialization", "configuration.rb")
