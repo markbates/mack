@@ -60,7 +60,7 @@ namespace :gem do
         s.add_dependency("genosaurus", "1.2.1")
         s.add_dependency("rcov", "0.8.1.2.0")
         s.add_dependency("rspec", "1.1.4")
-        
+        s.add_dependency("ruby-debug", "0.10.0")
       
         s.rubyforge_project = gh.project
         
