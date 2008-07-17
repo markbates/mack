@@ -1,7 +1,7 @@
 module Mack
   
   module Routes
-    include Mack::Utils::Hookable
+    include Extlib::Hook
     
     # This method yields up Mack::Routes::RouteMap and allows for the creation of routes in the system.
     # 
