@@ -67,7 +67,8 @@ module Mack
       self.request.instance_variable_set("@params_controller", nil)
       self.request.instance_variable_set("@params_action", nil)
       
-      c = cont.new(self.request, self.response, self.cookies)
+      c = cont.new
+      c.configure_controller(self.request, self.response, self.cookies)
       c.caught_exception = e unless e.nil?
 
       self.response.controller = c

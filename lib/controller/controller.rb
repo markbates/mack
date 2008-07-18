@@ -25,7 +25,7 @@ module Mack
     # If an exception was thrown by a request this represents that error.
     attr_accessor :caught_exception
 
-    def initialize(request, response, cookies)
+    def configure_controller(request, response, cookies)
       @request = request
       @response = response
       @render_options = {}
