@@ -1,3 +1,6 @@
+===0.6.0.1
+* Updated mack-localization (in mack-more) to be independent from utf8proc gem
+
 ===0.6.0
 * INCOMPATIBILITY NOTICE: Moved Mack::Configuration.root to Mack.root
 * INCOMPATIBILITY NOTICE: Moved Mack::Configuration.env to Mack.env

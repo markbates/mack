@@ -14,7 +14,7 @@ raise "You must specify a name for this application!" if app.nil?
 options = OpenStruct.new
 options.orm = "data_mapper"
 options.testing_framework = "rspec"
-options.version = "0.6.0"
+options.version = "0.6.0.1"
 
 opts = OptionParser.new do |opts|
   opts.banner = "Usage: mack <application_name> [options]"
