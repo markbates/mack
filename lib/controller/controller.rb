@@ -364,7 +364,26 @@ module Mack
     # Make sure that all the class level methods got included into the receiver's class
     #
     def self.included(base)
+      Mack::Controller::Registry.instance.controllers << base
       base.extend(ClassMethods)
+    end
+    
+    # Houses a repository of all the controllers in the system.
+    class Registry
+      include Singleton
+      
+      attr_reader :controllers
+      
+      def initialize
+        @controllers = []
+      end
+      
+      # Add a controller to the registry.
+      def self.add(controller)
+        Mack::Controller::Registry.instance.controllers << controller
+        Mack::Controller::Registry.instance.controllers.uniq!
+      end
+      
     end
     
   end # Controller

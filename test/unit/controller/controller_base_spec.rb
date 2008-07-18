@@ -30,6 +30,18 @@ end
 
 describe Mack::Controller do
   
+  describe Mack::Controller::Registry do
+    
+    it "should hold a list of all the controllers registered with Mack" do
+      class RegTestController
+      end
+      Mack::Controller::Registry.instance.controllers.should_not include(RegTestController)
+      RegTestController.send(:include, Mack::Controller)
+      Mack::Controller::Registry.instance.controllers.should include(RegTestController)
+    end
+    
+  end
+  
   before(:all) do
     Mack::Routes.build do |r|
       r.you_want_what "/yww", :controller => "wants_test", :action => :you_want_what
