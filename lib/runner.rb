@@ -14,7 +14,6 @@ module Mack
     # This method needs to be defined as part of the Rack framework. As is noted for the Mack::Runner
     # class, this is where the center of the Mack framework lies.
     def call(env)
-      # pp env
       begin
         setup(env)
         begin
@@ -45,7 +44,6 @@ module Mack
       rescue Exception => e
         Mack.logger.error(e)
         raise e
-      ensure
       end
     end
     
