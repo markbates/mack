@@ -14,6 +14,7 @@ raise "You must specify a name for this application!" if app.nil?
 options = OpenStruct.new
 options.orm = "data_mapper"
 options.testing_framework = "rspec"
+options.js_framework = "jquery"
 options.version = "<%= gh.version %>"
 
 opts = OptionParser.new do |opts|
@@ -27,8 +28,12 @@ opts = OptionParser.new do |opts|
     options.testing_framework = v
   end
   
+  opts.on("-j [jquery|prototype]") do |v|
+    options.js_framework = v
+  end
+  
 end
 
 opts.parse!(ARGV)
 
-MackApplicationGenerator.run({"version" => options.version, "app" => app, "orm" => options.orm, "testing_framework" => options.testing_framework})
+MackApplicationGenerator.run({"version" => options.version, "app" => app, "orm" => options.orm, "testing_framework" => options.testing_framework, "js_framework" => options.js_framework})
