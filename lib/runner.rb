@@ -75,41 +75,24 @@ module Mack
       self.response.write(c.run)
     end
     
-    def log_request
-      s_time = Time.now
-      x = yield
-      e_time = Time.now
-      p_time = e_time - s_time
-      if app_config.log.detailed_requests
-        msg = "\n\t[#{@request.request_method.upcase}] '#{@request.path_info}'\n"
-        msg << "\tSession ID: #{@request.session.id}\n" if app_config.mack.use_sessions
-        msg << "\tParameters: #{@request.all_params}\n"
-        msg << "\tCompleted in #{p_time} (#{(1 / p_time).round} reqs/sec) | #{@response.status} [#{@request.full_host}]"
-      else
-        msg = "[#{@request.request_method.upcase}] '#{@request.path_info}' (#{p_time})"
-      end
-      Mack.logger.info(msg)
-      x
-    end
-    
     # Setup the request, response, cookies, session, etc...
     # yield up, and then clean things up afterwards.
     def setup(env)
       exception = nil
-      log_request do
-        @request = Mack::Request.new(env) 
-        @response = Mack::Response.new
-        @cookies = Mack::CookieJar.new(self.request, self.response)
-        session do
-          begin
-            # custom_dispatch_wrapper do
-              yield
-            # end
-          rescue Exception => e
-            exception = e
-          end
+      log_request = Mack::RunnerHelpers::RequestLogger.new
+      @request = Mack::Request.new(env) 
+      @response = Mack::Response.new
+      @cookies = Mack::CookieJar.new(self.request, self.response)
+      session do
+        begin
+          # custom_dispatch_wrapper do
+            yield
+          # end
+        rescue Exception => e
+          exception = e
         end
       end
+      log_request.complete(@request, @response)
       raise exception if exception
       self.response.finish
     end
