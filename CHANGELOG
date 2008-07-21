@@ -7,7 +7,14 @@
 * [#44] Mack::Runner has now been extended to allow for greater extension flexibility.
 * [#42] Sessions can now be turned off globally using the app_config.mack.use_sessions switch.
 * [#38] There is now a registry of Controllers that are in the system.
+* [#36] Renamed the initialize method in the Mack::Controller module to configure_controller. This gives
+  control of the initialize method back to the class.
+* [#31] Added support for ruby-debug.
+* [#33] mack-active_record now requires ActiveRecord 2.0.2 explicitly, not >=2.0.2
+* [#34] Mack::l10n now raises exception with a fully qualified name.
+* [#7] Added support for Extlib::Hook in a few places.
 * gem: application_configuration 1.5.1
+* gem: ruby-debug 0.10.0
 
 ===0.6.0.1
 * Updated mack-localization (in mack-more) to be independent from utf8proc gem
