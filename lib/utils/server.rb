@@ -8,11 +8,6 @@ module Mack
         # Mack framework:
         app = Mack::Runner.new
         
-        Mack::Utils::Server::Registry.instance.wrappers do |w|
-          puts "Wrapping app with: #{w}"
-          app = w.new(app)
-        end
-        
         # Any urls listed will go straight to the public directly and will not be served up via the app:
         app = Rack::Static.new(app, :urls => ["/css", "/images", "/files", "/images", "/stylesheets", "/javascripts", "/media"], :root => "public")
         app = Rack::Lint.new(app) if app_config.mack.use_lint 
@@ -28,21 +23,6 @@ module Mack
         app
       end
       
-      class Registry
-        include Singleton
-        
-        attr_reader :wrappers
-        
-        def initialize
-          @wrappers = []
-        end
-        
-        def add(klass)
-          @wrappers << klass
-        end
-        
-      end
-    
     end # Server
   end # Utils
 end # Mack
