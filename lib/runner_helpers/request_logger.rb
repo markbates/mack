@@ -31,5 +31,5 @@ module Mack
       end
       
     end # RequestLogger
-  end # Utils
+  end # RunnerHelpers
 end # Mack

@@ -9,50 +9,46 @@ module Mack
     attr_reader :response # :nodoc:
     attr_reader :request # :nodoc:
     attr_reader :cookies # :nodoc:
+    attr_reader :request_logger # :nodoc:
+    attr_reader :session_helper # :nodoc:
+    
     # This method needs to be defined as part of the Rack framework. As is noted for the Mack::Runner
     # class, this is where the center of the Mack framework lies.
     def call(env)
       # pp env
       begin
-        setup(env) do
-          begin
-            route = Mack::Routes::RouteMap.instance.get_route_from_request(self.request)
-            if route[:redirect_to]
-              # because the route is specified to be a redirect, let's do that:
-              redirect_to(route)
+        setup(env)
+        begin
+          route = Mack::Routes::RouteMap.instance.get_route_from_request(self.request)
+          if route[:redirect_to]
+            # because the route is specified to be a redirect, let's do that:
+            redirect_to(route)
+          else
+            self.request.all_params[:original_controller] = route[:controller]
+            self.request.all_params[:original_action] = route[:action]
+            run_controller(route)
+          end
+        # rescue Mack::Errors::ResourceNotFound, Mack::Errors::UndefinedRoute => e
+        #   return try_to_find_resource(env, e)
+        rescue Exception => e
+          route = Mack::Routes::RouteMap.instance.get_route_from_error(e.class)
+          unless route.nil?
+            run_controller(route, e)
+          else
+            if e.class == Mack::Errors::ResourceNotFound || e.class == Mack::Errors::UndefinedRoute
+              return try_to_find_resource(env, e)
             else
-              self.request.all_params[:original_controller] = route[:controller]
-              self.request.all_params[:original_action] = route[:action]
-              run_controller(route)
-            end
-          # rescue Mack::Errors::ResourceNotFound, Mack::Errors::UndefinedRoute => e
-          #   return try_to_find_resource(env, e)
-          rescue Exception => e
-            route = Mack::Routes::RouteMap.instance.get_route_from_error(e.class)
-            unless route.nil?
-              run_controller(route, e)
-            else
-              if e.class == Mack::Errors::ResourceNotFound || e.class == Mack::Errors::UndefinedRoute
-                return try_to_find_resource(env, e)
-              else
-                raise e
-              end
+              raise e
             end
           end
-        end # setup
+        end
+        teardown
       rescue Exception => e
         Mack.logger.error(e)
         raise e
+      ensure
       end
     end
-    
-    #--
-    # This method gets called after the session has been established. Override this method
-    # to add custom code around requests.
-    # def custom_dispatch_wrapper
-    #   yield
-    # end
-    #++
     
     #private
     def run_controller(route, e = nil)
@@ -78,55 +74,18 @@ module Mack
     # Setup the request, response, cookies, session, etc...
     # yield up, and then clean things up afterwards.
     def setup(env)
-      exception = nil
-      log_request = Mack::RunnerHelpers::RequestLogger.new
+      @request_logger = Mack::RunnerHelpers::RequestLogger.new
       @request = Mack::Request.new(env) 
       @response = Mack::Response.new
       @cookies = Mack::CookieJar.new(self.request, self.response)
-      session do
-        begin
-          # custom_dispatch_wrapper do
-            yield
-          # end
-        rescue Exception => e
-          exception = e
-        end
-      end
-      log_request.complete(@request, @response)
-      raise exception if exception
+      @session_helper = Mack::RunnerHelpers::Session.new
+      @session_helper.start(self.request, self.response, self.cookies)
+    end
+    
+    def teardown
+      self.session_helper.complete(self.request, self.response, self.cookies)
+      self.request_logger.complete(self.request, self.response)
       self.response.finish
-    end
-    
-    def session
-      if app_config.mack.use_sessions
-        sess_id = self.cookies[app_config.mack.session_id]
-        unless sess_id
-          sess_id = create_new_session
-        else
-          sess = Cachetastic::Caches::MackSessionCache.get(sess_id)
-          if sess
-            self.request.session = sess
-          else
-            # we couldn't find it in the store, so we need to create it:
-            sess_id = create_new_session
-          end
-        end
-
-        yield
-      
-        Cachetastic::Caches::MackSessionCache.set(sess_id, self.request.session)
-      else
-        yield
-      end
-    end
-    
-    def create_new_session
-      id = String.randomize(40).downcase
-      self.cookies[app_config.mack.session_id] = {:value => id, :expires => nil}
-      sess = Mack::Session.new(id)
-      self.request.session = sess
-      Cachetastic::Caches::MackSessionCache.set(id, sess)
-      id
     end
     
     def try_to_find_resource(env, exception)
