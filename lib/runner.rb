@@ -77,7 +77,7 @@ module Mack
       @response = Mack::Response.new
       @cookies = Mack::CookieJar.new(self.request, self.response)
       @runner_helpers = []
-      Mack::RunnerHelpers::Registry.instance.runner_helpers.each do |helper|
+      Mack::RunnerHelpers::Registry.registered_items.each do |helper|
         help = helper.new
         help.start(self.request, self.response, self.cookies)
         @runner_helpers << help
