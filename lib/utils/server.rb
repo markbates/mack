@@ -1,5 +1,10 @@
 module Mack
   module Utils
+    
+    # Houses a registry of Rack runners that should be called before the Mack::Runner.
+    class RunnersRegistry < Mack::Utils::Registry
+    end
+    
     module Server
     
       # This method wraps all the necessary components of the Rack system around
@@ -7,6 +12,10 @@ module Mack
       def self.build_app
         # Mack framework:
         app = Mack::Runner.new
+        
+        Mack::Utils::RunnersRegistry.registered_items.each do |runner|
+          app = runner.new(app)
+        end
         
         # Any urls listed will go straight to the public directly and will not be served up via the app:
         app = Rack::Static.new(app, :urls => ["/css", "/images", "/files", "/images", "/stylesheets", "/javascripts", "/media"], :root => "public")
