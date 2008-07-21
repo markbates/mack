@@ -1,6 +1,7 @@
+require File.join(File.dirname(__FILE__), "base")
 module Mack
-  module RunnerHelpers
-    class Session
+  module RunnerHelpers # :nodoc:
+    class Session < Mack::RunnerHelpers::Base
       
       attr_accessor :sess_id
       

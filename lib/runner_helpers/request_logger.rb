@@ -1,21 +1,18 @@
+require File.join(File.dirname(__FILE__), "base")
 module Mack
-  module RunnerHelpers
-    class RequestLogger
+  module RunnerHelpers # :nodoc:
+    class RequestLogger < Mack::RunnerHelpers::Base
       
       attr_reader :start_time
       attr_reader :end_time
       attr_reader :total_time
       attr_reader :requests_per_second
       
-      def initialize(start_logger = true)
-        start if start_logger
-      end
-      
-      def start
+      def start(request, response, cookies)
         @start_time = Time.now
       end
       
-      def complete(request, response)
+      def complete(request, response, cookies)
         @end_time = Time.now
         @total_time = @end_time - @start_time
         @requests_per_second = (1 / @total_time).round

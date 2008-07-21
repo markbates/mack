@@ -9,8 +9,7 @@ module Mack
     attr_reader :response # :nodoc:
     attr_reader :request # :nodoc:
     attr_reader :cookies # :nodoc:
-    attr_reader :request_logger # :nodoc:
-    attr_reader :session_helper # :nodoc:
+    attr_reader :runner_helpers # :nodoc:
     
     # This method needs to be defined as part of the Rack framework. As is noted for the Mack::Runner
     # class, this is where the center of the Mack framework lies.
@@ -74,17 +73,21 @@ module Mack
     # Setup the request, response, cookies, session, etc...
     # yield up, and then clean things up afterwards.
     def setup(env)
-      @request_logger = Mack::RunnerHelpers::RequestLogger.new
       @request = Mack::Request.new(env) 
       @response = Mack::Response.new
       @cookies = Mack::CookieJar.new(self.request, self.response)
-      @session_helper = Mack::RunnerHelpers::Session.new
-      @session_helper.start(self.request, self.response, self.cookies)
+      @runner_helpers = []
+      Mack::RunnerHelpers::Registry.instance.runner_helpers.each do |helper|
+        help = helper.new
+        help.start(self.request, self.response, self.cookies)
+        @runner_helpers << help
+      end
     end
     
     def teardown
-      self.session_helper.complete(self.request, self.response, self.cookies)
-      self.request_logger.complete(self.request, self.response)
+      self.runner_helpers.reverse.each do |help|
+        help.complete(self.request, self.response, self.cookies)
+      end
       self.response.finish
     end
     
