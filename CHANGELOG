@@ -1,3 +1,8 @@
+* Added Page caching. All that's needed for using page caching is to require the mack-caching gem, turn on
+  page caching in your config files with: 
+    use_page_caching: true
+  and, in your controllers, specify which pages you would like cached with the cache_pages directive:
+    cache_pages :only => [:index, :show] # you can also use :except
 * Added a Mack::Utils::Registry class to allow for easy creation of registries. [#43]
 * Mack::Runner has now been extended to allow for greater extension flexibility.[#44]
 * Sessions can now be turned off globally using the app_config.mack.use_sessions switch. [#42]
