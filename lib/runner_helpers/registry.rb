@@ -11,20 +11,34 @@ module Mack
         self.runner_helpers = [Mack::RunnerHelpers::RequestLogger, Mack::RunnerHelpers::Session]
       end
       
-      def add(klass)
-        self.runner_helpers << klass
+      def add(klass, position = self.runner_helpers.size)
+        self.runner_helpers.insert(position, klass)
+        # self.runner_helpers << klass
         self.runner_helpers.uniq!
         self.runner_helpers.compact!
       end
       
       class << self
         
-        def add(klass)
-          Mack::RunnerHelpers::Registry.instance.add(klass)
+        def helpers
+          Mack::RunnerHelpers::Registry.instance.runner_helpers
+        end
+        
+        def add(klass, position = helpers.size)
+          Mack::RunnerHelpers::Registry.instance.add(klass, position)
         end
         
         def remove(klass)
-          Mack::RunnerHelpers::Registry.instance.runner_helpers.delete(klass)
+          helpers.delete(klass)
+        end
+        
+        def move_to_top(klass)
+          Mack::RunnerHelpers::Registry.instance.add(klass, 0)
+        end
+        
+        def move_to_bottom(klass)
+          remove(klass)
+          Mack::RunnerHelpers::Registry.instance.add(klass)
         end
         
       end
