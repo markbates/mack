@@ -6,6 +6,7 @@
 * [#43] Added a Mack::Utils::Registry class to allow for easy creation of registries.
 * [#44] Mack::Runner has now been extended to allow for greater extension flexibility.
 * [#42] Sessions can now be turned off globally using the app_config.mack.use_sessions switch.
+* [#38] There is now a registry of Controllers that are in the system.
 * gem: application_configuration 1.5.1
 
 ===0.6.0.1
