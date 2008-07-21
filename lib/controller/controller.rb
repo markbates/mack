@@ -43,6 +43,7 @@ module Mack
 
     # Gives access to the session. See Mack::Session for more information.
     def session
+      raise Mack::Errors::NoSessionError.new if self.request.session.nil?
       self.request.session
     end
 

@@ -82,7 +82,7 @@ module Mack
       p_time = e_time - s_time
       if app_config.log.detailed_requests
         msg = "\n\t[#{@request.request_method.upcase}] '#{@request.path_info}'\n"
-        msg << "\tSession ID: #{@request.session.id}\n"
+        msg << "\tSession ID: #{@request.session.id}\n" if app_config.mack.use_sessions
         msg << "\tParameters: #{@request.all_params}\n"
         msg << "\tCompleted in #{p_time} (#{(1 / p_time).round} reqs/sec) | #{@response.status} [#{@request.full_host}]"
       else
@@ -115,22 +115,26 @@ module Mack
     end
     
     def session
-      sess_id = self.cookies[app_config.mack.session_id]
-      unless sess_id
-        sess_id = create_new_session
-      else
-        sess = Cachetastic::Caches::MackSessionCache.get(sess_id)
-        if sess
-          self.request.session = sess
-        else
-          # we couldn't find it in the store, so we need to create it:
+      if app_config.mack.use_sessions
+        sess_id = self.cookies[app_config.mack.session_id]
+        unless sess_id
           sess_id = create_new_session
+        else
+          sess = Cachetastic::Caches::MackSessionCache.get(sess_id)
+          if sess
+            self.request.session = sess
+          else
+            # we couldn't find it in the store, so we need to create it:
+            sess_id = create_new_session
+          end
         end
-      end
 
-      yield
+        yield
       
-      Cachetastic::Caches::MackSessionCache.set(sess_id, self.request.session)
+        Cachetastic::Caches::MackSessionCache.set(sess_id, self.request.session)
+      else
+        yield
+      end
     end
     
     def create_new_session

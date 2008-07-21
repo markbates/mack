@@ -1,3 +1,4 @@
+* Sessions can now be turned off globally using the app_config.mack.use_sessions switch. [#42]
 * gem: application_configuration 1.5.1
 
 ===0.6.0.1
