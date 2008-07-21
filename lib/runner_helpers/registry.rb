@@ -13,7 +13,6 @@ module Mack
       
       def add(klass, position = self.runner_helpers.size)
         self.runner_helpers.insert(position, klass)
-        # self.runner_helpers << klass
         self.runner_helpers.uniq!
         self.runner_helpers.compact!
       end
