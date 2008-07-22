@@ -1,4 +1,6 @@
 * gem: application_configuration 1.5.1
+* Ticket #41: Deprecate orm_support.rb
+* Ticket #6: RJS Support (mack-more)
 
 ===0.6.0.1
 * Updated mack-localization (in mack-more) to be independent from utf8proc gem
