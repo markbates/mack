@@ -1,5 +1,10 @@
 module Mack
   module Utils
+    
+    # Houses a registry of Rack runners that should be called before the Mack::Runner.
+    class RunnersRegistry < Mack::Utils::Registry
+    end
+    
     module Server
     
       # This method wraps all the necessary components of the Rack system around
@@ -8,9 +13,8 @@ module Mack
         # Mack framework:
         app = Mack::Runner.new
         
-        Mack::Utils::Server::Registry.instance.wrappers do |w|
-          puts "Wrapping app with: #{w}"
-          app = w.new(app)
+        Mack::Utils::RunnersRegistry.registered_items.each do |runner|
+          app = runner.new(app)
         end
         
         # Any urls listed will go straight to the public directly and will not be served up via the app:
@@ -21,28 +25,9 @@ module Mack
         app = Rack::Recursive.new(app)
         # This will reload any edited classes if the cache_classes config setting is set to true.
         app = Rack::Reloader.new(app, 1) unless app_config.mack.cache_classes
-        # TODO: Not sure about this logger, investigate better ones.
-        # TODO: Depends on Mack.logger already being configured.
-        # This makes it a drag run this 'standalone' in another Ruby program.
-        # app = Rack::CommonLogger.new(app, Mack.logger)
         app
       end
       
-      class Registry
-        include Singleton
-        
-        attr_reader :wrappers
-        
-        def initialize
-          @wrappers = []
-        end
-        
-        def add(klass)
-          @wrappers << klass
-        end
-        
-      end
-    
     end # Server
   end # Utils
 end # Mack

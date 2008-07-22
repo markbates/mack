@@ -61,6 +61,7 @@ module Mack
         "mack::cache_classes" => true,
         "mack::use_lint" => true,
         "mack::show_exceptions" => true,
+        "mack::use_sessions" => true,
         "mack::session_id" => "_mack_session_id",
         "mack::rendering_systems" => [:action, :text, :partial, :public, :url, :xml],
         "mack::cookie_values" => {

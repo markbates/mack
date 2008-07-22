@@ -35,9 +35,9 @@ describe Mack::Controller do
     it "should hold a list of all the controllers registered with Mack" do
       class RegTestController
       end
-      Mack::Controller::Registry.instance.controllers.should_not include(RegTestController)
+      Mack::Controller::Registry.registered_items.should_not include(RegTestController)
       RegTestController.send(:include, Mack::Controller)
-      Mack::Controller::Registry.instance.controllers.should include(RegTestController)
+      Mack::Controller::Registry.registered_items.should include(RegTestController)
     end
     
   end

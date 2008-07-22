@@ -1,6 +1,10 @@
 module Mack
   module Errors # :nodoc:
     
+    # Raised when there is no session available and one is trying to be accessed.
+    class NoSessionError < StandardError
+    end
+    
     # Raised when someone calls render twice in one action
     # 
     # Example:

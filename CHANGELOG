@@ -1,6 +1,22 @@
+* [#18] Added Page caching. All that's needed for using page caching is to require the mack-caching gem, turn on
+  page caching in your config files with: 
+    use_page_caching: true
+  and, in your controllers, specify which pages you would like cached with the cache_pages directive:
+    cache_pages :only => [:index, :show] # you can also use :except
+* [#43] Added a Mack::Utils::Registry class to allow for easy creation of registries.
+* [#44] Mack::Runner has now been extended to allow for greater extension flexibility.
+* [#42] Sessions can now be turned off globally using the app_config.mack.use_sessions switch.
+* [#38] There is now a registry of Controllers that are in the system.
+* [#36] Renamed the initialize method in the Mack::Controller module to configure_controller. This gives
+  control of the initialize method back to the class.
+* [#31] Added support for ruby-debug.
+* [#33] mack-active_record now requires ActiveRecord 2.0.2 explicitly, not >=2.0.2
+* [#34] Mack::l10n now raises exception with a fully qualified name.
+* [#7] Added support for Extlib::Hook in a few places.
+* [#41] Deprecate orm_support.rb
+* [#6] RJS support
 * gem: application_configuration 1.5.1
-* Ticket #41: Deprecate orm_support.rb
-* Ticket #6: RJS Support (mack-more)
+* gem: ruby-debug 0.10.0
 
 ===0.6.0.1
 * Updated mack-localization (in mack-more) to be independent from utf8proc gem
