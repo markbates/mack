@@ -4,3 +4,9 @@ mack::session_id: _<%= @options["app"].downcase %>_session_id
 
 orm: <%= @options["orm"] %>
 mack::testing_framework: <%= @options["testing_framework"] %>
+
+# Mack provides RJS support through mack-javascript gem.
+# In order to have RJS support, you will need to perform the following steps:
+# 1.  Uncomment the code below, and make sure that the framework is the one you want to use
+# 2.  run:  rake generate:javascript
+# mack::js_framework: <%= @options["js_framework"] %>

@@ -14,6 +14,8 @@
 * [#33] mack-active_record now requires ActiveRecord 2.0.2 explicitly, not >=2.0.2
 * [#34] Mack::l10n now raises exception with a fully qualified name.
 * [#7] Added support for Extlib::Hook in a few places.
+* [#41] Deprecate orm_support.rb
+* [#6] RJS support
 * gem: application_configuration 1.5.1
 * gem: ruby-debug 0.10.0
 
