@@ -1,3 +1,4 @@
+* [#46] Calling .to_param on nil now raises a NoMethodError exception.
 * [#47] rake gems:* tasks now work, and no longer require mack_ruby_core_extensions
 * [#18] Added Page caching. All that's needed for using page caching is to require the mack-caching gem, turn on
   page caching in your config files with: 
