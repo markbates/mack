@@ -3,10 +3,30 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 require 'rubygems'
 require 'application_configuration'
+require 'mack-facets'
+require 'log4r'
 
 require File.join(File.dirname(__FILE__), "initialization", "configuration.rb")
+
+# Load all the supporting files, so we can load the required gems
+require File.join(File.dirname(__FILE__), "core_extensions", "kernel.rb")
+require File.join(File.dirname(__FILE__), "utils", "gem_manager.rb")
+require File.join(File.dirname(__FILE__), "initialization", "logging.rb")
+require File.join(Mack.root, "config", "initializers", "gems.rb")
+Mack::Utils::GemManager.instance.do_requires
+
 orm = app_config.orm
 unless orm.nil?
+  Mack.logger.warn %{
+    Please note that setting up orm in app_config has been deprecated, and will not be supported in future mack releases.
+    Here's how to update your existing application:
+    1.  Remove the line:
+        orm: data_mapper
+        from the app_config/default.yml file
+    2.  In gem.rb, add the following line in the require_gems block:
+        gem.add "mack-data_mapper", :version => "0.6.0", :libs => ["mack-data_mapper"]
+        ** if you use active record, then change it to mack-active_record instead of mack-data_mapper
+    }
   require "mack-#{orm}_tasks"
 end
 
