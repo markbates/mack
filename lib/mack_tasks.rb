@@ -6,7 +6,7 @@ require 'application_configuration'
 
 require File.join(File.dirname(__FILE__), "initialization", "configuration.rb")
 
-require 'mack_core'
+require File.join(File.dirname(__FILE__), 'mack_core')
 require File.join(Mack.root, "config", "initializers", "gems.rb")
 Mack::Utils::GemManager.instance.do_requires
 
@@ -19,7 +19,7 @@ unless orm.nil?
         orm: data_mapper
         from the app_config/default.yml file
     2.  In gem.rb, add the following line in the require_gems block:
-        gem.add "mack-data_mapper", :version => "0.6.0", :libs => ["mack-data_mapper"]
+        gem.add "mack-data_mapper", :libs => "mack-data_mapper"
         ** if you use active record, then change it to mack-active_record instead of mack-data_mapper
     }
   require "mack-#{orm}_tasks"

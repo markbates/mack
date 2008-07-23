@@ -1,2 +1,2 @@
-require 'mack_core'
-require 'mack_app'
+require File.join(File.dirname(__FILE__), 'mack_core')
+require File.join(File.dirname(__FILE__), 'mack_app')
