@@ -23,6 +23,7 @@
 * [#49] mack-active_record:  mack-active_record.rb will require mack-active_record_tasks.rb
 * [#49] mack-data_mapper:  mack-data_mapper.rb will require mack-data_mapper_tasks.rb
 * [#49] Updated warning message if orm is defined in app_config (i.e. user only needs to require mack-[orm_name], instead of both that and mack-[orm_name]_tasks).
+* [#50] Mack will now have 2 environment files: mack_core and mack_app.  Mack.rb will load both files, but it gives other module a chance to load just the core files and not the application's files.
 * gem: application_configuration 1.5.1
 * gem: ruby-debug 0.10.0
 

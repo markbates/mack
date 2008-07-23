@@ -3,15 +3,10 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 require 'rubygems'
 require 'application_configuration'
-require 'mack-facets'
-require 'log4r'
 
 require File.join(File.dirname(__FILE__), "initialization", "configuration.rb")
 
-# Load all the supporting files, so we can load the required gems
-require File.join(File.dirname(__FILE__), "core_extensions", "kernel.rb")
-require File.join(File.dirname(__FILE__), "utils", "gem_manager.rb")
-require File.join(File.dirname(__FILE__), "initialization", "logging.rb")
+require 'mack_core'
 require File.join(Mack.root, "config", "initializers", "gems.rb")
 Mack::Utils::GemManager.instance.do_requires
 

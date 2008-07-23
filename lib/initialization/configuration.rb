@@ -16,7 +16,8 @@ module Mack
   module Configuration # :nodoc:
 
     class << self
-      attr_accessor :initialized
+      attr_accessor :initialized_core
+      attr_accessor :initialized_application
     end
 
     # use local memory and store stuff for 24 hours:
