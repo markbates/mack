@@ -10,8 +10,8 @@ unless orm.nil?
     1.  Remove the line:
         orm: data_mapper
         from the app_config/default.yml file
-    2.  In gem.rb, add the following line in the require_gems block:
-        gem.add "mack-data_mapper", :version => "0.6.0", :libs => ["mack-data_mapper", "mack-data_mapper_tasks"]
+    2.  In gems.rb, add the following line in the require_gems block:
+        gem.add "mack-data_mapper", :libs => ["mack-data_mapper", "mack-data_mapper_tasks"]
         ** if you use active record, then change it to mack-active_record instead of mack-data_mapper
     }
   Mack.logger.info "Initializing #{orm} orm..."
