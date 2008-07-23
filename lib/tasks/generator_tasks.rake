@@ -7,7 +7,7 @@ namespace :generator do
       g = g.constantize
       if g.respond_to?(:superclass) && g.superclass == Genosaurus
         list << g.name
-        list << "\n\t" << "rake generate:#{g.name.underscore}\n"
+        list << "\n\t" << "rake generate:#{g.name.underscore.gsub("_generator", '')}\n"
       end
     end
     list << "\n\n"

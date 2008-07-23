@@ -17,9 +17,9 @@ describe "rake" do
 Available Generators:
 
 MackApplicationGenerator
-	rake generate:mack_application_generator
+	rake generate:mack_application
 PluginGenerator
-	rake generate:plugin_generator
+	rake generate:plugin
 
 
             LIST
@@ -29,15 +29,15 @@ PluginGenerator
 Available Generators:
 
 MackApplicationGenerator
-	rake generate:mack_application_generator
+	rake generate:mack_application
 MigrationGenerator
-	rake generate:migration_generator
+	rake generate:migration
 ModelGenerator
-	rake generate:model_generator
+	rake generate:model
 PluginGenerator
-	rake generate:plugin_generator
+	rake generate:plugin
 ScaffoldGenerator
-	rake generate:scaffold_generator
+	rake generate:scaffold
 
 
             LIST

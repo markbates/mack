@@ -20,11 +20,9 @@ namespace :gems do
   
   private
   task :setup do
-    gem 'mack'
     require 'core_extensions/kernel'
     require 'utils/gem_manager'
-    gem 'mack_ruby_core_extensions'
-    require 'mack_ruby_core_extensions'
+    require 'mack-facets'
     require File.join(FileUtils.pwd, "config", "initializers", "gems")
     require 'rubygems'
     require 'rubygems/gem_runner'
