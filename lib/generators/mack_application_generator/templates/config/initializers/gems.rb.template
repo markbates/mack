@@ -5,6 +5,9 @@
 # :libs, optional, is an array of files you want to require.
 # :source, options, is the source you want to use to install a particular gem.
 require_gems do |gem|
+<% if @options["orm"] -%>
+  gem.add "mack-<%=@options["orm"]%>", :libs => "mack-<%=@options["orm"]%>"
+<% end -%>
   # examples:
   # gem.add :redgreen, :version => "1.2.2", :libs => :redgreen
   # gem.add :termios
