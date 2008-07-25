@@ -1,3 +1,4 @@
+* [#57] Moved most files under to lib/mack
 * [#54] Added DataMapper 0.9.3 support
 * [#24] Added mack-mailer support.
 * Added a rake tmp:clear task.

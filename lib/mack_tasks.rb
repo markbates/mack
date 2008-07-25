@@ -4,7 +4,7 @@ require 'rake/rdoctask'
 require 'rubygems'
 require 'application_configuration'
 
-require File.join(File.dirname(__FILE__), "initialization", "configuration.rb")
+require File.join(File.dirname(__FILE__), "mack", "initialization", "configuration.rb")
 
 require File.join(File.dirname(__FILE__), 'mack_core')
 require File.join(Mack.root, "config", "initializers", "gems.rb")

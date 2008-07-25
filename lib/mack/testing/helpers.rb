@@ -10,7 +10,7 @@ module Mack
         rake = Rake::Application.new
         Rake.application = rake
       
-        [File.join(File.dirname(__FILE__), "..", "mack_tasks.rb"), tasks].flatten.each do |task|
+        [File.join(File.dirname(__FILE__), "..", "..", "mack_tasks.rb"), tasks].flatten.each do |task|
           load(task)
         end
       

@@ -21,14 +21,15 @@ require 'pp'
 require 'test/unit'
 require 'ruby-debug'
 
-require File.join(File.dirname(__FILE__), "initialization", "configuration.rb")
+fl = File.join(File.dirname(__FILE__), "mack")
+
+require File.join(fl, "initialization", "configuration.rb")
 
 unless Mack::Configuration.initialized_core
   
   puts "Initializing logging..."
-  require File.join(File.dirname(__FILE__), "initialization", "logging.rb")
+  require File.join(fl, "initialization", "logging.rb")
   
-  fl = File.join(File.dirname(__FILE__))
 
   Mack.logger.info "Initializing core classes..."
   # Require all the necessary files to make Mack actually work!
@@ -41,9 +42,9 @@ unless Mack::Configuration.initialized_core
     end
   end
   
-  require File.join(File.dirname(__FILE__), "runner")
+  require File.join(fl, "runner")
   
-  require File.join(File.dirname(__FILE__), "initialization", "orm_support.rb")
+  require File.join(fl, "initialization", "orm_support.rb")
   
   Mack::Configuration.initialized_core = true if Mack::Configuration.initialized_core.nil?
 
