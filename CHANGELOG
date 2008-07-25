@@ -1,3 +1,4 @@
+* [#54] Added DataMapper 0.9.3 support
 * [#24] Added mack-mailer support.
 * Added a rake tmp:clear task.
 * [#48] rake generator:list now displays the correct names for the generator tasks.
@@ -29,6 +30,7 @@
 * [#52] mack-more: mack-[orm] should require mack-[orm].rb using its full path.
 * gem: application_configuration 1.5.1
 * gem: ruby-debug 0.10.0
+* gem: data_mapper 0.9.3
 
 ===0.6.0.1
 * Updated mack-localization (in mack-more) to be independent from utf8proc gem
