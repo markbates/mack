@@ -20,8 +20,8 @@ namespace :gems do
   
   private
   task :setup do
-    require 'core_extensions/kernel'
-    require 'utils/gem_manager'
+    require 'mack/core_extensions/kernel'
+    require 'mack/utils/gem_manager'
     require 'mack-facets'
     require File.join(FileUtils.pwd, "config", "initializers", "gems")
     require 'rubygems'
