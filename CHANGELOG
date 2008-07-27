@@ -29,6 +29,7 @@
 * [#50] Mack will now have 2 environment files: mack_core and mack_app.  Mack.rb will load both files, but it gives other module a chance to load just the core files and not the application's files.
 * [#51] Application generator should generate orm support in the right place
 * [#52] mack-more: mack-[orm] should require mack-[orm].rb using its full path.
+* [#55] mack-more: mack-facets: Mack::Utils::Registry is now Mack::Utils::RegistryList
 * gem: application_configuration 1.5.1
 * gem: ruby-debug 0.10.0
 * gem: data_mapper 0.9.3

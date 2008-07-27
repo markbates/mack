@@ -370,7 +370,7 @@ module Mack
     end
     
     # Houses a repository of all the controllers in the system.
-    class Registry < Mack::Utils::Registry
+    class Registry < Mack::Utils::RegistryList
     end
     
   end # Controller

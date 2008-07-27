@@ -2,7 +2,7 @@ module Mack
   module Utils
     
     # Houses a registry of Rack runners that should be called before the Mack::Runner.
-    class RunnersRegistry < Mack::Utils::Registry
+    class RunnersRegistry < Mack::Utils::RegistryList
     end
     
     module Server
