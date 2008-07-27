@@ -31,6 +31,7 @@
 * [#52] mack-more: mack-[orm] should require mack-[orm].rb using its full path.
 * [#55] mack-more: mack-facets: Mack::Utils::Registry is now Mack::Utils::RegistryList
 * [#56] mack-more: Added Mack::Utils::RegistryMap
+* [#60] Fixed Mack executable problem
 * gem: application_configuration 1.5.1
 * gem: ruby-debug 0.10.0
 * gem: data_mapper 0.9.3

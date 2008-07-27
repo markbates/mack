@@ -6,7 +6,7 @@ require 'ostruct'
 require 'pp'
 require 'erb'
 require 'genosaurus'
-require File.join(File.dirname(__FILE__), "..", "lib", "generators", "mack_application_generator", "mack_application_generator")
+require File.join(File.dirname(__FILE__), "..", "lib", "mack", "generators", "mack_application_generator", "mack_application_generator")
 
 app = ARGV[0]
 raise "You must specify a name for this application!" if app.nil?
