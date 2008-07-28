@@ -2,7 +2,7 @@ require 'rake'
 require 'pathname'
 require 'spec'
 require 'spec/rake/spectask'
-
+require 'fileutils'
 namespace :test do
   
   task :setup do
@@ -56,7 +56,18 @@ namespace :test do
   
 end
 
+task :default do
+  require 'application_configuration'
+  app_config.load_file(File.join(FileUtils.pwd, "config", "app_config", "default.yml"))
+  app_config.load_file(File.join(FileUtils.pwd, "config", "app_config", "test.yml"))
+  tf = "rspec"
+  begin
+    tf = app_config.mack.testing_framework
+  rescue Exception => e
+  end
+  Rake::Task["test:setup"].invoke
+  Rake::Task["test:#{tf}"].invoke
+end
 
-alias_task :default, ["test:setup", "test:rspec"]
 alias_task :stats, "test:stats"
 alias_task :coverage, "test:coverage"
