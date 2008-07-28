@@ -27,12 +27,10 @@ namespace :test do
     Rake::Task["mack:environment"].invoke
     Rake::Task["test:setup"].invoke
     x = `rcov test/**/*_#{app_config.mack.testing_framework == "rspec" ? "spec" : "test"}.rb -T --no-html -x Rakefile,config\/`
-    if app_config.mack.testing_framework == "test_case"
-      x.each do |line|
-        case line
-        when /^\+[\+\-]*\+$/, /^\|.*\|$/, /\d+\sLines\s+\d+\sLOC/
-          puts line
-        end
+    x.each do |line|
+      case line
+      when /^\+[\+\-]*\+$/, /^\|.*\|$/, /\d+\sLines\s+\d+\sLOC/
+        puts line
       end
     end
   end
