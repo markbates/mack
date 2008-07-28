@@ -23,7 +23,3 @@ rule /^generate:/ do |t|
   klass = "#{klass.camelcase}Generator"
   gen = klass.constantize.run(ENV.to_hash)
 end
-
-rule /^test:rspec/ do |t|
-  raise "i'm running a test task!"
-end
