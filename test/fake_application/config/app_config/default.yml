@@ -9,8 +9,4 @@ mack::page_cache: true
 mack::use_distributed_routes: false
 mack::distributed_app_name: fake_app
 
-# cachetastic_default_options:
-#   logging:
-#     logger_1:
-#       type: console
-#       level: debug
+mack::testing_framework: rspec

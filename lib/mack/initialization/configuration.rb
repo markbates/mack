@@ -85,6 +85,7 @@ module Mack
         "mack::distributed_site_domain" => "http://localhost:3000",
         "mack::drb_timeout" => 1,
         "mack::default_respository_name" => "default",
+        "mack::testing_framework" => "rspec",
         "log::detailed_requests" => true,
         "log_level" => "info"
       }.merge(eval("DEFAULTS_#{Mack.env.upcase}"))
