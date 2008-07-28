@@ -25,13 +25,13 @@ namespace :test do
   task :stats do |t|
     ENV["MACK_ENV"] = "test"
     Rake::Task["mack:environment"].invoke
+    Rake::Task["test:setup"].invoke
     x = `rcov test/**/*_#{app_config.mack.testing_framework == "rspec" ? "spec" : "test"}.rb -T --no-html -x Rakefile,config\/`
-    @print = false
-    x.each do |line|
-      puts line if @print
-      unless @print
-        if line.match(/\d+ tests, \d+ assertions, \d+ failures, \d+ errors/)
-          @print = true
+    if app_config.mack.testing_framework == "test_case"
+      x.each do |line|
+        case line
+        when /^\+[\+\-]*\+$/, /^\|.*\|$/, /\d+\sLines\s+\d+\sLOC/
+          puts line
         end
       end
     end
@@ -41,6 +41,7 @@ namespace :test do
   task :coverage do |t|
     ENV["MACK_ENV"] = "test"
     Rake::Task["mack:environment"].invoke
+    Rake::Task["test:setup"].invoke
     `rcov test/**/*_#{app_config.mack.testing_framework == "rspec" ? "spec" : "test"}.rb -x Rakefile,config\/`
     `open coverage/index.html`
   end
