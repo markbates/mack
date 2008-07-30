@@ -1,7 +1,7 @@
 * [#45] rake stats task now works with Test::Unit::TestCase
 * [#57] Moved most files under to lib/mack
 * [#54] Added DataMapper 0.9.3 support
-* [#24] Added mack-mailer support.
+* [#24] Added mack-notifier support.
 * Added a rake tmp:clear task.
 * [#48] rake generator:list now displays the correct names for the generator tasks.
 * [#46] Calling .to_param on nil now raises a NoMethodError exception.
