@@ -38,8 +38,9 @@ module Mack
               gem(g.name)
             end
             g.libs.each { |l| require l.to_s } if g.libs?
-          rescue Exception => ex
+          rescue Gem::LoadError => er
             Mack.logger.warn "WARNING: gem #{g.name} [version: #{g.version}] is required, but is not installed"
+            raise er
           end
         end
       end
