@@ -19,7 +19,6 @@ require 'genosaurus'
 require 'net/http'
 require 'pp'
 require 'test/unit'
-require 'ruby-debug'
 
 fl = File.join(File.dirname(__FILE__), "mack")
 

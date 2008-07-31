@@ -1,37 +1,39 @@
+* [#60] Fixed Mack executable problem
+* [#59] Fixed gems:* tasks
 * [#57] Moved most files under to lib/mack
+* [#56] mack-more: Added Mack::Utils::RegistryMap
+* [#55] mack-more: mack-facets: Mack::Utils::Registry is now Mack::Utils::RegistryList
 * [#54] Added DataMapper 0.9.3 support
-* [#24] Added mack-mailer support.
-* Added a rake tmp:clear task.
+* [#52] mack-more: mack-[orm] should require mack-[orm].rb using its full path.
+* [#51] Application generator should generate orm support in the right place
+* [#50] Mack will now have 2 environment files: mack_core and mack_app.  Mack.rb will load both files, but it gives other module chance to load just the core files and not the application's files.
+* [#49] Making sure the orm tasks is available when orm_support is removed from the app_config
+* [#49] mack-active_record:  mack-active_record.rb will require mack-active_record_tasks.rb
+* [#49] mack-data_mapper:  mack-data_mapper.rb will require mack-data_mapper_tasks.rb
+* [#49] Updated warning message if orm is defined in app_config (i.e. user only needs to require mack-[orm_name], instead of both that and mack-[orm_name]_tasks).
 * [#48] rake generator:list now displays the correct names for the generator tasks.
-* [#46] Calling .to_param on nil now raises a NoMethodError exception.
 * [#47] rake gems:* tasks now work, and no longer require mack_ruby_core_extensions
+* [#46] Calling .to_param on nil now raises a NoMethodError exception.
+* [#44] Data Factory
+* [#44] Mack::Runner has now been extended to allow for greater extension flexibility.
+* [#43] Added a Mack::Utils::Registry class to allow for easy creation of registries.
+* [#42] Sessions can now be turned off globally using the app_config.mack.use_sessions switch.
+* [#41] Deprecate orm_support.rb
+* [#38] There is now a registry of Controllers that are in the system.
+* [#36] Renamed the initialize method in the Mack::Controller module to configure_controller. This gives
+  control of the initialize method back to the class.
+* [#34] Mack::l10n now raises exception with a fully qualified name.
+* [#33] mack-active_record now requires ActiveRecord 2.0.2 explicitly, not >=2.0.2
+* [#31] Added support for ruby-debug.
+* [#24] Added mack-mailer support.
 * [#18] Added Page caching. All that's needed for using page caching is to require the mack-caching gem, turn on
   page caching in your config files with: 
     use_page_caching: true
   and, in your controllers, specify which pages you would like cached with the cache_pages directive:
     cache_pages :only => [:index, :show] # you can also use :except
-* [#43] Added a Mack::Utils::Registry class to allow for easy creation of registries.
-* [#44] Mack::Runner has now been extended to allow for greater extension flexibility.
-* [#42] Sessions can now be turned off globally using the app_config.mack.use_sessions switch.
-* [#38] There is now a registry of Controllers that are in the system.
-* [#36] Renamed the initialize method in the Mack::Controller module to configure_controller. This gives
-  control of the initialize method back to the class.
-* [#31] Added support for ruby-debug.
-* [#33] mack-active_record now requires ActiveRecord 2.0.2 explicitly, not >=2.0.2
-* [#34] Mack::l10n now raises exception with a fully qualified name.
 * [#7] Added support for Extlib::Hook in a few places.
-* [#41] Deprecate orm_support.rb
 * [#6] RJS support
-* [#49] Making sure the orm tasks is available when orm_support is removed from the app_config
-* [#49] mack-active_record:  mack-active_record.rb will require mack-active_record_tasks.rb
-* [#49] mack-data_mapper:  mack-data_mapper.rb will require mack-data_mapper_tasks.rb
-* [#49] Updated warning message if orm is defined in app_config (i.e. user only needs to require mack-[orm_name], instead of both that and mack-[orm_name]_tasks).
-* [#50] Mack will now have 2 environment files: mack_core and mack_app.  Mack.rb will load both files, but it gives other module a chance to load just the core files and not the application's files.
-* [#51] Application generator should generate orm support in the right place
-* [#52] mack-more: mack-[orm] should require mack-[orm].rb using its full path.
-* [#55] mack-more: mack-facets: Mack::Utils::Registry is now Mack::Utils::RegistryList
-* [#56] mack-more: Added Mack::Utils::RegistryMap
-* [#60] Fixed Mack executable problem
+* Added a rake tmp:clear task.
 * gem: application_configuration 1.5.1
 * gem: ruby-debug 0.10.0
 * gem: data_mapper 0.9.3

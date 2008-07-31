@@ -1,3 +1,5 @@
+require 'ruby-debug'
+
 fl = File.join(File.dirname(__FILE__), "mack")
 
 require File.join(fl, "initialization", "configuration.rb")

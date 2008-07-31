@@ -31,12 +31,16 @@ module Mack
       # Requires the gem and any libs that you've specified.
       def do_requires
         @required_gem_list.each do |g|
-          if g.version?
-            gem(g.name, g.version)
-          else
-            gem(g.name)
+          begin
+            if g.version?
+              gem(g.name, g.version)
+            else
+              gem(g.name)
+            end
+            g.libs.each { |l| require l.to_s } if g.libs?
+          rescue Exception => ex
+            Mack.logger.warn "WARNING: gem #{g.name} [version: #{g.version}] is required, but is not installed"
           end
-          g.libs.each {|l| require l.to_s} if g.libs?
         end
       end
       
