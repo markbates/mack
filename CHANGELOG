@@ -27,7 +27,6 @@
 * [#33] mack-active_record now requires ActiveRecord 2.0.2 explicitly, not >=2.0.2
 * [#31] Added support for ruby-debug.
 * [#24] Added mack-notifier support.
-* [#24] Added mack-mailer support.
 * [#18] Added Page caching. All that's needed for using page caching is to require the mack-caching gem, turn on
   page caching in your config files with: 
     use_page_caching: true
