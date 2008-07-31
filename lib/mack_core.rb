@@ -19,6 +19,7 @@ require 'genosaurus'
 require 'net/http'
 require 'pp'
 require 'test/unit'
+require 'redgreen'
 
 fl = File.join(File.dirname(__FILE__), "mack")
 
