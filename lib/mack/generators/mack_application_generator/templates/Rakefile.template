@@ -4,7 +4,3 @@ require 'rake/rdoctask'
 
 gem 'mack', '<%= @options["version"] %>'
 require 'mack_tasks'
-
-<% if @options["testing_framework"] != "rspec" -%>
-  alias_task :default, "test:<%= @options["testing_framework"] %>"
-<% end -%>
