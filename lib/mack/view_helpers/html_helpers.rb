@@ -1,5 +1,5 @@
 module Mack
-  module ViewHelpers
+  module ViewHelpers # :nodoc:
     module HtmlHelpers
       
       # This is just an alias to 
