@@ -20,7 +20,7 @@ module Mack
           msg = "\n\t[#{request.request_method.upcase}] '#{request.path_info}'\n"
           msg << "\tSession ID: #{request.session.id}\n" if app_config.mack.use_sessions
           msg << "\tParameters: #{request.all_params}\n"
-          msg << "\tCompleted in #{@total_time} (#{@requests_per_second} reqs/sec) | #{response.status} [#{request.full_host}]"
+          msg << Color.green("\tCompleted in #{@total_time} (#{@requests_per_second} reqs/sec) | #{response.status} [#{request.full_host}]")
         else
           msg = "[#{request.request_method.upcase}] '#{request.path_info}' (#{total_time})"
         end

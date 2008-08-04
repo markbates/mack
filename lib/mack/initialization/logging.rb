@@ -15,6 +15,31 @@ module Mack
 end
 
 unless Mack.logger
+
+  module Log4r # :nodoc:
+    class IOOutputter # :nodoc:
+
+      # let's not do this more than once. :)
+      unless Log4r::IOOutputter.private_instance_methods.include?("old_write")
+
+        alias_method :old_write, :write
+
+        def write(data)
+          case data
+          when /^(DEBUG:|INFO:|WARN:|ERROR:|FATAL:)\s\[.*\]\s(SELECT|INSERT|UPDATE|DELETE|CREATE|DROP)/
+            old_write(Color.yellow(data))
+          when /^(ERROR:|FATAL:)/
+            old_write(Color.red(data))
+          else
+            old_write(data)
+          end
+        end
+
+      end
+
+    end # IOOutputter
+  end # Log4r
+  
   log_directory = app_config.log_root || File.join(Mack.root, "log")
   FileUtils.mkdir_p(log_directory)
 

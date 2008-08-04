@@ -1,5 +1,5 @@
 module Mack
-  module ViewHelpers
+  module ViewHelpers # :nodoc:
     module StringHelpers
       
       # Takes a count integer and a word and returns a phrase containing the count

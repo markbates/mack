@@ -1,5 +1,5 @@
 # Include ApplicationHelper into all controllers:
-Mack.logger.info "Initializing helpers..."
+Mack.logger.debug "Initializing helpers..."
 # adding application_helper module into all defined controllers
 if Object.const_defined?("ApplicationHelper")
   Mack.logger.warn("ApplicationHelper has been deprecated! Please use move it to Mack::ViewHelpers::ApplicationHelper instead.")
