@@ -6,8 +6,8 @@ require File.join(fl, "initialization", "configuration.rb")
 
 unless Mack::Configuration.initialized_application
   
-  Mack.logger.info "Starting application in #{Mack.env} mode."
-  Mack.logger.info "Mack root: #{Mack.root}"
+  Mack.logger.debug "Starting application in #{Mack.env} mode."
+  Mack.logger.debug "Mack root: #{Mack.root}"
 
   require File.join(fl, "initialization", "application.rb")
   
@@ -15,5 +15,5 @@ unless Mack::Configuration.initialized_application
   
   Mack::Configuration.initialized_application = true if Mack::Configuration.initialized_application.nil?
 
-  Mack.logger.info "Initialization of Mack Application Environment finished."
+  Mack.logger.debug "Initialization of Mack Application Environment finished."
 end

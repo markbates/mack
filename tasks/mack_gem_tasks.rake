@@ -50,7 +50,7 @@ namespace :gem do
         s.add_dependency("rack", "0.3.0")
         s.add_dependency("mack-more", gh.version)
         s.add_dependency("application_configuration", "1.5.2")
-        s.add_dependency("cachetastic", "1.7.2")
+        s.add_dependency("cachetastic", "1.7.3")
         s.add_dependency("log4r", "1.0.5")
         s.add_dependency("thin", "0.8.2")
         s.add_dependency("builder", "2.1.2")

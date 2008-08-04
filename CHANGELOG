@@ -36,7 +36,8 @@
 * [#7] Added support for Extlib::Hook in a few places.
 * [#6] RJS support
 * Added a rake tmp:clear task.
-* gem: application_configuration 1.5.1
+* gem: cachetastic 1.7.3
+* gem: application_configuration 1.5.2
 * gem: ruby-debug 0.10.0
 * gem: data_mapper 0.9.3
 

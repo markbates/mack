@@ -14,7 +14,7 @@ unless orm.nil?
         gem.add "mack-data_mapper", :libs => "mack-data_mapper"
         ** if you use active record, then change it to mack-active_record instead of mack-data_mapper
     }
-  Mack.logger.info "Initializing #{orm} orm..."
+  Mack.logger.debug "Initializing #{orm} orm..."
   require "mack-#{orm}"
   require "mack-#{orm}_tasks"
 end
