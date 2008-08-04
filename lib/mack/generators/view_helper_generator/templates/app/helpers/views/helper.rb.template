@@ -1,0 +1,7 @@
+module Mack
+  module ViewHelpers
+    module <%= @name_singular_camel %>Helper
+
+    end
+  end
+end

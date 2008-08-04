@@ -22,6 +22,8 @@ MackApplicationGenerator
 	rake generate:mack_application
 PluginGenerator
 	rake generate:plugin
+ViewHelperGenerator
+	rake generate:view_helper
 
 
             LIST

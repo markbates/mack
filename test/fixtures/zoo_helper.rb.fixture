@@ -1,0 +1,7 @@
+module Mack
+  module ViewHelpers
+    module ZooHelper
+
+    end
+  end
+end
