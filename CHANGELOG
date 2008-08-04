@@ -15,7 +15,6 @@
 * [#47] rake gems:* tasks now work, and no longer require mack_ruby_core_extensions
 * [#46] Calling .to_param on nil now raises a NoMethodError exception.
 * [#45] rake stats task now works with Test::Unit::TestCase
-* [#44] Data Factory
 * [#44] Mack::Runner has now been extended to allow for greater extension flexibility.
 * [#43] Added a Mack::Utils::Registry class to allow for easy creation of registries.
 * [#42] Sessions can now be turned off globally using the app_config.mack.use_sessions switch.
@@ -33,6 +32,7 @@
     use_page_caching: true
   and, in your controllers, specify which pages you would like cached with the cache_pages directive:
     cache_pages :only => [:index, :show] # you can also use :except
+* [#14] Data Factory
 * [#7] Added support for Extlib::Hook in a few places.
 * [#6] RJS support
 * Added a rake tmp:clear task.
