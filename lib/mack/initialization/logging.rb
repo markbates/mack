@@ -27,9 +27,9 @@ unless Mack.logger
         def write(data)
           case data
           when /^(DEBUG:|INFO:|WARN:|ERROR:|FATAL:)\s\[.*\]\s(SELECT|INSERT|UPDATE|DELETE|CREATE|DROP)/
-            old_write(Color.yellow(data))
+            old_write(Mack::Utils::Ansi::Color.wrap(app_config.log.db_color, data))
           when /^(ERROR:|FATAL:)/
-            old_write(Color.red(data))
+            old_write(Mack::Utils::Ansi::Color.wrap(app_config.log.error_color, data))
           else
             old_write(data)
           end

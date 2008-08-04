@@ -64,7 +64,6 @@ module Mack
         "mack::show_exceptions" => true,
         "mack::use_sessions" => true,
         "mack::session_id" => "_mack_session_id",
-        "mack::rendering_systems" => [:action, :text, :partial, :public, :url, :xml],
         "mack::cookie_values" => {
           "path" => "/"
         },
@@ -87,6 +86,9 @@ module Mack
         "mack::default_respository_name" => "default",
         "mack::testing_framework" => "rspec",
         "log::detailed_requests" => true,
+        "log::db_color" => "yellow",
+        "log::error_color" => "red",
+        "log::completed_color" => "green",
         "log_level" => "info"
       }.merge(eval("DEFAULTS_#{Mack.env.upcase}"))
     end
