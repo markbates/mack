@@ -1,0 +1,15 @@
+controller_template:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "app", "controllers", "controller.rb.template") %>
+  output_path: <%= File.join("app", "controllers", "#{@name_plural}_controller.rb") %>
+<% if app_config.mack.testing_framework == "test_case" -%>
+test_template:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "test", "controllers", "test_case.rb.template") %>
+  output_path: <%= File.join("test", "controllers", "#{@name_plural}_controller_test.rb") %>
+<% elsif app_config.mack.testing_framework == "rspec" -%>
+test_template:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "test", "controllers", "rspec.rb.template") %>
+  output_path: <%= File.join("test", "controllers", "#{@name_plural}_controller_spec.rb") %>
+<% end -%>

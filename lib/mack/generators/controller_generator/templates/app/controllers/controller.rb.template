@@ -1,0 +1,4 @@
+class <%= @name_plural_camel %>Controller
+  include Mack::Controller
+  
+end
