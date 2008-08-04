@@ -1,3 +1,6 @@
+===0.6.1.1
+* [#72] Fixed serial data type in DataMapper doesn't work with SQLite3
+
 ===0.6.1
 * [#70] Mack-more: better association rules for data_factory
 * [#60] Fixed Mack executable problem
