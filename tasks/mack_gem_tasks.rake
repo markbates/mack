@@ -57,7 +57,7 @@ namespace :gem do
         s.add_dependency("crypt", "1.1.4")
         s.add_dependency("daemons", "1.0.10")
         s.add_dependency("erubis", "2.6.2")
-        s.add_dependency("genosaurus", "1.2.1")
+        s.add_dependency("genosaurus", "1.2.2")
         s.add_dependency("rcov", "0.8.1.2.0")
         s.add_dependency("rspec", "1.1.4")
         s.add_dependency("ruby-debug", "0.10.0")

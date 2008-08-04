@@ -112,7 +112,7 @@ helper_test_spec_example:
 app_helper_test_spec_example:
   type: file
   template_path: <%= File.join(templates_directory_path, "test", "helpers", "views", "application_helper_spec.rb.template") %>
-  output_path: <%= File.join(app_name, "test", "helpers", "view", "application_helper_spec.rb") %>
+  output_path: <%= File.join(app_name, "test", "helpers", "views", "application_helper_spec.rb") %>
 test_spec_models:
   type: directory
   output_path: <%= File.join(app_name, "test", "models") %>

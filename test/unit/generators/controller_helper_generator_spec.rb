@@ -5,14 +5,12 @@ describe ControllerHelperGenerator do
   
   before(:each) do
     FileUtils.rm_rf(File.join(Mack.root, "app", "helpers", "controllers", "zoos_controller_helper.rb"))
-    FileUtils.rm_rf(File.join(Mack.root, "test", "helpers", "controllers", "zoos_controller_helper_test.rb"))
-    FileUtils.rm_rf(File.join(Mack.root, "test", "helpers", "controllers", "zoos_controller_helper_spec.rb"))
+    FileUtils.rm_rf(File.join(Mack.root, "test"))
   end
   
   after(:each) do
     FileUtils.rm_rf(File.join(Mack.root, "app", "helpers", "controllers", "zoos_controller_helper.rb"))
-    FileUtils.rm_rf(File.join(Mack.root, "test", "helpers", "controllers", "zoos_controller_helper_test.rb"))
-    FileUtils.rm_rf(File.join(Mack.root, "test", "helpers", "controllers", "zoos_controller_helper_spec.rb"))
+    FileUtils.rm_rf(File.join(Mack.root, "test"))
   end
   
   it "should require a name parameter" do

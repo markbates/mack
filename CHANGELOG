@@ -1,5 +1,7 @@
 * [#73] Tests no longer use the functional/unit directories
 * [#69] Added ViewHelperGenerator and ControllerHelperGenerator
+* [#25] Added ControllerGenerator
+* gem: genosaurus 1.2.2
 
 ===0.6.1.1
 * [#72] Fixed serial data type in DataMapper doesn't work with SQLite3

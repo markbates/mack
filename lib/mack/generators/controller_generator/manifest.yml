@@ -2,6 +2,9 @@ controller_template:
   type: file
   template_path: <%= File.join(templates_directory_path, "app", "controllers", "controller.rb.template") %>
   output_path: <%= File.join("app", "controllers", "#{@name_plural}_controller.rb") %>
+views_migrations:
+  type: directory
+  output_path: <%= File.join("app", "views", @name_plural) %>
 <% if app_config.mack.testing_framework == "test_case" -%>
 test_template:
   type: file

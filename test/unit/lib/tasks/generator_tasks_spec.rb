@@ -16,6 +16,8 @@ describe "rake" do
 
 Available Generators:
 
+ControllerGenerator
+	rake generate:controller
 ControllerHelperGenerator
 	rake generate:controller_helper
 MackApplicationGenerator
