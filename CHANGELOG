@@ -1,3 +1,4 @@
+* [#70] Mack-more: better association rules for data_factory
 * [#60] Fixed Mack executable problem
 * [#59] Fixed gems:* tasks
 * [#57] Moved most files under to lib/mack
