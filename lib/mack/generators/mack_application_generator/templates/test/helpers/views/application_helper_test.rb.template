@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), '..', '..', 'test_helper')
 
-class ZooHelperTest < Test::Unit::TestCase
+class ApplicationHelperTest < Test::Unit::TestCase
   include Mack::ViewHelpers
   
   def test_truth

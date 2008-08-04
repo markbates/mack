@@ -1,7 +1,7 @@
 require File.join(File.dirname(__FILE__), '..', '..', 'test_helper')
 
-class ZooHelperTest < Test::Unit::TestCase
-  include Mack::ViewHelpers
+class DefaultControllerHelperTest < Test::Unit::TestCase
+  include Mack::ControllerHelpers::DefaultController
   
   def test_truth
     assert true

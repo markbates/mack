@@ -15,7 +15,7 @@ options = OpenStruct.new
 options.orm = "data_mapper"
 options.testing_framework = "rspec"
 options.js_framework = "jquery"
-options.version = "0.6.1"
+options.version = "0.6.1.100"
 
 opts = OptionParser.new do |opts|
   opts.banner = "Usage: mack <application_name> [options]"
