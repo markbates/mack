@@ -1,0 +1,10 @@
+require File.join(File.dirname(__FILE__), '..', '..', 'spec_helper')
+
+class ZoosControllerHelperTest < Test::Unit::TestCase
+  include Mack::ControllerHelpers::ZoosController
+  
+  def test_truth
+    assert true
+  end
+  
+end

@@ -21,6 +21,11 @@ require(File.join(File.dirname(__FILE__), "fake_application", "config", "routes.
 
 #-------------- HELPER MODULES --------------------------#
 
+def fixture(name)
+  File.read(File.join(File.dirname(__FILE__), "fixtures", "#{name}.fixture"))
+end
+
+
 module CommonHelpers
   
   # TODO: find out how to get away from using mock***

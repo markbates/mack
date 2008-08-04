@@ -1,0 +1,7 @@
+module Mack
+  module ControllerHelpers
+    module <%= @name_plural_camel %>Controller
+      # methods here will automatically be included as protected methods into <%= @name_plural_camel %>Controller
+    end
+  end
+end

@@ -1,0 +1,10 @@
+require File.join(File.dirname(__FILE__), '..', '..', 'spec_helper')
+
+class <%= @name_plural_camel %>ControllerHelperTest < Test::Unit::TestCase
+  include Mack::ControllerHelpers::<%= @name_plural_camel %>Controller
+  
+  def test_truth
+    assert true
+  end
+  
+end

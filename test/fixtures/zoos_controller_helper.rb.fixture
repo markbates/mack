@@ -1,0 +1,7 @@
+module Mack
+  module ControllerHelpers
+    module ZoosController
+      # methods here will automatically be included as protected methods into ZoosController
+    end
+  end
+end
