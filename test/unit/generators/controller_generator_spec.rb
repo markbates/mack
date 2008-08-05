@@ -55,20 +55,38 @@ describe ControllerGenerator do
   
   it "should generate a Test::Unit::TestCase test if using the Test::Unit::TestCase framework" do
     temp_app_config("mack::testing_framework" => "test_case") do
-      file = File.join(Mack.root, "test", "helpers", "controllers", "zoos_controller_helper_test.rb")
+      file = File.join(Mack.root, "test", "controllers", "zoos_controller_test.rb")
       File.should_not be_exists(file)
       ControllerGenerator.run("name" => "zoo")
       File.should be_exists(file)
-      File.read(file).should == fixture("zoos_controller_helper_test.rb")
+      File.read(file).should == fixture("zoos_controller_test.rb")
     end
   end
   
   it "should generate a RSpec test if using the RSpec framework" do
-    file = File.join(Mack.root, "test", "helpers", "controllers", "zoos_controller_helper_spec.rb")
+    file = File.join(Mack.root, "test", "controllers", "zoos_controller_spec.rb")
     File.should_not be_exists(file)
     ControllerGenerator.run("name" => "zoo")
     File.should be_exists(file)
-    File.read(file).should == fixture("zoos_controller_helper_spec.rb")
+    File.read(file).should == fixture("zoos_controller_spec.rb")
+  end
+  
+  it "should generate a Test::Unit::TestCase test if using the Test::Unit::TestCase framework with optional actions" do
+    temp_app_config("mack::testing_framework" => "test_case") do
+      file = File.join(Mack.root, "test", "controllers", "zoos_controller_test.rb")
+      File.should_not be_exists(file)
+      ControllerGenerator.run("name" => "zoo", "actions" => "index,show")
+      File.should be_exists(file)
+      File.read(file).should == fixture("zoos_controller_test_with_actions.rb")
+    end
+  end
+  
+  it "should generate a RSpec test if using the RSpec framework with optional actions" do
+    file = File.join(Mack.root, "test", "controllers", "zoos_controller_spec.rb")
+    File.should_not be_exists(file)
+    ControllerGenerator.run("name" => "zoo", "actions" => "index,show")
+    File.should be_exists(file)
+    File.read(file).should == fixture("zoos_controller_spec_with_actions.rb")
   end
   
 end
