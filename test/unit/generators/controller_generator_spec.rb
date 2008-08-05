@@ -12,10 +12,15 @@ describe ControllerGenerator do
   
   before(:each) do
     common_cleanup
+    @route_file_loc = File.join(Mack.root, "config", "routes.rb")
+    @original_route_file = File.read(@route_file_loc)
   end
   
   after(:each) do
     common_cleanup
+    File.open(@route_file_loc, "w") do |f|
+      f.puts @original_route_file
+    end
   end
   
   it "should require a name parameter" do
@@ -34,6 +39,15 @@ describe ControllerGenerator do
     File.read(index).should match(/<h1>ZoosController#index<\/h1>/)
     File.should be_exists(show)
     File.read(show).should match(/<p>You can find me in app\/views\/zoos\/show.html.erb<\/p>/)
+  end
+  
+  it "should update the routes file if there are actions" do
+    ControllerGenerator.run("name" => "zoo", "actions" => "index,show")
+    File.read(@route_file_loc).should match(/  # Added by rake generate:controller name=zoo actions=index,show/)
+    File.read(@route_file_loc).should match(/  r.with_options\(:controller => :zoos\) do \|map\|/)
+    File.read(@route_file_loc).should match(/    map.zoos_index_url "\/zoos", :action => :index/)
+    File.read(@route_file_loc).should match(/    map.zoos_show_url "\/zoos\/show", :action => :show/)
+    File.read(@route_file_loc).should match(/  end # zoos/)
   end
   
   it "should generate a controller" do

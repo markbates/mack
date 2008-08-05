@@ -16,10 +16,42 @@ class ControllerGenerator < Genosaurus
   end
   
   def after_generate # :nodoc:
+    add_actions
+    update_routes_file
+    ControllerHelperGenerator.run(@options)
+  end
+  
+  private
+  def update_routes_file # :nodoc:
+    unless @actions.empty?
+      routes = File.join(Mack.root, "config", "routes.rb")
+      rf = File.open(routes).read
+      unless rf.match(".resource :#{@name_plural}")
+        puts "Updating routes.rb"
+        nrf = ""
+        rf.each do |line|
+          if line.match("Mack::Routes.build")
+            x = line.match(/\|(.+)\|/).captures
+            line << "\n  # Added by rake generate:controller name=#{param(:name)} actions=#{param(:actions)}\n"
+            line << "\n  r.with_options(:controller => :#{@name_plural}) do |map|\n"
+            @actions.each do |action|
+              line << "\n    map.#{@name_plural}_#{action}_url \"/#{@name_plural}#{action == "index" ? "" : "/#{action}"}\", :action => :#{action}"
+            end
+            line << "\n  end # #{@name_plural}\n"
+          end
+          nrf << line
+        end
+        File.open(routes, "w") do |f|
+          f.puts nrf
+        end
+      end
+    end
+  end
+  
+  def add_actions
     @actions.each do |action|
       template(action_template(action), File.join("app", "views", @name_plural, "#{action}.html.erb"))
-    end
-    ControllerHelperGenerator.run(@options)
+    end    
   end
   
   def action_template(action) # :nodoc:
