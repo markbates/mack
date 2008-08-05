@@ -45,8 +45,8 @@ describe ControllerGenerator do
     ControllerGenerator.run("name" => "zoo", "actions" => "index,show")
     File.read(@route_file_loc).should match(/  # Added by rake generate:controller name=zoo actions=index,show/)
     File.read(@route_file_loc).should match(/  r.with_options\(:controller => :zoos\) do \|map\|/)
-    File.read(@route_file_loc).should match(/    map.zoos_index_url "\/zoos", :action => :index/)
-    File.read(@route_file_loc).should match(/    map.zoos_show_url "\/zoos\/show", :action => :show/)
+    File.read(@route_file_loc).should match(/    map.zoos_index "\/zoos", :action => :index/)
+    File.read(@route_file_loc).should match(/    map.zoos_show "\/zoos\/show", :action => :show/)
     File.read(@route_file_loc).should match(/  end # zoos/)
   end
   

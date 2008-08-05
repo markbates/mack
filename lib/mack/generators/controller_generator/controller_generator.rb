@@ -32,10 +32,10 @@ class ControllerGenerator < Genosaurus
         rf.each do |line|
           if line.match("Mack::Routes.build")
             x = line.match(/\|(.+)\|/).captures
-            line << "\n  # Added by rake generate:controller name=#{param(:name)} actions=#{param(:actions)}\n"
-            line << "\n  r.with_options(:controller => :#{@name_plural}) do |map|\n"
+            line << "\n  # Added by rake generate:controller name=#{param(:name)} actions=#{param(:actions)}"
+            line << "\n  r.with_options(:controller => :#{@name_plural}) do |map|"
             @actions.each do |action|
-              line << "\n    map.#{@name_plural}_#{action}_url \"/#{@name_plural}#{action == "index" ? "" : "/#{action}"}\", :action => :#{action}"
+              line << "\n    map.#{@name_plural}_#{action} \"/#{@name_plural}#{action == "index" ? "" : "/#{action}"}\", :action => :#{action}"
             end
             line << "\n  end # #{@name_plural}\n"
           end

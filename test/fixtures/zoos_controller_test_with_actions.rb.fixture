@@ -7,11 +7,15 @@ class ZoosControllerTest < Test::Unit::TestCase
   end
   
   def test_index
-    assert true
+    get zoos_index_url
+    assert response.successful?
+    assert_match /ZoosController#index/, response.body
   end
   
   def test_show
-    assert true
+    get zoos_show_url
+    assert response.successful?
+    assert_match /ZoosController#show/, response.body
   end
   
 end
