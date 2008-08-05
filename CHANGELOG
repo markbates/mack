@@ -1,3 +1,4 @@
+* [#76] Move mack_ring_server to mack-distributed
 * [#75] Left over mack-distributed rake tasks
 * [#8]  Move distributed code from mack-core to mack-more
 * [#74] Added optional feature to disable initialization logging.
