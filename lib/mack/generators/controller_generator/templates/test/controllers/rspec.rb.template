@@ -1,5 +1,15 @@
 require File.join(File.dirname(__FILE__), "..", "spec_helper.rb")
 
 describe <%= @name_plural_camel %>Controller do
-  
+  <% @actions.each do |action| %>
+  describe "<%= action %>" do
+    
+    it "should get the <%= action %> action" do
+      get <%= @name_plural %>_<%= action %>_url
+      response.should be_successful
+      response.body.should match(/<%= @name_plural_camel %>Controller#<%= action %>/)
+    end
+    
+  end
+  <% end %>
 end

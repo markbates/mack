@@ -1,0 +1,25 @@
+require File.join(File.dirname(__FILE__), "..", "spec_helper.rb")
+
+describe ZoosController do
+  
+  describe "index" do
+    
+    it "should get the index action" do
+      get zoos_index_url
+      response.should be_successful
+      response.body.should match(/ZoosController#index/)
+    end
+    
+  end
+  
+  describe "show" do
+    
+    it "should get the show action" do
+      get zoos_show_url
+      response.should be_successful
+      response.body.should match(/ZoosController#show/)
+    end
+    
+  end
+  
+end

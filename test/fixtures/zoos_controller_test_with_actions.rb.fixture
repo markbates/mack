@@ -1,0 +1,21 @@
+require File.join(File.dirname(__FILE__), "..", "test_helper.rb")
+
+class ZoosControllerTest < Test::Unit::TestCase
+  
+  def test_truth
+    assert true
+  end
+  
+  def test_index
+    get zoos_index_url
+    assert response.successful?
+    assert_match /ZoosController#index/, response.body
+  end
+  
+  def test_show
+    get zoos_show_url
+    assert response.successful?
+    assert_match /ZoosController#show/, response.body
+  end
+  
+end
