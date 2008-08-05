@@ -10,8 +10,7 @@ module Mack
       yield Mack::Routes::RouteMap.instance
       Mack::Routes::Urls.include_safely_into(Mack::Controller, 
                                              Mack::Rendering::ViewTemplate, 
-                                             Test::Unit::TestCase, 
-                                             Mack::Distributed::Routes::Urls)
+                                             Test::Unit::TestCase)
     end
     
     # Routes are the back bone of the Mack framework. They are used to map incoming urls to controllers.
