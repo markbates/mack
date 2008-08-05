@@ -1,3 +1,4 @@
+* [#8]  Move distributed code from mack-core to mack-more
 * [#74] Added optional feature to disable initialization logging.
 * [#73] Tests no longer use the functional/unit directories
 * [#69] Added ViewHelperGenerator and ControllerHelperGenerator
