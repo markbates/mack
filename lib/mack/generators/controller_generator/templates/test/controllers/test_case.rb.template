@@ -7,7 +7,9 @@ class <%= @name_plural_camel %>ControllerTest < Test::Unit::TestCase
   end
   <% @actions.each do |action| %>
   def test_<%= action %>
-    assert true
+    get <%= @name_plural %>_<%= action %>_url
+    assert response.successful?
+    assert_match /<%= @name_plural_camel %>Controller#<%= action %>/, response.body
   end
   <% end %>
 end
