@@ -31,7 +31,7 @@ unless Mack::Configuration.initialized_core
   require File.join(fl, "initialization", "logging.rb")
   
 
-  Mack.logger.debug "Initializing core classes..."
+  Mack.logger.debug "Initializing core classes..." unless app_config.log.disable_initialization_logging
   # Require all the necessary files to make Mack actually work!
   lib_dirs = ["errors", "core_extensions", "utils", "runner_helpers", "routing", "view_helpers", "rendering", "controller", "tasks", "initialization/server", "generators", "distributed"]
   lib_dirs << "testing"# if Mack.env == "test"
@@ -48,5 +48,5 @@ unless Mack::Configuration.initialized_core
   
   Mack::Configuration.initialized_core = true if Mack::Configuration.initialized_core.nil?
 
-  Mack.logger.debug "Initialization of Mack Core finished."
+  Mack.logger.debug "Initialization of Mack Core finished." unless app_config.log.disable_initialization_logging
 end
