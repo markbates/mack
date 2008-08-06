@@ -52,7 +52,6 @@ module Mack
     DEFAULTS_TEST = {
       "log_level" => "error",
       "run_remote_tests" => true,
-      "mack::drb_timeout" => 0,
       "mack::cookie_values" => {}
     } unless self.const_defined?("DEFAULTS_TEST")
     
@@ -79,10 +78,6 @@ module Mack
           }
         },
         "mack::site_domain" => "http://localhost:3000",
-        "mack::use_distributed_routes" => false,
-        "mack::distributed_app_name" => nil,
-        "mack::distributed_site_domain" => "http://localhost:3000",
-        "mack::drb_timeout" => 1,
         "mack::default_respository_name" => "default",
         "mack::testing_framework" => "rspec",
         "log::detailed_requests" => true,
