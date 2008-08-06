@@ -134,6 +134,7 @@ module Mack
     # If A HollyCrapError is thrown it will be caught and rendered using the OopsController and the 500 action.
     # You can catch all exceptions using Exception.
     class RouteMap
+      include Extlib::Hook
       include Singleton
       
       def initialize # :nodoc:
@@ -246,15 +247,6 @@ module Mack
         }
         
         Mack::Routes::Urls.class_eval(url)
-        
-        if app_config.mack.use_distributed_routes
-          
-          Mack::Routes::Urls.class_eval %{
-            def #{n_route}_distributed_url(options = {})
-              (@dsd || app_config.mack.distributed_site_domain) + #{n_route}_url(options)
-            end
-          }
-        end
       end
       
       def regex_from_pattern(pattern)
