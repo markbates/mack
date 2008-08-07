@@ -1,16 +1,18 @@
 require "test/unit"
 
 #--
-module Mack
-  module RunnerHelpers # :nodoc:
-    class Session
-      private
-      def retrieve_session_id(request, response, cookies)
-        $current_session_id
-      end
-    end # Session
-  end # RunnerHelpers
-end # Mack
+if Mack.env == "test"
+  module Mack
+    module RunnerHelpers # :nodoc:
+      class Session
+        private
+        def retrieve_session_id(request, response, cookies)
+          $current_session_id
+        end
+      end # Session
+    end # RunnerHelpers
+  end # Mack
+end
 #++
 
 module Mack
