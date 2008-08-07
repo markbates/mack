@@ -1,4 +1,65 @@
-body { background-color: #fff; color: #333; }
+/* http://meyerweb.com/eric/tools/css/reset/ v1.0 | 20080212 */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+/* remember to define focus styles! */
+:focus {
+  outline: 0;
+}
+
+/* remember to highlight inserts somehow! */
+ins {
+  text-decoration: none;
+}
+del {
+  text-decoration: line-through;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+
+/* @override public/stylesheets/scaffold.css */
+
+body { 
+  background-color: #e6e6e6; color: #333;
+  text-align: center;
+  min-width: 1px;
+  padding: 10px;
+}
 
 body, p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
@@ -12,9 +73,44 @@ pre {
   font-size: 11px;
 }
 
-a { color: #000; }
-a:visited { color: #666; }
-a:hover { color: #fff; background-color:#000; }
+h1 {
+  font-size: xx-large;
+}
+
+h2 {
+  font-size: x-large;
+}
+
+h3 {
+  font-size: large;
+}
+
+h1, h2, h3 {
+  padding: 5px 0px 10px 0px;
+}
+
+td, th {
+  padding: 2px;
+}
+
+div {
+  padding: 2px;
+  margin: 2px;
+  border: 1px dotted #999;
+}
+
+a {
+  color: #000;
+}
+
+a:visited {
+  color: #666;
+}
+
+a:hover {
+  color: #fff;
+  background-color:#000;
+}
 
 .fieldWithErrors {
   padding: 2px;
@@ -22,13 +118,23 @@ a:hover { color: #fff; background-color:#000; }
   display: table;
 }
 
+#wrapper {
+  background-color: #fff;
+  border-style: dotted;
+  border-width: 1px;
+  margin: 0 auto; 
+  text-align: left;
+  width: 80%;
+  padding: 4px;
+}
+
 #errorExplanation {
   width: 400px;
-  border: 2px solid red;
-  padding: 7px;
+  border: 2px solid #c00;
   padding-bottom: 12px;
   margin-bottom: 20px;
   background-color: #f0f0f0;
+  padding: 2px;  
 }
 
 #errorExplanation h2 {
@@ -36,15 +142,9 @@ a:hover { color: #fff; background-color:#000; }
   font-weight: bold;
   padding: 5px 5px 5px 15px;
   font-size: 12px;
-  margin: -7px;
+  margin: -4px;
   background-color: #c00;
   color: #fff;
-}
-
-#errorExplanation p {
-  color: #333;
-  margin-bottom: 0;
-  padding: 5px;
 }
 
 #errorExplanation ul li {
@@ -52,23 +152,14 @@ a:hover { color: #fff; background-color:#000; }
   list-style: square;
 }
 
-div.uploadStatus {
-  margin: 5px;
+#errorExplanation ol, ul {
+  padding-left: 27px;
+  padding-top: 15px;
+  padding-bottom: 7px;
 }
 
-div.progressBar {
-  margin: 5px;
-}
-
-div.progressBar div.border {
-  background-color: #fff;
-  border: 1px solid gray;
-  width: 100%;
-}
-
-div.progressBar div.background {
-  background-color: #333;
-  height: 18px;
-  width: 0%;
+#tell_notice {
+  color: green;
+  display: inline-block;
 }
 

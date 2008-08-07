@@ -9,7 +9,15 @@
 </head>
 <body>
 
-<%%= yield_to :view  %>
+<div id="wrapper">
+
+  <%% if tell[:notice] -%>
+    <div id="tell_notice"><%%= tell[:notice] %></div>
+  <%% end -%>
+
+  <div><%%= yield_to :view  %></div>
+
+</div>
 
 </body>
 </html>
