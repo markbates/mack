@@ -1,10 +1,12 @@
+* [#81] Fixed sessions working with redirects in testing
 * [#76] Move mack_ring_server to mack-distributed
 * [#75] Left over mack-distributed rake tasks
-* [#8]  Move distributed code from mack-core to mack-more
 * [#74] Added optional feature to disable initialization logging.
 * [#73] Tests no longer use the functional/unit directories
 * [#69] Added ViewHelperGenerator and ControllerHelperGenerator
 * [#25] Added ControllerGenerator
+* [#8]  Move distributed code from mack-core to mack-more
+* [#5] Added tell messaging
 * gem: genosaurus 1.2.2
 
 ===0.6.1.1

@@ -1,5 +1,18 @@
 require "test/unit"
 
+#--
+module Mack
+  module RunnerHelpers # :nodoc:
+    class Session
+      private
+      def retrieve_session_id(request, response, cookies)
+        $current_session_id
+      end
+    end # Session
+  end # RunnerHelpers
+end # Mack
+#++
+
 module Mack
   module Testing # :nodoc:
     module Helpers
@@ -95,11 +108,12 @@ module Mack
     
       # Returns a Mack::Session from the request.
       def session # :nodoc:
-        Cachetastic::Caches::MackSessionCache.get(cookies[app_config.mack.session_id]) do
+        Cachetastic::Caches::MackSessionCache.get($current_session_id) do
           id = String.randomize(40).downcase
           set_cookie(app_config.mack.session_id, id)
           sess = Mack::Session.new(id)
           Cachetastic::Caches::MackSessionCache.set(id, sess)
+          $current_session_id = id
           sess
         end
       end
@@ -108,7 +122,9 @@ module Mack
       def in_session
         @_mack_in_session = true
         clear_session
+        $current_session_id = session.id
         yield
+        $current_session_id = nil
         clear_session
         @_mack_in_session = false
       end
@@ -169,6 +185,7 @@ module Mack
       def strip_cookies_from_response(res)
         unless res.original_headers["Set-Cookie"].nil?
           res.original_headers["Set-Cookie"].each do |ck|
+            puts "ck: #{ck}"
             spt = ck.split("=")
             name = spt.first
             value = spt.last

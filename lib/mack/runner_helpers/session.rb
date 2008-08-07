@@ -7,7 +7,7 @@ module Mack
       
       def start(request, response, cookies)
         if app_config.mack.use_sessions
-          sess_id = cookies[app_config.mack.session_id]
+          sess_id = retrieve_session_id(request, response, cookies)
           unless sess_id
             sess_id = create_new_session(request, response, cookies)
           else
@@ -23,10 +23,17 @@ module Mack
       end
       
       def complete(request, response, cookies)
+        unless response.redirection?
+          request.session[:tell] = nil
+        end
         Cachetastic::Caches::MackSessionCache.set(sess_id, request.session) if app_config.mack.use_sessions
       end
       
       private
+      def retrieve_session_id(request, response, cookies)
+        cookies[app_config.mack.session_id]
+      end
+      
       def create_new_session(request, response, cookies)
         id = String.randomize(40).downcase
         cookies[app_config.mack.session_id] = {:value => id, :expires => nil}

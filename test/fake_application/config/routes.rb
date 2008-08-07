@@ -2,6 +2,12 @@ Mack::Routes.build do |r|
 
   r.resource "admin/users"
   
+  r.with_options(:controller => :tattle) do |map|
+    map.set_tell "/tattle/set_tell", :action => :set_tell
+    map.set_tell_and_redirect "/tattle/set_tell_and_redirect", :action => :set_tell_and_redirect
+    map.read_tell "/tattle/read_tell", :action => :read_tell
+  end
+  
   r.with_options(:controller => :tst_home_page) do |map|
     map.connect "/"
     map.connect "foo", :action => :foo
