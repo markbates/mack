@@ -13,6 +13,22 @@ end
 describe Mack::ViewHelpers::HtmlHelpers do
   include HTMLSpecHelpers
   
+  describe "mail_to" do
+    
+    it "should use the 'text' parameter for the email parameter if one isn't given" do
+      mail_to("iii.blick.randy@langworthtowne.co.uk").should == %{<script>document.write(String.fromCharCode(60,97,32,104,114,101,102,61,34,109,97,105,108,116,111,58,105,105,105,46,98,108,105,99,107,46,114,97,110,100,121,64,108,97,110,103,119,111,114,116,104,116,111,119,110,101,46,99,111,46,117,107,34,62,105,105,105,46,98,108,105,99,107,46,114,97,110,100,121,64,108,97,110,103,119,111,114,116,104,116,111,119,110,101,46,99,111,46,117,107,60,47,97,62));</script>}.strip
+    end
+    
+    it "should build a javascript link by default" do
+      mail_to("Randy Blick III", "iii.blick.randy@langworthtowne.co.uk").should == %{<script>document.write(String.fromCharCode(60,97,32,104,114,101,102,61,34,109,97,105,108,116,111,58,105,105,105,46,98,108,105,99,107,46,114,97,110,100,121,64,108,97,110,103,119,111,114,116,104,116,111,119,110,101,46,99,111,46,117,107,34,62,82,97,110,100,121,32,66,108,105,99,107,32,73,73,73,60,47,97,62));</script>}.strip
+    end
+    
+    it "should generate a 'plain' version of the link if specified" do
+      mail_to("Randy Blick III", "iii.blick.randy@langworthtowne.co.uk", :format => :plain).should == link_to("Randy Blick III", "mailto:iii.blick.randy@langworthtowne.co.uk")
+    end
+    
+  end
+  
   describe "submit_tag" do
     
     it "should build a simple submit tag" do

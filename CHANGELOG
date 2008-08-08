@@ -1,3 +1,4 @@
+* [#83] Added mail_to HTML helper.
 * [#82] Added ACL support to mack-distributed
 * [#81] Fixed sessions working with redirects in testing
 * [#80] Distributed objects present both the DRb::DRbObject inspect and the original object's inspect when asked.
