@@ -1,3 +1,4 @@
+* [#84] Added Mack::Distributed.lookup(url) to retrieve specific distributed services.
 * [#83] Added mail_to HTML helper.
 * [#82] Added ACL support to mack-distributed
 * [#81] Fixed sessions working with redirects in testing
