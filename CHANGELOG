@@ -11,11 +11,14 @@
 * [#74] Added optional feature to disable initialization logging.
 * [#73] Tests no longer use the functional/unit directories
 * [#69] Added ViewHelperGenerator and ControllerHelperGenerator
+* [#39] HAML 2.0.2 support
 * [#25] Added ControllerGenerator
 * [#10] Added distributed objects to mack-distributed.
 * [#8]  Move distributed code from mack-core to mack-more
 * [#5] Added tell messaging
 * gem: genosaurus 1.2.2
+* gem: haml 2.0.2
+* gem: addressable 1.0.4
 
 ===0.6.1.1
 * [#72] Fixed serial data type in DataMapper doesn't work with SQLite3
