@@ -55,14 +55,10 @@ namespace :test do
 end
 
 task :default do
-  require 'application_configuration'
-  app_config.load_file(File.join(FileUtils.pwd, "config", "app_config", "default.yml"))
-  app_config.load_file(File.join(FileUtils.pwd, "config", "app_config", "test.yml"))
+  ENV["MACK_ENV"] = "test"
+  Rake::Task["mack:environment"].invoke
   tf = "rspec"
-  begin
-    tf = app_config.mack.testing_framework
-  rescue Exception => e
-  end
+  tf = app_config.mack.testing_framework
   Rake::Task["test:setup"].invoke
   Rake::Task["test:#{tf}"].invoke
 end

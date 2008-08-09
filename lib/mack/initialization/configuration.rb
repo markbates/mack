@@ -85,10 +85,11 @@ module Mack
         "log::error_color" => "red",
         "log::completed_color" => "green",
         "log_level" => "info"
-      }.merge(eval("DEFAULTS_#{Mack.env.upcase}"))
+      }#.merge(eval("DEFAULTS_#{Mack.env.upcase}"))
     end
     
     app_config.load_hash(DEFAULTS, "mack_defaults")
+    app_config.load_hash(eval("DEFAULTS_#{Mack.env.upcase}"), "mack_defaults_#{Mack.env}")
     app_config.load_file(File.join(Mack.root, "config", "app_config", "default.yml"))
     app_config.load_file(File.join(Mack.root, "config", "app_config", "#{Mack.env}.yml"))
     # app_config.reload
