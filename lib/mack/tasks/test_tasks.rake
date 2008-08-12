@@ -26,7 +26,7 @@ namespace :test do
     ENV["MACK_ENV"] = "test"
     Rake::Task["mack:environment"].invoke
     Rake::Task["test:setup"].invoke
-    x = `rcov test/**/*_#{app_config.mack.testing_framework == "rspec" ? "spec" : "test"}.rb -T --no-html -x Rakefile,config\/`
+    x = `rcov test/**/*_#{app_config.mack.testing_framework == "rspec" ? "spec" : "test"}.rb -T --no-html -x Rakefile,config\/,tasks\/`
     x.each do |line|
       case line
       when /^\+[\+\-]*\+$/, /^\|.*\|$/, /\d+\sLines\s+\d+\sLOC/
@@ -40,7 +40,7 @@ namespace :test do
     ENV["MACK_ENV"] = "test"
     Rake::Task["mack:environment"].invoke
     Rake::Task["test:setup"].invoke
-    `rcov test/**/*_#{app_config.mack.testing_framework == "rspec" ? "spec" : "test"}.rb -x Rakefile,config\/`
+    `rcov test/**/*_#{app_config.mack.testing_framework == "rspec" ? "spec" : "test"}.rb -x Rakefile,config\/,tasks\/`
     `open coverage/index.html`
   end
   
