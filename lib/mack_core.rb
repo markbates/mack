@@ -6,7 +6,6 @@ require 'application_configuration'
 require 'cachetastic'
 require 'fileutils'
 require 'log4r'
-require 'crypt/rijndael'
 require 'singleton'
 require 'uri'
 require 'drb'
@@ -19,7 +18,6 @@ require 'genosaurus'
 require 'net/http'
 require 'pp'
 require 'test/unit'
-require 'redgreen'
 
 fl = File.join(File.dirname(__FILE__), "mack")
 

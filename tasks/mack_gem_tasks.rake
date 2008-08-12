@@ -53,7 +53,6 @@ namespace :gem do
         s.add_dependency("log4r", "1.0.5")
         s.add_dependency("thin", "0.8.2")
         s.add_dependency("builder", "2.1.2")
-        s.add_dependency("crypt", "1.1.4")
         s.add_dependency("daemons", "1.0.10")
         s.add_dependency("erubis", "2.6.2")
         s.add_dependency("genosaurus", "1.2.2")
