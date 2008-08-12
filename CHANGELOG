@@ -1,4 +1,4 @@
-* [#11] Distributed Layout/Views
+* [#87] Refactored out common ORM code from mack-active_record and mack-data_mapper into mack-orm
 * [#86] stylesheet link helper
 * [#85] Refactored out Mack::ViewHelpers::HtmlHelpers into Mack::ViewHelpers::HtmlHelpers, Mack::ViewHelpers::FormHelpers and
         Mack::ViewHelpers::linkHelpers
@@ -16,6 +16,7 @@
 * [#67] Added test:setup tasks for active_record and data_mapper
 * [#39] HAML 2.0.2 support
 * [#25] Added ControllerGenerator
+* [#11] Distributed Layout/Views
 * [#10] Added distributed objects to mack-distributed.
 * [#8]  Move distributed code from mack-core to mack-more
 * [#5] Added tell messaging
