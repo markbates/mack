@@ -1,3 +1,4 @@
+* [#11] Distributed Layout/Views
 * [#86] stylesheet link helper
 * [#85] Refactored out Mack::ViewHelpers::HtmlHelpers into Mack::ViewHelpers::HtmlHelpers, Mack::ViewHelpers::FormHelpers and
         Mack::ViewHelpers::linkHelpers
