@@ -91,6 +91,15 @@ module Mack
         end
       end
       
+      def stylesheet(name)
+        path = ""
+        path = "#{app_config.mack.distributed_site_domain}" if app_config.mack.distributed_site_domain
+        file_name = "#{name}.css" if !name.ends_with?(".css")
+        
+        link = "<link href=\"#{path}/stylesheets/#{file_name}\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />"
+        return link
+      end
+      
     end # LinkHelpers
   end # ViewHelpers
 end # Mack
