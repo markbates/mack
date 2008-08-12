@@ -85,5 +85,27 @@ describe Mack::ViewHelpers::LinkHelpers do
       link.should == %{<a href="foo.com"><img alt="This is an image!" border="0" src="/images/foo.jpg" /></a>}
     end
   end
+  
+  describe "stylesheet" do
+    it "should generate stylesheet link without domain info if not specified" do
+      temp_app_config("mack::distributed_site_domain" => nil) do
+        stylesheet("foo").should_not match(/localhost/)
+      end
+    end
+    
+    it "should generate stylesheet link with domain info if specified" do
+      temp_app_config("mack::distributed_site_domain" => 'http://localhost:3001') do
+        stylesheet("foo").should match(/localhost/)
+      end
+    end
+    
+    it "should generate .css link if not specified" do
+      stylesheet("foo").should match(/foo.css/)
+    end
+    
+    it "should generate proper css tag" do
+      stylesheet("foo").should == %{<link href="/stylesheets/foo.css" media="screen" rel="stylesheet" type="text/css" />}
+    end
+  end
 
 end

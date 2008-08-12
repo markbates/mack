@@ -91,10 +91,20 @@ module Mack
         end
       end
       
+      #
+      # Generate Stylesheet tag
+      # If distributed_site_domain is specified, then it will use it as the host of the css file
+      # example:
+      # stylesheet("foo") => <link href="/stylesheets/scaffold.css" media="screen" rel="stylesheet" type="text/css" />
+      # 
+      # distributed_site_domain is set to 'http://localhost:3001'
+      # then, stylesheet("foo") will generate
+      # <link href="http://localhost:3001/stylesheets/scaffold.css" media="screen" rel="stylesheet" type="text/css" />
+      #
       def stylesheet(name)
         path = ""
         path = "#{app_config.mack.distributed_site_domain}" if app_config.mack.distributed_site_domain
-        file_name = "#{name}.css" if !name.ends_with?(".css")
+        file_name = "#{name}.css" if !name.end_with?(".css")
         
         link = "<link href=\"#{path}/stylesheets/#{file_name}\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />"
         return link
