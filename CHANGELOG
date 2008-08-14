@@ -1,3 +1,4 @@
+* [#68] Removed const redefined warnings if mack-l10n is used along with mack-activerecord
 * [#88] Implemented pending SQLite3 tests in mack-activerecord
 * [#68] Transactional support in mack-AR
 * [#87] Refactored out common ORM code from mack-active_record and mack-data_mapper into mack-orm
