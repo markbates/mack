@@ -1,3 +1,4 @@
+* [#68] Removed const redefined warnings if mack-l10n is used along with mack-activerecord
 * [#88] Implemented pending SQLite3 tests in mack-activerecord
 * [#68] Transactional support in mack-AR
 * [#87] Refactored out common ORM code from mack-active_record and mack-data_mapper into mack-orm
@@ -19,6 +20,7 @@
 * [#39] HAML 2.0.2 support
 * [#28] Refactored out encryption into the mack-encryption gem.
 * [#25] Added ControllerGenerator
+* [#19] Added HTML form helpers
 * [#11] Distributed Layout/Views
 * [#10] Added distributed objects to mack-distributed.
 * [#8]  Move distributed code from mack-core to mack-more
