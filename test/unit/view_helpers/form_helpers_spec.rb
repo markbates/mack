@@ -120,30 +120,30 @@ describe Mack::ViewHelpers::FormHelpers do
     
   end
   
-  describe "label" do
+  describe "label_tag" do
     
     it "should create a nested label for a model" do
-      label(:cop, :full_name).should == %{<label for="cop_full_name">Full name</label>}
+      label_tag(:cop, :full_name).should == %{<label for="cop_full_name">Full name</label>}
     end
     
     it "should create a non-nested label for a simple object" do
-      label(:simple).should == %{<label for="simple">Simple</label>}
+      label_tag(:simple).should == %{<label for="simple">Simple</label>}
     end
     
     it "should create a non-nested label for just a symbol" do
-      label(:unknown).should == %{<label for="unknown">Unknown</label>}
+      label_tag(:unknown).should == %{<label for="unknown">Unknown</label>}
     end
     
     it "should create a non-nested label for just a symbol" do
-      label(:unknown).should == %{<label for="unknown">Unknown</label>}
+      label_tag(:unknown).should == %{<label for="unknown">Unknown</label>}
     end
     
     it "should create a non-nested label and use :value for it's content" do
-      label(:unknown, :value => "My Label").should == %{<label for="unknown">My Label</label>}
+      label_tag(:unknown, :value => "My Label").should == %{<label for="unknown">My Label</label>}
     end
     
     it "should create a non-nested label and use :for for it's for" do
-      label(:unknown, :for => "my_label").should == %{<label for="my_label">Unknown</label>}
+      label_tag(:unknown, :for => "my_label").should == %{<label for="my_label">Unknown</label>}
     end
     
   end

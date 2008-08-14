@@ -54,7 +54,7 @@ module Mack
         non_content_tag(:input, {:type => :image, :src => "/images/#{src}"}.merge(options))
       end
 
-      def label(name, *args)
+      def label_tag(name, *args)
         fe = FormElement.new(*args)
         unless fe.options[:for]
           fe.options[:for] = (fe.calling_method == :to_s ? name.to_s : "#{name}_#{fe.calling_method}")
@@ -101,7 +101,8 @@ module Mack
           sel_value = var.send(fe.calling_method) if var
           sel_value = fe.options[:selected] if fe.options[:selected]
           sopts.each do |kv|
-            content << %{<option value="#{kv[1]}" #{kv[1].to_s == sel_value.to_s ? "selected" : ""}>#{kv[0]}</option>}
+            selected = kv[1].to_s == sel_value.to_s ? "selected" : ""
+            content << %{<option value="#{kv[1]}" #{selected}>#{kv[0]}</option>}
           end
           fe.options.delete(:selected)
           fe.options.delete(:options)
