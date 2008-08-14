@@ -30,12 +30,13 @@ class Symbol
     Thread.current[:view_template].hidden_field(self, *args)
   end
   
-  # See Mack::ViewHelpers::FormHelpers image_submit for more information
-  def image_submit(*args)
-    Thread.current[:view_template].image_submit(self, *args)
-  end
-  
   # See Mack::ViewHelpers::FormHelpers label_tag for more information
+  # 
+  # Examples:
+  #   @user = User.new
+  #   <%= :user.label_tag :email %> # => <label for="user_email">Email</label>
+  #   <%= :i_dont_exist.label_tag %> # => <label for="i_dont_exist">I don't exist</label>
+  #   <%= :i_dont_exist.label_tag :value => "Hello" %> # => <label for="i_dont_exist">Hello</label>
   def label_tag(*args)
     Thread.current[:view_template].label(self, *args)
   end
@@ -51,6 +52,11 @@ class Symbol
   end
   
   # See Mack::ViewHelpers::FormHelpers radio_button for more information
+  # 
+  # Examples:
+  #   @user = User.new(:level => 1)
+  #   <%= :user.radio_button :level %> # => <input checked="checked" id="user_level" name="user[level]" type="radio" />
+  #   <%= :i_dont_exist.radio_button %> # => <input id="i_dont_exist" name="i_dont_exist" type="radio" />
   def radio_button(*args)
     Thread.current[:view_template].radio_button(self, *args)
   end

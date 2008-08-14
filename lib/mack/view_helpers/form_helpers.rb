@@ -67,15 +67,6 @@ module Mack
         content_tag(:label, fe.options, content)
       end
 
-      def radio_button(name, *args)
-        build_form_element(name, {:type => :radio}, *args) do |var, fe, options|
-          if options[:value]
-            options.merge!(:checked => "checked")
-          end
-          options.delete(:value)
-        end
-      end
-
       def select(name, *args)
         var = instance_variable_get("@#{name}")
         fe = FormElement.new(*args)
@@ -140,14 +131,26 @@ module Mack
         build_form_element(name, {:type => :password}, *args)
       end
       
+      def radio_button(name, *args)
+        build_form_element(name, {:type => :radio, :value => ""}, *args) do |var, fe, options|
+          if fe.options[:value]
+            if fe.options[:value] == options[:value]
+              options.merge!(:checked => "checked")
+            end
+          elsif options[:value]
+            options.merge!(:checked => "checked")
+          end
+        end
+      end
+      
       private
       def build_form_element(name, options, *original_args)
         var = instance_variable_get("@#{name}")
+        fe = FormElement.new(*original_args)
         options = {:name => name, :id => name}.merge(options)
         if var.nil?
-          return non_content_tag(:input, options)
+          return non_content_tag(:input, options.merge(fe.options))
         else
-          fe = FormElement.new(*original_args)
           unless fe.calling_method == :to_s
             options.merge!(:name => "#{name}[#{fe.calling_method}]", :id => "#{name}_#{fe.calling_method}")
           end
@@ -179,6 +182,9 @@ module Mack
           when nil
           else
             raise ArgumentError.new("You must provide either a Symbol, a String, a Hash, or a combination thereof.")
+          end
+          if self.options[:checked]
+            self.options[:checked] = :checked
           end
         end
 

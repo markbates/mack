@@ -151,25 +151,19 @@ describe Mack::ViewHelpers::FormHelpers do
   describe "radio_button" do
     
     it "should create a nested radio_button for a model" do
-      radio_button(:cop, :tos).should == %{<input id="cop_tos" name="cop[tos]" type="radio" />}
+      radio_button(:cop, :level).should == %{<input checked="checked" id="cop_level" name="cop[level]" type="radio" value="1" />}
+      radio_button(:cop, :level, :value => "twoa").should == %{<input id="cop_level" name="cop[level]" type="radio" value="twoa" />}
     end
     
     it "should create a non-nested radio_button for a simple object" do
-      radio_button(:simple).should == %{<input checked="checked" id="simple" name="simple" type="radio" />}
+      radio_button(:simple).should == %{<input checked="checked" id="simple" name="simple" type="radio" value="hi" />}
+      radio_button(:simple, :value => "twob").should == %{<input id="simple" name="simple" type="radio" value="twob" />}
     end
     
     it "should create a non-nested radio_button for just a symbol" do
-      radio_button(:unknown).should == %{<input id="unknown" name="unknown" type="radio" />}
-    end
-    
-    it "should be checked if the value is true" do
-      @cop.tos = true
-      radio_button(:cop, :tos).should == %{<input checked="checked" id="cop_tos" name="cop[tos]" type="radio" />}
-    end
-    
-    it "should be unchecked if the value is false" do
-      @cop.tos = false
-      radio_button(:cop, :tos).should == %{<input id="cop_tos" name="cop[tos]" type="radio" />}
+      radio_button(:unknown).should == %{<input id="unknown" name="unknown" type="radio" value="" />}
+      radio_button(:unknown, :value => "twoc").should == %{<input id="unknown" name="unknown" type="radio" value="twoc" />}
+      radio_button(:unknown, :value => "twod", :checked => true).should == %{<input checked="checked" id="unknown" name="unknown" type="radio" value="twod" />}
     end
     
   end
