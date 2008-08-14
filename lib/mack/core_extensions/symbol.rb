@@ -55,23 +55,31 @@ class Symbol
   # 
   # Examples:
   #   @user = User.new(:level => 1)
-  #   <%= :user.radio_button :level %> # => <input checked="checked" id="user_level" name="user[level]" type="radio" />
-  #   <%= :i_dont_exist.radio_button %> # => <input id="i_dont_exist" name="i_dont_exist" type="radio" />
+  #   <%= :user.radio_button :level %> # => <input checked="checked" id="user_level" name="user[level]" type="radio" value="1" />
+  #   <%= :user.radio_button :level, :value => 2 %> # => <input id="user_level" name="user[level]" type="radio" value="2" />
+  #   <%= :i_dont_exist.radio_button %> # => <input id="i_dont_exist" name="i_dont_exist" type="radio" value="" />
   def radio_button(*args)
     Thread.current[:view_template].radio_button(self, *args)
   end
   
-  # See Mack::ViewHelpers::FormHelpers select for more information
-  def select(*args)
-    Thread.current[:view_template].select(self, *args)
-  end
-  
-  # See Mack::ViewHelpers::FormHelpers submit for more information
-  def submit(*args)
-    Thread.current[:view_template].submit(self, *args)
+  # See Mack::ViewHelpers::FormHelpers select_tag for more information
+  # 
+  # Examples:
+  #   @user = User.new(:level => 1)
+  #   <%= :user.select_tag :level, :options => [["one", 1], ["two", 2]] %> # => <select id="user_level" name="user[level]"><option value="1" selected>one</option><option value="2" >two</option></select>
+  #   <%= :user.select_tag :level, :options => {:one => 1, :two => 2} %> # => <select id="user_level" name="user[level]"><option value="1" selected>one</option><option value="2" >two</option></select>
+  #   <%= :i_dont_exist.select_tag :options => [["one", 1], ["two", 2]], :selected => 1 %> # => <select id="i_dont_exist" name="i_dont_exist"><option value="1" selected>one</option><option value="2" >two</option></select>
+  def select_tag(*args)
+    Thread.current[:view_template].select_tag(self, *args)
   end
   
   # See Mack::ViewHelpers::FormHelpers text_area for more information
+  # 
+  # Examples:
+  #   @user = User.new(:bio => "my bio here")
+  #   <%= :user.text_area :bio %> # => <textarea id="user_bio" name="user[bio]">my bio here</textarea>
+  #   <%= :i_dont_exist.text_area %> # => <textarea id="i_dont_exist" name="i_dont_exist"></textarea>
+  #   <%= :i_dont_exist.text_area :value => "hi there" %> # => <textarea id="i_dont_exist" name="i_dont_exist">hi there</textarea>
   def text_area(*args)
     Thread.current[:view_template].text_area(self, *args)
   end

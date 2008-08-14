@@ -168,30 +168,30 @@ describe Mack::ViewHelpers::FormHelpers do
     
   end
   
-  describe "select" do
+  describe "select_tag" do
     
     it "should create a nested select tag for a model" do
-      select(:cop, :level).should == %{<select id="cop_level" name="cop[level]"></select>}
+      select_tag(:cop, :level).should == %{<select id="cop_level" name="cop[level]"></select>}
     end
     
     it "should create a non-nested select tag for a simple model" do
-      select(:simple).should == %{<select id="simple" name="simple"></select>}
+      select_tag(:simple).should == %{<select id="simple" name="simple"></select>}
     end
     
     it "should build the options from a given array of arrays" do
-      select(:simple, :options => @select_options).should == %{<select id="simple" name="simple"><option value="1" >one</option><option value="2" >two</option><option value="3" >three</option></select>}
+      select_tag(:simple, :options => @select_options).should == %{<select id="simple" name="simple"><option value="1" >one</option><option value="2" >two</option><option value="3" >three</option></select>}
     end
     
     it "should build the options from a given hash" do
-      select(:simple, :options => {"one" => 1, "two" => 2, "three" => 3}).should == %{<select id="simple" name="simple"><option value="1" >one</option><option value="3" >three</option><option value="2" >two</option></select>}
+      select_tag(:simple, :options => {"one" => 1, "two" => 2, "three" => 3}).should == %{<select id="simple" name="simple"><option value="1" >one</option><option value="3" >three</option><option value="2" >two</option></select>}
     end
     
     it "should mark an option as selected if the model has it seleceted" do
-      select(:cop, :level, :options => @select_options).should == %{<select id="cop_level" name="cop[level]"><option value="1" selected>one</option><option value="2" >two</option><option value="3" >three</option></select>}
+      select_tag(:cop, :level, :options => @select_options).should == %{<select id="cop_level" name="cop[level]"><option value="1" selected>one</option><option value="2" >two</option><option value="3" >three</option></select>}
     end
     
     it "should mark an option as selected if the selected options is available" do
-      select(:simple, :options => @select_options, :selected => 1).should == %{<select id="simple" name="simple"><option value="1" selected>one</option><option value="2" >two</option><option value="3" >three</option></select>}
+      select_tag(:simple, :options => @select_options, :selected => 1).should == %{<select id="simple" name="simple"><option value="1" selected>one</option><option value="2" >two</option><option value="3" >three</option></select>}
     end
     
   end
@@ -208,6 +208,7 @@ describe Mack::ViewHelpers::FormHelpers do
     
     it "should create a non-nested text_area for just a symbol" do
       text_area(:unknown).should == %{<textarea id="unknown" name="unknown"></textarea>}
+      text_area(:unknown, :value => "hi there").should == %{<textarea id="unknown" name="unknown">hi there</textarea>}
     end
 
     it "should create a nested text_area for a model with an empty value if value is false" do
@@ -278,18 +279,18 @@ Hello
     
   end
   
-  describe "submit" do
+  describe "submit_button" do
     
     it "should build a simple submit tag" do
-      submit.should == %{<input type="submit" value="Submit" />}
+      submit_button.should == %{<input type="submit" value="Submit" />}
     end
     
     it "should allow you to change the value" do
-      submit("Login").should == %{<input type="submit" value="Login" />}
+      submit_button("Login").should == %{<input type="submit" value="Login" />}
     end
     
     it "should take options" do
-      submit("Login", {:class => :foo}).should == %{<input class="foo" type="submit" value="Login" />}
+      submit_button("Login", {:class => :foo}).should == %{<input class="foo" type="submit" value="Login" />}
     end
     
   end

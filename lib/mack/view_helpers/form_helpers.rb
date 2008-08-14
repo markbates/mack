@@ -24,12 +24,14 @@ module Mack
       end
       
       def submit_tag(value = "Submit", options = {}, *original_args)
-        Mack.logger.warn("DEPRECATED: 'submit_tag'. Please use 'submit' instead")
-        submit(value, options, *original_args)
+        Mack.logger.warn("DEPRECATED: 'submit_tag'. Please use 'submit_button' instead")
+        submit_button(value, options, *original_args)
       end
       
-      # Builds an HTML submit tag
-      def submit(value = "Submit", options = {}, *original_args)
+      # Examples:
+      #   <%= submit_button %> # => <input type="submit" value="Submit" />
+      #   <%= submit_button "Login" %> # => <input type="submit" value="Login" />
+      def submit_button(value = "Submit", options = {}, *original_args)
         non_content_tag(:input, {:type => :submit, :value => value}.merge(options))
       end
       
@@ -67,7 +69,7 @@ module Mack
         content_tag(:label, fe.options, content)
       end
 
-      def select(name, *args)
+      def select_tag(name, *args)
         var = instance_variable_get("@#{name}")
         fe = FormElement.new(*args)
         options = {:name => name, :id => name}
@@ -107,7 +109,9 @@ module Mack
         fe = FormElement.new(*args)
         options = {:name => name, :id => name}
         if var.nil?
-          return content_tag(:textarea, options.merge(fe.options))
+          value = fe.options[:value]
+          fe.options.delete(:value)
+          return content_tag(:textarea, options.merge(fe.options), value)
         else
           unless fe.calling_method == :to_s
             options.merge!(:name => "#{name}[#{fe.calling_method}]", :id => "#{name}_#{fe.calling_method}")
