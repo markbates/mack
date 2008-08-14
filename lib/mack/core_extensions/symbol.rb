@@ -5,7 +5,7 @@ class Symbol
   # Examples:
   #   @user = User.new(:accepted_tos => true)
   #   <%= :user.check_box :accepted_tos %> # => <input checked="checked" id="user_accepted_tos" name="user[accepted_tos]" type="checkbox" />
-  #   <%= :i_dont_exist.checkbox %> # => <input id="i_dont_exist" name="i_dont_exist" type="checkbox" />
+  #   <%= :i_dont_exist.check_box %> # => <input id="i_dont_exist" name="i_dont_exist" type="checkbox" />
   def check_box(*args)
     Thread.current[:view_template].check_box(self, *args)
   end

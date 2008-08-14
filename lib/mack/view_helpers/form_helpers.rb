@@ -2,6 +2,18 @@ module Mack
   module ViewHelpers # :nodoc:
     module FormHelpers
       
+      # Examples:
+      #   <% form(users_create_url) do -%>
+      #     # form stuff here...
+      #   <% end -%>
+      # 
+      #   <% form(users_update_url, :method => :put) do -%>
+      #     # form stuff here...
+      #   <% end -%>
+      # 
+      #   <% form(photos_create_url, :multipart => true) do -%>
+      #     # form stuff here...
+      #   <% end -%>
       def form(action, options = {}, &block)
         options = {:method => :post, :action => action}.merge(options)
         if options[:id]
@@ -23,10 +35,7 @@ module Mack
         # content_tag(:form, options, &block)
       end
       
-      def submit_tag(value = "Submit", options = {}, *original_args)
-        Mack.logger.warn("DEPRECATED: 'submit_tag'. Please use 'submit_button' instead")
-        submit_button(value, options, *original_args)
-      end
+      alias_deprecated_method :submit_tag, :submit_button, '0.7.0'
       
       # Examples:
       #   <%= submit_button %> # => <input type="submit" value="Submit" />
@@ -35,6 +44,10 @@ module Mack
         non_content_tag(:input, {:type => :submit, :value => value}.merge(options))
       end
       
+      # Examples:
+      #   @user = User.new(:accepted_tos => true)
+      #   <%= check_box :user, :accepted_tos %> # => <input checked="checked" id="user_accepted_tos" name="user[accepted_tos]" type="checkbox" />
+      #   <%= check_box :i_dont_exist %> # => <input id="i_dont_exist" name="i_dont_exist" type="checkbox" />
       def check_box(name, *args)
         build_form_element(name, {:type => :checkbox}, *args) do |var, fe, options|
           if options[:value]
@@ -43,19 +56,34 @@ module Mack
           options.delete(:value)
         end
       end
-
+      
+      # Examples:
+      #   @user = User.new(:bio_file => "~/bio.doc")
+      #   <%= file_field :user, :bio_file %> # => <input id="user_bio_field" name="user[bio_field]" type="file" value="~/bio.doc" />
+      #   <%= file_field :i_dont_exist %> # => <input id="i_dont_exist" name="i_dont_exist" type="file" value="" />
       def file_field(name, *args)
         build_form_element(name, {:type => :file}, *args)
       end
 
+      # Examples:
+      #   @user = User.new(:email => "mark@mackframework.com")
+      #   <%= hidden_field :user, :email %> # => <input id="user_email" name="user[email]" type="hidden" value="mark@mackframework.com" />
+      #   <%= hidden_field :i_dont_exist %> # => <input id="i_dont_exist" name="i_dont_exist" type="hidden" />
       def hidden_field(name, *args)
         build_form_element(name, {:type => :hidden}, *args)
       end
-
+      
+      # Examples:
+      #   <%= image_submit "logo.png" %> # => <input src="/images/logo.png" type="image" />
       def image_submit(src, options = {})
         non_content_tag(:input, {:type => :image, :src => "/images/#{src}"}.merge(options))
       end
 
+      # Examples:
+      #   @user = User.new
+      #   <%= label_tag :user, :email %> # => <label for="user_email">Email</label>
+      #   <%= label_tag :i_dont_exist %> # => <label for="i_dont_exist">I don't exist</label>
+      #   <%= label_tag :i_dont_exist, :value => "Hello" %> # => <label for="i_dont_exist">Hello</label>
       def label_tag(name, *args)
         fe = FormElement.new(*args)
         unless fe.options[:for]
@@ -69,6 +97,11 @@ module Mack
         content_tag(:label, fe.options, content)
       end
 
+      # Examples:
+      #   @user = User.new(:level => 1)
+      #   <%= select_tag :user, :level, :options => [["one", 1], ["two", 2]] %> # => <select id="user_level" name="user[level]"><option value="1" selected>one</option><option value="2" >two</option></select>
+      #   <%= select_tag :user :level, :options => {:one => 1, :two => 2} %> # => <select id="user_level" name="user[level]"><option value="1" selected>one</option><option value="2" >two</option></select>
+      #   <%= select_tag :i_dont_exist :options => [["one", 1], ["two", 2]], :selected => 1 %> # => <select id="i_dont_exist" name="i_dont_exist"><option value="1" selected>one</option><option value="2" >two</option></select>
       def select_tag(name, *args)
         var = instance_variable_get("@#{name}")
         fe = FormElement.new(*args)
@@ -103,7 +136,12 @@ module Mack
         
         return content_tag(:select, options.merge(fe.options), content)
       end
-
+      
+      # Examples:
+      #   @user = User.new(:bio => "my bio here")
+      #   <%= text_area :user, :bio %> # => <textarea id="user_bio" name="user[bio]">my bio here</textarea>
+      #   <%= text_area :i_dont_exist %> # => <textarea id="i_dont_exist" name="i_dont_exist"></textarea>
+      #   <%= text_area :i_dont_exist :value => "hi there" %> # => <textarea id="i_dont_exist" name="i_dont_exist">hi there</textarea>
       def text_area(name, *args)
         var = instance_variable_get("@#{name}")
         fe = FormElement.new(*args)
@@ -126,15 +164,28 @@ module Mack
           return content_tag(:textarea, options.merge(fe.options), content)
         end
       end
-
+      
+      # Examples:
+      #   @user = User.new(:email => "mark@mackframework.com")
+      #   <%= text_field :user, :email %> # => <input id="user_email" name="user[email]" type="text" value="mark@mackframework.com" />
+      #   <%= text_field :i_dont_exist %> # => <input id="i_dont_exist" name="i_dont_exist" type="text" />
       def text_field(name, *args)
         build_form_element(name, {:type => :text}, *args)
       end
       
+      # Examples:
+      #   @user = User.new(:email => "mark@mackframework.com")
+      #   <%= password_field :user, :email %> # => <input id="user_email" name="user[email]" type="password" value="mark@mackframework.com" />
+      #   <%= password_field :i_dont_exist %> # => <input id="i_dont_exist" name="i_dont_exist" type="password" />
       def password_field(name, *args)
         build_form_element(name, {:type => :password}, *args)
       end
       
+      # Examples:
+      #   @user = User.new(:level => 1)
+      #   <%= radio_button :user, :level %> # => <input checked="checked" id="user_level" name="user[level]" type="radio" value="1" />
+      #   <%= radio_button :user, :level, :value => 2 %> # => <input id="user_level" name="user[level]" type="radio" value="2" />
+      #   <%= radio_button :i_dont_exist %> # => <input id="i_dont_exist" name="i_dont_exist" type="radio" value="" />
       def radio_button(name, *args)
         build_form_element(name, {:type => :radio, :value => ""}, *args) do |var, fe, options|
           if fe.options[:value]
@@ -148,7 +199,7 @@ module Mack
       end
       
       private
-      def build_form_element(name, options, *original_args)
+      def build_form_element(name, options, *original_args) # :nodoc:
         var = instance_variable_get("@#{name}")
         fe = FormElement.new(*original_args)
         options = {:name => name, :id => name}.merge(options)
@@ -166,7 +217,7 @@ module Mack
         end
       end
       
-      class FormElement
+      class FormElement # :nodoc:
 
         attr_accessor :calling_method
         attr_accessor :options
