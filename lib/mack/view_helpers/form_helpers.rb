@@ -77,7 +77,37 @@ module Mack
       end
 
       def select(name, *args)
+        var = instance_variable_get("@#{name}")
+        fe = FormElement.new(*args)
+        options = {:name => name, :id => name}
+        unless fe.calling_method == :to_s
+          options.merge!(:name => "#{name}[#{fe.calling_method}]", :id => "#{name}_#{fe.calling_method}")
+        end
 
+        content = ""
+
+        opts = fe.options[:options]
+        unless opts.nil?
+          sopts = opts
+          if opts.is_a?(Array)
+          elsif opts.is_a?(Hash)
+            sopts = []
+            opts.sort.each do |k,v|
+              sopts << [k, v]
+            end
+          else
+            raise ArgumentError.new(":options must be either an Array of Arrays or a Hash!")
+          end
+          sel_value = var.send(fe.calling_method) if var
+          sel_value = fe.options[:selected] if fe.options[:selected]
+          sopts.each do |kv|
+            content << %{<option value="#{kv[1]}" #{kv[1].to_s == sel_value.to_s ? "selected" : ""}>#{kv[0]}</option>}
+          end
+          fe.options.delete(:selected)
+          fe.options.delete(:options)
+        end
+        
+        return content_tag(:select, options.merge(fe.options), content)
       end
 
       def text_area(name, *args)

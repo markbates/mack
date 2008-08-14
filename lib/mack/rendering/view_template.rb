@@ -3,7 +3,6 @@ module Mack
     # This class is used to do all the view level bindings.
     # It allows for seperation between the Mack::Controller and the view levels.
     class ViewTemplate
-      include Mack::ViewHelpers
       
       # Allows access to any options passed into the template.
       attr_accessor :options
