@@ -1,3 +1,4 @@
+* [#96] Distributed Views module now uses file cache
 * [#92] Removed deprecated app_config.orm code.
 * [#91] Fixed Mack blowing up if there is no config/initializers/gems.rb file.
 * [#90] Added deprecation system.
