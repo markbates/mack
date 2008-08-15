@@ -1,6 +1,5 @@
-* [#68] Removed const redefined warnings if mack-l10n is used along with mack-activerecord
+* [#90] Added deprecation system.
 * [#88] Implemented pending SQLite3 tests in mack-activerecord
-* [#68] Transactional support in mack-AR
 * [#87] Refactored out common ORM code from mack-active_record and mack-data_mapper into mack-orm
 * [#86] stylesheet link helper
 * [#85] Refactored out Mack::ViewHelpers::HtmlHelpers into Mack::ViewHelpers::HtmlHelpers, Mack::ViewHelpers::FormHelpers and
@@ -16,7 +15,9 @@
 * [#74] Added optional feature to disable initialization logging.
 * [#73] Tests no longer use the functional/unit directories
 * [#69] Added ViewHelperGenerator and ControllerHelperGenerator
+* [#68] Transactional support in mack-AR
 * [#67] Added test:setup tasks for active_record and data_mapper
+* [#62] Removed const redefined warnings if mack-l10n is used along with mack-activerecord
 * [#39] HAML 2.0.2 support
 * [#28] Refactored out encryption into the mack-encryption gem.
 * [#25] Added ControllerGenerator
