@@ -1,3 +1,4 @@
+* [#91] Fixed Mack blowing up if there is no config/initializers/gems.rb file.
 * [#90] Added deprecation system.
 * [#89] rake gems:* will now only display warning if any gem required is not installed (and not break)
 * [#88] Implemented pending SQLite3 tests in mack-activerecord

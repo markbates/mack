@@ -7,10 +7,13 @@ require 'application_configuration'
 require File.join(File.dirname(__FILE__), "mack", "initialization", "configuration.rb")
 
 require File.join(File.dirname(__FILE__), 'mack_core')
-require File.join(Mack.root, "config", "initializers", "gems.rb")
-begin
-  Mack::Utils::GemManager.instance.do_requires
-rescue Gem::LoadError
+gems_rb = File.join(Mack.root, "config", "initializers", "gems.rb")
+if File.exists?(gems_rb)
+  begin
+    require File.join(Mack.root, "config", "initializers", "gems.rb")
+    Mack::Utils::GemManager.instance.do_requires
+  rescue Gem::LoadError
+  end
 end
 
 orm = app_config.orm
