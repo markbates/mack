@@ -239,6 +239,18 @@ describe Mack::ViewHelpers::FormHelpers do
     
   end
   
+  describe "delete_button" do
+    include CommonHelpers
+    
+    it "should create a form and a delete button" do
+      delete_button("http://www.mackframework.com").should == %{<form action="http://www.mackframework.com" method="post">\n<input id="_method" name="_method" type="hidden" value="delete" />\n<button type="submit">Delete</button>\n</form>}
+      delete_button("http://www.mackframework.com", "Remove", :target => "_blank").should == %{<form action="http://www.mackframework.com" method="post" target="_blank">\n<input id="_method" name="_method" type="hidden" value="delete" />\n<button type="submit">Remove</button>\n</form>}
+      delete_button("http://www.mackframework.com", "Remove", {:target => "_blank"}, {:class => "foo"}).should == %{<form action="http://www.mackframework.com" method="post" target="_blank">\n<input id="_method" name="_method" type="hidden" value="delete" />\n<button class="foo" type="submit">Remove</button>\n</form>}
+      delete_button("http://www.mackframework.com", "Remove", {:target => "_blank"}, {:confirm => "really??"}).should == %{<form action="http://www.mackframework.com" method="post" target="_blank">\n<input id="_method" name="_method" type="hidden" value="delete" />\n<button onclick="if (confirm('really??')) {submit();}; return false;" type="submit">Remove</button>\n</form>}
+    end
+    
+  end
+  
   
   describe "form" do
     include CommonHelpers

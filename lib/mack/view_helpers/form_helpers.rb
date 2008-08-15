@@ -36,6 +36,17 @@ module Mack
         # content_tag(:form, options, &block)
       end
       
+      def delete_button(url, value = "Delete", form_options = {}, button_options = {})
+        if button_options[:confirm]
+          button_options[:onclick] = "if (confirm('#{button_options[:confirm]}')) {submit();}; return false;"
+          button_options.delete(:confirm)
+        end
+        t = "\n" << hidden_field(:_method, :value => :delete)
+        t << "\n" << submit_button(value, button_options)
+        t << "\n"
+        content_tag(:form, {:action => url, :method => :post}.merge(form_options), t)
+      end
+      
       alias_deprecated_method :submit_tag, :submit_button, '0.7.0'
       
       # Examples:
