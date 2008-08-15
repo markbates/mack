@@ -282,6 +282,7 @@
 :xls: application/excel; application/vnd.ms-excel; application/x-excel; application/x-msexcel
 :js_official: application/x-javascript
 :js: text/javascript
+:json: text/javascript
 :ani: application/x-navi-animation
 :rmp: audio/x-pn-realaudio; audio/x-pn-realaudio-plugin
 :pre: application/x-freelance
