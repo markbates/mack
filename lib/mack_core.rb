@@ -42,8 +42,6 @@ unless Mack::Configuration.initialized_core
   
   require File.join(fl, "runner")
   
-  require File.join(fl, "initialization", "orm_support.rb")
-  
   Mack::Configuration.initialized_core = true if Mack::Configuration.initialized_core.nil?
 
   Mack.logger.debug "Initialization of Mack Core finished." unless app_config.log.disable_initialization_logging

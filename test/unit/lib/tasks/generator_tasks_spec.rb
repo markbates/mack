@@ -11,8 +11,7 @@ describe "rake" do
         rake_task("generator:list") do
           ENV["__generator_list"].should_not be_nil
 
-          if app_config.orm.nil?
-            list = <<-LIST
+          list = <<-LIST
 
 Available Generators:
 
@@ -29,25 +28,6 @@ ViewHelperGenerator
 
 
             LIST
-          else
-            list = <<-LIST
-
-Available Generators:
-
-MackApplicationGenerator
-	rake generate:mack_application
-MigrationGenerator
-	rake generate:migration
-ModelGenerator
-	rake generate:model
-PluginGenerator
-	rake generate:plugin
-ScaffoldGenerator
-	rake generate:scaffold
-
-
-            LIST
-          end
 
           ENV["__generator_list"].should == list
         end
