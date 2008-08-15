@@ -1,3 +1,4 @@
+* [#89] rake gems:* will now only display warning if any gem required is not installed (and not break)
 * [#68] Removed const redefined warnings if mack-l10n is used along with mack-activerecord
 * [#88] Implemented pending SQLite3 tests in mack-activerecord
 * [#68] Transactional support in mack-AR
