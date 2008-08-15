@@ -1,5 +1,6 @@
 module Mack
   module ViewHelpers # :nodoc:
+    # A useful collection of helpers for forms.
     module FormHelpers
       
       # Examples:
