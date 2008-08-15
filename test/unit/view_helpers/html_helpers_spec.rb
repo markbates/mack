@@ -65,41 +65,4 @@ describe Mack::ViewHelpers::HtmlHelpers do
     end
   end
   
-  describe "form" do
-    include CommonHelpers
-    
-    it "should generate proper form tags" do
-      tmp = <<-EOF
-<% form("http://www.mackframework.com") do %>
-Hello
-<% end %>
-      EOF
-      erb(tmp).should == "<form action=\"http://www.mackframework.com\" method=\"post\">\nHello\n</form>"
-      tmp = <<-EOF
-<% form("http://www.mackframework.com", :multipart => true) do %>
-Hello
-<% end %>
-      EOF
-      erb(tmp).should == "<form action=\"http://www.mackframework.com\" enctype=\"multipart/form-data\" method=\"post\">\nHello\n</form>"
-      tmp = <<-EOF
-<% form("http://www.mackframework.com", :id => "my_form") do %>
-Hello
-<% end %>
-      EOF
-      erb(tmp).should == "<form action=\"http://www.mackframework.com\" class=\"my_form\" id=\"my_form\" method=\"post\">\nHello\n</form>"
-      
-      tmp = <<-EOF
-<% form("http://www.mackframework.com", :id => "my_form", :method => :get) do %>
-Hello
-<% end %>
-      EOF
-      erb(tmp).should == "<form action=\"http://www.mackframework.com\" class=\"my_form\" id=\"my_form\" method=\"get\">\nHello\n</form>"
-      tmp = <<-EOF
-<% form("http://www.mackframework.com", :id => "my_form", :method => :put) do %>
-Hello
-<% end %>
-      EOF
-      erb(tmp).should == "<form action=\"http://www.mackframework.com\" class=\"my_form\" id=\"my_form\" method=\"post\">\n<input name=\"_method\" type=\"hidden\" value=\"put\" />\nHello\n</form>"
-    end
-  end
 end

@@ -2,6 +2,7 @@ require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
 describe Mack::ViewHelpers::DateTimeHelpers do
+  include Mack::ViewHelpers
   
   class Dilbert
     attr_accessor :created_at
@@ -44,9 +45,10 @@ describe Mack::ViewHelpers::DateTimeHelpers do
   describe "date_time_select" do
     
     it "should generate 5 select tags by default" do
-      pending
+      # pending
       @dilbert = Dilbert.new
-      @dilbert.created_at = Time.parse("2008-8-16 15:35")
+      @dilbert.created_at = Time.parse("2008-8-16 19:35")
+      date_time_select(:dilbert, :created_at).should == fixture("default_date_time_select.html")
     end
     
   end
