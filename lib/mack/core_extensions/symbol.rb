@@ -38,7 +38,7 @@ class Symbol
   #   <%= :i_dont_exist.label_tag %> # => <label for="i_dont_exist">I don't exist</label>
   #   <%= :i_dont_exist.label_tag :value => "Hello" %> # => <label for="i_dont_exist">Hello</label>
   def label_tag(*args)
-    Thread.current[:view_template].label(self, *args)
+    Thread.current[:view_template].label_tag(self, *args)
   end
   
   # See Mack::ViewHelpers::FormHelpers password_field for more information
