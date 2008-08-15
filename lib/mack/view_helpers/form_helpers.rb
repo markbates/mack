@@ -42,7 +42,8 @@ module Mack
       #   <%= submit_button %> # => <input type="submit" value="Submit" />
       #   <%= submit_button "Login" %> # => <input type="submit" value="Login" />
       def submit_button(value = "Submit", options = {}, *original_args)
-        non_content_tag(:input, {:type => :submit, :value => value}.merge(options))
+        # non_content_tag(:input, {:type => :submit, :value => value}.merge(options))
+        content_tag(:button, {:type => :submit}.merge(options), value)
       end
       
       # Examples:

@@ -282,15 +282,15 @@ Hello
   describe "submit_button" do
     
     it "should build a simple submit tag" do
-      submit_button.should == %{<input type="submit" value="Submit" />}
+      submit_button.should == %{<button type="submit">Submit</button>}
     end
     
     it "should allow you to change the value" do
-      submit_button("Login").should == %{<input type="submit" value="Login" />}
+      submit_button("Login").should == %{<button type="submit">Login</button>}
     end
     
     it "should take options" do
-      submit_button("Login", {:class => :foo}).should == %{<input class="foo" type="submit" value="Login" />}
+      submit_button("Login", {:class => :foo}).should == %{<button class="foo" type="submit">Login</button>}
     end
     
   end
