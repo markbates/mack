@@ -14,6 +14,7 @@ module Mack
         self.render_value = render_value
         self.options = options
         @_yield_to_cache = {}
+        Thread.current[:view_template] = self
       end
       
       # Allows access to the current Mack::Controller object.

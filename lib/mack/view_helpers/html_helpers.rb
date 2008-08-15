@@ -39,6 +39,9 @@ module Mack
       
       private
       def build_options(options)
+        if options[:disabled]
+          options[:disabled] = :disabled
+        end
         opts = ""
         unless options.empty?
           opts = " " << options.join("%s=\"%s\"", " ")
