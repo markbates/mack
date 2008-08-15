@@ -2,7 +2,7 @@
 Mack.logger.debug "Initializing helpers..." unless app_config.log.disable_initialization_logging
 # adding application_helper module into all defined controllers
 if Object.const_defined?("ApplicationHelper")
-  Mack.logger.warn("ApplicationHelper has been deprecated! Please use move it to Mack::ViewHelpers::ApplicationHelper instead.")
+  deprecate_method("ApplicationHelper", "Mack::ViewHelpers::ApplicationHelper", "0.7.0")
   ApplicationHelper.include_safely_into(Mack::Rendering::ViewTemplate)
 end
 
