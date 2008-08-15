@@ -146,7 +146,7 @@ module Mack
       def text_area(name, *args)
         var = instance_variable_get("@#{name}")
         fe = FormElement.new(*args)
-        options = {:name => name, :id => name}
+        options = {:name => name, :id => name, :cols => 60, :rows => 20}
         if var.nil?
           value = fe.options[:value]
           fe.options.delete(:value)

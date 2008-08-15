@@ -199,21 +199,21 @@ describe Mack::ViewHelpers::FormHelpers do
   describe "text_area" do
     
     it "should create a nested text_area for a model" do
-      text_area(:cop, :full_name).should == %{<textarea id="cop_full_name" name="cop[full_name]">ness</textarea>}
+      text_area(:cop, :full_name).should == %{<textarea cols="60" id="cop_full_name" name="cop[full_name]" rows="20">ness</textarea>}
     end
     
     it "should create a non-nested text_area for a simple object" do
-      text_area(:simple).should == %{<textarea id="simple" name="simple">hi</textarea>}
+      text_area(:simple).should == %{<textarea cols="60" id="simple" name="simple" rows="20">hi</textarea>}
     end
     
     it "should create a non-nested text_area for just a symbol" do
-      text_area(:unknown).should == %{<textarea id="unknown" name="unknown"></textarea>}
-      text_area(:unknown, :value => "hi there").should == %{<textarea id="unknown" name="unknown">hi there</textarea>}
+      text_area(:unknown).should == %{<textarea cols="60" id="unknown" name="unknown" rows="20"></textarea>}
+      text_area(:unknown, :value => "hi there").should == %{<textarea cols="60" id="unknown" name="unknown" rows="20">hi there</textarea>}
     end
 
     it "should create a nested text_area for a model with an empty value if value is false" do
       @cop.full_name = nil
-      text_area(:cop, :full_name).should == %{<textarea id="cop_full_name" name="cop[full_name]"></textarea>}
+      text_area(:cop, :full_name).should == %{<textarea cols="60" id="cop_full_name" name="cop[full_name]" rows="20"></textarea>}
     end
     
   end
