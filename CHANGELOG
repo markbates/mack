@@ -21,6 +21,7 @@
 * [#39] HAML 2.0.2 support
 * [#28] Refactored out encryption into the mack-encryption gem.
 * [#25] Added ControllerGenerator
+* [#19] Added HTML form helpers
 * [#11] Distributed Layout/Views
 * [#10] Added distributed objects to mack-distributed.
 * [#8]  Move distributed code from mack-core to mack-more
