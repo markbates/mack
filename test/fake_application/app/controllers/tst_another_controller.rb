@@ -48,6 +48,13 @@ class TstAnotherController
     render(:text, love_you)
   end
   
+  def do_upload
+    debugger
+    file = request.file("file0")
+    @saved_file_name = file.file_name
+    redirect_to(upload_successful_url)
+  end
+  
   def regardless_of_string_or_symbol
     x = ""
     x << "from_string: foo=#{params["foo"]}\n"

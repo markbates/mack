@@ -24,6 +24,8 @@ Mack::Routes.build do |r|
     map.env '/env', :action => :env
     map.kill_kenny_no_meth "/tst_another/kill_kenny", :action => :kill_kenny
     map.kill_kenny_bad "/tst_another/kill_kenny_bad", :action => :kill_kenny_bad
+    map.upload_file "/tst_another/do_upload", :action => :do_upload
+    map.upload_successful "/tst_another/upload_successful"
   end
   
   r.with_options(:controller => "vtt/view_template") do |map|
