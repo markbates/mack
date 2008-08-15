@@ -14,7 +14,7 @@ module Mack
       def date_time_select(name, *args)
         var = instance_variable_get("@#{name}")
         fe = FormElement.new(*args)
-        time = var.nil? ? Time.now : var.send(fe.calling_method)
+        time = var.nil? ? Time.now : (var.send(fe.calling_method) || Time.now)
         # years = ((time.year - 5)..(time.year + 5)).to_a
         years = []
         (time.year - 5).upto(time.year + 5) { |y| years << [y, y]}
