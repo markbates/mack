@@ -93,24 +93,6 @@ module Mack
       end
 
       # Examples:
-      #   @user = User.new
-      #   <%= label_tag :user, :email %> # => <label for="user_email">Email</label>
-      #   <%= label_tag :i_dont_exist %> # => <label for="i_dont_exist">I don't exist</label>
-      #   <%= label_tag :i_dont_exist, :value => "Hello" %> # => <label for="i_dont_exist">Hello</label>
-      def label_tag(name, *args)
-        fe = FormElement.new(*args)
-        unless fe.options[:for]
-          fe.options[:for] = (fe.calling_method == :to_s ? name.to_s : "#{name}_#{fe.calling_method}")
-        end
-        unless fe.options[:value]
-          fe.options[:value] = (fe.calling_method == :to_s ? name.to_s.humanize : fe.calling_method.to_s.humanize)
-        end
-        content = fe.options[:value]
-        fe.options.delete(:value)
-        content_tag(:label, fe.options, content)
-      end
-
-      # Examples:
       #   @user = User.new(:level => 1)
       #   <%= select_tag :user, :level, :options => [["one", 1], ["two", 2]] %> # => <select id="user_level" name="user[level]"><option value="1" selected>one</option><option value="2" >two</option></select>
       #   <%= select_tag :user :level, :options => {:one => 1, :two => 2} %> # => <select id="user_level" name="user[level]"><option value="1" selected>one</option><option value="2" >two</option></select>
@@ -147,7 +129,7 @@ module Mack
           fe.options.delete(:options)
         end
         
-        return content_tag(:select, options.merge(fe.options), content)
+        return label_parameter_tag(name, options[:id], var, fe) + content_tag(:select, options.merge(fe.options), content)
       end
       
       # Examples:
@@ -162,7 +144,7 @@ module Mack
         if var.nil?
           value = fe.options[:value]
           fe.options.delete(:value)
-          return content_tag(:textarea, options.merge(fe.options), value)
+          return label_parameter_tag(name, options[:id], var, fe) + content_tag(:textarea, options.merge(fe.options), value)
         else
           unless fe.calling_method == :to_s
             options.merge!(:name => "#{name}[#{fe.calling_method}]", :id => "#{name}_#{fe.calling_method}")
@@ -174,7 +156,7 @@ module Mack
           content = options[:value]
           options.delete(:value)
           
-          return content_tag(:textarea, options.merge(fe.options), content)
+          return label_parameter_tag(name, options[:id], var, fe) + content_tag(:textarea, options.merge(fe.options), content)
         end
       end
       
@@ -211,13 +193,48 @@ module Mack
         end
       end
       
+      # Examples:
+      #   @user = User.new
+      #   <%= label_tag :user, :email %> # => <label for="user_email">Email</label>
+      #   <%= label_tag :i_dont_exist %> # => <label for="i_dont_exist">I don't exist</label>
+      #   <%= label_tag :i_dont_exist, :value => "Hello" %> # => <label for="i_dont_exist">Hello</label>
+      def label_tag(name, *args)
+        fe = FormElement.new(*args)
+        unless fe.options[:for]
+          fe.options[:for] = (fe.calling_method == :to_s ? name.to_s : "#{name}_#{fe.calling_method}")
+        end
+        unless fe.options[:value]
+          fe.options[:value] = (fe.calling_method == :to_s ? name.to_s.humanize : fe.calling_method.to_s.humanize)
+        end
+        content = fe.options[:value]
+        fe.options.delete(:value)
+        content_tag(:label, fe.options, content)
+      end
+      
       private
+      def label_parameter_tag(name, id, var, fe)
+        label = ""
+        if fe.options[:label]
+          if fe.options[:label].is_a?(TrueClass)
+            if var.nil?
+              label = %{<label for="#{id}">#{name.to_s.humanize}</label>}
+            else
+              label = %{<label for="#{id}">#{fe.calling_method.to_s.humanize}</label>}
+            end
+          else
+            label = %{<label for="#{id}">#{fe.options[:label]}</label>}
+          end
+          fe.options.delete(:label)
+        end
+        return label
+      end
+      
       def build_form_element(name, options, *original_args) # :nodoc:
         var = instance_variable_get("@#{name}")
         fe = FormElement.new(*original_args)
         options = {:name => name, :id => name}.merge(options)
         if var.nil?
-          return non_content_tag(:input, options.merge(fe.options))
+          return label_parameter_tag(name, options[:id], var, fe) + non_content_tag(:input, options.merge(fe.options))
         else
           unless fe.calling_method == :to_s
             options.merge!(:name => "#{name}[#{fe.calling_method}]", :id => "#{name}_#{fe.calling_method}")
@@ -226,7 +243,7 @@ module Mack
           
           yield var, fe, options if block_given?
           
-          return non_content_tag(:input, options.merge(fe.options))
+          return label_parameter_tag(name, options[:id], var, fe) + non_content_tag(:input, options.merge(fe.options))
         end
       end
       

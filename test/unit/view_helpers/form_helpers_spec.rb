@@ -45,6 +45,11 @@ describe Mack::ViewHelpers::FormHelpers do
       check_box(:cop, :tos).should == %{<input id="cop_tos" name="cop[tos]" type="checkbox" />}
     end
     
+    it "should create a label if asked" do
+      check_box(:cop, :tos, :label => true).should == %{<label for="cop_tos">Tos</label><input id="cop_tos" name="cop[tos]" type="checkbox" />}
+      check_box(:cop, :tos, :label => "TOS").should == %{<label for="cop_tos">TOS</label><input id="cop_tos" name="cop[tos]" type="checkbox" />}
+    end
+    
   end
   
   describe "file_field" do
@@ -64,6 +69,11 @@ describe Mack::ViewHelpers::FormHelpers do
     it "should create a nested file_field for a model with an empty value if value is false" do
       @cop.bio_file = nil
       file_field(:cop, :bio_file).should == %{<input id="cop_bio_file" name="cop[bio_file]" type="file" value="" />}
+    end
+    
+    it "should create a label if asked" do
+      file_field(:unknown, :label => true).should == %{<label for="unknown">Unknown</label><input id="unknown" name="unknown" type="file" />}
+      file_field(:unknown, :label => "I Know").should == %{<label for="unknown">I Know</label><input id="unknown" name="unknown" type="file" />}
     end
     
   end
@@ -106,6 +116,11 @@ describe Mack::ViewHelpers::FormHelpers do
     it "should create a nested password_field for a model with an empty value if value is false" do
       @cop.full_name = nil
       password_field(:cop, :full_name).should == %{<input id="cop_full_name" name="cop[full_name]" type="password" value="" />}
+    end
+    
+    it "should create a label if asked" do
+      password_field(:cop, :full_name, :label => true).should == %{<label for="cop_full_name">Full name</label><input id="cop_full_name" name="cop[full_name]" type="password" value="ness" />}
+      password_field(:cop, :full_name, :label => "Cop's Name").should == %{<label for="cop_full_name">Cop's Name</label><input id="cop_full_name" name="cop[full_name]" type="password" value="ness" />}
     end
     
   end
@@ -166,6 +181,11 @@ describe Mack::ViewHelpers::FormHelpers do
       radio_button(:unknown, :value => "twod", :checked => true).should == %{<input checked="checked" id="unknown" name="unknown" type="radio" value="twod" />}
     end
     
+    it "should create a label if asked" do
+      radio_button(:cop, :level, :label => true).should == %{<label for="cop_level">Level</label><input checked="checked" id="cop_level" name="cop[level]" type="radio" value="1" />}
+      radio_button(:cop, :level, :label => "The Level").should == %{<label for="cop_level">The Level</label><input checked="checked" id="cop_level" name="cop[level]" type="radio" value="1" />}
+    end
+    
   end
   
   describe "select_tag" do
@@ -194,6 +214,11 @@ describe Mack::ViewHelpers::FormHelpers do
       select_tag(:simple, :options => @select_options, :selected => 1).should == %{<select id="simple" name="simple"><option value="1" selected>one</option><option value="2" >two</option><option value="3" >three</option></select>}
     end
     
+    it "should create a label if asked" do
+      select_tag(:cop, :level, :label => true).should == %{<label for="cop_level">Level</label><select id="cop_level" name="cop[level]"></select>}
+      select_tag(:cop, :level, :label => "The Level").should == %{<label for="cop_level">The Level</label><select id="cop_level" name="cop[level]"></select>}
+    end
+    
   end
   
   describe "text_area" do
@@ -216,6 +241,11 @@ describe Mack::ViewHelpers::FormHelpers do
       text_area(:cop, :full_name).should == %{<textarea cols="60" id="cop_full_name" name="cop[full_name]" rows="20"></textarea>}
     end
     
+    it "should create a label if asked" do
+      text_area(:cop, :full_name, :label => true).should == %{<label for="cop_full_name">Full name</label><textarea cols="60" id="cop_full_name" name="cop[full_name]" rows="20">ness</textarea>}
+      text_area(:cop, :full_name, :label => "Cop's Name").should == %{<label for="cop_full_name">Cop's Name</label><textarea cols="60" id="cop_full_name" name="cop[full_name]" rows="20">ness</textarea>}
+    end
+    
   end
   
   describe "text_field" do
@@ -235,6 +265,11 @@ describe Mack::ViewHelpers::FormHelpers do
     it "should create a nested text_field for a model with an empty value if value is false" do
       @cop.full_name = nil
       text_field(:cop, :full_name).should == %{<input id="cop_full_name" name="cop[full_name]" type="text" value="" />}
+    end
+    
+    it "should create a label if asked" do
+      text_field(:cop, :full_name, :label => true).should == %{<label for="cop_full_name">Full name</label><input id="cop_full_name" name="cop[full_name]" type="text" value="ness" />}
+      text_field(:cop, :full_name, :label => "Cop's Name").should == %{<label for="cop_full_name">Cop's Name</label><input id="cop_full_name" name="cop[full_name]" type="text" value="ness" />}
     end
     
   end
