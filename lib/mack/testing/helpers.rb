@@ -82,10 +82,19 @@ module Mack
       def put(uri, options = {})
         build_response(request.put(uri, build_request_options({:input => options.to_params})))
       end
-    
+      
+      def build_file(path)
+        return Mack::Testing::FileWrapper.new(path)
+      end
+          
       # Performs a 'post' request for the specified uri.
       def post(uri, options = {})
-        build_response(request.post(uri, build_request_options({:input => options.to_params})))
+        if options[:multipart]
+          form_input = build_multipart_data(options)
+          build_response(request.post(uri, build_request_options({"CONTENT_TYPE" => "multipart/form-data, boundary=Mack-boundary", "CONTENT_LENGTH" => form_input.size, :input => form_input})))
+        else
+          build_response(request.post(uri, build_request_options({:input => options.to_params})))
+        end
       end
     
       # Performs a 'delete' request for the specified uri.
@@ -152,6 +161,28 @@ module Mack
       end
     
       private
+      
+      def build_multipart_data(options)
+        form_input = ""
+        boundary = "--Mack-boundary\r\n"
+        options.each_pair do |k, v|
+          if v.kind_of?(Mack::Testing::FileWrapper)
+            form_input += boundary
+            form_input += "content-disposition: form-data; name=\"#{k}\"; filename=\"#{v.file_name}\"\r\n"
+            form_input += "Content-Type: #{v.mime}\r\n\r\n"
+            form_input += "#{v.content}\r\n"
+          elsif k != :multipart 
+            form_input += boundary
+            form_input += "content-disposition: form-data; name=\"#{k}\"\r\n"
+            form_input += "Content-Type: text/plain\r\n\r\n"
+            form_input += "#{v}\r\n"
+          end
+        end
+        form_input += boundary
+        return form_input
+      end
+      
+      
       def test_cookies
         @test_cookies = {} if @test_cookies.nil?
         @test_cookies

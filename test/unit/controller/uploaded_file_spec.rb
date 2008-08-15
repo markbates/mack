@@ -52,7 +52,7 @@ describe Mack::Request::UploadedFile do
     File.exists?(File.join(Mack.root, "tmp", @uploaded_file.file_name)).should == true
     File.exists?(@uploaded_file.temp_file.path).should_not == true
   end
-  
+    
   it "should raise error when destination path is not specified" do
     lambda { @uploaded_file.save }.should raise_error(ArgumentError)
   end

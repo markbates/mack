@@ -48,6 +48,19 @@ class TstAnotherController
     render(:text, love_you)
   end
   
+  def do_upload
+    file = request.file("file0")
+    @saved_file_name = file.file_name
+    @album = params[:album]
+  end
+  
+  def upload_multiple
+    file = request.file("file0")
+    @saved_file1 = file.file_name.dup
+    file = request.file("file1")
+    @saved_file2 = file.file_name.dup
+  end
+  
   def regardless_of_string_or_symbol
     x = ""
     x << "from_string: foo=#{params["foo"]}\n"
