@@ -1,6 +1,8 @@
-* [#15] File upload testing support (ability to do multipart form post in testing)
+* [#92] Removed deprecated app_config.orm code.
+* [#91] Fixed Mack blowing up if there is no config/initializers/gems.rb file.
+* [#90] Added deprecation system.
+* [#89] rake gems:* will now only display warning if any gem required is not installed (and not break)
 * [#88] Implemented pending SQLite3 tests in mack-activerecord
-* [#68] Transactional support in mack-AR
 * [#87] Refactored out common ORM code from mack-active_record and mack-data_mapper into mack-orm
 * [#86] stylesheet link helper
 * [#85] Refactored out Mack::ViewHelpers::HtmlHelpers into Mack::ViewHelpers::HtmlHelpers, Mack::ViewHelpers::FormHelpers and
@@ -16,11 +18,15 @@
 * [#74] Added optional feature to disable initialization logging.
 * [#73] Tests no longer use the functional/unit directories
 * [#69] Added ViewHelperGenerator and ControllerHelperGenerator
-* [#68] Removed const redefined warnings if mack-l10n is used along with mack-activerecord
+* [#68] Transactional support in mack-AR
+* [#62] Removed const redefined warnings if mack-l10n is used along with mack-activerecord
 * [#67] Added test:setup tasks for active_record and data_mapper
+* [#62] Removed const redefined warnings if mack-l10n is used along with mack-activerecord
 * [#39] HAML 2.0.2 support
 * [#28] Refactored out encryption into the mack-encryption gem.
 * [#25] Added ControllerGenerator
+* [#19] Added HTML form helpers
+* [#15] File upload testing support (ability to do multipart form post in testing)
 * [#11] Distributed Layout/Views
 * [#10] Added distributed objects to mack-distributed.
 * [#8]  Move distributed code from mack-core to mack-more
