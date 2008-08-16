@@ -6,18 +6,15 @@ module Mack
                 ["September", 9], ["October", 10], ["November", 11], ["December", 12]]
       DAYS = []
       1.upto(31) do |m| 
-        m = m < 10 ? "0#{m}" : m
-        DAYS << [m, m]
+        DAYS << [(m < 10 ? "0#{m}" : m), m]
       end
       HOURS = []
       1.upto(24) do |h|
-        h = h < 10 ? "0#{h}" : h
-        HOURS << [h, h]
+        HOURS << [(h < 10 ? "0#{h}" : h), h]
       end
       MINUTES = []
       1.upto(59) do |m| 
-        m = m < 10 ? "0#{m}" : m
-        MINUTES << [m, m]
+        MINUTES << [(m < 10 ? "0#{m}" : m), m]
       end
       
       def date_time_select(name, *args)
