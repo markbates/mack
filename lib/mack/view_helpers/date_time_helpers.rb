@@ -59,6 +59,11 @@ module Mack
         return label + boxes
       end
       
+      def date_select(name, *args)
+        fe = FormElement.new(*args)
+        date_time_select(name, fe.calling_method, {:hours => false, :minutes => false, :seconds => false}.merge(fe.options))
+      end
+      
       private
       def dt_select(col, name, fe, selected, values)
         options = {:name => name, :id => name}

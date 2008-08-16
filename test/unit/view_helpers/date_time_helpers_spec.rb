@@ -88,6 +88,16 @@ describe Mack::ViewHelpers::FormHelpers do
     
   end
   
+  describe "date_select" do
+    
+    it "should generate just month/day/year" do
+      @dilbert = Dilbert.new
+      @dilbert.created_at = Time.parse("2008-8-16 19:35")
+      date_select(:dilbert, :created_at).should == date_time_select(:dilbert, :created_at, :months => true, :days => true, :hours => false, :minutes => false)
+    end
+    
+  end
+  
   describe "params" do
     
     it "should be able to reconstitute a time from the date_time_select" do
