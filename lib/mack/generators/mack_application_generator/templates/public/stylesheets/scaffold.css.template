@@ -112,6 +112,11 @@ a:hover {
   background-color:#000;
 }
 
+label {
+  font-weight: bold;
+  display: block;
+}
+
 .fieldWithErrors {
   padding: 2px;
   background-color: red;
