@@ -20,7 +20,7 @@ module Mack
       def date_time_select(name, *args)
         var = instance_variable_get("@#{name}")
         fe = FormElement.new(*args)
-        
+        options = {:years => true, :months => true, :days => true, :hours => true, :minutes => true, :seconds => false}.merge(fe.options)
         label = label_parameter_tag(name, (fe.calling_method == :to_s ? name : "#{name}_#{fe.calling_method}"), var, fe)
         
         time = var.nil? ? Time.now : (var.send(fe.calling_method) || Time.now)
@@ -28,7 +28,21 @@ module Mack
         years = []
         (time.year - 5).upto(time.year + 5) { |y| years << [y, y]}
         
-        boxes = "#{dt_select(:month, name, fe, time.month, MONTHS)}/#{dt_select(:day, name, fe, time.day, DAYS)}/#{dt_select(:year, name, fe, time.year, years)} #{dt_select(:hour, name, fe, time.hour, HOURS)}:#{dt_select(:minute, name, fe, time.min, MINUTES)}"
+        date_boxes = []
+        date_boxes << dt_select(:month, name, fe, time.month, MONTHS) if options[:months]
+        date_boxes << dt_select(:day, name, fe, time.day, DAYS) if options[:days]
+        date_boxes << dt_select(:year, name, fe, time.year, years) if options[:years]
+        
+        time_boxes = []
+        time_boxes << dt_select(:hour, name, fe, time.hour, HOURS) if options[:hours]
+        time_boxes << dt_select(:minute, name, fe, time.min, MINUTES) if options[:minutes]
+        time_boxes << dt_select(:second, name, fe, time.sec, MINUTES) if options[:seconds]
+        
+        boxes = date_boxes.join("/")
+        
+        unless time_boxes.empty?
+          boxes << " " << time_boxes.join(":")
+        end
         
         return label + boxes
       end
