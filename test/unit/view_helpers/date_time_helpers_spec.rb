@@ -64,6 +64,12 @@ describe Mack::ViewHelpers::FormHelpers do
       date_time_select(:dilbert, :created_at, :seconds => true).should == fixture("date_time_select_with_seconds.html")
     end
     
+    it "should not show months if told" do
+      @dilbert = Dilbert.new
+      @dilbert.created_at = Time.parse("2008-8-16 19:35")
+      date_time_select(:dilbert, :created_at, :months => false).should == fixture("date_time_select_without_months.html")
+    end
+    
   end
   
   describe "params" do
