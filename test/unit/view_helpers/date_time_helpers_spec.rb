@@ -70,6 +70,22 @@ describe Mack::ViewHelpers::FormHelpers do
       date_time_select(:dilbert, :created_at, :months => false).should == fixture("date_time_select_without_months.html")
     end
     
+    it "should use the override options if told" do
+      @dilbert = Dilbert.new
+      @dilbert.created_at = Time.parse("2008-8-16 19:35")
+      years = []
+      1999.upto(2010) {|y| years << [y, y]}
+      date_time_select(:dilbert, :created_at, :months => false, :days => false, :hours => false, :minutes => false, :year_options => years).should == fixture("date_time_select_with_year_options.html")
+    end
+    
+    it "should use the override values if told" do
+      @dilbert = Dilbert.new
+      @dilbert.created_at = Time.parse("2008-8-16 19:35")
+      years = []
+      # 1999.upto(2010) {|y| years << [y, y]}
+      date_time_select(:dilbert, :created_at, :months => false, :days => false, :hours => false, :minutes => false, :year_values => 1999..2010).should == fixture("date_time_select_with_year_options.html")
+    end
+    
   end
   
   describe "params" do

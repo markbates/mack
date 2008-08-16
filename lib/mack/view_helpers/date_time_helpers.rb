@@ -20,26 +20,35 @@ module Mack
       def date_time_select(name, *args)
         var = instance_variable_get("@#{name}")
         fe = FormElement.new(*args)
-        options = {:years => true, :months => true, :days => true, :hours => true, :minutes => true, :seconds => false}.merge(fe.options)
-        
-        fe.options - [:years, :months, :days, :hours, :minutes, :seconds]
-        
-        label = label_parameter_tag(name, (fe.calling_method == :to_s ? name : "#{name}_#{fe.calling_method}"), var, fe)
         
         time = var.nil? ? Time.now : (var.send(fe.calling_method) || Time.now)
-        # years = ((time.year - 5)..(time.year + 5)).to_a
+        
         years = []
         (time.year - 5).upto(time.year + 5) { |y| years << [y, y]}
         
+        options = {:years => true, :months => true, :days => true, :hours => true, :minutes => true, :seconds => false, :year_options => years, :month_options => MONTHS, :day_options => DAYS, :hour_options => HOURS, :minute_options => MINUTES, :second_options => MINUTES}.merge(fe.options)
+        
+        [:year, :month, :day, :hour, :minute, :second].each do |v|
+          if options["#{v}_values".to_sym]
+            options["#{v}_options".to_sym] = []
+            options["#{v}_values".to_sym].each {|i| options["#{v}_options".to_sym] << [i, i]}
+          end
+        end
+        
+        fe.options - [:years, :months, :days, :hours, :minutes, :seconds, :year_options, :month_options, :day_options, :hour_options, :minute_options, :second_options, :year_values, :month_values, :day_values, :hour_values, :minute_values, :second_values]
+        
+        label = label_parameter_tag(name, (fe.calling_method == :to_s ? name : "#{name}_#{fe.calling_method}"), var, fe)
+
+        
         date_boxes = []
-        date_boxes << dt_select(:month, name, fe, time.month, MONTHS) if options[:months]
-        date_boxes << dt_select(:day, name, fe, time.day, DAYS) if options[:days]
-        date_boxes << dt_select(:year, name, fe, time.year, years) if options[:years]
+        date_boxes << dt_select(:month, name, fe, time.month, options[:month_options]) if options[:months]
+        date_boxes << dt_select(:day, name, fe, time.day, options[:day_options]) if options[:days]
+        date_boxes << dt_select(:year, name, fe, time.year, options[:year_options]) if options[:years]
         
         time_boxes = []
-        time_boxes << dt_select(:hour, name, fe, time.hour, HOURS) if options[:hours]
-        time_boxes << dt_select(:minute, name, fe, time.min, MINUTES) if options[:minutes]
-        time_boxes << dt_select(:second, name, fe, time.sec, MINUTES) if options[:seconds]
+        time_boxes << dt_select(:hour, name, fe, time.hour, options[:hour_options]) if options[:hours]
+        time_boxes << dt_select(:minute, name, fe, time.min, options[:minute_options]) if options[:minutes]
+        time_boxes << dt_select(:second, name, fe, time.sec, options[:second_options]) if options[:seconds]
         
         boxes = date_boxes.join("/")
         
