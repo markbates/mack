@@ -5,11 +5,20 @@ module Mack
       MONTHS = [["January", 1], ["February", 2], ["March", 3], ["April", 4], ["May", 5], ["June", 6], ["July", 7], ["August", 8], 
                 ["September", 9], ["October", 10], ["November", 11], ["December", 12]]
       DAYS = []
-      1.upto(31) {|m| DAYS << [m, m]}
+      1.upto(31) do |m| 
+        m = m < 10 ? "0#{m}" : m
+        DAYS << [m, m]
+      end
       HOURS = []
-      1.upto(24) {|h| HOURS << [h, h]}
+      1.upto(24) do |h|
+        h = h < 10 ? "0#{h}" : h
+        HOURS << [h, h]
+      end
       MINUTES = []
-      1.upto(59) {|m| MINUTES << [m, m]}
+      1.upto(59) do |m| 
+        m = m < 10 ? "0#{m}" : m
+        MINUTES << [m, m]
+      end
       
       def date_time_select(name, *args)
         var = instance_variable_get("@#{name}")
