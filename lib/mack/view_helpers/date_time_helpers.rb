@@ -21,6 +21,9 @@ module Mack
         var = instance_variable_get("@#{name}")
         fe = FormElement.new(*args)
         options = {:years => true, :months => true, :days => true, :hours => true, :minutes => true, :seconds => false}.merge(fe.options)
+        
+        fe.options - [:years, :months, :days, :hours, :minutes, :seconds]
+        
         label = label_parameter_tag(name, (fe.calling_method == :to_s ? name : "#{name}_#{fe.calling_method}"), var, fe)
         
         time = var.nil? ? Time.now : (var.send(fe.calling_method) || Time.now)

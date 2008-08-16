@@ -58,6 +58,12 @@ describe Mack::ViewHelpers::FormHelpers do
       date_time_select(:dilbert, :created_at, :label => "Created").should == %{<label for="dilbert_created_at">Created</label>} + fixture("default_date_time_select.html")
     end
     
+    it "should generate seconds if told" do
+      @dilbert = Dilbert.new
+      @dilbert.created_at = Time.parse("2008-8-16 19:35:16")
+      date_time_select(:dilbert, :created_at, :seconds => true).should == fixture("date_time_select_with_seconds.html")
+    end
+    
   end
   
   describe "params" do
