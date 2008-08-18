@@ -82,7 +82,7 @@ module Mack
       def put(uri, options = {})
         if options[:multipart]
           form_input = build_multipart_data(options)
-          build_response(request.post(uri, build_request_options({"CONTENT_TYPE" => "multipart/form-data, boundary=Mack-boundary", "CONTENT_LENGTH" => form_input.size, :input => form_input})))
+          build_response(request.put(uri, build_request_options({"CONTENT_TYPE" => "multipart/form-data, boundary=Mack-boundary", "CONTENT_LENGTH" => form_input.size, :input => form_input})))
         else
           build_response(request.put(uri, build_request_options({:input => options.to_params})))
         end
