@@ -56,4 +56,9 @@ describe Mack::Configuration do
     
   end
   
+  it "should load facets before loading app config" do
+    app_config.mack.test_facets.should == 86400
+    app_config.test_facets.should == 900
+  end
+  
 end

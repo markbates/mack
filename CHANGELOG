@@ -1,6 +1,9 @@
 * [#102] New association method in data_factory
 * [#101] Update to file upload testing (build_file -> file_for_upload, and multipart support in put)
 * [#100] Inline routing parameters are being mutated
+* [#99] Upgraded to facets 2.4.3
+* [#98] Fixed mack-facets not being loaded before app_config files.
+* [#97] Fixed sessions only working with 'local_memory' mode
 * [#96] Distributed Views module now uses file cache
 * [#92] Removed deprecated app_config.orm code.
 * [#91] Fixed Mack blowing up if there is no config/initializers/gems.rb file.
@@ -38,6 +41,7 @@
 * gem: genosaurus 1.2.2
 * gem: haml 2.0.2
 * gem: addressable 1.0.4
+* gem: facets 2.4.3
 
 ===0.6.1.1
 * [#72] Fixed serial data type in DataMapper doesn't work with SQLite3

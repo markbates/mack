@@ -2,6 +2,7 @@ require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
 require 'rubygems'
+require 'mack-facets'
 require 'application_configuration'
 
 require File.join(File.dirname(__FILE__), "mack", "initialization", "configuration.rb")
