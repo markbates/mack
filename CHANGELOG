@@ -1,5 +1,6 @@
 * [#102] New association method in data_factory
 * [#101] Update to file upload testing (build_file -> file_for_upload, and multipart support in put)
+* [#100] Inline routing parameters are being mutated
 * [#99] Upgraded to facets 2.4.3
 * [#98] Fixed mack-facets not being loaded before app_config files.
 * [#97] Fixed sessions only working with 'local_memory' mode
