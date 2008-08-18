@@ -11,7 +11,7 @@ module Mack
         if block_given?
           concat("<#{tag}#{build_options(options)}>\n", block.binding)
           yield
-          concat("</#{tag}>", block.binding)
+          concat("\n</#{tag}>", block.binding)
         else
            "<#{tag}#{build_options(options)}>#{content}</#{tag}>"
         end

@@ -82,7 +82,28 @@ module Mack
     
     private
     def parse_params(ps)
-      ps.each_pair do |k, v|
+      
+      # look for date time selects:
+      dts = ps.select {|k,v| k.to_s.match(/\(.+\)/)}
+      unless dts.empty?
+        dtsh = {}
+        dts.each do |k,v|
+          # convert dilbert[created_at(year)] # => dilbert[created_at]
+          p_name = k.gsub(/\(.+\)/, '')
+          # get 'year'
+          sub_p_name = k.match(/\((.+)\)/).captures.first.to_s
+          # create a new DateTimeParameter if one doesn't exist for this parameter yet
+          dtsh[p_name] = DateTimeParameter.new if dtsh[p_name].nil?
+          # set the accessor for this part of the select
+          dtsh[p_name].add(sub_p_name, v)
+        end
+        # Add the final DateTimeParameter's back onto the request stack.
+        dtsh.each do |k,v|
+          ps[k] = v.to_time
+        end
+      end
+      
+      ps.reject {|k,v| k.to_s.match(/\(.+\)/)}.each do |k,v|
         if k.to_s.match(/.+\[.+\]/)
           nv = k.to_s.match(/.+\[(.+)\]/).captures.first
           nk = k.to_s.match(/(.+)\[.+\]/).captures.first
@@ -96,5 +117,36 @@ module Mack
       end
     end
     
-  end
-end
+    class DateTimeParameter # :nodoc:
+      attr_accessor :year
+      attr_accessor :month
+      attr_accessor :day
+      attr_accessor :hour
+      attr_accessor :minute
+      attr_accessor :second
+      
+      def initialize
+        self.year = Time.now.year
+        self.month = 1
+        self.day = 1
+        self.hour = 0
+        self.minute = 0
+        self.second = 0
+      end
+      
+      def add(key, value)
+        self.send("#{key}=", value)
+      end
+      
+      def to_s
+        "#{year}-#{month}-#{day} #{hour}:#{minute}:#{second}"
+      end
+      
+      def to_time
+        Time.parse(self.to_s)
+      end
+      
+    end
+    
+  end # Request
+end # Mack

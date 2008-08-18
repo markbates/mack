@@ -199,19 +199,19 @@ describe Mack::ViewHelpers::FormHelpers do
     end
     
     it "should build the options from a given array of arrays" do
-      select_tag(:simple, :options => @select_options).should == %{<select id="simple" name="simple"><option value="1" >one</option><option value="2" >two</option><option value="3" >three</option></select>}
+      select_tag(:simple, :options => @select_options).should == %{<select id="simple" name="simple">\n<option value="1" >one</option>\n<option value="2" >two</option>\n<option value="3" >three</option></select>}
     end
     
     it "should build the options from a given hash" do
-      select_tag(:simple, :options => {"one" => 1, "two" => 2, "three" => 3}).should == %{<select id="simple" name="simple"><option value="1" >one</option><option value="3" >three</option><option value="2" >two</option></select>}
+      select_tag(:simple, :options => {"one" => 1, "two" => 2, "three" => 3}).should == %{<select id="simple" name="simple">\n<option value="1" >one</option>\n<option value="3" >three</option>\n<option value="2" >two</option></select>}
     end
     
     it "should mark an option as selected if the model has it seleceted" do
-      select_tag(:cop, :level, :options => @select_options).should == %{<select id="cop_level" name="cop[level]"><option value="1" selected>one</option><option value="2" >two</option><option value="3" >three</option></select>}
+      select_tag(:cop, :level, :options => @select_options).should == %{<select id="cop_level" name="cop[level]">\n<option value="1" selected>one</option>\n<option value="2" >two</option>\n<option value="3" >three</option></select>}
     end
     
     it "should mark an option as selected if the selected options is available" do
-      select_tag(:simple, :options => @select_options, :selected => 1).should == %{<select id="simple" name="simple"><option value="1" selected>one</option><option value="2" >two</option><option value="3" >three</option></select>}
+      select_tag(:simple, :options => @select_options, :selected => 1).should == %{<select id="simple" name="simple">\n<option value="1" selected>one</option>\n<option value="2" >two</option>\n<option value="3" >three</option></select>}
     end
     
     it "should create a label if asked" do
@@ -296,32 +296,32 @@ describe Mack::ViewHelpers::FormHelpers do
 Hello
 <% end %>
       EOF
-      erb(tmp).should == "<form action=\"http://www.mackframework.com\" method=\"post\">\nHello\n</form>"
+      erb(tmp).should == "<form action=\"http://www.mackframework.com\" method=\"post\">\nHello\n\n</form>"
       tmp = <<-EOF
 <% form("http://www.mackframework.com", :multipart => true) do %>
 Hello
 <% end %>
       EOF
-      erb(tmp).should == "<form action=\"http://www.mackframework.com\" enctype=\"multipart/form-data\" method=\"post\">\nHello\n</form>"
+      erb(tmp).should == "<form action=\"http://www.mackframework.com\" enctype=\"multipart/form-data\" method=\"post\">\nHello\n\n</form>"
       tmp = <<-EOF
 <% form("http://www.mackframework.com", :id => "my_form") do %>
 Hello
 <% end %>
       EOF
-      erb(tmp).should == "<form action=\"http://www.mackframework.com\" class=\"my_form\" id=\"my_form\" method=\"post\">\nHello\n</form>"
+      erb(tmp).should == "<form action=\"http://www.mackframework.com\" class=\"my_form\" id=\"my_form\" method=\"post\">\nHello\n\n</form>"
       
       tmp = <<-EOF
 <% form("http://www.mackframework.com", :id => "my_form", :method => :get) do %>
 Hello
 <% end %>
       EOF
-      erb(tmp).should == "<form action=\"http://www.mackframework.com\" class=\"my_form\" id=\"my_form\" method=\"get\">\nHello\n</form>"
+      erb(tmp).should == "<form action=\"http://www.mackframework.com\" class=\"my_form\" id=\"my_form\" method=\"get\">\nHello\n\n</form>"
       tmp = <<-EOF
 <% form("http://www.mackframework.com", :id => "my_form", :method => :put) do %>
 Hello
 <% end %>
       EOF
-      erb(tmp).should == "<form action=\"http://www.mackframework.com\" class=\"my_form\" id=\"my_form\" method=\"post\">\n<input name=\"_method\" type=\"hidden\" value=\"put\" />\nHello\n</form>"
+      erb(tmp).should == "<form action=\"http://www.mackframework.com\" class=\"my_form\" id=\"my_form\" method=\"post\">\n<input name=\"_method\" type=\"hidden\" value=\"put\" />\nHello\n\n</form>"
     end
     
   end

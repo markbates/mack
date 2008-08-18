@@ -32,7 +32,7 @@ module Mack
         concat("<form#{build_options(options)}>\n", block.binding)
         concat(meth, block.binding) unless meth.blank?
         yield
-        concat("</form>", block.binding)
+        concat("\n</form>", block.binding)
         # content_tag(:form, options, &block)
       end
       
@@ -123,7 +123,7 @@ module Mack
           sel_value = fe.options[:selected] if fe.options[:selected]
           sopts.each do |kv|
             selected = kv[1].to_s == sel_value.to_s ? "selected" : ""
-            content << %{<option value="#{kv[1]}" #{selected}>#{kv[0]}</option>}
+            content << %{\n<option value="#{kv[1]}" #{selected}>#{kv[0]}</option>}
           end
           fe.options.delete(:selected)
           fe.options.delete(:options)
