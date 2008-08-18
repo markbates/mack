@@ -224,7 +224,6 @@ module Mack
       def strip_cookies_from_response(res)
         unless res.original_headers["Set-Cookie"].nil?
           res.original_headers["Set-Cookie"].each do |ck|
-            puts "ck: #{ck}"
             spt = ck.split("=")
             name = spt.first
             value = spt.last
