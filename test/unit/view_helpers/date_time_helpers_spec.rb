@@ -44,6 +44,13 @@ describe Mack::ViewHelpers::FormHelpers do
   
   describe "date_time_select" do
     
+    it "should work on a non-model time" do
+      @created_at = Time.now
+      dts = date_time_select(:created_at)
+      dts.should match(/created_at\(year\)/)
+      dts.should match(/<option value="#{@created_at.year}" selected>#{@created_at.year}<\/option>/)
+    end
+    
     it "should generate 5 select tags by default" do
       @dilbert = Dilbert.new
       @dilbert.created_at = Time.parse("2008-8-16 19:35")
@@ -94,6 +101,16 @@ describe Mack::ViewHelpers::FormHelpers do
       @dilbert = Dilbert.new
       @dilbert.created_at = Time.parse("2008-8-16 19:35")
       date_select(:dilbert, :created_at).should == date_time_select(:dilbert, :created_at, :months => true, :days => true, :hours => false, :minutes => false)
+    end
+    
+    it "should work on a non-model time" do
+      dts = date_select(:expected_date)
+      dts.should match(/expected_date\(year\)/)
+      dts.should match(/<option value="2008" selected>2008<\/option>/)
+      dts.should match(/expected_date\(month\)/)
+      dts.should match(/<option value="8" selected>August<\/option>/)
+      dts.should match(/expected_date\(day\)/)
+      dts.should match(/<option value="24" selected>24<\/option>/)
     end
     
   end

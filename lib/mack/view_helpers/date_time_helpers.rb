@@ -21,7 +21,8 @@ module Mack
         var = instance_variable_get("@#{name}")
         fe = FormElement.new(*args)
         
-        time = var.nil? ? Time.now : (var.send(fe.calling_method) || Time.now)
+        time = var if var.is_a?(Time) || var.is_a?(Date)
+        time = var.nil? ? Time.now : (var.send(fe.calling_method) || Time.now) if time.nil?
         
         years = []
         (time.year - 5).upto(time.year + 5) { |y| years << [y, y]}
@@ -59,6 +60,9 @@ module Mack
         return label + boxes
       end
       
+      # Used just like date_time_select, but it has hours, minutes, and seconds turned off.
+      # 
+      # 
       def date_select(name, *args)
         fe = FormElement.new(*args)
         date_time_select(name, fe.calling_method, {:hours => false, :minutes => false, :seconds => false}.merge(fe.options))
@@ -69,6 +73,8 @@ module Mack
         options = {:name => name, :id => name}
         unless fe.calling_method == :to_s
           options.merge!(:name => "#{name}[#{fe.calling_method}(#{col})]", :id => "#{name}_#{fe.calling_method}_#{col}")
+        else
+          options.merge!(:name => "#{name}(#{col})", :id => "#{name}_#{col}")
         end
         options.merge!(:options => values, :selected => selected)
         select_tag(name, fe.options.merge(options))
