@@ -1,3 +1,32 @@
-<h1>Welcome to your Mack application!</h1>
+<div>
+  <h1>Welcome to your Mack application!</h1>
 
-<p>If you are seeing this page, it means that your Mack application has been generated properly!</p>
+  <h4>If you are seeing this page, it means that your Mack application has been generated properly!</h4>
+</div>
+
+<div>
+  <pre>
+
+Generated with Mack Version:  <%= Mack::VERSION %>
+Running with Mack Version:    <%%= Mack::VERSION %>
+
+-------------------------------------------------------------------------
+
+Mack Root:        <%%= Mack.root %>
+Mack Environment: <%%= Mack.env %>
+
+-------------------------------------------------------------------------
+
+<%% unless Mack::Utils::GemManager.instance.required_gem_list.empty? -%>
+Gems required by this application:
+<%% Mack::Utils::GemManager.instance.required_gem_list.each do |g| -%>
+<%%= g %>
+<%% end -%>
+
+-------------------------------------------------------------------------
+<%% end -%>
+
+Configuration:
+<%%= pp_to_s Mack::Configuration.dump %>
+</pre>
+</div>

@@ -2,9 +2,11 @@
 require File.join(File.dirname(__FILE__), "..", "test_helper.rb")
 
 class DefaultControllerTest < Test::Unit::TestCase
+  
   def test_home_page
     get home_page_url
     assert_response :success
     assert_match("Welcome to your Mack application!", response.body)
   end
+  
 end

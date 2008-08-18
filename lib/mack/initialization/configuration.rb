@@ -78,7 +78,6 @@ module Mack
           }
         },
         "mack::site_domain" => "http://localhost:3000",
-        "mack::default_respository_name" => "default",
         "mack::testing_framework" => "rspec",
         "log::detailed_requests" => true,
         "log::db_color" => "cyan",
@@ -95,6 +94,17 @@ module Mack
     app_config.load_file(File.join(Mack.root, "config", "app_config", "default.yml"))
     app_config.load_file(File.join(Mack.root, "config", "app_config", "#{Mack.env}.yml"))
     # app_config.reload
+    
+    def self.dump
+      fcs = app_config.instance.instance_variable_get("@final_configuration_settings")
+      conf = {}
+      fcs.each_pair do |k, v|
+        unless v.is_a?(Application::Configuration::Namespace)
+          conf[k.to_s] = v unless k.to_s.match("__")
+        end
+      end
+      conf
+    end
     
   end
 end
