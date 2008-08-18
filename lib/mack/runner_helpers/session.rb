@@ -7,16 +7,16 @@ module Mack
       
       def start(request, response, cookies)
         if app_config.mack.use_sessions
-          sess_id = retrieve_session_id(request, response, cookies)
-          unless sess_id
-            sess_id = create_new_session(request, response, cookies)
+          self.sess_id = retrieve_session_id(request, response, cookies)
+          unless self.sess_id
+            self.sess_id = create_new_session(request, response, cookies)
           else
-            sess = Cachetastic::Caches::MackSessionCache.get(sess_id)
+            sess = Cachetastic::Caches::MackSessionCache.get(self.sess_id)
             if sess
               request.session = sess
             else
               # we couldn't find it in the store, so we need to create it:
-              sess_id = create_new_session(request, response, cookies)
+              self.sess_id = create_new_session(request, response, cookies)
             end
           end
         end
@@ -24,9 +24,9 @@ module Mack
       
       def complete(request, response, cookies)
         unless response.redirection?
-          request.session[:tell] = nil
+          request.session.delete(:tell)
         end
-        Cachetastic::Caches::MackSessionCache.set(sess_id, request.session) if app_config.mack.use_sessions
+        Cachetastic::Caches::MackSessionCache.set(self.sess_id, request.session) if app_config.mack.use_sessions
       end
       
       private

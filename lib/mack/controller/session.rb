@@ -30,6 +30,11 @@ module Mack
       @sess_hash = {}
     end
     
+    # Deletes a value from the session
+    def delete(key)
+      @sess_hash.delete(key.to_sym)
+    end
+    
     private
     attr_reader :sess_hash # :nodoc:
     
