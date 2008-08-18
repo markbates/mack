@@ -26,7 +26,7 @@ module Mack
         unless response.redirection?
           request.session.delete(:tell)
         end
-        Cachetastic::Caches::MackSessionCache.set(self.sess_id, request.session) if app_config.mack.use_sessions
+        Cachetastic::Caches::MackSessionCache.set(request.session.id, request.session) if app_config.mack.use_sessions
       end
       
       private
