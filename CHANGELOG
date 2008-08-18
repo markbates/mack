@@ -1,3 +1,4 @@
+* [#102] New association method in data_factory
 * [#101] Update to file upload testing (build_file -> file_for_upload, and multipart support in put)
 * [#97] Fixed sessions only working with 'local_memory' mode
 * [#96] Distributed Views module now uses file cache
