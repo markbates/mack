@@ -187,6 +187,7 @@ module Mack
       # also added to the 'params' object in the request.
       # If the route can not be found a Mack::Errors::UndefinedRoute exception is raised.
       def get_route_from_request(req)
+        orig_pattern = req.path_info.dup
         pattern = req.path_info.downcase
         unless pattern == "/"
           pattern.chop! if pattern.match(/\/$/)
@@ -199,7 +200,7 @@ module Mack
           rt.each do |route|
             if pattern.match(route.regex_pattern) && route.method == meth
               r = route
-              opts = r.options_with_embedded_parameters(pattern)
+              opts = r.options_with_embedded_parameters(orig_pattern)
               req.merge_params(opts)
               return opts
             end
@@ -307,6 +308,12 @@ module Mack
               opts[val] = split_uri[ind]
             end
           end
+          [:controller, :action].each do |key|
+            if opts[key]
+              opts[key] = opts[key].to_s.downcase.to_sym
+            end
+          end
+          
           opts
         end
         

@@ -24,6 +24,13 @@ describe Mack::Routes::RouteMap do
     lambda { get "/tst_users/asgaga/asgasg/asg" }.should raise_error(Mack::Errors::UndefinedRoute)
   end
   
+  it "should handle uri case properly" do
+    get "/TST_users/1-HelloWorld"
+    response.body.should match(/tst_users: show: id: 1-HelloWorld/)
+    get "/tst_users/1-helloworld"
+    response.body.should match(/tst_users: show: id: 1-helloworld/)
+  end
+  
   it "should have support for rails default style routes" do
     get "/tst_another/foo"
     response.body.should match(/tst_another_controller: foo: id: '' pickles: ''/)
@@ -36,7 +43,7 @@ describe Mack::Routes::RouteMap do
   
   it "should support unescaped params" do
     get "/tst_users/Who%27s+Your+Daddy%21%3F%21"
-    response.body.should match(/tst_users: show: id: who's your daddy!?!/)
+    response.body.should match(/tst_users: show: id: Who's Your Daddy!?!/)
   end
   
   it "should handle redirect" do

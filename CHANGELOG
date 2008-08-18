@@ -1,5 +1,6 @@
 * [#102] New association method in data_factory
 * [#101] Update to file upload testing (build_file -> file_for_upload, and multipart support in put)
+* [#100] Inline routing parameters are being mutated
 * [#96] Distributed Views module now uses file cache
 * [#92] Removed deprecated app_config.orm code.
 * [#91] Fixed Mack blowing up if there is no config/initializers/gems.rb file.
