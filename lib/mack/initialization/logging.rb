@@ -14,7 +14,10 @@ module Mack
   
   def self.reset_logger!
     log_directory = app_config.log_root || File.join(Mack.root, "log")
-    FileUtils.mkdir_p(log_directory)
+    begin
+      FileUtils.mkdir_p(log_directory)
+    rescue Exception => e
+    end
 
     Mack.logger = Log4r::Logger.new('')
     Mack.logger.level =  Module.instance_eval("Log4r::#{(app_config.log_level || :info).to_s.upcase}")
