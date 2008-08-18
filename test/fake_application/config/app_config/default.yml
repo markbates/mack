@@ -10,3 +10,6 @@ mack::use_distributed_routes: false
 mack::distributed_app_name: fake_app
 
 mack::testing_framework: rspec
+
+mack::test_facets: <%= 24.hours %>
+test_facets: <%= 15.minutes %>
