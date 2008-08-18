@@ -1,3 +1,4 @@
+* [#102] New association method in data_factory
 * [#101] Update to file upload testing (build_file -> file_for_upload, and multipart support in put)
 * [#96] Distributed Views module now uses file cache
 * [#92] Removed deprecated app_config.orm code.
