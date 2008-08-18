@@ -80,10 +80,16 @@ module Mack
     
       # Performs a 'put' request for the specified uri.
       def put(uri, options = {})
-        build_response(request.put(uri, build_request_options({:input => options.to_params})))
+        if options[:multipart]
+          form_input = build_multipart_data(options)
+          build_response(request.post(uri, build_request_options({"CONTENT_TYPE" => "multipart/form-data, boundary=Mack-boundary", "CONTENT_LENGTH" => form_input.size, :input => form_input})))
+        else
+          build_response(request.put(uri, build_request_options({:input => options.to_params})))
+        end
       end
       
-      def build_file(path)
+      # create a wrapper object for file upload testing.
+      def file_for_upload(path)
         return Mack::Testing::FileWrapper.new(path)
       end
           

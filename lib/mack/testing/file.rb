@@ -1,7 +1,7 @@
 require 'base64'
 module Mack
   module Testing
-    class FileWrapper
+    class FileWrapper # :nodoc:
       
       attr_reader :path
       attr_reader :file_name
