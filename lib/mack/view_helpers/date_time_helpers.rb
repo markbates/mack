@@ -17,6 +17,23 @@ module Mack
         MINUTES << [(m < 10 ? "0#{m}" : m), m]
       end
       
+      # This will create a series of select boxes that compromise a time object. By default boxes will be
+      # created for day/month/year hour:minute. You can optionally turn on or off any of these boxes, including
+      # seconds by setting them to true/false. For example:
+      #   <%= date_time_select :some_time, :days => false %>
+      # will not produce a select box for days, and so on...
+      # 
+      # You can pass in an array of arrays to represent the options for any of the boxes like such:
+      #   <%= date_time_select :some_time, :day_options => [[1,"one"], [2,"two"]] %>
+      # Will produce a day select box with only two options. Alternatively you can pass in an array of values
+      # and the options will be done for you. Like such:
+      #   <%= date_time_select :some_time, :day_values => 1..60 %>
+      # Will produce a day select box with 60 options whose values and keys will be the same.
+      # 
+      # The separators for dates and times can be set with the date_separator and time_separator options. By
+      # default they are:
+      #   :date_separator => '/'
+      #   :time_separator => ':'
       def date_time_select(name, *args)
         var = instance_variable_get("@#{name}")
         fe = FormElement.new(*args)
@@ -27,7 +44,7 @@ module Mack
         years = []
         (time.year - 5).upto(time.year + 5) { |y| years << [y, y]}
         
-        options = {:years => true, :months => true, :days => true, :hours => true, :minutes => true, :seconds => false, :year_options => years, :month_options => MONTHS, :day_options => DAYS, :hour_options => HOURS, :minute_options => MINUTES, :second_options => MINUTES}.merge(fe.options)
+        options = {:years => true, :months => true, :days => true, :hours => true, :minutes => true, :seconds => false, :year_options => years, :month_options => MONTHS, :day_options => DAYS, :hour_options => HOURS, :minute_options => MINUTES, :second_options => MINUTES, :date_separator => '/', :time_separator => ':'}.merge(fe.options)
         
         [:year, :month, :day, :hour, :minute, :second].each do |v|
           if options["#{v}_values".to_sym]
@@ -51,18 +68,22 @@ module Mack
         time_boxes << dt_select(:minute, name, fe, time.min, options[:minute_options]) if options[:minutes]
         time_boxes << dt_select(:second, name, fe, time.sec, options[:second_options]) if options[:seconds]
         
-        boxes = date_boxes.join("/")
+        boxes = date_boxes.join(options[:date_separator])
         
         unless time_boxes.empty?
-          boxes << " " << time_boxes.join(":")
+          boxes << " " << time_boxes.join(options[:time_separator])
         end
         
         return label + boxes
       end
       
-      # Used just like date_time_select, but it has hours, minutes, and seconds turned off.
+      # Used just like date_time_select, but it has hours, minutes, and seconds turned off. See date_time_select
+      # for more options.
       # 
-      # 
+      #   @user = User.new
+      #   <%= :user.date_select :birth_date %>
+      #   @some_time = Time.new
+      #   <%= :date_select :some_time, :label => true %>
       def date_select(name, *args)
         fe = FormElement.new(*args)
         date_time_select(name, fe.calling_method, {:hours => false, :minutes => false, :seconds => false}.merge(fe.options))

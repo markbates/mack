@@ -1,9 +1,11 @@
 class Symbol
   
+  # See Mack::ViewHelpers::FormHelpers date_time_select for more information
   def date_time_select(*args)
     Thread.current[:view_template].date_time_select(self, *args)
   end
-
+  
+  # See Mack::ViewHelpers::FormHelpers date_select for more information
   def date_select(*args)
     Thread.current[:view_template].date_select(self, *args)
   end

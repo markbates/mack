@@ -1,7 +1,7 @@
 #--
 # Configure logging
 #++
-
+require File.join(File.dirname(__FILE__), "..", "utils", "ansi", "ansi_color")
 module Mack
   
   def self.logger
@@ -45,10 +45,14 @@ unless Mack.logger
           case data
           when /^(DEBUG:|INFO:|WARN:|ERROR:|FATAL:)\s\[.*\]\s(SELECT|INSERT|UPDATE|DELETE|CREATE|DROP)/
             old_write(Mack::Utils::Ansi::Color.wrap(app_config.log.db_color, data))
-          when /^(ERROR:|FATAL:)/
-            old_write(Mack::Utils::Ansi::Color.wrap(app_config.log.error_color, data))
           else
-            old_write(data)
+            level = data.match(/^\w+/).to_s
+            color = app_config.log.send("#{level.downcase}_color")
+            if color
+              old_write(Mack::Utils::Ansi::Color.wrap(color, data))
+            else
+              old_write(data)
+            end
           end
         end
 

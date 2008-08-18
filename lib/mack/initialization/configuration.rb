@@ -81,9 +81,11 @@ module Mack
         "mack::default_respository_name" => "default",
         "mack::testing_framework" => "rspec",
         "log::detailed_requests" => true,
-        "log::db_color" => "yellow",
+        "log::db_color" => "cyan",
         "log::error_color" => "red",
-        "log::completed_color" => "green",
+        "log::fatal_color" => "red",
+        "log::warn_color" => "yellow",
+        "log::completed_color" => "purple",
         "log_level" => "info"
       }#.merge(eval("DEFAULTS_#{Mack.env.upcase}"))
     end
