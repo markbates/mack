@@ -17,6 +17,12 @@ module Mack
         end
       end
       
+      # Applies a simple HTML formatting scheme to the text. It first wraps the
+      # whole string in a p tag. Then it converts any double carriage returns to
+      # new p tags, and any single break tags to br tags.
+      # 
+      # Examples:
+      #   simple_format("hello\n\ngoodbye\nhello, goodbye") # => "<p>hello</p>\n\n<p>goodbye\n<br />\nhello, goodbye</p>"
       def simple_format(text, options = {})
         if options.empty?
           p = "<p>"
@@ -29,6 +35,28 @@ module Mack
         x.gsub!(/([^\n]\n)(?=[^\n])/, "\\1<br />\n") # 1 newline   -> br
         "#{p}#{x}</p>"
       end
+      
+      # By this will convert all '<' tags to &gt;. You can specify specific tags
+      # with the :tags => [...] option.
+      # 
+      # Examples:
+      #   sanitize_html("<script>foo;</script>hello <b>mark</b>") # => "&gt;script>foo;&gt;/script>hello &gt;b>mark&gt;/b>"
+      #   sanitize_html("<script>foo;</script>hello <b>mark</b>", :tags => :script) # =>  "&gt;script>foo;&gt;/script>hello <b>mark</b>"
+      #   sanitize_html("< script>foo;</ script>hello <b>mark</b>", :tags => :script) # => "&gt;script>foo;&gt;/script>hello <b>mark</b>"
+      def sanitize_html(html, options = {})
+        h = html.to_s.dup
+        unless options[:tags]
+          return h.gsub("<", "&gt;")
+        else
+          [options[:tags]].flatten.each do |tag|
+            h.gsub!(/<\s*#{tag}/i, "&gt;#{tag}")
+            h.gsub!(/<\/\s*#{tag}/i, "&gt;/#{tag}")
+          end
+          return h
+        end
+      end
+      
+      alias_method :s, :sanitize_html
       
     end # StringHelpers
   end # ViewHelpers
