@@ -101,12 +101,16 @@ module Mack
       # then, stylesheet("foo") will generate
       # <link href="http://localhost:3001/stylesheets/scaffold.css" media="screen" rel="stylesheet" type="text/css" />
       #
-      def stylesheet(name)
+      def stylesheet(*files)
         path = ""
         path = "#{app_config.mack.distributed_site_domain}" if app_config.mack.distributed_site_domain
-        file_name = "#{name}.css" if !name.end_with?(".css")
         
-        link = "<link href=\"#{path}/stylesheets/#{file_name}\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />"
+        link = ""
+        files.each do |name|
+          file_name = !name.end_with?(".css") ? "#{name}.css" : "#{name}"
+          link += "<link href=\"#{path}/stylesheets/#{file_name}\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />\n"
+        end
+        
         return link
       end
       

@@ -104,8 +104,13 @@ describe Mack::ViewHelpers::LinkHelpers do
     end
     
     it "should generate proper css tag" do
-      stylesheet("foo").should == %{<link href="/stylesheets/foo.css" media="screen" rel="stylesheet" type="text/css" />}
+      stylesheet("foo").should == %{<link href="/stylesheets/foo.css" media="screen" rel="stylesheet" type="text/css" />\n}
     end
+    
+    it "should generate multiple css tags if given a list of names" do
+      stylesheet("foo", "bar", "hello.css").should == %{<link href="/stylesheets/foo.css" media="screen" rel="stylesheet" type="text/css" />\n<link href="/stylesheets/bar.css" media="screen" rel="stylesheet" type="text/css" />\n<link href="/stylesheets/hello.css" media="screen" rel="stylesheet" type="text/css" />\n}
+    end
+    
   end
 
 end
