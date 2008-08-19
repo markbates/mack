@@ -6,7 +6,7 @@ module Mack
       # and will grap the pretty print of the inspect and wrap it in 
       # HTML pre tags.
       def debug(obj)
-        "<pre>#{pp_to_s(obj.inspect)}</pre>"
+        "<pre>#{pp_to_s(obj)}</pre>"
       end
       
     end # ObjectHelpers

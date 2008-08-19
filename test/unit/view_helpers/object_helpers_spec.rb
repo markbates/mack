@@ -7,8 +7,8 @@ describe Mack::ViewHelpers::ObjectHelpers do
   describe "debug" do
     
     it "should pp the inspect of an object and wrap it in pre tags" do
-      debug(1).should == "<pre>\"1\"\n</pre>"
-      debug(:foo => :bar).should == "<pre>\"{:foo=>:bar}\"\n</pre>"
+      debug(1).should == "<pre>1\n</pre>"
+      debug(:foo => :bar).should == "<pre>{:foo=>:bar}\n</pre>"
     end
     
   end

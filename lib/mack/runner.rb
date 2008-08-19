@@ -10,6 +10,8 @@ module Mack
     attr_reader :request # :nodoc:
     attr_reader :cookies # :nodoc:
     attr_reader :runner_helpers # :nodoc:
+    attr_reader :original_controller
+    attr_reader :original_action
     
     # This method needs to be defined as part of the Rack framework. As is noted for the Mack::Runner
     # class, this is where the center of the Mack framework lies.
@@ -22,14 +24,17 @@ module Mack
             # because the route is specified to be a redirect, let's do that:
             redirect_to(route)
           else
-            self.request.all_params[:original_controller] = route[:controller]
-            self.request.all_params[:original_action] = route[:action]
+            # set these in case we need them for handling errors:
+            @original_controller = route[:controller]
+            @original_action = route[:action]
             run_controller(route)
           end
         # rescue Mack::Errors::ResourceNotFound, Mack::Errors::UndefinedRoute => e
         #   return try_to_find_resource(env, e)
         rescue Exception => e
           route = Mack::Routes::RouteMap.instance.get_route_from_error(e.class)
+          self.request.all_params[:original_controller] = @original_controller
+          self.request.all_params[:original_action] = @original_action
           unless route.nil?
             run_controller(route, e)
           else
