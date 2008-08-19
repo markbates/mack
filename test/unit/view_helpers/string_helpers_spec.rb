@@ -2,9 +2,10 @@ require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
 describe Mack::ViewHelpers::StringHelpers do
-  include Mack::ViewHelpers::StringHelpers
+  include Mack::ViewHelpers
   
   describe "Inflection" do
+    
     it "should be able to pluralize word" do
       pluralize_word(1, "error").should == "1 error"
       pluralize_word(2, "error").should == "2 errors"
@@ -13,6 +14,15 @@ describe Mack::ViewHelpers::StringHelpers do
       pluralize_word(2, "errors").should == "2 errors"
       pluralize_word(0, "errors").should == "0 errors"
     end
+    
+  end
+  
+  describe "simple_format" do
+    
+    it "should format a string with simple p and br tags" do
+      simple_format("hello\n\ngoodbye\nhello, goodbye").should == "<p>hello</p>\n\n<p>goodbye\n<br />\nhello, goodbye</p>"
+    end
+    
   end
   
 end

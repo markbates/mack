@@ -17,6 +17,19 @@ module Mack
         end
       end
       
+      def simple_format(text, options = {})
+        if options.empty?
+          p = "<p>"
+        else
+          p = "<p #{options.join("%s=\"%s\"", " ")}>"
+        end
+        x = text.to_s.dup
+        x.gsub!(/\r\n?/, "\n")                    # \r\n and \r -> \n
+        x.gsub!(/\n\n+/, "</p>\n\n#{p}")  # 2+ newline  -> paragraph
+        x.gsub!(/([^\n]\n)(?=[^\n])/, "\\1<br />\n") # 1 newline   -> br
+        "#{p}#{x}</p>"
+      end
+      
     end # StringHelpers
   end # ViewHelpers
 end # Mack
