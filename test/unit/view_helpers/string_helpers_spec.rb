@@ -28,9 +28,9 @@ describe Mack::ViewHelpers::StringHelpers do
   describe "sanitize_html" do
     
     it "should sanitize all html by defaul" do
-      sanitize_html("<script>foo;</script>hello <b>mark</b>").should == "&gt;script>foo;&gt;/script>hello &gt;b>mark&gt;/b>"
-      sanitize_html("<script>foo;</script>hello <b>mark</b>", :tags => :script).should == "&gt;script>foo;&gt;/script>hello <b>mark</b>"
-      sanitize_html("< script>foo;</ script>hello <b>mark</b>", :tags => :script).should == "&gt;script>foo;&gt;/script>hello <b>mark</b>"
+      sanitize_html("<script>foo;</script>hello <b>mark</b>").should == "&lt;script>foo;&lt;/script>hello &lt;b>mark&lt;/b>"
+      sanitize_html("<script>foo;</script>hello <b>mark</b>", :tags => :script).should == "&lt;script>foo;&lt;/script>hello <b>mark</b>"
+      sanitize_html("< script>foo;</ script>hello <b>mark</b>", :tags => :script).should == "&lt;script>foo;&lt;/script>hello <b>mark</b>"
       sanitize_html("<script>foo;</script>hello <b>mark</b>").should == s("<script>foo;</script>hello <b>mark</b>")
     end
     

@@ -36,21 +36,21 @@ module Mack
         "#{p}#{x}</p>"
       end
       
-      # By this will convert all '<' tags to &gt;. You can specify specific tags
+      # By this will convert all '<' tags to &lt;. You can specify specific tags
       # with the :tags => [...] option.
       # 
       # Examples:
-      #   sanitize_html("<script>foo;</script>hello <b>mark</b>") # => "&gt;script>foo;&gt;/script>hello &gt;b>mark&gt;/b>"
-      #   sanitize_html("<script>foo;</script>hello <b>mark</b>", :tags => :script) # =>  "&gt;script>foo;&gt;/script>hello <b>mark</b>"
-      #   sanitize_html("< script>foo;</ script>hello <b>mark</b>", :tags => :script) # => "&gt;script>foo;&gt;/script>hello <b>mark</b>"
+      #   sanitize_html("<script>foo;</script>hello <b>mark</b>") # => "&lt;script>foo;&lt;/script>hello &lt;b>mark&lt;/b>"
+      #   sanitize_html("<script>foo;</script>hello <b>mark</b>", :tags => :script) # =>  "&lt;script>foo;&lt;/script>hello <b>mark</b>"
+      #   sanitize_html("< script>foo;</ script>hello <b>mark</b>", :tags => :script) # => "&lt;script>foo;&lt;/script>hello <b>mark</b>"
       def sanitize_html(html, options = {})
         h = html.to_s.dup
         unless options[:tags]
-          return h.gsub("<", "&gt;")
+          return h.gsub("<", "&lt;")
         else
           [options[:tags]].flatten.each do |tag|
-            h.gsub!(/<\s*#{tag}/i, "&gt;#{tag}")
-            h.gsub!(/<\/\s*#{tag}/i, "&gt;/#{tag}")
+            h.gsub!(/<\s*#{tag}/i, "&lt;#{tag}")
+            h.gsub!(/<\/\s*#{tag}/i, "&lt;/#{tag}")
           end
           return h
         end
