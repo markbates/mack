@@ -62,8 +62,6 @@ namespace :gem do
       
         s.rubyforge_project = gh.project
         
-        File.open(File.join("bin", "mack"), "w") {|f| f.puts Erubis::Eruby.new(File.open(File.join("tasks", "mack.template")).read).result(binding)}
-        
       end
       Rake::GemPackageTask.new(gem_spec) do |pkg|
         pkg.package_dir = "#{pwd}/pkg"

@@ -1,3 +1,61 @@
-<h1>Welcome to your Mack application!</h1>
+<div>
+  <h1>Welcome to your Mack application!</h1>
 
-<p>If you are seeing this page, it means that your Mack application has been generated properly!</p>
+  <h4>If you are seeing this page, it means that your Mack application has been generated properly!</h4>
+</div>
+
+<div id="general_info_div">
+  <h4>General Information:</h4>
+  <table>
+    <tr>
+      <td align="right">Generated with Mack Version:</td>
+      <td><%= Mack::VERSION %></td>
+    </tr>
+    <tr>
+      <td align="right">Running with Mack Version:</td>
+      <td><%%= Mack::VERSION %></td>
+    </tr>
+    <tr>
+      <td align="right">Mack Root:</td>
+      <td><%%= Mack.root %></td>
+    </tr>
+    <tr>
+      <td align="right">Current Environment:</td>
+      <td><%%= Mack.env %></td>
+    </tr>
+  </table>
+</div>
+
+<%% unless required_gem_list.empty? -%>
+<div id="gems_div">
+  <h4>Gems:</h4>
+  <%% required_gem_list.each do |g| -%>
+    <p>-- <%%= g %></p>
+  <%% end -%>
+</div>
+<%% end -%>
+
+<div id="request_div">
+  <h4>Request:</h4>
+  <%%= debug request %>
+</div>
+
+<div id="cookies_div">
+  <h4>Cookies:</h4>
+  <%%= debug cookies %>
+</div>
+
+<div id="parameters_div">
+  <h4>Parameters:</h4>
+  <%%= debug params %>
+</div>
+
+<div id="session_div">
+  <h4>Session:</h4>
+  <%%= debug session %>
+</div>
+
+<div id="config_div">
+  <h4>Configuration:</h4>
+  <%%= debug Mack::Configuration.dump %>
+</div>

@@ -1,3 +1,4 @@
+* [#103] Log colors for the console are now configurable per log level.
 * [#102] New association method in data_factory
 * [#101] Update to file upload testing (build_file -> file_for_upload, and multipart support in put)
 * [#100] Inline routing parameters are being mutated

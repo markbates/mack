@@ -2,5 +2,5 @@ require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
-gem 'mack', '<%= @options["version"] %>'
+gem 'mack', '<%= Mack::VERSION %>'
 require 'mack_tasks'

@@ -4,14 +4,7 @@ namespace :mack do
 
     desc "Dumps out the configuration for the specified environment."
     task :config => :environment do
-      fcs = app_config.instance.instance_variable_get("@final_configuration_settings")
-      conf = {}
-      fcs.each_pair do |k, v|
-        unless v.is_a?(Application::Configuration::Namespace)
-          conf[k.to_s] = v unless k.to_s.match("__")
-        end
-      end
-      pp conf
+      pp Mack::Configuration.dump
     end # config
     
     desc "Show all the routes available"

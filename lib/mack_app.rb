@@ -8,6 +8,7 @@ unless Mack::Configuration.initialized_application
   
   Mack.logger.debug "Starting application in #{Mack.env} mode."
   Mack.logger.debug "Mack root: #{Mack.root}"
+  Mack.logger.debug "Mack version: #{Mack::VERSION}"
 
   require File.join(fl, "initialization", "application.rb")
   

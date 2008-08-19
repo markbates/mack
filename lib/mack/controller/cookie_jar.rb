@@ -63,6 +63,10 @@ module Mack
       self.all_cookies
     end
     
+    def inspect
+      self.all_cookies.inspect
+    end
+    
   end # CookieJar
   
 end # Mack

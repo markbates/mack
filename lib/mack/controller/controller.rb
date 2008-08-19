@@ -38,7 +38,7 @@ module Mack
 
     # Gives access to all the parameters for this request.
     def params
-      self.request
+      self.request.all_params
     end
 
     # Gives access to the session. See Mack::Session for more information.

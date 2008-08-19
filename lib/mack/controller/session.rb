@@ -35,6 +35,10 @@ module Mack
       @sess_hash.delete(key.to_sym)
     end
     
+    def inspect
+      "#{self.id}: #{@sess_hash.inspect}"
+    end
+    
     private
     attr_reader :sess_hash # :nodoc:
     

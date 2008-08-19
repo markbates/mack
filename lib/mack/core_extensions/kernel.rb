@@ -5,6 +5,11 @@ module Kernel
     yield Mack::Utils::GemManager.instance
   end
   
+  # Returns an Array of gems required by the Mack::Utils::GemManager
+  def required_gem_list
+    Mack::Utils::GemManager.instance.required_gem_list
+  end
+  
   # Aliases the deprecated method to the new method and logs a warning.
   def alias_deprecated_method(deprecated_method, new_method, version_deprecrated = nil, version_to_be_removed = nil)
     eval %{
