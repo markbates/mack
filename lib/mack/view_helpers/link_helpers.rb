@@ -107,7 +107,7 @@ module Mack
         
         link = ""
         files.each do |name|
-          file_name = !name.end_with?(".css") ? "#{name}.css" : "#{name}"
+          file_name = !name.to_s.end_with?(".css") ? "#{name}.css" : "#{name}"
           link += "<link href=\"#{path}/stylesheets/#{file_name}\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />\n"
         end
         
