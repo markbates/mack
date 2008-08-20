@@ -2,6 +2,19 @@ module Mack
   module ViewHelpers # :nodoc:
     module LinkHelpers
       
+      def popup(link_text, url = link_text, popup_options = {}, html_options = {})
+        popup_options = {:menubar => :no, :width => 500, :height => 400, :toolbar => :no, :scrollbars => :yes, :resizable => :yes, :titlebar => :no, :status => :no, :location => :no}.merge(popup_options)
+        m = url.methodize
+        %{
+          <script>
+            function #{m}_popup(u) {
+              window.open(u, '#{m}', "#{popup_options.join("%s=%s", ",")}");
+            }
+          </script>
+          #{link_to(link_text, "javascript:#{m}_popup('#{url}')", html_options)}
+        }
+      end
+      
       # This is just an alias to the a method
       # 
       # Examples:
