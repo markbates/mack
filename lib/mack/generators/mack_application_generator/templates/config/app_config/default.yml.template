@@ -12,8 +12,8 @@
 # 
 # Examples:
 # default.yml:
-#   default_time_limit: <%= 15.minutes %>
-#   api::timeout_limit: <%= 15.seconds %>
+#   default_time_limit: <%%= 15.minutes %>
+#   api::timeout_limit: <%%= 15.seconds %>
 # 
 # app_config.default_time_limit # => 900
 # app_config.api.timeout_limit # => 15

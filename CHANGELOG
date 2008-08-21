@@ -1,3 +1,4 @@
+* [#112] Error generating mack application
 * [#109] DataMapper 0.9.4
 * [#103] Log colors for the console are now configurable per log level.
 * [#102] New association method in data_factory
