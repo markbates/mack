@@ -28,7 +28,7 @@ The environment can also be changed like this:
   $ rake mack:server:start#<environment>
   
 You can also run:
-  $ rake console
+  $ rake mack:console
 This will give you console level access to your application.
 
 
