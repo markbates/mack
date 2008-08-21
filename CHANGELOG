@@ -1,3 +1,4 @@
+* [#109] DataMapper 0.9.4
 * [#103] Log colors for the console are now configurable per log level.
 * [#102] New association method in data_factory
 * [#101] Update to file upload testing (build_file -> file_for_upload, and multipart support in put)
@@ -43,6 +44,7 @@
 * gem: haml 2.0.2
 * gem: addressable 1.0.4
 * gem: facets 2.4.3
+* gem: data_mapper 0.9.4
 
 ===0.6.1.1
 * [#72] Fixed serial data type in DataMapper doesn't work with SQLite3
