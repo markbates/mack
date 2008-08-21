@@ -1,7 +1,7 @@
 module Mack
   module ControllerHelpers
     module ZoosController
-      # methods here will automatically be included as protected methods into ZoosController
+      # methods here will automatically be included as protected methods into ZoosController as protected methods.
     end
   end
 end
