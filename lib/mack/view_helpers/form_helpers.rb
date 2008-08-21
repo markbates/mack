@@ -36,6 +36,7 @@ module Mack
         # content_tag(:form, options, &block)
       end
       
+      # Generates a button with a form around it and will set the request method to delete.
       def delete_button(url, value = "Delete", form_options = {}, button_options = {})
         if button_options[:confirm]
           button_options[:onclick] = "if (confirm('#{button_options[:confirm]}')) {submit();}; return false;"

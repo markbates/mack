@@ -2,17 +2,30 @@ module Mack
   module ViewHelpers # :nodoc:
     module LinkHelpers
       
+      # Generates a javascript popup window. It will create the javascript needed for the window,
+      # as well as the href to call it.
+      # 
+      # Example:
+      #   popup('click here', 'http://www.example.com', {:toolbar => :yes, :name => :example_window}, {:alt => 'hello'}) # => 
+      #   <script>
+      #     function popup_r8b3edqgpbhm3zkthlgp(u) {
+      #       window.open(u, 'example_window', "height=400,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,titlebar=no,toolbar=yes,width=500");
+      #     }
+      #   </script>
+      #   <a alt="hello" href="javascript:popup_r8b3edqgpbhm3zkthlgp('http://www.example.com')">click here</a>
       def popup(link_text, url = link_text, popup_options = {}, html_options = {})
-        popup_options = {:menubar => :no, :width => 500, :height => 400, :toolbar => :no, :scrollbars => :yes, :resizable => :yes, :titlebar => :no, :status => :no, :location => :no}.merge(popup_options)
-        m = url.methodize
+        m = String.randomize(20).downcase
+        popup_options = {:menubar => :no, :width => 500, :height => 400, :toolbar => :no, :scrollbars => :yes, :resizable => :yes, :titlebar => :no, :status => :no, :location => :no, :name => m}.merge(popup_options)
+        window_name = popup_options[:name]
+        popup_options.delete(:name)
         %{
-          <script>
-            function #{m}_popup(u) {
-              window.open(u, '#{m}', "#{popup_options.join("%s=%s", ",")}");
-            }
-          </script>
-          #{link_to(link_text, "javascript:#{m}_popup('#{url}')", html_options)}
-        }
+<script>
+  function popup_#{m}(u) {
+    window.open(u, '#{window_name}', "#{popup_options.join("%s=%s", ",")}");
+  }
+</script>
+#{link_to(link_text, "javascript:popup_#{m}('#{url}')", html_options)}
+        }.strip
       end
       
       # This is just an alias to the a method

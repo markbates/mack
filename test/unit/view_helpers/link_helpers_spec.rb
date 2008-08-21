@@ -8,6 +8,22 @@ describe Mack::ViewHelpers::LinkHelpers do
     return "http://www.mackframework.com"
   end
   
+  describe "popup" do
+    
+    it "should generate a javascript function and an href" do
+      res = popup('click here', 'http://www.example.com', {:toolbar => :yes, :name => :example_window}, {:alt => 'hello'}).strip
+      res.should match(/function popup_[a-z0-9]{20}\(u\) \{/)
+      res.should match(/<a alt="hello" href="javascript:popup_[a-z0-9]{20}\('http:\/\/www\.example\.com'\)">click here<\/a>/)
+      res.should match(/window.open\(u, 'example_window', "height=400,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,titlebar=no,toolbar=yes,width=500"\);/)
+      
+      res = popup('click here', 'http://www.example.com').strip
+      res.should match(/function popup_[a-z0-9]{20}\(u\) \{/)
+      res.should match(/<a href="javascript:popup_[a-z0-9]{20}\('http:\/\/www\.example\.com'\)">click here<\/a>/)
+      res.should match(/window.open\(u, '[a-z0-9]{20}', "height=400,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,titlebar=no,toolbar=no,width=500"\);/)
+    end
+    
+  end
+  
   describe "mail_to" do
     
     it "should use the 'text' parameter for the email parameter if one isn't given" do
