@@ -26,6 +26,30 @@ when "data_mapper"
 #     username: root
 #     password:
 
+# development:
+#   default:
+#     adapter: postgres
+#     database: <%= @options["app"].downcase %>_development
+#     host: localhost
+#     username: root
+#     password: 
+#     
+# test:
+#   default:
+#     adapter: postgres
+#     database: <%= @options["app"].downcase %>_test
+#     host: localhost
+#     username: root
+#     password:
+# 
+# production:
+#   default:
+#     adapter: postgres
+#     database: <%= @options["app"].downcase %>_production
+#     host: localhost
+#     username: root
+#     password:
+
 development:
   default:
     adapter: sqlite3
