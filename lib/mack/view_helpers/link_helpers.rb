@@ -118,6 +118,23 @@ module Mack
       end
       
       #
+      # Generate Javascript tag (<javascript src="/javascripts/foo.js?1241225" type="text/javascript" />)
+      #
+      # If distributed_site_domain is specified, it will be used.
+      #
+      def javascript(files, options = {})
+        files = [files].flatten
+        options = {:type => "text/javascript"}.merge(options)
+        
+        link = ""
+        files.each do |name|
+          file_name = !name.to_s.end_with?(".js") ? "#{name}.js" : "#{name}"
+          link += "<javascript src=\"#{get_resource_root}/javascripts/#{file_name}?#{Time.now.to_i}\" type=\"#{options[:type]}\" />\n"
+        end
+        return link
+      end
+      
+      #
       # Generate Stylesheet tag
       # If distributed_site_domain is specified, then it will use it as the host of the css file
       # example:
@@ -127,17 +144,26 @@ module Mack
       # then, stylesheet("foo") will generate
       # <link href="http://localhost:3001/stylesheets/scaffold.css" media="screen" rel="stylesheet" type="text/css" />
       #
-      def stylesheet(*files)
-        path = ""
-        path = "#{app_config.mack.distributed_site_domain}" if app_config.mack.distributed_site_domain
+      # Supported options are: :media, :rel, and :type
+      #
+      def stylesheet(files, options = {})
+        files = [files].flatten
+        options = {:media => 'screen', :rel => 'stylesheet', :type => 'text/css'}.merge(options)
         
         link = ""
         files.each do |name|
           file_name = !name.to_s.end_with?(".css") ? "#{name}.css" : "#{name}"
-          link += "<link href=\"#{path}/stylesheets/#{file_name}\" media=\"screen\" rel=\"stylesheet\" type=\"text/css\" />\n"
+          link += "<link href=\"#{get_resource_root}/stylesheets/#{file_name}\" media=\"#{options[:media]}\" rel=\"#{options[:rel]}\" type=\"#{options[:type]}\" />\n"
         end
         
         return link
+      end
+      
+      private
+      def get_resource_root
+        path = ""
+        path = "#{app_config.mack.distributed_site_domain}" if app_config.mack.distributed_site_domain
+        return path
       end
       
     end # LinkHelpers

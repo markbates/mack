@@ -102,7 +102,50 @@ describe Mack::ViewHelpers::LinkHelpers do
     end
   end
   
+  describe "javascript" do
+    it "should append .js if not provided" do
+      data = javascript("foo")
+      data.should match(/foo.js/)
+    end
+    
+    it "should create 1 javascript tag" do
+      data = javascript("foo")
+      data.should match(/javascript/)
+      data.should match(/foo/)
+    end
+    
+    it "should create n javascript tags" do
+      data = javascript(['foo', 'bar'])
+      lines = data.split("\n")
+      lines[0].should match(/javascript/)
+      lines[0].should match(/foo/)
+      lines[1].should match(/bar/)
+    end
+    
+    it "should create 1 javascript tag without domain info if not specified" do
+      temp_app_config("mack::distributed_site_domain" => nil) do
+        data = javascript("foo")
+        data.should match(/javascript/)
+        data.should_not match(/localhost/)
+        data.should match(/foo/)
+      end
+    end
+    
+    it "should create 1 javascript tag with domain info if specified" do
+      temp_app_config("mack::distributed_site_domain" => "http://localhost:3001") do
+        data = javascript("foo")
+        data.should match(/javascript/)
+        data.should match(/localhost:3001/)
+        data.should match(/foo/)
+      end
+    end
+  end
+  
   describe "stylesheet" do
+    it "should accept custom options to stylesheet tag" do
+      stylesheet("foo", :media => 'print').should match(/print/)
+    end
+    
     it "should generate stylesheet link without domain info if not specified" do
       temp_app_config("mack::distributed_site_domain" => nil) do
         stylesheet("foo").should_not match(/localhost/)
@@ -111,7 +154,7 @@ describe Mack::ViewHelpers::LinkHelpers do
     
     it "should generate stylesheet link with domain info if specified" do
       temp_app_config("mack::distributed_site_domain" => 'http://localhost:3001') do
-        stylesheet("foo").should match(/localhost/)
+        stylesheet("foo").should match(/localhost:3001/)
       end
     end
     
@@ -121,10 +164,14 @@ describe Mack::ViewHelpers::LinkHelpers do
     
     it "should generate proper css tag" do
       stylesheet("foo").should == %{<link href="/stylesheets/foo.css" media="screen" rel="stylesheet" type="text/css" />\n}
+      stylesheet("foo", :media => 'print').should == %{<link href="/stylesheets/foo.css" media="print" rel="stylesheet" type="text/css" />\n}
+      stylesheet("foo", :media => 'print', :rel => 'bar').should == %{<link href="/stylesheets/foo.css" media="print" rel="bar" type="text/css" />\n}
+      stylesheet("foo", :media => 'print', :rel => 'bar', :type => 'some_type').should == %{<link href="/stylesheets/foo.css" media="print" rel="bar" type="some_type" />\n}
     end
     
     it "should generate multiple css tags if given a list of names" do
-      stylesheet("foo", "bar", "hello.css").should == %{<link href="/stylesheets/foo.css" media="screen" rel="stylesheet" type="text/css" />\n<link href="/stylesheets/bar.css" media="screen" rel="stylesheet" type="text/css" />\n<link href="/stylesheets/hello.css" media="screen" rel="stylesheet" type="text/css" />\n}
+      stylesheet(["foo", "bar", "hello.css"]).should == %{<link href="/stylesheets/foo.css" media="screen" rel="stylesheet" type="text/css" />\n<link href="/stylesheets/bar.css" media="screen" rel="stylesheet" type="text/css" />\n<link href="/stylesheets/hello.css" media="screen" rel="stylesheet" type="text/css" />\n}
+      
     end
     
   end
