@@ -10,7 +10,7 @@ namespace :mack do
     libs = []
     libs << "-r irb/completion"
     libs << "-r #{File.join(File.dirname(__FILE__), '..', 'initialization', 'console')}"
-    exec "irb #{libs.join(" ")} --simple-prompt"
+    system "irb #{libs.join(" ")} --simple-prompt"
   end # console
   
 end # mack
