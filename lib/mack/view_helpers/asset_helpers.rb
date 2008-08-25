@@ -2,13 +2,6 @@ module Mack
   class AssetHelpers # :nodoc:
     include Singleton
     
-    #
-    # Clear previously set configuration for asset hosts
-    #
-    def reset!
-      @hosts = nil
-    end
-     
     # 
     # Set the asset hosts for this app.  It supports the following format:
     # - plain string: the string literal will be considered as the asset hosts (e.g. 'http://assets.foo.com')
@@ -45,6 +38,13 @@ module Mack
         ret_val = sprintf(host, rand(max_distribution))
       end
       return ret_val
+    end
+    
+    #
+    # Clear previously set configuration for asset hosts
+    #
+    def reset!
+      @hosts = nil
     end
   end
 end
