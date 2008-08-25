@@ -1,6 +1,8 @@
-* [#21] Asset Hosts
+* [#107] Updated to Rack 0.4.0
 * [#95] Removed deprecated model_* methods
 * [#94] Removed deprecated submit_tag
+* [#21] Asset Hosts
+* gem: rack 0.4.0
 
 === 0.7.0
 * [#114] Javascript link_helper
