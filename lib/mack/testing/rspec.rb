@@ -22,4 +22,12 @@ module Spec # :nodoc:
     
     end # ExampleMethods
   end # Example
+  
+  module Matchers # :nodoc:
+    def match(regexp)
+      regexp = /#{regexp}/ if regexp.is_a?(String)
+      Matchers::Match.new(regexp)
+    end
+  end # Matchers
+  
 end # Spec

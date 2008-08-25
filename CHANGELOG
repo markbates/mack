@@ -1,3 +1,8 @@
+* [#95] Removed deprecated model_* methods
+* [#94] Removed deprecated submit_tag
+
+=== 0.7.0
+* [#114] Javascript link_helper
 * [#112] Error generating mack application
 * [#109] DataMapper 0.9.4
 * [#103] Log colors for the console are now configurable per log level.
@@ -29,7 +34,6 @@
 * [#73] Tests no longer use the functional/unit directories
 * [#69] Added ViewHelperGenerator and ControllerHelperGenerator
 * [#68] Transactional support in mack-AR
-* [#62] Removed const redefined warnings if mack-l10n is used along with mack-activerecord
 * [#67] Added test:setup tasks for active_record and data_mapper
 * [#62] Removed const redefined warnings if mack-l10n is used along with mack-activerecord
 * [#39] HAML 2.0.2 support

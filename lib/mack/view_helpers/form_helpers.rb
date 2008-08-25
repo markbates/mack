@@ -48,8 +48,6 @@ module Mack
         content_tag(:form, {:action => url, :method => :post}.merge(form_options), t)
       end
       
-      alias_deprecated_method :submit_tag, :submit_button, '0.7.0'
-      
       # Examples:
       #   <%= submit_button %> # => <input type="submit" value="Submit" />
       #   <%= submit_button "Login" %> # => <input type="submit" value="Login" />
