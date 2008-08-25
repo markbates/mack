@@ -46,7 +46,7 @@ namespace :gem do
         
         s.rdoc_options << '--title' << 'Mack' << '--main' << 'README' << '--line-numbers' << "--inline-source"
         
-        s.add_dependency("rack", "0.3.0")
+        s.add_dependency("rack", "0.4.0")
         s.add_dependency("mack-more", gh.version)
         s.add_dependency("application_configuration", "1.5.2")
         s.add_dependency("cachetastic", "1.7.3")
