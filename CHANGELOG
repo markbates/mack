@@ -1,4 +1,5 @@
-* [#94] Remove deprecated submit_tag
+* [#95] Removed deprecated model_* methods
+* [#94] Removed deprecated submit_tag
 
 === 0.7.0
 * [#114] Javascript link_helper
