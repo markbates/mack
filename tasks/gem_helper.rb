@@ -24,7 +24,15 @@ class GemHelper # :nodoc:
   
   def release
     begin
+      ac_path = File.join(ENV["HOME"], ".rubyforge", "auto-config.yml")
+      if File.exists?(ac_path)
+        fixed = File.open(ac_path).read.gsub("  ~: {}\n\n", '')
+        fixed.gsub!(/    !ruby\/object:Gem::Version \? \n.+\n.+\n\n/, '')
+        puts "Fixing #{ac_path}..."
+        File.open(ac_path, "w") {|f| f.puts fixed}
+      end
       rf = RubyForge.new
+      rf.configure
       rf.login
       begin
         rf.add_release(self.project, self.package, self.version, File.join("pkg", full_gem_name))
@@ -38,7 +46,11 @@ class GemHelper # :nodoc:
         end
       end
     rescue Exception => e
-      puts e
+      if e.message == "You have already released this version."
+        puts e
+      else
+        raise e
+      end
     end
   end
   
