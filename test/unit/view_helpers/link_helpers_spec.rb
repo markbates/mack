@@ -3,6 +3,10 @@ require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
 describe Mack::ViewHelpers::LinkHelpers do
   include Mack::ViewHelpers
+  before(:all) do
+    Mack::AssetHelpers.instance.reset!
+  end
+  
   
   def my_url
     return "http://www.mackframework.com"

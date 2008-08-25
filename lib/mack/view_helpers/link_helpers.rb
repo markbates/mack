@@ -129,7 +129,8 @@ module Mack
         link = ""
         files.each do |name|
           file_name = !name.to_s.end_with?(".js") ? "#{name}.js" : "#{name}"
-          link += "<javascript src=\"#{get_resource_root}/javascripts/#{file_name}?#{Time.now.to_i}\" type=\"#{options[:type]}\" />\n"
+          resource = "/javascripts/#{file_name}"
+          link += "<javascript src=\"#{get_resource_root(resource)}#{resource}?#{Time.now.to_i}\" type=\"#{options[:type]}\" />\n"
         end
         return link
       end
@@ -153,16 +154,18 @@ module Mack
         link = ""
         files.each do |name|
           file_name = !name.to_s.end_with?(".css") ? "#{name}.css" : "#{name}"
-          link += "<link href=\"#{get_resource_root}/stylesheets/#{file_name}\" media=\"#{options[:media]}\" rel=\"#{options[:rel]}\" type=\"#{options[:type]}\" />\n"
+          resource = "/stylesheets/#{file_name}"
+          link += "<link href=\"#{get_resource_root(resource)}#{resource}\" media=\"#{options[:media]}\" rel=\"#{options[:rel]}\" type=\"#{options[:type]}\" />\n"
         end
         
         return link
       end
       
       private
-      def get_resource_root
+      def get_resource_root(resource)
         path = ""
         path = "#{app_config.mack.distributed_site_domain}" if app_config.mack.distributed_site_domain
+        path = Mack::AssetHelpers.instance.asset_hosts(resource) if path.empty?
         return path
       end
       
