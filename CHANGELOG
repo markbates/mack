@@ -31,7 +31,6 @@
 * [#73] Tests no longer use the functional/unit directories
 * [#69] Added ViewHelperGenerator and ControllerHelperGenerator
 * [#68] Transactional support in mack-AR
-* [#62] Removed const redefined warnings if mack-l10n is used along with mack-activerecord
 * [#67] Added test:setup tasks for active_record and data_mapper
 * [#62] Removed const redefined warnings if mack-l10n is used along with mack-activerecord
 * [#39] HAML 2.0.2 support
