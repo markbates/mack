@@ -5,6 +5,8 @@ require 'rubygems'
 require 'mack-facets'
 require 'application_configuration'
 
+require File.join(File.dirname(__FILE__), "mack", "utils", "paths.rb")
+
 require File.join(File.dirname(__FILE__), "mack", "initialization", "configuration.rb")
 
 require File.join(File.dirname(__FILE__), 'mack_core')

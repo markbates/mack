@@ -56,14 +56,18 @@ module Mack
       Mack::Paths.test("controllers", files)
     end
     
+    def self.test_helpers(*files)
+      Mack::Paths.test("helpers", files)
+    end
+    
     # <MACK_PROJECT_ROOT>/test/helpers/controllers
     def self.controller_helper_tests(*files)
-      Mack::Paths.test("helpers", "controllers", files)
+      Mack::Paths.test_helpers("controllers", files)
     end
     
     # <MACK_PROJECT_ROOT>/test/helpers/views
     def self.view_helper_tests(*files)
-      Mack::Paths.test("helpers", "views", files)
+      Mack::Paths.test_helpers("views", files)
     end
     
     # <MACK_PROJECT_ROOT>/app/views
