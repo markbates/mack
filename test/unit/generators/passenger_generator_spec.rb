@@ -10,6 +10,11 @@ describe PassengerGenerator do
     FileUtils.rm_rf(@readme)
   end
   
+  after(:each) do
+    FileUtils.rm_rf(@config_ru)
+    FileUtils.rm_rf(@readme)
+  end
+  
   it "should generate the files needed to run Mack with Passenger" do
     File.should_not be_exists(@config_ru)
     File.should_not be_exists(@readme)
