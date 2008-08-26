@@ -1,4 +1,9 @@
-require 'ruby-debug'
+begin
+  # just in case people don't have it installed.
+  require 'ruby-debug'
+rescue Exception => e
+end
+
 
 fl = File.join(File.dirname(__FILE__), "mack")
 

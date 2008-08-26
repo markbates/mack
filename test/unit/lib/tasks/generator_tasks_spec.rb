@@ -21,6 +21,8 @@ ControllerHelperGenerator
 	rake generate:controller_helper
 MackApplicationGenerator
 	rake generate:mack_application
+PassengerGenerator
+	rake generate:passenger
 PluginGenerator
 	rake generate:plugin
 ViewHelperGenerator
