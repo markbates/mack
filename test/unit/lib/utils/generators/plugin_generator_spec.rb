@@ -33,7 +33,7 @@ describe PluginGenerator do
   end
   
   def bandit_dir
-    File.join(Mack.root, "vendor", "plugins", "bandit")
+    Mack::Paths.plugins("bandit")
   end
   
 end

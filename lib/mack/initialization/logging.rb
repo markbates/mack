@@ -13,7 +13,7 @@ module Mack
   end
   
   def self.reset_logger!
-    log_directory = app_config.log_root || File.join(Mack.root, "log")
+    log_directory = app_config.log_root || Mack::Paths.log
     begin
       FileUtils.mkdir_p(log_directory)
     rescue Exception => e

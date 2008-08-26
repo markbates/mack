@@ -4,15 +4,15 @@ require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 describe ControllerGenerator do
   
   def common_cleanup
-    FileUtils.rm_rf(File.join(Mack.root, "app", "controllers", "zoos_controller.rb"))
-    FileUtils.rm_rf(File.join(Mack.root, "app", "views", "zoos"))
-    FileUtils.rm_rf(File.join(Mack.root, "app", "helpers", "controllers", "zoos_controller_helper.rb"))
-    FileUtils.rm_rf(File.join(Mack.root, "test"))
+    FileUtils.rm_rf(Mack::Paths.controllers("zoos_controller.rb"))
+    FileUtils.rm_rf(Mack::Paths.views("zoos"))
+    FileUtils.rm_rf(Mack::Paths.controller_helpers("zoos_controller_helper.rb"))
+    FileUtils.rm_rf(Mack::Paths.test)
   end
   
   before(:each) do
     common_cleanup
-    @route_file_loc = File.join(Mack.root, "config", "routes.rb")
+    @route_file_loc = Mack::Paths.config("routes.rb")
     @original_route_file = File.read(@route_file_loc)
   end
   
@@ -29,9 +29,9 @@ describe ControllerGenerator do
   end
   
   it "should also take an optional 'actions' parameter" do
-    index = File.join(Mack.root, "app", "views", "zoos", "index.html.erb")
-    show = File.join(Mack.root, "app", "views", "zoos", "show.html.erb")
-    file = File.join(Mack.root, "app", "controllers", "zoos_controller.rb")
+    index = Mack::Paths.views("zoos", "index.html.erb")
+    show = Mack::Paths.views("zoos", "show.html.erb")
+    file = Mack::Paths.controllers("zoos_controller.rb")
     ControllerGenerator.run("name" => "zoo", "actions" => "index,show")
     File.should be_exists(file)
     File.read(file).should == fixture("zoos_controller_with_actions.rb")
@@ -51,16 +51,16 @@ describe ControllerGenerator do
   end
   
   it "should generate a controller" do
-    file = File.join(Mack.root, "app", "controllers", "zoos_controller.rb")
+    file = Mack::Paths.controllers("zoos_controller.rb")
     File.should_not be_exists(file)
     ControllerGenerator.run("name" => "zoo")
     File.should be_exists(file)
     File.read(file).should == fixture("zoos_controller.rb")
-    File.should be_exists(File.join(Mack.root, "app", "views", "zoos"))
+    File.should be_exists(Mack::Paths.views("zoos"))
   end
   
   it "should generate a controller helper" do
-    file = File.join(Mack.root, "app", "helpers", "controllers", "zoos_controller_helper.rb")
+    file = Mack::Paths.controller_helpers("zoos_controller_helper.rb")
     File.should_not be_exists(file)
     ControllerGenerator.run("name" => "zoo")
     File.should be_exists(file)
@@ -69,7 +69,7 @@ describe ControllerGenerator do
   
   it "should generate a Test::Unit::TestCase test if using the Test::Unit::TestCase framework" do
     temp_app_config("mack::testing_framework" => "test_case") do
-      file = File.join(Mack.root, "test", "controllers", "zoos_controller_test.rb")
+      file = Mack::Paths.controller_tests("zoos_controller_test.rb")
       File.should_not be_exists(file)
       ControllerGenerator.run("name" => "zoo")
       File.should be_exists(file)
@@ -78,7 +78,7 @@ describe ControllerGenerator do
   end
   
   it "should generate a RSpec test if using the RSpec framework" do
-    file = File.join(Mack.root, "test", "controllers", "zoos_controller_spec.rb")
+    file = Mack::Paths.controller_tests("zoos_controller_spec.rb")
     File.should_not be_exists(file)
     ControllerGenerator.run("name" => "zoo")
     File.should be_exists(file)
@@ -87,7 +87,7 @@ describe ControllerGenerator do
   
   it "should generate a Test::Unit::TestCase test if using the Test::Unit::TestCase framework with optional actions" do
     temp_app_config("mack::testing_framework" => "test_case") do
-      file = File.join(Mack.root, "test", "controllers", "zoos_controller_test.rb")
+      file = Mack::Paths.controller_tests("zoos_controller_test.rb")
       File.should_not be_exists(file)
       ControllerGenerator.run("name" => "zoo", "actions" => "index,show")
       File.should be_exists(file)
@@ -96,7 +96,7 @@ describe ControllerGenerator do
   end
   
   it "should generate a RSpec test if using the RSpec framework with optional actions" do
-    file = File.join(Mack.root, "test", "controllers", "zoos_controller_spec.rb")
+    file = Mack::Paths.controller_tests("zoos_controller_spec.rb")
     File.should_not be_exists(file)
     ControllerGenerator.run("name" => "zoo", "actions" => "index,show")
     File.should be_exists(file)

@@ -70,8 +70,8 @@ module Mack
     
     app_config.load_hash(DEFAULTS, "mack_defaults")
     app_config.load_hash(eval("DEFAULTS_#{Mack.env.upcase}"), "mack_defaults_#{Mack.env}")
-    app_config.load_file(File.join(Mack.root, "config", "app_config", "default.yml"))
-    app_config.load_file(File.join(Mack.root, "config", "app_config", "#{Mack.env}.yml"))
+    app_config.load_file(Mack::Paths.app_config("default.yml"))
+    app_config.load_file(Mack::Paths.app_config("#{Mack.env}.yml"))
     # app_config.reload
     
     def self.dump
