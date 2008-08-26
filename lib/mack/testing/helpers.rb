@@ -1,3 +1,4 @@
+
 require "test/unit"
 
 #--
@@ -125,14 +126,16 @@ module Mack
     
       # Returns a Mack::Session from the request.
       def session # :nodoc:
-        Cachetastic::Caches::MackSessionCache.get($current_session_id) do
+        sess = Mack::SessionStore.store.get($current_session_id, nil, nil, nil)
+        if sess.nil?
           id = String.randomize(40).downcase
           set_cookie(app_config.mack.session_id, id)
           sess = Mack::Session.new(id)
-          Cachetastic::Caches::MackSessionCache.set(id, sess)
+          Mack::SessionStore.store.direct_set(id, sess)
           $current_session_id = id
-          sess
+          sess          
         end
+        sess
       end
     
       # Used to create a 'session' around a block of code. This is great of 'integration' tests.
@@ -148,7 +151,7 @@ module Mack
     
       # Clears all the sessions.
       def clear_session
-        Cachetastic::Caches::MackSessionCache.expire_all
+        Mack::SessionStore.store.expire_all
       end
     
       # Returns a Hash of cookies from the response.
