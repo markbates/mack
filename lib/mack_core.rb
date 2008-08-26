@@ -21,6 +21,7 @@ require 'test/unit'
 
 fl = File.join(File.dirname(__FILE__), "mack")
 require File.join(fl, "version")
+require File.join(fl, "utils", "paths.rb")
 require File.join(fl, "initialization", "configuration.rb")
 
 unless Mack::Configuration.initialized_core

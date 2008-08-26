@@ -4,8 +4,8 @@ require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 describe PassengerGenerator do
   
   before(:each) do
-    @config_ru = File.join(Mack.root, "config.ru")
-    @readme = File.join(Mack.root, "tmp", "README")
+    @config_ru = Mack::Paths.root("config.ru")
+    @readme = Mack::Paths.tmp("README")
     FileUtils.rm_rf(@config_ru)
     FileUtils.rm_rf(@readme)
   end

@@ -31,12 +31,12 @@ module Mack
         "debug" => false,
         "adapter" => "file",
         "store_options" => 
-          {"dir" => File.join(Mack.root, "tmp")},
+          {"dir" => Mack::Paths.tmp},
         "expiry_time" => 14400,
         "logging" => {
           "logger_1" => {
             "type" => "file",
-            "file" => File.join(Mack.root, "log", "cachetastic_caches_mack_session_cache.log")
+            "file" => Mack::Paths.log("cachetastic_caches_mack_session_cache.log")
           }
         }
       }
@@ -73,7 +73,7 @@ module Mack
           "logging" => {
             "logger_1" => {
               "type" => "file",
-              "file" => File.join(Mack.root, "log", "cachetastic.log")
+              "file" => Mack::Paths.log("cachetastic.log")
             }
           }
         },
@@ -91,8 +91,8 @@ module Mack
     
     app_config.load_hash(DEFAULTS, "mack_defaults")
     app_config.load_hash(eval("DEFAULTS_#{Mack.env.upcase}"), "mack_defaults_#{Mack.env}")
-    app_config.load_file(File.join(Mack.root, "config", "app_config", "default.yml"))
-    app_config.load_file(File.join(Mack.root, "config", "app_config", "#{Mack.env}.yml"))
+    app_config.load_file(Mack::Paths.app_config("default.yml"))
+    app_config.load_file(Mack::Paths.app_config("#{Mack.env}.yml"))
     # app_config.reload
     
     def self.dump
