@@ -1,0 +1,2 @@
+class PassengerGenerator < Genosaurus
+end

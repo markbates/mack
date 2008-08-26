@@ -1,3 +1,4 @@
+* [#120] Added PassengerGenerator to generate the necessary files to run Mack with Passenger Phusion (mod_rails)
 * [#107] Updated to Rack 0.4.0
 * [#95] Removed deprecated model_* methods
 * [#94] Removed deprecated submit_tag
