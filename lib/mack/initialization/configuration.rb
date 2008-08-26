@@ -26,20 +26,7 @@ module Mack
       "mack::use_lint" => false,
       "mack::show_exceptions" => false,
       "log_level" => "info",
-      "log::detailed_requests" => false,
-      "cachetastic_caches_mack_session_cache_options" => {
-        "debug" => false,
-        "adapter" => "file",
-        "store_options" => 
-          {"dir" => Mack::Paths.tmp},
-        "expiry_time" => 14400,
-        "logging" => {
-          "logger_1" => {
-            "type" => "file",
-            "file" => Mack::Paths.log("cachetastic_caches_mack_session_cache.log")
-          }
-        }
-      }
+      "log::detailed_requests" => false
     } unless self.const_defined?("DEFAULTS_PRODUCTION")
     
     # use local memory and store stuff for 5 minutes:
@@ -52,7 +39,8 @@ module Mack
     DEFAULTS_TEST = {
       "log_level" => "error",
       "run_remote_tests" => true,
-      "mack::cookie_values" => {}
+      "mack::cookie_values" => {},
+      "mack::session_store" => "test"
     } unless self.const_defined?("DEFAULTS_TEST")
     
     unless self.const_defined?("DEFAULTS")
@@ -66,17 +54,6 @@ module Mack
         "mack::cookie_values" => {
           "path" => "/"
         },
-        "cachetastic_default_options" => {
-          "debug" => false,
-          "adapter" => "local_memory",
-          "expiry_time" => 300,
-          "logging" => {
-            "logger_1" => {
-              "type" => "file",
-              "file" => Mack::Paths.log("cachetastic.log")
-            }
-          }
-        },
         "mack::site_domain" => "http://localhost:3000",
         "mack::testing_framework" => "rspec",
         "log::detailed_requests" => true,
@@ -85,7 +62,9 @@ module Mack
         "log::fatal_color" => "red",
         "log::warn_color" => "yellow",
         "log::completed_color" => "purple",
-        "log_level" => "info"
+        "log_level" => "info",
+        "mack::session_store" => "cookie",
+        "cookie_session_store::expiry_time" => 4.hours
       }#.merge(eval("DEFAULTS_#{Mack.env.upcase}"))
     end
     

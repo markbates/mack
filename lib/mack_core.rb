@@ -2,6 +2,7 @@ require 'rubygems'
 require 'rack'
 require 'digest'
 require 'mack-facets'
+require 'mack-encryption'
 require 'application_configuration'
 require 'cachetastic'
 require 'fileutils'
@@ -32,7 +33,7 @@ unless Mack::Configuration.initialized_core
 
   Mack.logger.debug "Initializing core classes..." unless app_config.log.disable_initialization_logging
   # Require all the necessary files to make Mack actually work!
-  lib_dirs = ["errors", "core_extensions", "utils", "runner_helpers", "routing", "view_helpers", "rendering", "controller", "tasks", "initialization/server", "generators", "distributed"]
+  lib_dirs = ["errors", "core_extensions", "utils", "sessions", "runner_helpers", "routing", "view_helpers", "rendering", "controller", "tasks", "initialization/server", "generators", "distributed"]
   lib_dirs << "testing"# if Mack.env == "test"
   lib_dirs.each do |dir|
     dir_globs = Dir.glob(File.join(fl, dir, "**/*.rb"))
