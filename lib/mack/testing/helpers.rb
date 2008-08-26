@@ -126,7 +126,7 @@ module Mack
     
       # Returns a Mack::Session from the request.
       def session # :nodoc:
-        sess = Mack::SessionStore.store.get($current_session_id, nil, nil, nil)
+        sess = Mack::SessionStore.get($current_session_id, nil, nil, nil)
         if sess.nil?
           id = String.randomize(40).downcase
           set_cookie(app_config.mack.session_id, id)
@@ -151,7 +151,7 @@ module Mack
     
       # Clears all the sessions.
       def clear_session
-        Mack::SessionStore.store.expire_all
+        Mack::SessionStore.expire_all
       end
     
       # Returns a Hash of cookies from the response.
