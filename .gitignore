@@ -3,7 +3,7 @@ log/**/*
 .DS_Store
 doc
 pkg
-fake_application/tmp
+test/fake_application/tmp
 *.pid
 test/fake_application/public/something/logo.gif
 test/fake_application/db/fake_application_test.db
