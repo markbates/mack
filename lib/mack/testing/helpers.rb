@@ -199,7 +199,7 @@ module Mack
     
       def mack_app
         if $mack_app.nil?
-          $mack_app = Rack::Recursive.new(Mack::Runner.new)
+          $mack_app = Rack::Recursive.new(Mack::Utils::ContentLengthHandler.new(Mack::Runner.new))
         end
         $mack_app
       end

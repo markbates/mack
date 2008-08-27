@@ -10,6 +10,7 @@
 * [#107] Updated to Rack 0.4.0
 * [#95] Removed deprecated model_* methods
 * [#94] Removed deprecated submit_tag
+* [#40] Added Mack::Utils::ContentLengthHandler so response will now have 'Content-Length' in its header.
 * [#21] Asset Hosts
 * gem: rack 0.4.0
 * gem: json_pure 1.1.3
