@@ -1,3 +1,4 @@
+* [#129] DataMapper 0.9.5 support
 * [#128] Updated json_pure to 1.1.3 and removed ruby-debug dependency
 * [#127] Moved mack-paths into core
 * [#125] Cookie store is now the default session store, not cachetastic
@@ -10,6 +11,7 @@
 * [#21] Asset Hosts
 * gem: rack 0.4.0
 * gem: json_pure 1.1.3
+* gem: data_mappe 0.9.5
 
 === 0.7.0
 * [#114] Javascript link_helper
