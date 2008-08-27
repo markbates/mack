@@ -49,7 +49,7 @@ module Mack
         # Returns the directory path for the current controller.
         def controller_view_path
           ivar_cache do
-            File.join(Mack.root, "app", "views", self.controller.controller_name)
+            Mack::Paths.views(self.controller.controller_name)
           end
         end
         
