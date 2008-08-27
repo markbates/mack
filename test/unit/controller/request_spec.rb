@@ -3,6 +3,12 @@ require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
 describe Mack::Request do
   
+  it "should set Content-Length to response header" do
+    get "/tst_home_page/request_full_host"
+    response["Content-Length"].should_not be_nil
+    response["Content-Length"].should == response.body.to_str.size.to_s
+  end
+  
   it "should handle request to full host" do
     get "/tst_home_page/request_full_host"
     response.body.should match(/http:\/\/example.org/)
