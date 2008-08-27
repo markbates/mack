@@ -60,14 +60,6 @@ module Mack
       end
     end # UndefinedRoute
     
-    # Raised when a layout is specified that doesn't exist.
-    class UnknownLayout < StandardError
-      # Takes a layout name.
-      def initialize(layout)
-        super("Could not find layout in: #{File.join(Mack.root, "app", "views", layout.to_s + ".html.erb")}")
-      end
-    end
-    
     # Raised if an unsupported render option is supplied.
     class UnknownRenderOption < StandardError
       # Takes a render option.

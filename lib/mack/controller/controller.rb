@@ -348,9 +348,7 @@ module Mack
       #     end
       #   end
       # 
-      # The default layout is "#{Mack.root}/app/views/layouts/application.html.erb".
-      # 
-      # If a layout is specified, and it doesn't exist a Mack::Errors::UnknownLayout error will be raised.
+      # The default layout is "#{Mack.root}/app/views/layouts/application.<format>.erb".
       def layout(lay)
         self.class_eval do
           define_method(:layout) do
