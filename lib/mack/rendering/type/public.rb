@@ -13,7 +13,7 @@ module Mack
           if File.extname(p_file).blank?
             p_file = "#{p_file}.#{self.options[:format]}"
           end
-          find_file(Mack.root, "public", p_file) do |f|
+          find_file(Mack::Paths.public(p_file)) do |f|
             return File.open(f).read
           end
           raise Mack::Errors::ResourceNotFound.new(p_file)

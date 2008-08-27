@@ -10,17 +10,17 @@ require File.join(File.dirname(__FILE__), "mack", "utils", "paths.rb")
 require File.join(File.dirname(__FILE__), "mack", "initialization", "configuration.rb")
 
 require File.join(File.dirname(__FILE__), 'mack_core')
-gems_rb = File.join(Mack.root, "config", "initializers", "gems.rb")
+gems_rb = Mack::Paths.initializers("gems.rb")
 if File.exists?(gems_rb)
   begin
-    require File.join(Mack.root, "config", "initializers", "gems.rb")
+    require gems_rb
     Mack::Utils::GemManager.instance.do_requires
   rescue Gem::LoadError
   end
 end
 
 # Requires all rake tasks that ship with the Mack framework.
-[File.join(File.dirname(__FILE__)), File.join(FileUtils.pwd, "lib"), File.join(FileUtils.pwd, "vendor", "plugins")].each do |dir|
+[File.join(File.dirname(__FILE__)), Mack::Paths.lib, Mack::Paths.plugins].each do |dir|
   begin
     require File.join(dir, "tasks", "rake_helpers.rb")
   rescue Exception => e
