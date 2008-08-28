@@ -51,12 +51,26 @@ module Mack
       u
     end
     
+    # Returns all the subdomains as an array, so ["dev", "www"] would be returned for 
+    # "dev.www.mackframework.com". You can specify a different tld_length, such as 2 
+    # to catch ["www"] instead of ["www", "mackframework"] in "www.mackframework.co.uk".
+    # 
+    # Thanks Ruby on Rails for this.
+    def subdomains(tld_length = 1)
+      return [] unless named_host?(host)
+      parts = host.split('.')
+      parts[0..-(tld_length+2)]
+    end
+    
     # Examples:
     #  http://example.org:80
     #  https://example.org:443
     #  http://example.org:8080
     def full_host_with_port
-      full_host << ":#{self.port}"
+      unless full_host.match(/:#{self.port}/)
+        return full_host + ":#{self.port}"
+      end
+      return full_host
     end
     
     # Gives access to the request parameters. This includes 'get' parameters, 'post' parameters
@@ -81,6 +95,10 @@ module Mack
     end
     
     private
+    def named_host?(host)
+      !(host.nil? || /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.match(host))
+    end
+    
     def parse_params(ps)
       
       # look for date time selects:
