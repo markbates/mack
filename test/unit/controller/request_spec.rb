@@ -12,9 +12,13 @@ describe Mack::Request do
   end
   
   it "should set Content-Length to response header" do
+    $mack_app = Rack::Recursive.new(Mack::Utils::ContentLengthHandler.new(Mack::Runner.new))
+    
     get "/tst_home_page/request_full_host"
     response["Content-Length"].should_not be_nil
     response["Content-Length"].should == response.body.to_str.size.to_s
+    
+    $mack_app = Rack::Recursive.new(Mack::Runner.new)
   end
   
   it "should handle request to full host" do
