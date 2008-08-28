@@ -7,7 +7,7 @@
 
 fl = File.join(File.dirname(__FILE__), "..")
 
-require File.join(fl, "..", "mack")
+require File.join(fl, "..", "..", "mack")
 
 require File.join(fl, "testing", "helpers")
 

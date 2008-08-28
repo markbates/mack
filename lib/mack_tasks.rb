@@ -5,11 +5,20 @@ require 'rubygems'
 require 'mack-facets'
 require 'application_configuration'
 
-require File.join(File.dirname(__FILE__), "mack", "utils", "paths.rb")
+fl = File.join(File.dirname(__FILE__), 'mack')
 
-require File.join(File.dirname(__FILE__), "mack", "initialization", "configuration.rb")
+require File.join(fl, "initialization", "boot_loader.rb")
 
-require File.join(File.dirname(__FILE__), 'mack_core')
+# if ARGV.any?
+  require File.join(File.dirname(__FILE__), 'mack_core')
+# else
+#   require File.join(fl, "utils", "paths.rb")
+#   require File.join(fl, "initialization", "configuration.rb")
+#   require File.join(fl, "initialization", "logging.rb")
+#   require File.join(fl, 'core_extensions', 'kernel')
+#   require File.join(fl, 'utils', 'gem_manager')
+# end
+
 gems_rb = Mack::Paths.initializers("gems.rb")
 if File.exists?(gems_rb)
   begin
@@ -18,12 +27,14 @@ if File.exists?(gems_rb)
   rescue Gem::LoadError
   end
 end
+  
 
 # Requires all rake tasks that ship with the Mack framework.
-[File.join(File.dirname(__FILE__)), Mack::Paths.lib, Mack::Paths.plugins].each do |dir|
+[fl, Mack::Paths.lib, Mack::Paths.plugins].each do |dir|
   begin
     require File.join(dir, "tasks", "rake_helpers.rb")
   rescue Exception => e
+    # raise e
   end
   files = Dir.glob(File.join(dir, "**/*.rake"))
   files.each do |f|
