@@ -2,7 +2,7 @@ namespace :mack do
   
   desc "Loads the Mack environment. Default is development."
   task :environment do
-    require File.join(File.dirname(__FILE__), '..', "..", 'mack_app')
+    Mack::Environment.load
   end # environment
 
   desc "Loads an irb console allow you full access to the application w/o a browser."

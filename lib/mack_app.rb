@@ -3,7 +3,8 @@ require File.join(fl, "initialization", "application.rb")
 require File.join(fl, "initialization", "helpers.rb")
 require File.join(fl, "initialization", "plugins.rb")
 
-boot_load(:start_mack_application, :configuration, :print_hello_banner, :routes, :helpers, :app_files, :runner) do
+boot_load(:start_mack_application, :configuration, :print_hello_banner, :lib, :routes, :app_files, :helpers, :runner) do
+  Mack::Environment.load
   Mack.logger.debug "Initialization of Mack Application Environment finished."
 end
 

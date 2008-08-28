@@ -24,8 +24,10 @@ module Mack
         # set up the Rake application
         rake = Rake::Application.new
         Rake.application = rake
-      
-        [File.join(File.dirname(__FILE__), "..", "..", "mack_tasks.rb"), tasks].flatten.each do |task|
+        require 'rake'
+        require 'rake/testtask'
+        require 'rake/rdoctask'
+        [Dir.glob(File.join(File.dirname(__FILE__), "..", "tasks", "*.rake")), tasks].flatten.each do |task|
           load(task)
         end
       

@@ -27,7 +27,7 @@ end
 
 fl = File.join(File.dirname(__FILE__), "mack")
 require File.join(fl, "initialization", "boot_loader.rb")
-
+require File.join(fl, "initialization", "environment.rb")
 require File.join(fl, "initialization", "configuration.rb")
 require File.join(fl, "initialization", "logging.rb")
 
