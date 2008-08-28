@@ -23,11 +23,8 @@ namespace :test do
   
   desc "Report code statistics (KLOCs, etc) from the application. Requires the rcov gem."
   task :stats do |t|
-    ENV["MACK_ENV"] = "test"
-    Rake::Task["mack:environment"].invoke
-    Rake::Task["test:setup"].invoke
-    x = `rcov test/**/*_#{app_config.mack.testing_framework == "rspec" ? "spec" : "test"}.rb -T --no-html -x Rakefile,config\/,tasks\/`
-    x.each do |line|
+    res = common_coverage
+    res.each do |line|
       case line
       when /^\+[\+\-]*\+$/, /^\|.*\|$/, /\d+\sLines\s+\d+\sLOC/
         puts line
@@ -37,11 +34,14 @@ namespace :test do
   
   desc "Generates test coverage from the application. Requires the rcov gem."
   task :coverage do |t|
-    ENV["MACK_ENV"] = "test"
-    Rake::Task["mack:environment"].invoke
-    Rake::Task["test:setup"].invoke
-    `rcov test/**/*_#{app_config.mack.testing_framework == "rspec" ? "spec" : "test"}.rb -x Rakefile,config\/,tasks\/`
-    `open coverage/index.html`
+    common_coverage
+
+    unless PLATFORM['i386-mswin32'] 
+      system("open coverage/index.html") if PLATFORM['darwin'] 
+    else 
+      system("\"C:/Program Files/Mozilla Firefox/firefox.exe\" " + 
+      "coverage/index.html") 
+    end
   end
   
   task :empty do |t|
@@ -50,6 +50,31 @@ namespace :test do
   
   task :raise_exception do |t|
     raise "Oh No!"
+  end
+  
+  private
+  def common_coverage
+    ENV["MACK_ENV"] = "test"
+    Rake::Task["mack:environment"].invoke
+    Rake::Task["test:setup"].invoke
+    
+    rm_f Mack::Paths.root("coverage")
+    rm_f Mack::Paths.root("coverage.data")
+    unless PLATFORM['i386-mswin32'] 
+      rcov = "rcov --sort coverage --rails --aggregate coverage.data " + 
+      "--text-summary -Ilib -T -x gems/*,rcov*,lib/tasks/*,Rakefile" 
+    else 
+      rcov = "rcov.cmd --sort coverage --rails --aggregate coverage.data " + 
+      "--text-summary -Ilib -T" 
+    end
+    
+    puts "Generating... please wait..."
+    if app_config.mack.testing_framework == "rspec" 
+      res = `#{rcov} --html test/**/*_spec.rb`
+    elsif app_config.mack.testing_framework == "test_case"
+      res = `#{rcov} --html test/**/*_test.rb`
+    end
+    res
   end
   
 end

@@ -4,6 +4,7 @@
 * [#127] Moved mack-paths into core
 * [#125] Cookie store is now the default session store, not cachetastic
 * [#124] Opened up the session store API
+* [#122] Added DataMapper session store.
 * [#121] Cookie session store support.
 * [#120] Added PassengerGenerator to generate the necessary files to run Mack with Passenger Phusion (mod_rails)
 * [#107] Updated to Rack 0.4.0
