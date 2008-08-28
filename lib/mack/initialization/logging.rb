@@ -1,7 +1,4 @@
-#--
-# Configure logging
-#++
-boot_load(:logging) do
+boot_load(:logging, :configuration) do
   require 'log4r'
   require File.join(File.dirname(__FILE__), "..", "utils", "ansi", "ansi_color")
   module Mack
