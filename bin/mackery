@@ -1,0 +1,14 @@
+#!/usr/local/bin/ruby
+
+@app = ARGV[0]
+raise "You must specify an application to run!" if @app.nil?
+
+ARGV.shift # get rid of the app name, cause we don't need it.
+@app = @app.strip.downcase
+
+require File.join(File.dirname(__FILE__), "options_handler")
+
+cmd = "mackery-#{@app}"
+cmd << " _#{@mack_gem_version}_" if @mack_gem_version
+
+system cmd

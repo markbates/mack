@@ -1,3 +1,4 @@
+* [#142] INCOMPATIBILITY NOTICE: rake console is no more. Please use mackery console instead.
 * [#140] Added Mack::BootLoader
 * [#137] Added subdomains method on request.
 * [#130] Added ability to 'reload' the console

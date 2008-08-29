@@ -43,6 +43,8 @@ namespace :gem do
         
         s.bindir = "bin"
         s.executables << "mack"
+        s.executables << "mackery"
+        s.executables << "mackery-console"
         
         s.rdoc_options << '--title' << 'Mack' << '--main' << 'README' << '--line-numbers' << "--inline-source"
         

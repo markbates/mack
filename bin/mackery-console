@@ -1,0 +1,6 @@
+require File.join(File.dirname(__FILE__), "options_handler")
+
+libs = []
+libs << "-r irb/completion"
+libs << "-r #{File.join(File.dirname(__FILE__), '..', 'lib', 'mack', 'initialization', 'console')}"
+system "irb #{libs.join(" ")} --simple-prompt"
