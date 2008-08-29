@@ -19,6 +19,10 @@
 * gem: json_pure 1.1.3
 * gem: data_mappe 0.9.5
 
+=== 0.7.0.1
+gem: application_configuration 1.5.3
+gem: cachetastic 1.7.4
+
 === 0.7.0
 * [#114] Javascript link_helper
 * [#112] Error generating mack application
@@ -68,6 +72,10 @@
 * gem: addressable 1.0.4
 * gem: facets 2.4.3
 * gem: data_mapper 0.9.4
+
+===0.6.1.2
+* gem: application_configuration 1.5.3
+* gem: cachetastic 1.7.4
 
 ===0.6.1.1
 * [#72] Fixed serial data type in DataMapper doesn't work with SQLite3
