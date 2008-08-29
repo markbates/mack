@@ -1,3 +1,4 @@
+#!/usr/local/bin/ruby
 require File.join(File.dirname(__FILE__), "options_handler")
 
 libs = []
