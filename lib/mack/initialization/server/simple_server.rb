@@ -8,9 +8,9 @@ module Mack
     class << self
       
       def run(options)
-        r = "Rack::Handler::#{options.handler.camelcase}"
-        puts "Starting app using: #{r} in #{options.environment} mode on port: #{options.port}"
-        eval(r).run(Mack::Utils::Server.build_app, :Port => options.port)
+        r = "Rack::Handler::#{options[:handler].camelcase}"
+        puts "Starting app using: #{r} in #{options[:environment]} mode on port: #{options[:port]}"
+        eval(r).run(Mack::Utils::Server.build_app, :Port => options[:port])
       end
       
     end

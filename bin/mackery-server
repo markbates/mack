@@ -1,12 +1,10 @@
 #!/usr/local/bin/ruby
-require File.join(File.dirname(__FILE__), "options_handler")
+# require File.join(File.dirname(__FILE__), "options_handler")
+
+require File.join(File.dirname(__FILE__), "env_handler")
 
 require 'rubygems'
-require 'optparse'
-require 'optparse/time'
-require 'ostruct'
 require 'fileutils'
-
 require 'thin'
 
 if @mack_gem_version
@@ -17,13 +15,30 @@ end
 
 require 'mack'
 
-if @options.handler == "thin"
-  thin_opts = ["start", @original_command_args]
-  if @options.daemonize
-    thin_opts << '-d'
+handler = "thin"
+
+if ARGV.include?("-h")
+  handler = ARGV[ARGV.index("-h") + 1]
+  ARGV.delete("-h")
+  ARGV.delete(handler)
+end
+
+if handler == "thin"
+  # thin_opts = ["start", ARGV]
+  thin_opts = []
+  if ARGV[0] == "start" || ARGV[0] == "stop" || ARGV[0] == "restart"
+    thin_opts << ARGV[0]
+    ARGV.shift
+  else
+    thin_opts << "start"
   end
-  puts "thin_opts: #{thin_opts.flatten.inspect}"
+  thin_opts << ARGV
+  # puts "thin_opts: #{thin_opts.flatten.inspect}"
   Thin::Runner.new(thin_opts.flatten.reject{|a| a.match(/^_[\d\.]+_$/)}).run!
 else
-  Mack::SimpleServer.run(@options)
+  port = 3000
+  if ARGV.include?("-p")
+    port = ARGV[ARGV.index("-p") + 1]
+  end
+  Mack::SimpleServer.run(:handler => handler, :port => port, :environment => ENV["MACK_ENV"])
 end

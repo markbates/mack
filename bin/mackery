@@ -14,9 +14,9 @@ when "start"
 else
 end
 
-require File.join(File.dirname(__FILE__), "options_handler")
+require File.join(File.dirname(__FILE__), "env_handler")
 
-cmd = "mackery-#{@app} #{@original_command_args.join(" ")}"
+cmd = "mackery-#{@app} #{ARGV.join(" ")}"
 cmd << " _#{@mack_gem_version}_" if @mack_gem_version
-puts cmd
+# puts cmd
 system cmd

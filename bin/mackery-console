@@ -1,5 +1,7 @@
 #!/usr/local/bin/ruby
-require File.join(File.dirname(__FILE__), "options_handler")
+# require File.join(File.dirname(__FILE__), "options_handler")
+
+require File.join(File.dirname(__FILE__), "env_handler")
 
 libs = []
 libs << "-r irb/completion"
