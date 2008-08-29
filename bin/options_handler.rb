@@ -7,6 +7,7 @@ require 'fileutils'
 @options.environment = "development"
 @options.port = 3000 # Does NOT work with Thin!! You must edit the thin.yml file!
 @options.handler = "thin"
+@options.daemonize = false
 
 opts = OptionParser.new do |opts|
   opts.banner = "Usage: mackery <application_name> [options]"
@@ -21,6 +22,10 @@ opts = OptionParser.new do |opts|
   
   opts.on("-h [handler]") do |v|
     @options.handler = v
+  end
+  
+  opts.on("-d [daemonize]") do |v|
+    @options.daemonize = true
   end
   
 end

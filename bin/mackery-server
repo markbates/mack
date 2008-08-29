@@ -19,6 +19,9 @@ require 'mack'
 
 if @options.handler == "thin"
   thin_opts = ["start", @original_command_args]
+  if @options.daemonize
+    thin_opts << '-d'
+  end
   puts "thin_opts: #{thin_opts.flatten.inspect}"
   Thin::Runner.new(thin_opts.flatten.reject{|a| a.match(/^_[\d\.]+_$/)}).run!
 else
