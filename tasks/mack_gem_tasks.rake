@@ -45,6 +45,7 @@ namespace :gem do
         s.executables << "mack"
         s.executables << "mackery"
         s.executables << "mackery-console"
+        s.executables << "mackery-server"
         
         s.rdoc_options << '--title' << 'Mack' << '--main' << 'README' << '--line-numbers' << "--inline-source"
         

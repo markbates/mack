@@ -1,0 +1,26 @@
+#!/usr/local/bin/ruby
+require File.join(File.dirname(__FILE__), "options_handler")
+
+require 'rubygems'
+require 'optparse'
+require 'optparse/time'
+require 'ostruct'
+require 'fileutils'
+
+require 'thin'
+
+if @mack_gem_version
+  gem 'mack', @mack_gem_version
+else
+  gem 'mack'
+end
+
+require 'mack'
+
+if @options.handler == "thin"
+  thin_opts = ["start", @original_command_args]
+  puts "thin_opts: #{thin_opts.flatten.inspect}"
+  Thin::Runner.new(thin_opts.flatten.reject{|a| a.match(/^_[\d\.]+_$/)}).run!
+else
+  Mack::SimpleServer.run(@options)
+end

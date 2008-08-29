@@ -5,6 +5,8 @@ require 'fileutils'
 
 @options = OpenStruct.new
 @options.environment = "development"
+@options.port = 3000 # Does NOT work with Thin!! You must edit the thin.yml file!
+@options.handler = "thin"
 
 opts = OptionParser.new do |opts|
   opts.banner = "Usage: mackery <application_name> [options]"
@@ -13,7 +15,17 @@ opts = OptionParser.new do |opts|
     @options.environment = v
   end
   
+  opts.on("-p [port]") do |v|
+    @options.port = v
+  end
+  
+  opts.on("-h [handler]") do |v|
+    @options.handler = v
+  end
+  
 end
+
+@original_command_args = ARGV.dup
 
 opts.parse!(ARGV)
 
