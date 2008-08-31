@@ -56,7 +56,7 @@ class GemHelper # :nodoc:
   
   def install
     sudo = ENV['SUDOLESS'] == 'true' || RUBY_PLATFORM =~ /win32|cygwin/ ? '' : 'sudo'
-    sh %{#{sudo} gem install --local #{File.join("pkg", full_gem_name)} --no-update-sources}
+    sh %{#{sudo} gem install #{File.join("pkg", full_gem_name)} --no-update-sources}
   end
   
 end
