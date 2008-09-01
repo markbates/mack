@@ -51,7 +51,26 @@ module Mack
       # Examples:
       #   <%= submit_button %> # => <input type="submit" value="Submit" />
       #   <%= submit_button "Login" %> # => <input type="submit" value="Login" />
+      #   <%= submit_button "Login", :disable_with => "Please wait..." %> # => <input type="submit" value="Login" onclick="this.disabled=true;this.value='Please wait...';this.form.submit();" />
       def submit_button(value = "Submit", options = {}, *original_args)
+        # processing the disable with option, which will be embebed in the onclick parameter.
+        if disable_with = opts.options(:disable_with)
+          disable_with = "this.value='#{disable_with}'"
+          
+          # Making sure that we keep the content of the onclick option, should it exist.
+          disable_with << ";#{options.delete('onclick')}" if options['onclick']
+          
+          # Setting the onlick option.
+          options["onclick"] = [
+            "this.setAttribute('originalValue', this.value)",
+            "this.disabled=true",
+            disable_with,
+            "result = (this.form.onsubmit ? (this.form.onsubmit() ? this.form.submit() : false) : this.form.submit())",
+            "if (result == false) { this.value = this.getAttribute('originalValue'); this.disabled = false }",
+            "return result;",
+          ].join(";")
+        end
+        
         # non_content_tag(:input, {:type => :submit, :value => value}.merge(options))
         content_tag(:button, {:type => :submit}.merge(options), value)
       end
