@@ -45,17 +45,36 @@ module Mack
         end
       end
       
+      # Requires the gem and any libs that you've specified.
+      def do_task_requires
+        @required_gem_list.each do |g|
+          begin
+            if g.version?
+              gem(g.name, g.version)
+            else
+              gem(g.name)
+            end
+            g.tasks.each { |l| require l.to_s } if g.tasks?
+          rescue Exception => e
+            puts e.message
+            puts e.backtrace
+          end
+        end
+      end
+      
       private
       class GemObject # :nodoc:
         attr_accessor :name
         attr_accessor :version
         attr_accessor :libs
+        attr_accessor :tasks
         attr_accessor :source
         
         def initialize(name, options = {})
           self.name = name
           self.version = options[:version]
           self.libs = [options[:libs]].flatten.compact
+          self.tasks = [options[:tasks], "#{name}_tasks"].flatten.compact
           self.source = options[:source]
         end
         
@@ -66,7 +85,7 @@ module Mack
         end
         
         def libs?
-          !self.libs.empty?
+          self.libs.any?
         end
         
         def version?
@@ -75,6 +94,10 @@ module Mack
         
         def source?
           !self.source.blank?
+        end
+        
+        def tasks?
+          self.tasks.any?
         end
         
       end

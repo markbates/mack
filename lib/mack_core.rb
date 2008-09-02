@@ -42,7 +42,7 @@ end
 boot_load(:gems) do
   Mack.logger.debug "Initializing custom gems..." unless app_config.log.disable_initialization_logging
   require Mack::Paths.initializers("gems.rb")
-  Mack::Utils::GemManager.instance.do_requires  
+  Mack::Utils::GemManager.instance.do_requires
 end
 
 boot_load(:core_classes) do
