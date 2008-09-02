@@ -9,4 +9,5 @@ Rake::RDocTask.new do |rd|
   rd.options << "--line-numbers"
   rd.options << "--inline-source"
   rd.title = "Mack Framework"
+  # rd.template = File.join(File.dirname(__FILE__), "rdoc_template")
 end

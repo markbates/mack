@@ -3,7 +3,6 @@ namespace :mack do
   
   desc "Loads the Mack environment. Default is development."
   task :environment do
-    require File.join(File.dirname(__FILE__), '..', '..', 'mack')
     Mack::Environment.load
   end # environment
 
