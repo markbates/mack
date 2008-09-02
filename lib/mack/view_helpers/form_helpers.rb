@@ -52,9 +52,10 @@ module Mack
       #   <%= submit_button %> # => <input type="submit" value="Submit" />
       #   <%= submit_button "Login" %> # => <input type="submit" value="Login" />
       #   <%= submit_button "Login", :disable_with => "Please wait..." %> # => <input type="submit" value="Login" onclick="this.disabled=true;this.value='Please wait...';this.form.submit();" />
+      # Please note that if the form.submit() returns false the button's value will be restored to its initial value.
       def submit_button(value = "Submit", options = {}, *original_args)
         # processing the disable with option, which will be embebed in the onclick parameter.
-        if disable_with = opts.options(:disable_with)
+        if disable_with = options.delete(:disable_with)
           disable_with = "this.value='#{disable_with}'"
           
           # Making sure that we keep the content of the onclick option, should it exist.
