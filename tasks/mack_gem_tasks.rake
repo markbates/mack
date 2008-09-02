@@ -21,6 +21,7 @@ namespace :gem do
       pwd = FileUtils.pwd
       gh = GemHelper.instance
       FileUtils.rm_rf("#{pwd}/pkg", :verbose => true)
+      FileUtils.rm_rf("#{pwd}/doc", :verbose => true)
       gem_spec = Gem::Specification.new do |s|
         s.name = gh.gem_name
         s.version = gh.version
