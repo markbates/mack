@@ -1,3 +1,4 @@
+puts caller.inspect
 namespace :gems do
   
   desc "lists all the gem required for this application."
