@@ -12,6 +12,8 @@
 * [#122] Added DataMapper session store.
 * [#121] Cookie session store support.
 * [#120] Added PassengerGenerator to generate the necessary files to run Mack with Passenger Phusion (mod_rails)
+* [#118] Mack/mack-more can be loaded from vendor/framework/mack and vendor/framework/mack-more
+* [#117] Added rake task: mack:freeze:edge
 * [#107] Updated to Rack 0.4.0
 * [#95] Removed deprecated model_* methods
 * [#94] Removed deprecated submit_tag

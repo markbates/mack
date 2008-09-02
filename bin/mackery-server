@@ -3,15 +3,12 @@
 
 require File.join(File.dirname(__FILE__), "env_handler")
 
+require File.join(File.dirname(__FILE__), "gem_load_path")
+
 require 'rubygems'
+
 require 'fileutils'
 require 'thin'
-
-if @mack_gem_version
-  gem 'mack', @mack_gem_version
-else
-  gem 'mack'
-end
 
 require 'mack'
 

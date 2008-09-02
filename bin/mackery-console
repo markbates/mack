@@ -3,7 +3,14 @@
 
 require File.join(File.dirname(__FILE__), "env_handler")
 
+require File.join(File.dirname(__FILE__), "gem_load_path")
+
 libs = []
 libs << "-r irb/completion"
-libs << "-r #{File.join(File.dirname(__FILE__), '..', 'lib', 'mack', 'initialization', 'console')}"
+mack_lib_path = File.join(FileUtils.pwd, 'vendor', 'framework', 'mack', 'lib', 'mack')
+if File.exists?(mack_lib_path)
+  libs << "-r #{File.join(mack_lib_path, 'initialization', 'console')}"  
+else
+  libs << "-r #{File.join(File.dirname(__FILE__), '..', 'lib', 'mack', 'initialization', 'console')}"
+end
 system "irb #{libs.join(" ")} --simple-prompt"
