@@ -51,15 +51,22 @@ module Mack
       # Examples:
       #   <%= submit_button %> # => <input type="submit" value="Submit" />
       #   <%= submit_button "Login" %> # => <input type="submit" value="Login" />
+      #   You can disable the button after clicking it. In essence, this will work as follows:
       #   <%= submit_button "Login", :disable_with => "Please wait..." %> # => <input type="submit" value="Login" onclick="this.disabled=true;this.value='Please wait...';this.form.submit();" />
-      # Please note that if the form.submit() returns false the button's value will be restored to its initial value.
+      #  Even though :disable_with will work on the onclick parameter, you can add your own onclick behaviour to the mix, as follows:
+      #  <%= submit_button "Login", :disable_with => "Please wait...", :onclick => "alert('test')" %> # => <input type="submit" value="Login" onclick="this.disabled=true;this.value='Please wait...';alert('test');this.form.submit();" />
+      #
+      #  Please note that if the form.submit() returns false the button's value will be restored to its initial value. This behaviour is acheived through the injection of a couple bits of JS into the onlick existing parameter. These bits are injected after the disabled value, and all existing onclick behaviour that you define in the :onlick option. The included JS bits are as follows:
+      # "result = (this.form.onsubmit ? (this.form.onsubmit() ? this.form.submit() : false) : this.form.submit())",
+      # "if (result == false) { this.value = this.getAttribute('originalValue'); this.disabled = false }",
+      # "return result;"
       def submit_button(value = "Submit", options = {}, *original_args)
         # processing the disable with option, which will be embebed in the onclick parameter.
         if disable_with = options.delete(:disable_with)
           disable_with = "this.value='#{disable_with}'"
           
           # Making sure that we keep the content of the onclick option, should it exist.
-          disable_with << ";#{options.delete('onclick')}" if options['onclick']
+          disable_with << ";#{options.delete(:onclick)}" if options.has_key?(:onclick)
           
           # Setting the onlick option.
           options["onclick"] = [
