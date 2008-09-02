@@ -341,11 +341,11 @@ Hello
     end
     
     it "should allow you to specify a disabled value" do
-      submit_button("Login", {:disable_with => "Please wait..."}).should == %{<button onclick="this.setAttribute('originalValue', this.value);this.disabled=true;this.value='Please wait...';result = (this.form.onsubmit ? (this.form.onsubmit() ? this.form.submit() : false) : this.form.submit());if (result == false) { this.value = this.getAttribute('originalValue'); this.disabled = false };return result;" type="submit">Login</button>}
+      submit_button("Login", {:disable_with => "Please wait..."}).should == %{<button onclick="this.setAttribute('originalValue', this.innerHTML);this.disabled=true;this.innerHTML='Please wait...';result = (this.form.onsubmit ? (this.form.onsubmit() ? this.form.submit() : false) : this.form.submit());if (result == false) { this.innerHTML = this.getAttribute('originalValue'); this.disabled = false };return result;" type="submit">Login</button>}
     end
 
     it "should allow you to keep your existing onlick settings when setting the :disable_with option" do
-      submit_button("Login", {:onclick => "alert('test')", :disable_with => "Please wait..."}).should == %{<button onclick="this.setAttribute('originalValue', this.value);this.disabled=true;this.value='Please wait...';alert('test');result = (this.form.onsubmit ? (this.form.onsubmit() ? this.form.submit() : false) : this.form.submit());if (result == false) { this.value = this.getAttribute('originalValue'); this.disabled = false };return result;" type="submit">Login</button>}
+      submit_button("Login", {:onclick => "alert('test')", :disable_with => "Please wait..."}).should == %{<button onclick="this.setAttribute('originalValue', this.innerHTML);this.disabled=true;this.innerHTML='Please wait...';alert('test');result = (this.form.onsubmit ? (this.form.onsubmit() ? this.form.submit() : false) : this.form.submit());if (result == false) { this.innerHTML = this.getAttribute('originalValue'); this.disabled = false };return result;" type="submit">Login</button>}
     end
     
   end

@@ -69,18 +69,18 @@ module Mack
       def submit_button(value = "Submit", options = {}, *original_args)
         # processing the disable with option, which will be embebed in the onclick parameter.
         if disable_with = options.delete(:disable_with)
-          disable_with = "this.value='#{disable_with}'"
+          disable_with = "this.innerHTML='#{disable_with}'"
           
           # Making sure that we keep the content of the onclick option, should it exist.
           disable_with << ";#{options.delete(:onclick)}" if options.has_key?(:onclick)
           
           # Setting the onlick option.
           options[:onclick] = [
-            "this.setAttribute('originalValue', this.value)",
+            "this.setAttribute('originalValue', this.innerHTML)",
             "this.disabled=true",
             disable_with,
             "result = (this.form.onsubmit ? (this.form.onsubmit() ? this.form.submit() : false) : this.form.submit())",
-            "if (result == false) { this.value = this.getAttribute('originalValue'); this.disabled = false }",
+            "if (result == false) { this.innerHTML = this.getAttribute('originalValue'); this.disabled = false }",
             "return result;",
           ].join(";")
         end
