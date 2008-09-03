@@ -56,8 +56,6 @@ module Mack
             end
             g.tasks.each { |l| require l.to_s } if g.tasks?
           rescue Exception => e
-            puts e.message
-            puts e.backtrace
           end
         end
       end
