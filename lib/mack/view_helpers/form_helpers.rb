@@ -38,10 +38,6 @@ module Mack
       
       # Generates a button with a form around it and will set the request method to delete.
       def delete_button(url, value = "Delete", form_options = {}, button_options = {})
-        if button_options[:confirm]
-          button_options[:onclick] = "if (confirm('#{button_options[:confirm]}')) {submit();}; return false;"
-          button_options.delete(:confirm)
-        end
         t = "\n" << hidden_field(:_method, :value => :delete)
         t << "\n" << submit_button(value, button_options)
         t << "\n"
@@ -67,6 +63,11 @@ module Mack
       #   "if (result == false) { this.value = this.getAttribute('originalValue'); this.disabled = false }",
       #   "return result;"
       def submit_button(value = "Submit", options = {}, *original_args)
+        if options[:confirm]
+          onclick = "if (confirm('#{options.delete(:confirm)}')) {submit();}; return false;"
+          onclick << ";#{options.delete(:onclick)}" if options.has_key?(:onclick)
+          options[:onclick] = onclick
+        end
         # processing the disable with option, which will be embebed in the onclick parameter.
         if disable_with = options.delete(:disable_with)
           disable_with = "this.innerHTML='#{disable_with}'"
