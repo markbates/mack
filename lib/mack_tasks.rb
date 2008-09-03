@@ -9,11 +9,11 @@ require 'application_configuration'
 fl = File.join(File.dirname(__FILE__), 'mack')
 
 f_tasks = File.join(FileUtils.pwd, 'vendor', 'framework', 'mack', 'lib', 'mack_tasks.rb')
-if File.exists?(f_tasks)
-  puts "Run from the local copy"
+if File.exists?(f_tasks) && f_tasks != __FILE__
+  # puts "Run from the local copy"
   require f_tasks
 else
-  puts "running mack_tasks from: #{fl}"
+  # puts "running mack_tasks from: #{fl}"
 
   require File.join(fl, 'tasks', 'rake_helpers')
   require File.join(fl, 'core_extensions', 'kernel')
