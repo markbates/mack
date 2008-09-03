@@ -14,6 +14,7 @@ if File.exists?(f_tasks) && f_tasks != __FILE__
   require f_tasks
 else
   # puts "running mack_tasks from: #{fl}"
+  require File.join(File.dirname(__FILE__), '..', 'bin', 'gem_load_path')
 
   require File.join(fl, 'tasks', 'rake_helpers')
   require File.join(fl, 'core_extensions', 'kernel')
