@@ -10,6 +10,7 @@ mack_more_path = File.join(vendor_path, 'framework', 'mack-more')
 if File.exists?(mack_path)
   $:.insert(0, File.expand_path(mack_path))
 else
+  require 'rubygems'
   if @mack_gem_version
     gem 'mack', @mack_gem_version
   else
