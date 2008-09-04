@@ -365,11 +365,14 @@ module Mack
     def self.included(base)
       Mack::Controller::Registry.add(base)
       base.extend(ClassMethods)
+      base.extend(Mack::Utils::RequestAuthenticityValidator::ClassMethods)
+      base.before_filter :validate_request_authenticity
     end
     
     # Houses a repository of all the controllers in the system.
     class Registry < Mack::Utils::RegistryList
-    end
+    end    
     
+    include Mack::Utils::RequestAuthenticityValidator
   end # Controller
 end # Mack

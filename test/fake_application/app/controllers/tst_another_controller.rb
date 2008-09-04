@@ -76,4 +76,13 @@ class TstAnotherController
     render(:text, x)
   end
   
+  def xss
+  end
+  
+  def xss2
+  end
+  
+  def violate_xss_check
+  end
+    
 end

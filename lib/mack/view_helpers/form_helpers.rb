@@ -3,6 +3,11 @@ module Mack
     # A useful collection of helpers for forms.
     module FormHelpers
       
+      def form_authenticity_field
+        str = %{<input type="hidden" name="authenticity_token" value="#{Mack::Utils::AuthenticityTokenDispenser.instance.dispense_token(request.session.id)}" />}
+      end
+        
+      
       # Examples:
       #   <% form(users_create_url) do -%>
       #     # form stuff here...
@@ -32,6 +37,7 @@ module Mack
         concat("<form#{build_options(options)}>\n", block.binding)
         concat(meth, block.binding) unless meth.blank?
         yield
+        concat(form_authenticity_field, block.binding)
         concat("\n</form>", block.binding)
         # content_tag(:form, options, &block)
       end
