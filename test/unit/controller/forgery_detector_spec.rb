@@ -126,7 +126,7 @@ describe 'Forgery Detector' do
       temp_app_config("mack::disable_forgery_detector" => false) do
         my_token = Digest::SHA1.hexdigest(session.id.to_s + "shh, it's a secret")
         get xss_url
-        response.body.should match(%{<input type="hidden" name="authenticity_token" value="#{my_token}" />})
+        response.body.should match(%{<input type="hidden" name="__authenticity_token" value="#{my_token}" />})
       end
     end
     
@@ -134,7 +134,7 @@ describe 'Forgery Detector' do
       temp_app_config("mack::disable_forgery_detector" => false) do
         my_token = Digest::SHA1.hexdigest(session.id.to_s + "shh, it's a secret")
         get xss2_url
-        response.body.should match(%{<input type="hidden" name="authenticity_token" value="#{my_token}" />})
+        response.body.should match(%{<input type="hidden" name="__authenticity_token" value="#{my_token}" />})
       end
     end
   end
@@ -155,7 +155,7 @@ describe 'Forgery Detector' do
     it "should raise error when authenticity token is present but doesn't match" do
       temp_app_config("mack::disable_forgery_detector" => false) do
         lambda{
-          post(violate_xss_check_url, :authenticity_token => "boo")
+          post(violate_xss_check_url, :__authenticity_token => "boo")
         }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
       end
     end
@@ -164,7 +164,7 @@ describe 'Forgery Detector' do
       temp_app_config("mack::disable_forgery_detector" => false) do
         my_token = Digest::SHA1.hexdigest(session.id.to_s + "shh, it's a secret")
         lambda{
-          post(violate_xss_check_url, :authenticity_token => my_token)
+          post(violate_xss_check_url, :__authenticity_token => my_token)
         }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
       end
     end
@@ -173,7 +173,7 @@ describe 'Forgery Detector' do
       temp_app_config("request_authenticity_token_salt" => "boo", "mack::disable_forgery_detector" => false) do
         my_token = Digest::SHA1.hexdigest(session.id.to_s + "boo")
         lambda{
-          post(violate_xss_check_url, :authenticity_token => my_token)
+          post(violate_xss_check_url, :__authenticity_token => my_token)
         }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
       end
     end
@@ -182,7 +182,7 @@ describe 'Forgery Detector' do
       temp_app_config("request_authenticity_token_salt" => "", "mack::disable_forgery_detector" => false) do
         my_token = Digest::SHA1.hexdigest(session.id.to_s + "shh, it's a secret")
         lambda{
-          post(violate_xss_check_url, :authenticity_token => my_token)
+          post(violate_xss_check_url, :__authenticity_token => my_token)
         }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
       end
     end

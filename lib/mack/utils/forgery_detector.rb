@@ -97,7 +97,7 @@ module Mack
       # -  All of the above must be true
       #
       def detect_forgery
-        valid_request? || raise(Mack::Errors::InvalidAuthenticityToken.new(request.params[:authenticity_token] || "unknown token"))
+        valid_request? || raise(Mack::Errors::InvalidAuthenticityToken.new(request.params[:__authenticity_token] || "unknown token"))
       end
 
       protected
@@ -130,7 +130,7 @@ module Mack
         return app_config.mack.disable_forgery_detector ||
                 self.skip_action? ||
                 request.params[:method] == "get" ||
-                (request.params[:authenticity_token] == authenticity_token)
+                (request.params[:__authenticity_token] == authenticity_token)
       end
       
       def authenticity_token # :nodoc:

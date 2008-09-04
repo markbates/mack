@@ -12,7 +12,7 @@ module Mack
       # the authenticity token is already included in your form.
       #
       def form_authenticity_field
-        str = %{<input type="hidden" name="authenticity_token" value="#{Mack::Utils::AuthenticityTokenDispenser.instance.dispense_token(request.session.id)}" />}
+        str = %{<input type="hidden" name="__authenticity_token" value="#{Mack::Utils::AuthenticityTokenDispenser.instance.dispense_token(request.session.id)}" />}
       end
         
       
@@ -44,8 +44,8 @@ module Mack
         end
         concat("<form#{build_options(options)}>\n", block.binding)
         concat(meth, block.binding) unless meth.blank?
-        yield
         concat(form_authenticity_field, block.binding) if !app_config.mack.disable_forgery_detector
+        yield
         concat("\n</form>", block.binding)
         # content_tag(:form, options, &block)
       end
