@@ -64,7 +64,15 @@ class ForgeryTest3Controller
   end
 end
 
-describe 'Request Authenticity' do
+class ForgeryInheritanceController < ForgeryTest3Controller
+  
+  def test5
+    render(:text, "foo")
+  end
+  
+end
+
+describe 'Forgery Detector' do
   
   describe 'Authenticity token' do
     it "should always use the session id + default salt" do
@@ -105,7 +113,7 @@ describe 'Request Authenticity' do
     end
   end
   
-  describe 'Request validation' do
+  describe 'Forgery detection' do
     it "should not validate if this feature is globally turned off" do
       temp_app_config("disable_request_validation" => true) do
         post(violate_xss_check_url).should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
@@ -150,7 +158,7 @@ describe 'Request Authenticity' do
     end
   end
   
-  describe "Disabling request validation" do
+  describe "Disabling forgery detector" do
     before(:all) do
       Mack::Routes.build do |r|
         r.forgery_test1 "/forgery_test1", :controller => :forgery_test, :action => :forgery_test1, :method => :post
@@ -167,6 +175,12 @@ describe 'Request Authenticity' do
         r.forgery3_test2 "/forgery3_test2", :controller => :forgery_test3, :action => :test2, :method => :post
         r.forgery3_test3 "/forgery3_test3", :controller => :forgery_test3, :action => :test3, :method => :post
         r.forgery3_test4 "/forgery3_test4", :controller => :forgery_test3, :action => :test4, :method => :post
+        
+        r.forgery4_test1 "/forgery3_test1", :controller => :forgery_inheritance, :action => :test1, :method => :post
+        r.forgery4_test2 "/forgery3_test2", :controller => :forgery_inheritance, :action => :test2, :method => :post
+        r.forgery4_test3 "/forgery3_test3", :controller => :forgery_inheritance, :action => :test3, :method => :post
+        r.forgery4_test4 "/forgery3_test4", :controller => :forgery_inheritance, :action => :test4, :method => :post
+        r.forgery4_test5 "/forgery3_test5", :controller => :forgery_inheritance, :action => :test5, :method => :post        
       end
       a = "hello"
     end
@@ -214,6 +228,24 @@ describe 'Request Authenticity' do
       lambda{
         post(forgery3_test4_url)
       }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+    end
+    
+    it "should work in inherited controller" do
+      lambda{
+        post(forgery4_test1_url)
+      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+      lambda{
+        post(forgery4_test2_url)
+      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+      lambda{
+        post(forgery4_test3_url)
+      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+      lambda{
+        post(forgery4_test4_url)
+      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+      lambda{
+        post(forgery4_test5_url)
+      }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
     end
     
   end
