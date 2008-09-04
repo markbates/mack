@@ -17,8 +17,14 @@ module Mack
         def get(id, request, response, cookies)
           c = cookies[id]
           return nil if c.nil?
-          sess = YAML.load(c.decrypt)
-          return sess
+          begin
+            sess = YAML.load(c.decrypt)
+            return sess
+          rescue Exception => e
+            # The cookie was bad, delete it and start a new session.
+            c.delete(id)
+            return nil
+          end
         end
         
         # Encrypts the session and places it into the cookie.

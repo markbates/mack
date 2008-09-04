@@ -17,6 +17,14 @@ rule /^cachetastic:/ do |t|
   Rake::Task["cachetastic:manipulate_caches"].invoke
 end
 
+rule /^generate:.+:desc/ do |t|
+  klass = t.name.gsub("generate:", '')
+  klass.gsub!(":desc", '')
+  Rake::Task["environment"].invoke
+  klass = "#{klass.camelcase}Generator"
+  puts klass.constantize.describe
+end
+
 rule /^generate:/ do |t|
   klass = t.name.gsub("generate:", '')
   Rake::Task["environment"].invoke

@@ -1,3 +1,10 @@
+* [#147] Added :confirm to button helpers.
+* [#146] [Diogo Almeida] Added :disable_with to submit_button form helper.
+* [#145] Added rake generate:<generator_name>:desc task to 'describe' a Genosaurus generator
+* [#144] INCOMPATIBILITY NOTICE: rake server is no more. Please use mackery server instead.
+* [#142] INCOMPATIBILITY NOTICE: rake console is no more. Please use mackery console instead.
+* [#140] Added Mack::BootLoader
+* [#137] Added subdomains method on request.
 * [#130] Added ability to 'reload' the console
 * [#129] DataMapper 0.9.5 support
 * [#128] Updated json_pure to 1.1.3 and removed ruby-debug dependency
@@ -7,6 +14,8 @@
 * [#122] Added DataMapper session store.
 * [#121] Cookie session store support.
 * [#120] Added PassengerGenerator to generate the necessary files to run Mack with Passenger Phusion (mod_rails)
+* [#118] Mack/mack-more can be loaded from vendor/framework/mack and vendor/framework/mack-more
+* [#117] Added rake task: mack:freeze:edge
 * [#107] Updated to Rack 0.4.0
 * [#95] Removed deprecated model_* methods
 * [#94] Removed deprecated submit_tag
@@ -14,7 +23,13 @@
 * [#21] Asset Hosts
 * gem: rack 0.4.0
 * gem: json_pure 1.1.3
-* gem: data_mappe 0.9.5
+* gem: data_mapper 0.9.5
+* gem: genosaurus 1.2.4
+* gem: ezcrypto 0.7
+
+=== 0.7.0.1
+gem: application_configuration 1.5.3
+gem: cachetastic 1.7.4
 
 === 0.7.0
 * [#114] Javascript link_helper
@@ -65,6 +80,10 @@
 * gem: addressable 1.0.4
 * gem: facets 2.4.3
 * gem: data_mapper 0.9.4
+
+===0.6.1.2
+* gem: application_configuration 1.5.3
+* gem: cachetastic 1.7.4
 
 ===0.6.1.1
 * [#72] Fixed serial data type in DataMapper doesn't work with SQLite3

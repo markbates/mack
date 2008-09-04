@@ -4,30 +4,17 @@ namespace :mack do
 
     desc "Starts the webserver."
     task :start do |t|
+      puts %{
+This task has been removed. Please use the 'mackery' command to start/stop the server:
 
-      require 'rubygems'
-      require 'optparse'
-      require 'optparse/time'
-      require 'ostruct'
-      require 'fileutils'
+  $ mackery server
 
-      require 'thin'
+The environment can be set like this:
 
-      options = OpenStruct.new
-      options.port = (ENV["PORT"] ||= "3000") # Does NOT work with Thin!! You must edit the thin.yml file!
-      options.handler = (ENV["HANDLER"] ||= "thin")
-
-
-      # require File.join(Mack.root, "config", "boot.rb")
-      require 'mack'
-
-      if options.handler == "thin"
-        # thin_opts = ["start", "-r", "config/thin.ru"]
-        thin_opts = ["start"]
-        Thin::Runner.new(thin_opts.flatten).run!
-      else
-        Mack::SimpleServer.run(options)
-      end
+  $ mackery server -e test
+  
+  $ mackery server -p 8080 -e production # etc...
+      }
     end # start
 
   end # server

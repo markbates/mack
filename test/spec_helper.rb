@@ -15,9 +15,6 @@ end
 # load the mack framework:
 require(File.join(File.dirname(__FILE__), "..", "lib", 'mack'))
 
-# not quite sure why, but when you run rake you need to keep reloading the routes. this doesn't seem
-# to be a problem when running script/server or when running an individual test.
-require(File.join(File.dirname(__FILE__), "fake_application", "config", "routes.rb"))
 
 #-------------- HELPER MODULES --------------------------#
 

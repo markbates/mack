@@ -1,0 +1,22 @@
+#!/usr/local/bin/ruby
+
+@app = ARGV[0]
+if @app.nil?
+  @app = "server"
+end
+
+ARGV.shift # get rid of the app name, cause we don't need it.
+@app = @app.strip.downcase
+
+case @app
+when "start"
+  @app = "server"
+else
+end
+
+require File.join(File.dirname(__FILE__), "env_handler")
+
+cmd = "mackery-#{@app} #{ARGV.join(" ")}"
+cmd << " _#{@mack_gem_version}_" if @mack_gem_version
+# puts cmd
+system cmd

@@ -12,23 +12,16 @@ First things first, let's generate your application:
   $ mack <app_name>
 
 To run a Mack application:
-  $ rake mack:server:start
+  $ mackery server
 
-It will try and run the app using the following servers in this order:
-  * Thin
-  * Mongrel
-  * WEBrick
-
-rake script:server takes the following options:
-  $ rake server PORT=<port> Mack.env=<environment> HANDLER=<rack_handler>
+mackery server takes the following options:
+  $ mackery server -p <port> -e <environment> -h <rack_handler>
   
-The port and rack_handler flags don't apply if you're using Thin[http://code.macournoyer.com/thin] to run the app, which is the default if it is installed. Use the thin.yml file in your application's config directory to configure Thin. The rack_handler one will allow you to switch which server is used to run the app. See Rack for more Rack::Handlers.
-  
-The environment can also be changed like this:
-  $ rake mack:server:start#<environment>
+The rack_handler one will allow you to switch which server is used to run the app. See Rack for more Rack::Handlers.
   
 You can also run:
-  $ rake mack:console
+  $ mackery console
+  
 This will give you console level access to your application.
 
 

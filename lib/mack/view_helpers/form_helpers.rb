@@ -44,10 +44,6 @@ module Mack
       
       # Generates a button with a form around it and will set the request method to delete.
       def delete_button(url, value = "Delete", form_options = {}, button_options = {})
-        if button_options[:confirm]
-          button_options[:onclick] = "if (confirm('#{button_options[:confirm]}')) {submit();}; return false;"
-          button_options.delete(:confirm)
-        end
         t = "\n" << hidden_field(:_method, :value => :delete)
         t << "\n" << submit_button(value, button_options)
         t << "\n"
@@ -57,7 +53,45 @@ module Mack
       # Examples:
       #   <%= submit_button %> # => <input type="submit" value="Submit" />
       #   <%= submit_button "Login" %> # => <input type="submit" value="Login" />
+      #   You can disable the button after clicking it. In essence, this will work as follows:
+      #   <%= submit_button "Login", :disable_with => "Please wait..." %> 
+      #    # => <input type="submit" value="Login" onclick="this.disabled=true;this.value='Please wait...';this.form.submit();" />
+      #  Even though :disable_with will work on the onclick parameter, you can add your own onclick behaviour to the mix, as follows:
+      #  <%= submit_button "Login", :disable_with => "Please wait...", :onclick => "alert('test')" %> 
+      #    # => <input type="submit" value="Login" onclick="this.disabled=true;this.value='Please wait...';alert('test');this.form.submit();" />
+      #
+      # Please note that if the form.submit() returns false the button's value will be restored to 
+      # its initial value. This behaviour is acheived through the injection of a couple bits of JS 
+      # into the onlick existing parameter. These bits are injected after the disabled value, and 
+      # all existing onclick behaviour that you define in the :onlick option. The included JS bits 
+      # are as follows:
+      #   "result = (this.form.onsubmit ? (this.form.onsubmit() ? this.form.submit() : false) : this.form.submit())",
+      #   "if (result == false) { this.value = this.getAttribute('originalValue'); this.disabled = false }",
+      #   "return result;"
       def submit_button(value = "Submit", options = {}, *original_args)
+        if options[:confirm]
+          onclick = "if (confirm('#{options.delete(:confirm)}')) {submit();}; return false;"
+          onclick << ";#{options.delete(:onclick)}" if options.has_key?(:onclick)
+          options[:onclick] = onclick
+        end
+        # processing the disable with option, which will be embebed in the onclick parameter.
+        if disable_with = options.delete(:disable_with)
+          disable_with = "this.innerHTML='#{disable_with}'"
+          
+          # Making sure that we keep the content of the onclick option, should it exist.
+          disable_with << ";#{options.delete(:onclick)}" if options.has_key?(:onclick)
+          
+          # Setting the onlick option.
+          options[:onclick] = [
+            "this.setAttribute('originalValue', this.innerHTML)",
+            "this.disabled=true",
+            disable_with,
+            "result = (this.form.onsubmit ? (this.form.onsubmit() ? this.form.submit() : false) : this.form.submit())",
+            "if (result == false) { this.innerHTML = this.getAttribute('originalValue'); this.disabled = false }",
+            "return result;",
+          ].join(";")
+        end
+        
         # non_content_tag(:input, {:type => :submit, :value => value}.merge(options))
         content_tag(:button, {:type => :submit}.merge(options), value)
       end

@@ -21,6 +21,7 @@ namespace :gem do
       pwd = FileUtils.pwd
       gh = GemHelper.instance
       FileUtils.rm_rf("#{pwd}/pkg", :verbose => true)
+      FileUtils.rm_rf("#{pwd}/doc", :verbose => true)
       gem_spec = Gem::Specification.new do |s|
         s.name = gh.gem_name
         s.version = gh.version
@@ -43,19 +44,21 @@ namespace :gem do
         
         s.bindir = "bin"
         s.executables << "mack"
+        s.executables << "mackery"
+        s.executables << "mackery-console"
+        s.executables << "mackery-server"
         
         s.rdoc_options << '--title' << 'Mack' << '--main' << 'README' << '--line-numbers' << "--inline-source"
         
         s.add_dependency("rack", "0.4.0")
         s.add_dependency("mack-more", gh.version)
-        s.add_dependency("application_configuration", "1.5.2")
-        s.add_dependency("cachetastic", "1.7.3")
+        s.add_dependency("application_configuration", "1.5.3")
         s.add_dependency("log4r", "1.0.5")
         s.add_dependency("thin", "0.8.2")
         s.add_dependency("builder", "2.1.2")
         s.add_dependency("daemons", "1.0.10")
         s.add_dependency("erubis", "2.6.2")
-        s.add_dependency("genosaurus", "1.2.2")
+        s.add_dependency("genosaurus", "1.2.4")
         s.add_dependency("rcov", "0.8.1.2.0")
         s.add_dependency("rspec", "1.1.4")
       
