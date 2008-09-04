@@ -85,7 +85,7 @@ class ForgerySuperclassController
 end
 
 class ForgeryInheritanceController < ForgerySuperclassController
-  disable_forgery_detector :only => "test6"
+  disable_forgery_detector :only => :test6
   def test5
     render(:text, "foo")
   end  

@@ -3,6 +3,14 @@ module Mack
     # A useful collection of helpers for forms.
     module FormHelpers
       
+      #
+      # Get the secret token to be added in an HTML form.
+      # This is to ensure that your form is valid.
+      # 
+      # Only call this method if you generate the form manually.
+      # If you use the form() method to generate your form, then
+      # the authenticity token is already included in your form.
+      #
       def form_authenticity_field
         str = %{<input type="hidden" name="authenticity_token" value="#{Mack::Utils::AuthenticityTokenDispenser.instance.dispense_token(request.session.id)}" />}
       end

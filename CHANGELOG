@@ -9,6 +9,7 @@
 * [#129] DataMapper 0.9.5 support
 * [#128] Updated json_pure to 1.1.3 and removed ruby-debug dependency
 * [#127] Moved mack-paths into core
+* [#126] XSS Prevention
 * [#125] Cookie store is now the default session store, not cachetastic
 * [#124] Opened up the session store API
 * [#122] Added DataMapper session store.
