@@ -3,6 +3,19 @@ module Mack
     # A useful collection of helpers for forms.
     module FormHelpers
       
+      #
+      # Get the secret token to be added in an HTML form.
+      # This is to ensure that your form is valid.
+      # 
+      # Only call this method if you generate the form manually.
+      # If you use the form() method to generate your form, then
+      # the authenticity token is already included in your form.
+      #
+      def form_authenticity_field
+        str = %{<input type="hidden" name="authenticity_token" value="#{Mack::Utils::AuthenticityTokenDispenser.instance.dispense_token(request.session.id)}" />}
+      end
+        
+      
       # Examples:
       #   <% form(users_create_url) do -%>
       #     # form stuff here...
@@ -32,6 +45,7 @@ module Mack
         concat("<form#{build_options(options)}>\n", block.binding)
         concat(meth, block.binding) unless meth.blank?
         yield
+        concat(form_authenticity_field, block.binding) if !app_config.mack.disable_forgery_detector
         concat("\n</form>", block.binding)
         # content_tag(:form, options, &block)
       end

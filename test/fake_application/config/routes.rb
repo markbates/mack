@@ -26,6 +26,9 @@ Mack::Routes.build do |r|
     map.kill_kenny_bad "/tst_another/kill_kenny_bad", :action => :kill_kenny_bad
     map.upload_file "/tst_another/do_upload", :action => :do_upload
     map.upload_multiple "/tst_another/upload_multiple", :action => :upload_multiple
+    map.xss "/tst_another/xss", :action => :xss
+    map.xss2 "/tst/another/xss2", :action => :xss2
+    map.violate_xss_check "/tst/another/violate_xss_check", :action => :violate_xss_check, :method => :post
   end
   
   r.with_options(:controller => "vtt/view_template") do |map|

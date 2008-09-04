@@ -103,5 +103,13 @@ module Mack
       end
     end
     
+    # Raised if a request (other than GET request) has an invalid authenticity token
+    class InvalidAuthenticityToken < StandardError
+      # Takes the mismatched token
+      def initialize(token)
+        super("TOKEN: #{token.to_s} is an invalid request authenticity token.")
+      end
+    end
+    
   end # Errors
 end # Mack
