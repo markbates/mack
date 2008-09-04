@@ -101,46 +101,54 @@ describe 'Forgery Detector' do
   
   describe 'Form helpers' do    
     it "should generate authenticity token when using form() method" do
-      my_token = Digest::SHA1.hexdigest(session.id.to_s + "shh, it's a secret")
-      get xss_url
-      response.body.should match(%{<input type="hidden" name="authenticity_token" value="#{my_token}" />})
+      temp_app_config("mack::disable_forgery_detector" => false) do
+        my_token = Digest::SHA1.hexdigest(session.id.to_s + "shh, it's a secret")
+        get xss_url
+        response.body.should match(%{<input type="hidden" name="authenticity_token" value="#{my_token}" />})
+      end
     end
     
     it "should let people add authenticity token when not using form() method" do 
-      my_token = Digest::SHA1.hexdigest(session.id.to_s + "shh, it's a secret")
-      get xss2_url
-      response.body.should match(%{<input type="hidden" name="authenticity_token" value="#{my_token}" />})
+      temp_app_config("mack::disable_forgery_detector" => false) do
+        my_token = Digest::SHA1.hexdigest(session.id.to_s + "shh, it's a secret")
+        get xss2_url
+        response.body.should match(%{<input type="hidden" name="authenticity_token" value="#{my_token}" />})
+      end
     end
   end
   
   describe 'Forgery detection' do
     it "should not validate if this feature is globally turned off" do
-      temp_app_config("disable_request_validation" => true) do
-        post(violate_xss_check_url).should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
-      end
+      post(violate_xss_check_url).should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
     end
     
     it "should raise error when authenticity token is not present in the params" do
-      lambda{
-        post(violate_xss_check_url)
-      }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
+      temp_app_config("mack::disable_forgery_detector" => false) do
+        lambda{
+          post(violate_xss_check_url)
+        }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
+      end
     end
     
     it "should raise error when authenticity token is present but doesn't match" do
-      lambda{
-        post(violate_xss_check_url, :authenticity_token => "boo")
-      }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
+      temp_app_config("mack::disable_forgery_detector" => false) do
+        lambda{
+          post(violate_xss_check_url, :authenticity_token => "boo")
+        }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
+      end
     end
     
     it "should not raise error when a valid authenticity token is present in post" do
-      my_token = Digest::SHA1.hexdigest(session.id.to_s + "shh, it's a secret")
-      lambda{
-        post(violate_xss_check_url, :authenticity_token => my_token)
-      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+      temp_app_config("mack::disable_forgery_detector" => false) do
+        my_token = Digest::SHA1.hexdigest(session.id.to_s + "shh, it's a secret")
+        lambda{
+          post(violate_xss_check_url, :authenticity_token => my_token)
+        }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+      end
     end
     
     it "should not raise error when a valid authenticity token and custom salt are both present" do
-      temp_app_config("request_authenticity_token_salt" => "boo") do
+      temp_app_config("request_authenticity_token_salt" => "boo", "mack::disable_forgery_detector" => false) do
         my_token = Digest::SHA1.hexdigest(session.id.to_s + "boo")
         lambda{
           post(violate_xss_check_url, :authenticity_token => my_token)
@@ -149,7 +157,7 @@ describe 'Forgery Detector' do
     end
     
     it "should not raise error when a valid authenticity token is present but custom salt is empty" do
-      temp_app_config("request_authenticity_token_salt" => "") do
+      temp_app_config("request_authenticity_token_salt" => "", "mack::disable_forgery_detector" => false) do
         my_token = Digest::SHA1.hexdigest(session.id.to_s + "shh, it's a secret")
         lambda{
           post(violate_xss_check_url, :authenticity_token => my_token)
@@ -186,66 +194,74 @@ describe 'Forgery Detector' do
     end
     
     it "should handle :only" do
-      lambda{
-        post(forgery_test1_url)
-      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
-      lambda{
-        post(forgery_test2_url)
-      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
-      lambda{
-        post(forgery_test3_url)
-      }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
-      lambda{
-        post(forgery_test4_url)
-      }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
+      temp_app_config("mack::disable_forgery_detector" => false) do
+        lambda{
+          post(forgery_test1_url)
+        }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+        lambda{
+          post(forgery_test2_url)
+        }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+        lambda{
+          post(forgery_test3_url)
+        }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
+        lambda{
+          post(forgery_test4_url)
+        }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
+      end
     end
     
     it "should handle :except" do
-      lambda{
-        post(forgery2_test1_url)
-      }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
-      lambda{
-        post(forgery2_test2_url)
-      }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
-      lambda{
-        post(forgery2_test3_url)
-      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
-      lambda{
-        post(forgery2_test4_url)
-      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+      temp_app_config("mack::disable_forgery_detector" => false) do
+        lambda{
+          post(forgery2_test1_url)
+        }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
+        lambda{
+          post(forgery2_test2_url)
+        }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
+        lambda{
+          post(forgery2_test3_url)
+        }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+        lambda{
+          post(forgery2_test4_url)
+        }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+      end
     end
     
     it "should handle disable all" do
-      lambda{
-        post(forgery3_test1_url)
-      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
-      lambda{
-        post(forgery3_test2_url)
-      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
-      lambda{
-        post(forgery3_test3_url)
-      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
-      lambda{
-        post(forgery3_test4_url)
-      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+      temp_app_config("mack::disable_forgery_detector" => false) do
+        lambda{
+          post(forgery3_test1_url)
+        }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+        lambda{
+          post(forgery3_test2_url)
+        }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+        lambda{
+          post(forgery3_test3_url)
+        }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+        lambda{
+          post(forgery3_test4_url)
+        }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+      end
     end
     
     it "should work in inherited controller" do
-      lambda{
-        post(forgery4_test1_url)
-      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
-      lambda{
-        post(forgery4_test2_url)
-      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
-      lambda{
-        post(forgery4_test3_url)
-      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
-      lambda{
-        post(forgery4_test4_url)
-      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
-      lambda{
-        post(forgery4_test5_url)
-      }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
+      temp_app_config("mack::disable_forgery_detector" => false) do
+        lambda{
+          post(forgery4_test1_url)
+        }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+        lambda{
+          post(forgery4_test2_url)
+        }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+        lambda{
+          post(forgery4_test3_url)
+        }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+        lambda{
+          post(forgery4_test4_url)
+        }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+        lambda{
+          post(forgery4_test5_url)
+        }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
+      end
     end
     
   end

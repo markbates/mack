@@ -47,7 +47,7 @@ module Mack
       
       def valid_request?
         return true if !self.class.ignored_actions.empty? and self.skip_action?        
-        return app_config.disable_request_validation ||
+        return app_config.mack.disable_forgery_detector ||
         self.skip_action? ||
         request.params[:method] == "get" ||
         (request.params[:authenticity_token] == authenticity_token)

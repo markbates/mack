@@ -37,7 +37,7 @@ module Mack
         concat("<form#{build_options(options)}>\n", block.binding)
         concat(meth, block.binding) unless meth.blank?
         yield
-        concat(form_authenticity_field, block.binding)
+        concat(form_authenticity_field, block.binding) if !app_config.mack.disable_forgery_detector
         concat("\n</form>", block.binding)
         # content_tag(:form, options, &block)
       end

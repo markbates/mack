@@ -40,7 +40,8 @@ module Mack
       "log_level" => "error",
       "run_remote_tests" => true,
       "mack::cookie_values" => {},
-      "mack::session_store" => "test"
+      "mack::session_store" => "test",
+      "mack::disable_forgery_detector" => true
     } unless self.const_defined?("DEFAULTS_TEST")
     
     unless self.const_defined?("DEFAULTS")

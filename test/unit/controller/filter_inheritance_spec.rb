@@ -40,6 +40,7 @@ describe "Mack::Controller::Filter Inheritance" do
   
   it "should handle basic filter inheritance" do
     filters = []
+    filters << Mack::Controller::Filter.new(:detect_forgery, ::TopController, {})
     filters << Mack::Controller::Filter.new(:say_hi, ::TopController, {})
     filters << Mack::Controller::Filter.new(:say_something, ::MiddleController, {})
     filters << Mack::Controller::Filter.new(:say_bye, ::BottomController, {})
