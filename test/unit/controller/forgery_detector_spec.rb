@@ -1,37 +1,66 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
-class XSS1Controller
+class ForgeryTestController
   include Mack::Controller
-  disable_request_validation :only => ['test1', 'test2']
+  disable_forgery_detector :only => ['forgery_test1', 'forgery_test2']
   
-  def test1
+  def forgery_test1
+    render(:text, "foo")
   end
   
-  def test2
+  def forgery_test2
+    render(:text, "foo")
   end
   
-  def test3
+  def forgery_test3
+    render(:text, "foo")
   end
   
-  def test4
+  def forgery_test4
+    render(:text, "foo")
   end
 end
 
-class XSS2Controller
+class ForgeryTest2Controller
   include Mack::Controller
-  disable_request_validation :except => ['test1', 'test2']
+  disable_forgery_detector :except => ['test1', 'test2']
   
   def test1
+    render(:text, "foo")
   end
   
   def test2
+    render(:text, "foo")
   end
    
   def test3
+    render(:text, "foo")
   end
   
   def test4
+    render(:text, "foo")
+  end
+end
+
+class ForgeryTest3Controller
+  include Mack::Controller
+  disable_forgery_detector
+  
+  def test1
+    render(:text, "foo")
+  end
+  
+  def test2
+    render(:text, "foo")
+  end
+   
+  def test3
+    render(:text, "foo")
+  end
+  
+  def test4
+    render(:text, "foo")
   end
 end
 
@@ -124,30 +153,68 @@ describe 'Request Authenticity' do
   describe "Disabling request validation" do
     before(:all) do
       Mack::Routes.build do |r|
-        r.xss1_test1 "/test1", :controller => :xss1, :action => :test1
-        r.xss1_test2 "/test2", :controller => :xss1, :action => :test2
-        r.xss1_test3 "/test3", :controller => :xss3, :action => :test3
-        r.xss1_test4 "/test4", :controller => :xss4, :action => :test4
+        r.forgery_test1 "/forgery_test1", :controller => :forgery_test, :action => :forgery_test1, :method => :post
+        r.forgery_test2 "/forgery_test2", :controller => :forgery_test, :action => :forgery_test2, :method => :post
+        r.forgery_test3 "/forgery_test3", :controller => :forgery_test, :action => :forgery_test3, :method => :post
+        r.forgery_test4 "/forgery_test4", :controller => :forgery_test, :action => :forgery_test4, :method => :post
+      
+        r.forgery2_test1 "/forgery2_test1", :controller => :forgery_test2, :action => :test1, :method => :post
+        r.forgery2_test2 "/forgery2_test2", :controller => :forgery_test2, :action => :test2, :method => :post
+        r.forgery2_test3 "/forgery2_test3", :controller => :forgery_test2, :action => :test3, :method => :post
+        r.forgery2_test4 "/forgery2_test4", :controller => :forgery_test2, :action => :test4, :method => :post
+        
+        r.forgery3_test1 "/forgery3_test1", :controller => :forgery_test3, :action => :test1, :method => :post
+        r.forgery3_test2 "/forgery3_test2", :controller => :forgery_test3, :action => :test2, :method => :post
+        r.forgery3_test3 "/forgery3_test3", :controller => :forgery_test3, :action => :test3, :method => :post
+        r.forgery3_test4 "/forgery3_test4", :controller => :forgery_test3, :action => :test4, :method => :post
       end
+      a = "hello"
     end
     
     it "should handle :only" do
       lambda{
-        post(xss1_test1_url)
+        post(forgery_test1_url)
       }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
       lambda{
-        post(xss1_test2_url)
+        post(forgery_test2_url)
       }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
       lambda{
-        post(xss1_test3_url)
+        post(forgery_test3_url)
       }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
       lambda{
-        post(xss1_test4_url)
+        post(forgery_test4_url)
       }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
     end
     
-    it "should handle :except"
+    it "should handle :except" do
+      lambda{
+        post(forgery2_test1_url)
+      }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
+      lambda{
+        post(forgery2_test2_url)
+      }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
+      lambda{
+        post(forgery2_test3_url)
+      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+      lambda{
+        post(forgery2_test4_url)
+      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+    end
     
-    it "should handle disable all"
+    it "should handle disable all" do
+      lambda{
+        post(forgery3_test1_url)
+      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+      lambda{
+        post(forgery3_test2_url)
+      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+      lambda{
+        post(forgery3_test3_url)
+      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+      lambda{
+        post(forgery3_test4_url)
+      }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+    end
+    
   end
 end
