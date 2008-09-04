@@ -1,3 +1,7 @@
+require 'mack-facets'
+require 'application_configuration'
+require File.join(File.dirname(__FILE__), 'boot_loader')
+require File.join(File.dirname(__FILE__), '..', 'utils', 'paths')
 boot_load(:configuration) do
   module Mack
   
@@ -57,6 +61,8 @@ boot_load(:configuration) do
           },
           "mack::site_domain" => "http://localhost:3000",
           "mack::testing_framework" => "rspec",
+          "mack::rspec_file_pattern" => "test/**/*_spec.rb",
+          "mack::test_case_file_pattern" => "test/**/*_test.rb",
           "log::detailed_requests" => true,
           "log::db_color" => "cyan",
           "log::error_color" => "red",

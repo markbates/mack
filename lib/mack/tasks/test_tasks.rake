@@ -10,15 +10,19 @@ namespace :test do
   
   desc "Run test code."
   Rake::TestTask.new(:test_case) do |t|
+    require File.join(File.dirname(__FILE__), '..', 'initialization', 'configuration')
+    Mack::BootLoader.run(:configuration)
     t.libs << "test"
-    t.pattern = 'test/**/*_test.rb'
+    t.pattern = app_config.mack.send("#{app_config.mack.testing_framework}_file_pattern")
     t.verbose = true
   end
   
   desc 'Run specifications'
   Spec::Rake::SpecTask.new(:rspec) do |t|
+    require File.join(File.dirname(__FILE__), '..', 'initialization', 'configuration')
+    Mack::BootLoader.run(:configuration)
     t.spec_opts << '--options' << 'test/spec.opts' if File.exists?('test/spec.opts')
-    t.spec_files = Dir.glob('test/**/*_spec.rb')
+    t.spec_files = Dir.glob(app_config.mack.send("#{app_config.mack.testing_framework}_file_pattern"))
   end
   
   desc "Report code statistics (KLOCs, etc) from the application. Requires the rcov gem."
@@ -69,20 +73,15 @@ namespace :test do
     end
     
     puts "Generating... please wait..."
-    if app_config.mack.testing_framework == "rspec" 
-      res = `#{rcov} --html test/**/*_spec.rb`
-    elsif app_config.mack.testing_framework == "test_case"
-      res = `#{rcov} --html test/**/*_test.rb`
-    end
+    res = `#{rcov} --html #{app_config.mack.send("#{app_config.mack.testing_framework}_file_pattern")}`
     res
   end
   
 end
 
 task :default do
-  require 'application_configuration'
-  app_config.load_file(File.join(FileUtils.pwd, "config", "app_config", "default.yml"))
-  app_config.load_file(File.join(FileUtils.pwd, "config", "app_config", "test.yml"))
+  require File.join(File.dirname(__FILE__), '..', 'initialization', 'configuration')
+  Mack::BootLoader.run(:configuration)
   tf = "rspec"
   begin
     tf = app_config.mack.testing_framework
