@@ -64,12 +64,34 @@ class ForgeryTest3Controller
   end
 end
 
-class ForgeryInheritanceController < ForgeryTest3Controller
-  
-  def test5
+class ForgerySuperclassController
+  include Mack::Controller
+  disable_forgery_detector :only => "test4"
+  def test1
     render(:text, "foo")
   end
   
+  def test2
+    render(:text, "foo")
+  end
+   
+  def test3
+    render(:text, "foo")
+  end
+  
+  def test4
+    render(:text, "foo")
+  end
+end
+
+class ForgeryInheritanceController < ForgerySuperclassController
+  disable_forgery_detector :only => "test6"
+  def test5
+    render(:text, "foo")
+  end  
+  def test6
+    render(:text, "foo")
+  end
 end
 
 describe 'Forgery Detector' do
@@ -184,11 +206,12 @@ describe 'Forgery Detector' do
         r.forgery3_test3 "/forgery3_test3", :controller => :forgery_test3, :action => :test3, :method => :post
         r.forgery3_test4 "/forgery3_test4", :controller => :forgery_test3, :action => :test4, :method => :post
         
-        r.forgery4_test1 "/forgery3_test1", :controller => :forgery_inheritance, :action => :test1, :method => :post
-        r.forgery4_test2 "/forgery3_test2", :controller => :forgery_inheritance, :action => :test2, :method => :post
-        r.forgery4_test3 "/forgery3_test3", :controller => :forgery_inheritance, :action => :test3, :method => :post
-        r.forgery4_test4 "/forgery3_test4", :controller => :forgery_inheritance, :action => :test4, :method => :post
-        r.forgery4_test5 "/forgery3_test5", :controller => :forgery_inheritance, :action => :test5, :method => :post        
+        r.forgery4_test1 "/forgery4_test1", :controller => :forgery_inheritance, :action => :test1, :method => :post
+        r.forgery4_test2 "/forgery4_test2", :controller => :forgery_inheritance, :action => :test2, :method => :post
+        r.forgery4_test3 "/forgery4_test3", :controller => :forgery_inheritance, :action => :test3, :method => :post
+        r.forgery4_test4 "/forgery4_test4", :controller => :forgery_inheritance, :action => :test4, :method => :post
+        r.forgery4_test5 "/forgery4_test5", :controller => :forgery_inheritance, :action => :test5, :method => :post        
+        r.forgery4_test6 "/forgery4_test6", :controller => :forgery_inheritance, :action => :test6, :method => :post        
       end
       a = "hello"
     end
@@ -248,19 +271,22 @@ describe 'Forgery Detector' do
       temp_app_config("mack::disable_forgery_detector" => false) do
         lambda{
           post(forgery4_test1_url)
-        }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+        }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
         lambda{
           post(forgery4_test2_url)
-        }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+        }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
         lambda{
           post(forgery4_test3_url)
-        }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
+        }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
         lambda{
           post(forgery4_test4_url)
         }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
         lambda{
           post(forgery4_test5_url)
         }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
+        lambda{
+          post(forgery4_test6_url)
+        }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
       end
     end
     

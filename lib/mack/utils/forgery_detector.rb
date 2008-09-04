@@ -4,22 +4,42 @@ module Mack
     module ForgeryDetector
       
       module ClassMethods
+        
         def disable_forgery_detector(options = {})
-          # cannot set both :only and :except
-          self.ignored_actions.clear
-          
-          # if no options provided, then assume we're disabling all forgery protection for all actions
-          self.ignored_actions[:all] = true and return if options.empty?
-          
-          if (the_list = options.delete(:only))
-            self.ignored_actions[:only] = the_list
-          elsif (the_list = options.delete(:except))
-            self.ignored_actions[:except] = the_list
+          hash = self.ignored_actions
+          hash[:all] = true and return if options.empty?
+
+          # TODO: should raise error if type is invalid
+          type = options[:only] ? :only : (options[:except] ? :except : :unknown)
+          list = options[:only] ? options[:only] : (options[:except] ? options[:except] : [])
+          if !list.empty?
+            hash[type] ||= []
+            hash[type] << list
+            hash[type].flatten!
+            hash[type].uniq!
+            hash[:all] = false
           end
         end
         
+        # also get the options from superclass
         def ignored_actions
-          @ignored_actions ||= {}
+          unless @ignored_actions
+            @ignored_actions = {}
+            sc = self.superclass
+            if sc.class_is_a?(Mack::Controller)
+              sc_hash = sc.ignored_actions
+              if sc_hash[:only]
+                @ignored_actions[:only] ||= []
+                @ignored_actions[:only] << sc_hash[:only]
+              elsif sc_hash[:except]
+                @ignored_actions[:except] ||= []
+                @ignored_actions[:except] << sc_hash[:except]
+              elsif sc_hash[:all]
+                @ignored_actions[:all] = sc_hash[:all]
+              end
+            end
+          end
+          return @ignored_actions
         end
       end
       
@@ -30,16 +50,17 @@ module Mack
       protected
           
       def skip_action?
-        return true if self.class.ignored_actions[:all]
-        return false if self.class.ignored_actions.empty?
+        return true if self.class.ignored_actions[:all] and self.class.ignored_actions.empty?
+        return false if !self.class.ignored_actions[:all] and self.class.ignored_actions.empty? 
+        
         skip = true
         action = request.params[:action]        
-        
-        if self.class.ignored_actions[:only]
-          list = [self.class.ignored_actions[:only]].flatten
+        hash   = self.class.ignored_actions
+        if hash[:only]
+          list = [hash[:only]].flatten
           skip = false if !list.include?action
-        elsif self.class.ignored_actions[:except]
-          list = [self.class.ignored_actions[:except]].flatten
+        elsif hash[:except]
+          list = [hash[:except]].flatten
           skip = false if list.include?action
         end
         return skip
@@ -48,9 +69,9 @@ module Mack
       def valid_request?
         return true if !self.class.ignored_actions.empty? and self.skip_action?        
         return app_config.mack.disable_forgery_detector ||
-        self.skip_action? ||
-        request.params[:method] == "get" ||
-        (request.params[:authenticity_token] == authenticity_token)
+                self.skip_action? ||
+                request.params[:method] == "get" ||
+                (request.params[:authenticity_token] == authenticity_token)
       end
       
       def authenticity_token
