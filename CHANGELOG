@@ -29,6 +29,7 @@
 * gem: data_mapper 0.9.5
 * gem: genosaurus 1.2.4
 * gem: ezcrypto 0.7
+* gem: facets 2.4.4
 
 === 0.7.0.1
 gem: application_configuration 1.5.3
