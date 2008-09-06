@@ -1,7 +1,13 @@
 # Generates a controller for Mack applications.
 # 
 # Example:
-#   rake generate:controller name=post
+#   rake generate:controller name=post # => Generates a PostsController that includes Mack::Controller.
+# 
+# Or you can get the generator to create some actions for you this way:
+#   rake generator:controller name=post actions=index,show # => Generates a PostController with a placeholder for the index and show actions.
+#   
+# Finally, the controller generator includes a magic word for the actions parameter:
+#   rake generator:controller name=post actions=restful # => Generates a PostsController with the 7 rest actions.
 class ControllerGenerator < Genosaurus
   
   require_param :name
@@ -12,7 +18,11 @@ class ControllerGenerator < Genosaurus
     @name_singular_camel = @name_singular.camelcase
     @name_plural_camel = @name_plural.camelcase
     @actions = []
-    @actions = param(:actions).split(",") unless param(:actions).blank?
+    if param(:actions).to_s == "restful"
+      @actions = "index,show,new,edit,create,update,destroy".split(",")
+    else      
+      @actions = param(:actions).split(",") unless param(:actions).blank?
+    end
   end
   
   def after_generate # :nodoc:
