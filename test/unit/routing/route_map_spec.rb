@@ -3,6 +3,29 @@ require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
 describe Mack::Routes::RouteMap do
 
+  class ChaptersController
+    include Mack::Controller
+    
+    def show
+      @chapters = params[:chaps]
+      render(:text, 'hello')
+    end
+    
+  end
+
+  Mack::Routes.build do |r|
+    r.chapter_show "/chapters/*chaps", :controller => :chapters, :action => :show
+  end
+
+  it "should map a wildcard to an array" do
+    get '/chapters/1'
+    assigns(:chapters).should == ["1"]
+    get '/chapters/1/1a'
+    assigns(:chapters).should == ["1", "1a"]
+    get '/chapters/1/1a/1b'
+    assigns(:chapters).should == ["1", "1a", "1b"]
+  end
+
   it "should route to homepage" do
     get "/"
     response.body.should match(/tst_home_page: index/)
