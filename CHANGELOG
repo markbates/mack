@@ -1,3 +1,4 @@
+=== 0.7.1
 * [#153] Emails with just a single 'part' are now being sent correctly.
 * [#147] Added :confirm to button helpers.
 * [#146] [Diogo Almeida] Added :disable_with to submit_button form helper.
