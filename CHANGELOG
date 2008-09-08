@@ -1,3 +1,4 @@
+* [#155] Fixed invalid javascript tag
 === 0.7.1
 * [#153] Emails with just a single 'part' are now being sent correctly.
 * [#147] Added :confirm to button helpers.
