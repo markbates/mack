@@ -23,10 +23,12 @@ module Mack
       end
       
       def complete(request, response, cookies)
-        unless response.redirection?
-          request.session.delete(:tell)
+        if app_config.mack.use_sessions
+          unless response.redirection?
+            request.session.delete(:tell)
+          end
+          Mack::SessionStore.set(request.session.id, request, response, cookies)
         end
-        Mack::SessionStore.set(request.session.id, request, response, cookies) if app_config.mack.use_sessions
       end
       
       private
