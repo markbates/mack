@@ -1,3 +1,4 @@
+* [#162] Fixed View helpers for mack-javascript aren't being required
 * [#158] Fixed Turning off sessions throws an Error
 * [#155] Fixed invalid javascript tag
 
