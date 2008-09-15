@@ -4,7 +4,7 @@ require 'rake/rdoctask'
 require 'fileutils'
 require 'rubygems'
 require 'mack-facets'
-require 'application_configuration'
+require 'configatron'
 
 fl = File.join(File.dirname(__FILE__), 'mack')
 

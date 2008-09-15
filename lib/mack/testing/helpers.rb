@@ -93,7 +93,7 @@ module Mack
         sess = Mack::SessionStore.get($current_session_id, nil, nil, nil)
         if sess.nil?
           id = String.randomize(40).downcase
-          set_cookie(app_config.mack.session_id, id)
+          set_cookie(configatron.mack.session_id, id)
           sess = Mack::Session.new(id)
           Mack::SessionStore.store.direct_set(id, sess)
           $current_session_id = id
@@ -194,7 +194,7 @@ module Mack
             spt = ck.split("=")
             name = spt.first
             value = spt.last
-            if name == app_config.mack.session_id
+            if name == configatron.mack.session_id
               value = nil unless @_mack_in_session
             end
             set_cookie(name, value)

@@ -1,5 +1,5 @@
 boot_load(:initializers) do
-  Mack.logger.debug "Initializing custom initializers..." unless app_config.log.disable_initialization_logging
+  Mack.logger.debug "Initializing custom initializers..." unless configatron.log.disable_initialization_logging
   Dir.glob(Mack::Paths.initializers("**/*.rb")) do |d|
     require d
   end  
@@ -7,7 +7,7 @@ end
 
 boot_load(:lib, :plugins, :gems) do
   # require 'lib' files:
-  Mack.logger.debug "Initializing lib classes..." unless app_config.log.disable_initialization_logging
+  Mack.logger.debug "Initializing lib classes..." unless configatron.log.disable_initialization_logging
   Dir.glob(Mack::Paths.lib("**/*.rb")).each do |d|
     require d
   end
@@ -21,13 +21,13 @@ end
 
 boot_load(:routes) do
   # set up routes:
-  Mack.logger.debug "Initializing routes..." unless app_config.log.disable_initialization_logging
+  Mack.logger.debug "Initializing routes..." unless configatron.log.disable_initialization_logging
   require Mack::Paths.config("routes")
 end
 
 boot_load(:app_files, :default_controller) do
   # require 'app' files:
-  Mack.logger.debug "Initializing 'app' classes..." unless app_config.log.disable_initialization_logging
+  Mack.logger.debug "Initializing 'app' classes..." unless configatron.log.disable_initialization_logging
   Dir.glob(Mack::Paths.app("**/*.rb")).each do |d|
     # puts "d: #{d}"
     begin

@@ -43,7 +43,7 @@ module Mack
       unless value.is_a?(Hash)
         value = {:value => value}
       end
-      value = app_config.mack.cookie_values.symbolize_keys.merge(value)
+      value = configatron.mack.cookie_values.to_hash.symbolize_keys.merge(value)
       self.all_cookies[key] = value
       self.response.set_cookie(key, value)
     end

@@ -13,7 +13,7 @@ namespace :test do
     require File.join(File.dirname(__FILE__), '..', 'initialization', 'configuration')
     Mack::BootLoader.run(:configuration)
     t.libs << "test"
-    t.pattern = app_config.mack.send("#{app_config.mack.testing_framework}_file_pattern")
+    t.pattern = configatron.mack.send("#{configatron.mack.testing_framework}_file_pattern")
     t.verbose = true
   end
   
@@ -22,7 +22,7 @@ namespace :test do
     require File.join(File.dirname(__FILE__), '..', 'initialization', 'configuration')
     Mack::BootLoader.run(:configuration)
     t.spec_opts << '--options' << 'test/spec.opts' if File.exists?('test/spec.opts')
-    t.spec_files = Dir.glob(app_config.mack.send("#{app_config.mack.testing_framework}_file_pattern"))
+    t.spec_files = Dir.glob(configatron.mack.send("#{configatron.mack.testing_framework}_file_pattern"))
   end
   
   desc "Report code statistics (KLOCs, etc) from the application. Requires the rcov gem."
@@ -73,7 +73,7 @@ namespace :test do
     end
     
     puts "Generating... please wait..."
-    res = `#{rcov} --html #{app_config.mack.send("#{app_config.mack.testing_framework}_file_pattern")}`
+    res = `#{rcov} --html #{configatron.mack.send("#{configatron.mack.testing_framework}_file_pattern")}`
     res
   end
   
@@ -84,7 +84,7 @@ task :default do
   Mack::BootLoader.run(:configuration)
   tf = "rspec"
   begin
-    tf = app_config.mack.testing_framework
+    tf = configatron.mack.testing_framework
   rescue Exception => e
   end
   Rake::Task["test:setup"].invoke

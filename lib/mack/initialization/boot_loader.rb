@@ -91,26 +91,26 @@ end
 #     
 #     def initializers
 #       # set up initializers:
-#       Mack.logger.debug "Initializing custom initializers..." unless app_config.log.disable_initialization_logging
+#       Mack.logger.debug "Initializing custom initializers..." unless configatron.log.disable_initialization_logging
 #       Dir.glob(Mack::Paths.initializers("**/*.rb")) do |d|
 #         require d
 #       end
 #     end
 #     
 #     def gems
-#       Mack.logger.debug "Initializing custom gems..." unless app_config.log.disable_initialization_logging
+#       Mack.logger.debug "Initializing custom gems..." unless configatron.log.disable_initialization_logging
 #       Mack::Utils::GemManager.instance.do_requires
 #     end
 #     
 #     def plugins
 #       # require 'plugins':
-#       Mack.logger.debug "Initializing plugins..." unless app_config.log.disable_initialization_logging
+#       Mack.logger.debug "Initializing plugins..." unless configatron.log.disable_initialization_logging
 #       require File.join(File.dirname(__FILE__), "plugins.rb")
 #     end
 #     
 #     def libs
 #       # require 'lib' files:
-#       Mack.logger.debug "Initializing lib classes..." unless app_config.log.disable_initialization_logging
+#       Mack.logger.debug "Initializing lib classes..." unless configatron.log.disable_initialization_logging
 #       Dir.glob(Mack::Paths.lib("**/*.rb")).each do |d|
 #         require d
 #       end
@@ -124,13 +124,13 @@ end
 #     
 #     def routes
 #       # set up routes:
-#       Mack.logger.debug "Initializing routes..." unless app_config.log.disable_initialization_logging
+#       Mack.logger.debug "Initializing routes..." unless configatron.log.disable_initialization_logging
 #       require Mack::Paths.config("routes")
 #     end
 #     
 #     def app
 #       # require 'app' files:
-#       Mack.logger.debug "Initializing 'app' classes..." unless app_config.log.disable_initialization_logging
+#       Mack.logger.debug "Initializing 'app' classes..." unless configatron.log.disable_initialization_logging
 #       Dir.glob(Mack::Paths.app("**/*.rb")).each do |d|
 #         # puts "d: #{d}"
 #         begin
