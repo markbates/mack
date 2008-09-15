@@ -27,7 +27,7 @@ describe ViewHelperGenerator do
   end
   
   it "should generate a Test::Unit::TestCase test if using the Test::Unit::TestCase framework" do
-    temp_app_config("mack::testing_framework" => "test_case") do
+    temp_app_config(:mack => {:testing_framework => "test_case"}) do
       file = Mack::Paths.view_helper_tests("zoo_helper_test.rb")
       File.should_not be_exists(file)
       ViewHelperGenerator.run("name" => "zoo")

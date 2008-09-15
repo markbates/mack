@@ -27,7 +27,7 @@ describe ControllerHelperGenerator do
   end
   
   it "should generate a Test::Unit::TestCase test if using the Test::Unit::TestCase framework" do
-    temp_app_config("mack::testing_framework" => "test_case") do
+    temp_app_config(:mack => {:testing_framework => "test_case"}) do
       file = Mack::Paths.controller_helper_tests("zoos_controller_helper_test.rb")
       File.should_not be_exists(file)
       ControllerHelperGenerator.run("name" => "zoo")

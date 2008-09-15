@@ -68,7 +68,7 @@ describe ControllerGenerator do
   end
   
   it "should generate a Test::Unit::TestCase test if using the Test::Unit::TestCase framework" do
-    temp_app_config("mack::testing_framework" => "test_case") do
+    temp_app_config(:mack => {:testing_framework => "test_case"}) do
       file = Mack::Paths.controller_tests("zoos_controller_test.rb")
       File.should_not be_exists(file)
       ControllerGenerator.run("name" => "zoo")
@@ -86,7 +86,7 @@ describe ControllerGenerator do
   end
   
   it "should generate a Test::Unit::TestCase test if using the Test::Unit::TestCase framework with optional actions" do
-    temp_app_config("mack::testing_framework" => "test_case") do
+    temp_app_config(:mack => {:testing_framework => "test_case"}) do
       file = Mack::Paths.controller_tests("zoos_controller_test.rb")
       File.should_not be_exists(file)
       ControllerGenerator.run("name" => "zoo", "actions" => "index,show")
