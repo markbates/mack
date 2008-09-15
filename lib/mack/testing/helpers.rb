@@ -29,7 +29,7 @@ module Mack
       end
     
       def remote_test # :nodoc:
-        if (app_config.run_remote_tests)
+        if (configatron.mack.run_remote_tests)
           yield
         end
       end

@@ -1,0 +1,36 @@
+# This is where you would override any of the default Mack configuration settings,
+# as well as create your own settings. The configuration settings for your environment
+# can be dumped out using this rake task:
+# 
+#   rake mack:dump:config#<environment>
+# 
+# Configuration parameters can be used in your application like such:
+# 
+#   configatron.<setting_name>
+# 
+# Nested parameters can be defined using ::.
+# 
+# Examples:
+# default.rb: 
+#   configatron do |config|
+#     config.default_time_limit: <%%= 15.minutes %>
+#     config.namespace(:api) do |api|
+#       api.timeout_limit: <%%= 15.seconds %>
+#     end
+#   end
+# 
+# configatron.default_time_limit # => 900
+# configatron.api.timeout_limit # => 15
+
+configatron do |config|
+  config.namespace(:mack) do |mack|
+    mack.session_id = '_<%= @options["app"].downcase %>_session_id'
+    mack.testing_framework = '<%= @options["testing_framework"] %>'
+    # Mack provides RJS support through mack-javascript gem.
+    # In order to have RJS support, you will need to perform the following steps:
+    # 1.  Uncomment the code below, and make sure that the framework is the one you want to use
+    # 2.  run:  rake generate:javascript
+    # mack.js_framework = '<%= @options["js_framework"] %>'
+  end
+  config.default_secret_key = '<%= String.randomize(80) %>'
+end
