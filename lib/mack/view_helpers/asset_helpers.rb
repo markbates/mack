@@ -19,7 +19,7 @@ module Mack
     # Return the max number of asset hosts distribution
     #
     def max_distribution
-      return app_config.asset_hosts_max_distribution.to_i || 4
+      return configatron.mack.assets.max_distribution
     end
     
     #
@@ -29,7 +29,7 @@ module Mack
       ret_val = ''
       
       # if no explicit asset_host setting, then use the one defined in app_config (if exists)
-      host = @hosts || app_config.asset_hosts
+      host = @hosts || configatron.mack.assets.hosts
       host = '' if host.nil?
       
       if host.kind_of?(Proc)

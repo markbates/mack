@@ -87,11 +87,11 @@ boot_load(:configuration) do
             mack.cookie_values = {}
             mack.session_store = :test
             mack.disable_forgery_detector = true
+            mack.run_remote_tests = true
           end
           c.namespace(:log) do |log|
             log.level = :error
           end
-          c.run_remote_tests = true
         end
       end
 
