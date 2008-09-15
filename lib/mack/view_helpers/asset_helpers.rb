@@ -8,7 +8,7 @@ module Mack
     # - formatted string: to support asset host distribution (e.g. 'http://asset%d.foo.com')
     # - a proc object: to support custom asset hosts generation (e.g. Proc.new { |source| 'assets.foo.com' }
     #
-    # The max number of distribution can be set from app_config's asset_hosts_max_distribution.
+    # The max number of distribution can be set from configatron's asset_hosts_max_distribution.
     # The default value is 4
     #
     def asset_hosts=(host)
@@ -28,7 +28,7 @@ module Mack
     def asset_hosts(source = '')
       ret_val = ''
       
-      # if no explicit asset_host setting, then use the one defined in app_config (if exists)
+      # if no explicit asset_host setting, then use the one defined in configatron (if exists)
       host = @hosts || configatron.mack.assets.hosts
       host = '' if host.nil?
       

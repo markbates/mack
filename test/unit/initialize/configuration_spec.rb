@@ -38,11 +38,11 @@ describe Mack::Configuration do
   
   describe "Existence Check" do
     
-    it "should have valid reference to app_config" do
+    it "should have valid reference to configatron" do
       configatron.should_not be_nil
     end
     
-    it "should have valid reference to mack's app_config" do
+    it "should have valid reference to mack's configatron" do
       configatron.mack.should_not be_nil
     end
     

@@ -14,7 +14,7 @@ describe Mack::Session do
     
   end
   
-  describe "app_config.mack.use_sessions" do
+  describe "configatron.mack.use_sessions" do
     
     class SessionSpecController
       include Mack::Controller
