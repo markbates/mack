@@ -22,8 +22,8 @@ application_layout:
 <% ["default", "development", "production", "test"].each do |env| -%>
 <%= env %>_yml:
   type: file
-  template_path: <%= File.join(templates_directory_path, "config", "app_config", "#{env}.yml.template") %>
-  output_path: <%= File.join(app_name, "config", "app_config", "#{env}.yml") %>
+  template_path: <%= File.join(templates_directory_path, "config", "configatron", "#{env}.rb.template") %>
+  output_path: <%= File.join(app_name, "config", "configatron", "#{env}.rb") %>
 <% end -%>
 database_yml:
   type: file
