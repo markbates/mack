@@ -40,7 +40,7 @@ describe "Asset Hosts" do
       end
     end
     
-    it "should override app_config setting if asset host is set by calling setter in AssetHelpers" do
+    it "should override configatron setting if asset host is set by calling setter in AssetHelpers" do
       temp_app_config(:mack => {:assets => {:hosts => 'http://www.foo.com'}}) do
         Mack::AssetHelpers.instance.asset_hosts="http://asset%d.foo.com"
         stylesheet('foo').should match(/asset(0|1|2|3|4).foo.com/)
@@ -89,7 +89,7 @@ describe "Asset Hosts" do
       end
     end
     
-    it "should override app_config setting if asset host is set by calling setter in AssetHelpers" do
+    it "should override configatron setting if asset host is set by calling setter in AssetHelpers" do
       temp_app_config("asset_hosts" => 'http://www.foo.com') do
         Mack::AssetHelpers.instance.asset_hosts="http://asset%d.foo.com"
         javascript('foo').should match(/asset(0|1|2|3|4).foo.com/)
