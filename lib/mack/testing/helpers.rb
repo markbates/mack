@@ -22,9 +22,10 @@ module Mack
       # Temporarily changes the application configuration. Changes are reverted after
       # the yield returns.
       def temp_app_config(options = {})
-        app_config.load_hash(options, String.randomize)
+        configatron.configure_from_hash(options)
+        # app_config.load_hash(options, String.randomize)
         yield
-        app_config.revert
+        configatron.revert
       end
     
       def remote_test # :nodoc:
