@@ -31,3 +31,9 @@ rule /^generate:/ do |t|
   klass = "#{klass.camelcase}Generator"
   gen = klass.constantize.run(ENV.to_hash)
 end
+
+rule /^gems:freeze:/ do |t|
+  gem_name = t.name.gsub('gems:freeze:', '')
+  ENV['gem_name'] = gem_name
+  Rake::Task["gems:install_and_freeze"].invoke
+end
