@@ -49,7 +49,7 @@ boot_load(:logging, :configuration) do
               old_write(Mack::Utils::Ansi::Color.wrap(configatron.log.db_color, data))
             else
               level = data.match(/^\w+/).to_s
-              color = configatron.log.send("#{level.downcase}_color")
+              color = configatron.log.retrieve("#{level.downcase}_color", nil)
               if color
                 old_write(Mack::Utils::Ansi::Color.wrap(color, data))
               else
