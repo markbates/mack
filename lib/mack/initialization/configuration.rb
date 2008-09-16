@@ -20,91 +20,95 @@ boot_load(:configuration) do
     # production, development, and test have their own default configuration options. These
     # get merged with overall default options.
     module Configuration # :nodoc:
-
-      configatron do |c|
-        c.namespace(:mack) do |mack|
-          mack.render_url_timeout = 5
-          mack.cache_classes = true
-          mack.use_lint = true
-          mack.show_exceptions = true
-          mack.use_sessions = true
-          mack.session_id = '_mack_session_id'
-          mack.cookie_values = {:path => '/'}
-          mack.site_domain = 'http://localhost:3000'
-          mack.testing_framework = :rspec
-          mack.rspec_file_pattern = 'test/**/*_spec.rb'
-          mack.test_case_file_pattern = 'test/**/*_test.rb'
-          mack.session_store = :cookie
-          mack.disable_forgery_detector = false
-          mack.namespace(:assets) do |assets|
-            assets.max_distribution = 4
-            assets.hosts = ''
-          end
-        end
-        c.namespace(:log) do |log|
-          log.level = :info
-          log.detailed_requests = true
-          log.db_color = :cyan
-          log.error_color = :red
-          log.fatal_color = :red
-          log.warn_color = :yellow
-          log.completed_color = :purple
-          log.disable_initialization_logging = false
-          log.root = Mack::Paths.log
-        end
-        c.namespace(:cookie_session_store) do |css|
-          css.expiry_time = 4.hours
-        end
-      end      
-      
-      if Mack.env == 'production'
+      unless const_defined?("LOADED")
         configatron do |c|
           c.namespace(:mack) do |mack|
-            mack.use_lint = false
-            mack.show_exceptions = false
+            mack.render_url_timeout = 5
+            mack.cache_classes = true
+            mack.use_lint = true
+            mack.show_exceptions = true
+            mack.use_sessions = true
+            mack.session_id = '_mack_session_id'
+            mack.cookie_values = {:path => '/'}
+            mack.site_domain = 'http://localhost:3000'
+            mack.testing_framework = :rspec
+            mack.rspec_file_pattern = 'test/**/*_spec.rb'
+            mack.test_case_file_pattern = 'test/**/*_test.rb'
+            mack.session_store = :cookie
+            mack.disable_forgery_detector = false
+            mack.namespace(:assets) do |assets|
+              assets.max_distribution = 4
+              assets.hosts = ''
+            end
           end
           c.namespace(:log) do |log|
             log.level = :info
             log.detailed_requests = true
+            log.db_color = :cyan
+            log.error_color = :red
+            log.fatal_color = :red
+            log.warn_color = :yellow
+            log.completed_color = :purple
+            log.disable_initialization_logging = false
+            log.root = Mack::Paths.log
           end
-        end
-      end
+          c.namespace(:cookie_session_store) do |css|
+            css.expiry_time = 4.hours
+          end
+        end      
       
-      if Mack.env == 'development'
-        configatron do |c|
-          c.namespace(:mack) do |mack|
-            mack.cache_classes = true
-          end
-          c.namespace(:log) do |log|
-            log.level = :debug
-          end
-        end
-      end
-
-      if Mack.env == 'test'
-        configatron do |c|
-          c.namespace(:mack) do |mack|
-            mack.cookie_values = {}
-            mack.session_store = :test
-            mack.disable_forgery_detector = true
-            mack.run_remote_tests = true
-          end
-          c.namespace(:log) do |log|
-            log.level = :error
+        if Mack.env == 'production'
+          configatron do |c|
+            c.namespace(:mack) do |mack|
+              mack.use_lint = false
+              mack.show_exceptions = false
+            end
+            c.namespace(:log) do |log|
+              log.level = :info
+              log.detailed_requests = true
+            end
           end
         end
-      end
-
-      if File.exists?(Mack::Paths.configatron('default.rb'))
-        require Mack::Paths.configatron('default.rb')
-      end
       
-      if File.exists?(Mack::Paths.configatron("#{Mack.env}.rb"))
-        require Mack::Paths.configatron("#{Mack.env}.rb")
-      end
+        if Mack.env == 'development'
+          configatron do |c|
+            c.namespace(:mack) do |mack|
+              mack.cache_classes = true
+            end
+            c.namespace(:log) do |log|
+              log.level = :debug
+            end
+          end
+        end
+
+        if Mack.env == 'test'
+          configatron do |c|
+            c.namespace(:mack) do |mack|
+              mack.cookie_values = {}
+              mack.session_store = :test
+              mack.disable_forgery_detector = true
+              mack.run_remote_tests = true
+            end
+            c.namespace(:log) do |log|
+              log.level = :error
+            end
+          end
+        end
+
+        if File.exists?(Mack::Paths.configatron('default.rb'))
+          require Mack::Paths.configatron('default.rb')
+        end
+      
+        if File.exists?(Mack::Paths.configatron("#{Mack.env}.rb"))
+          require Mack::Paths.configatron("#{Mack.env}.rb")
+        end
     
-      def self.dump
-        configatron.to_hash
+        def self.dump
+          configatron.to_hash
+        end
+        
+        LOADED = true
+        
       end
     
     end
