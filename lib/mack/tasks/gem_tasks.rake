@@ -40,26 +40,23 @@ namespace :gems do
     dep_msg = "and its dependencies" if add_dependencies
     puts "\nTask: freezing #{gem_name} #{dep_msg} to #{local_gem_dir}."
     puts "Phase 1: Collecting information..."
-    collect_dependencies(gem_name, version)
-    processed_gems.uniq!
-    puts "Phase 2: Checking installation states..."
+    if add_dependencies
+      collect_dependencies(gem_name, version)
+    else
+      processed_gems << LocalGem.new(gem_name, version)
+    end
+    puts "\nPhase 2: Checking installation states..."
     check_installation
-    puts "Phase 3: Freezing Gems..."
+    puts "\nPhase 3: Freezing Gems..."
     freeze_gems
-    # processed_gems.clear
-    # check_installation(gem_name, version, add_dependencies)
-    # processed_gems.clear
-    # freeze_gem(gem_name, version, add_dependencies)
-    puts "\nTotal of #{processed_gems.size} gems frozen to #{local_gem_dir}"
-    
-    puts "Phase 4: validating data..."
+    puts "\nPhase 4: validating data..."
     processed_gems.each do |gem|
       msg "."
       if !File.exists?(File.join(local_gem_dir, gem.name))
         puts "  ** Warning: #{gem.name} was skipped"
       end
     end
-    puts "Done."
+    puts "\nTotal of #{processed_gems.size} gems frozen to #{local_gem_dir}"
   end
 end # gem
 
@@ -92,7 +89,7 @@ def check_installation
     res = Gem.cache.search(/^#{gem.name}$/i, gem.version)
     if !res or res.empty?
       msg "  ** #{gem.name} not installed.  Installing #{gem.name} - #{gem.version}"
-      # sh("sudo gem install #{gem_name} -v #{gem.version}")
+      sh("sudo gem install #{gem_name} -v #{gem.version}")
     else
       msg "  ** #{gem.name} has been installed."
     end
@@ -119,7 +116,8 @@ end
 def do_dependencies(gem_name, version = "> 0.0.0", &block)
   raise "Block expected!" if !block_given?
   source_indexes = Gem::SourceIndex.from_installed_gems
-  deps = source_indexes.find_name(gem_name, version)[0].dependencies
+  # get the last item in the 'found list'.  That's the latest version.  If user passed in specific version, then there's only 1 in the list
+  deps = source_indexes.find_name(gem_name, version).last.dependencies
   msg "  ** Found #{deps.size} dependencies for #{gem_name}"
   deps.each do |dep_gem|
     yield(dep_gem)
@@ -150,12 +148,10 @@ class LocalGem
   end
   
   def eql?(other)
-    puts "eql? called"
     other.to_s == self.to_s
   end
   
   def hash
-    puts "hash is called"
     self.to_s.hash
   end
 end
