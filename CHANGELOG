@@ -1,6 +1,6 @@
 * [#23] Removed support for application_configuration and added support for configatron
 * gem: configatron 1.2.2
-* gem: cachetastic 1.99.100
+* gem: cachetastic 1.9.9.100
 
 === 0.7.1.1
 * [#163] Fixed jQuery code is being generated with double quotes instead of single quotes
