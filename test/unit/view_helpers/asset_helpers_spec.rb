@@ -14,7 +14,7 @@ describe "Asset Hosts" do
     end
     
     it "should use app domain if specifed and even if asset host is defined" do
-      temp_app_config(:mack => {:assets => {:hosts => "http://assets.foo.com"}, :distributed_site_domain => 'http://localhost:3001'}) do
+      temp_app_config(:mack => {:assets => {:hosts => "http://assets.foo.com"}, :distributed => { :site_domain => 'http://localhost:3001'}}) do
         data = stylesheet('foo')
         data.should match(/localhost:3001/)
         data.should_not match(/assets.foo.com/)
@@ -63,7 +63,7 @@ describe "Asset Hosts" do
     end
     
     it "should use app domain if specifed and even if asset host is defined" do
-      temp_app_config(:mack => {:assets => {:hosts => "http://assets.foo.com"}, :distributed_site_domain => 'http://localhost:3001'}) do
+      temp_app_config(:mack => {:assets => {:hosts => "http://assets.foo.com"}, :distributed => { :site_domain => 'http://localhost:3001'}}) do
         data = javascript('foo')
         data.should match(/localhost:3001/)
         data.should_not match(/assets.foo.com/)

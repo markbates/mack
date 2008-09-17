@@ -46,10 +46,6 @@ describe Mack::Configuration do
       configatron.mack.should_not be_nil
     end
     
-    it "should raise NoMethodError if unknown config key is requested" do
-      lambda{configatron.mack.foo_bar}.should raise_error(NoMethodError)
-    end
-    
     it "should return valid reference if requested config key is valid" do
       configatron.mack.cache_classes.should == true
     end
