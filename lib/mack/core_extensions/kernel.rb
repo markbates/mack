@@ -41,6 +41,71 @@ module Kernel
     end
   end
   
+  unless Module.const_defined?('GEM_MOD')
+    Module.const_set('GEM_MOD', 1)
+    alias_method :old_gem, :gem
+    
+    def gem(gem_name, *version_requirements)
+      vendor_path = File.join(FileUtils.pwd, 'vendor')
+      gem_path = File.join(vendor_path, 'gems')
+      
+      # try to normalize the version requirement string
+      ver = version_requirements.to_s.strip
+      ver = "> 0.0.0" if ver == nil or ver.empty?
+      # if the version string starts with number, then prepend = to it (since the developer wants an exact match)
+      ver = "= " + ver if ver[0,1] != '=' and ver[0,1] != '>' and ver[0,1] != '<'
+      
+      num = ver.match(/\d.+/).to_s
+      op  = ver.delete(num).strip
+      op  += "=" if op == '=' 
+      
+      found_local_gem = false
+      
+      Dir.glob(File.join(gem_path, "#{gem_name}*")).each_with_index do |file, i|
+        # all frozen gem has the pattern [gem_name]-[version]
+        next if !file.include?'-'
+
+        # make sure we're not loading gem with almost the same name, e.g. "#{gem_name}-foo_bar-0.89.1"
+        file_gem_name = file.match(/\D*-/).to_s
+        next if !file.starts_with?(file_gem_name)
+        
+        # find the version number from the file name
+        file_ver = file.match(/\d.+/).to_s
+        
+        # generate some number comparison that we can evaluate, to make sure that we
+        # pick the correct gem based on the requested version requirements
+        comparison = "'#{file_ver}' #{op} '#{num}'"  # e.g.: "'0.8.0' > '0.0.0'"
+        
+        # if we find the match (i.e. the comparison string checks out) then
+        # read the frozen spec file in that directory (so we can see what the require path is)
+        # and prepend the new require path(s) to the global search path.
+        # If we didn't find it, then continue to look (obviously)
+        if eval(comparison)           
+          spec_file = File.join(file, 'spec.yaml')
+          spec = YAML.load(File.read(spec_file))
+          load_path = ""
+          if spec.require_path
+            spec.require_path.each do |rp|
+              $:.insert(0, File.expand_path(File.join(file, rp)))
+            end
+          else
+            $:.insert(0, File.expand_path(file))
+          end
+          puts "Loading frozen gem: #{gem_name} from #{file}"
+          found_local_gem = true
+          break
+        end
+      end 
+    
+      # if After going through the vendor/gems folder and we still didn't find
+      # any frozen gem that matched the criteria, then call the system's gem loader
+      if !found_local_gem
+        puts "Loading installed gem: #{gem_name}"
+        old_gem(gem_name, *version_requirements)
+      end
+    end
+  end
+    
   private
   class DeprecatedRegistryList < Mack::Utils::RegistryList # :nodoc:
   end

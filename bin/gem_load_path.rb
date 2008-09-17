@@ -24,18 +24,18 @@ if File.exists?(mack_more_path)
   end
 end
 
-if File.exists?(gem_path)
-  Dir.glob(File.join(gem_path, "*")).each_with_index do |d, i|
-    spec_file = File.join(d, 'spec.yaml')
-    spec = YAML.load(File.read(spec_file))
-    if spec.require_path
-      spec.require_path.each do |rp|
-        puts "inserting #{File.expand_path(File.join(d, rp))}"
-        $:.insert(i+1, File.expand_path(File.join(d, rp)))
-      end
-    else
-      puts "inserting #{File.expand_path(File.join(d))}"
-      $:.insert(i+1, File.expand_path(d))
-    end
-  end
-end
+# if File.exists?(gem_path)
+#   Dir.glob(File.join(gem_path, "*")).each_with_index do |d, i|
+#     spec_file = File.join(d, 'spec.yaml')
+#     spec = YAML.load(File.read(spec_file))
+#     if spec.require_path
+#       spec.require_path.each do |rp|
+#         puts "inserting #{File.expand_path(File.join(d, rp))}"
+#         $:.insert(i+1, File.expand_path(File.join(d, rp)))
+#       end
+#     else
+#       puts "inserting #{File.expand_path(File.join(d))}"
+#       $:.insert(i+1, File.expand_path(d))
+#     end
+#   end
+# end

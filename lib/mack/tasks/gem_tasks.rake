@@ -20,8 +20,8 @@ namespace :gems do
   
   task :freeze do
     puts "gems:freeze"
-    add_dependencies = ENV['DEP'] || ENV['DEPS'] || 'false'
-    Mack::Utils::GemManager.instance.required_gem_list.each do |g|
+    add_dependencies = ENV['INCLUDE_DEPENDENCIES'] || ENV['include_dependencies'] || false
+      Mack::Utils::GemManager.instance.required_gem_list.each do |g|
       version = g.version? ? g.version : '> 0.0.0'
       ENV['gem_name'] = g.name.to_s
       ENV['version'] = version
@@ -34,7 +34,7 @@ namespace :gems do
     require 'rubygems/gem_runner'
     require 'ruby-debug'
     
-    add_dependencies = ENV['DEP'] || ENV['DEPS'] || false
+    add_dependencies = ENV['INCLUDE_DEPENDENCIES'] || ENV['include_dependencies'] || false
     version = ENV['version'] || ENV['VERSION'] || ENV['ver'] || ENV['VER'] || '> 0.0.0'
     source  = ENV['source']  || ENV['SOURCE'] || 'http://gems.rubyforge.org'
     gem_name = ENV['gem_name']
@@ -45,6 +45,7 @@ namespace :gems do
     if add_dependencies
       collect_dependencies(gem_name, version)
     else
+      version = source_index.find_name(gem_name, version).last.version.to_s
       processed_gems << LocalGem.new(gem_name, version)
     end
     puts "\nPhase 2: Checking installation states..."
