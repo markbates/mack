@@ -1,6 +1,6 @@
 * [#119] Freeze gems
 * [#23] Removed support for application_configuration and added support for configatron
-* gem: configatron 1.2.2
+* gem: configatron 2.0.0
 * gem: cachetastic 1.9.9.100
 
 === 0.7.1.1
