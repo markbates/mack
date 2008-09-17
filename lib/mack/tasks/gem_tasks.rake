@@ -19,7 +19,7 @@ namespace :gems do
   end # install
   
   task :freeze do
-    puts "gems:freeze"
+    # puts "gems:freeze"
     add_dependencies = ENV['INCLUDE_DEPENDENCIES'] || ENV['include_dependencies'] || false
       Mack::Utils::GemManager.instance.required_gem_list.each do |g|
       version = g.version? ? g.version : '> 0.0.0'
