@@ -127,7 +127,7 @@ module Mack
       
       def valid_request? # :nodoc:
         return true if !self.class.ignored_actions.empty? and self.skip_action?        
-        return app_config.mack.disable_forgery_detector ||
+        return configatron.mack.disable_forgery_detector ||
                 self.skip_action? ||
                 request.params[:method] == "get" ||
                 (request.params[:__authenticity_token] == authenticity_token)
@@ -142,7 +142,7 @@ module Mack
       include Singleton
 
       def dispense_token(key) # :nodoc:
-        salt = app_config.request_authenticity_token_salt || "shh, it's a secret"
+        salt = configatron.mack.retrieve(:request_authenticity_token_salt, "shh, it's a secret")
         salt = "shh, it's a secret" if salt.empty?
         string_to_hash = key.to_s + salt.to_s
         Digest::SHA1.hexdigest(string_to_hash)

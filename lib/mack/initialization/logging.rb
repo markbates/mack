@@ -12,14 +12,14 @@ boot_load(:logging, :configuration) do
     end
   
     def self.reset_logger!
-      log_directory = app_config.log_root || Mack::Paths.log
+      log_directory = configatron.log.retrieve(:root, Mack::Paths.log)
       begin
         FileUtils.mkdir_p(log_directory)
       rescue Exception => e
       end
 
       Mack.logger = Log4r::Logger.new('')
-      Mack.logger.level =  Module.instance_eval("Log4r::#{(app_config.log_level || :info).to_s.upcase}")
+      Mack.logger.level =  Module.instance_eval("Log4r::#{(configatron.log.retrieve(:level, :info)).to_s.upcase}")
 
       format = Log4r::PatternFormatter.new(:pattern => "%l:\t[%d]\t%M")
 
@@ -46,10 +46,10 @@ boot_load(:logging, :configuration) do
           def write(data)
             case data
             when /^(DEBUG:|INFO:|WARN:|ERROR:|FATAL:)\s\[.*\]\s(SELECT|INSERT|UPDATE|DELETE|CREATE|DROP)/
-              old_write(Mack::Utils::Ansi::Color.wrap(app_config.log.db_color, data))
+              old_write(Mack::Utils::Ansi::Color.wrap(configatron.log.db_color, data))
             else
               level = data.match(/^\w+/).to_s
-              color = app_config.log.send("#{level.downcase}_color")
+              color = configatron.log.retrieve("#{level.downcase}_color", nil)
               if color
                 old_write(Mack::Utils::Ansi::Color.wrap(color, data))
               else

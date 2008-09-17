@@ -163,7 +163,7 @@ module Mack
       private
       def get_resource_root(resource)
         path = ""
-        path = "#{app_config.mack.distributed_site_domain}" if app_config.mack.distributed_site_domain
+        path = "#{configatron.mack.distributed_site_domain}" if configatron.mack.exists?(:distributed_site_domain)
         path = Mack::AssetHelpers.instance.asset_hosts(resource) if path.empty?
         return path
       end

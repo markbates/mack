@@ -104,7 +104,7 @@ describe 'Forgery Detector' do
       my_token.should == real_token
     end
     it "should allow people to use custom salt" do
-      temp_app_config("request_authenticity_token_salt" => "Boo") do
+      temp_app_config(:mack => {:request_authenticity_token_salt => "Boo"}) do
         session_id = session.id
         real_token = Mack::Utils::AuthenticityTokenDispenser.instance.dispense_token(session_id)
         my_token = Digest::SHA1.hexdigest(session_id.to_s + "Boo")
@@ -112,7 +112,7 @@ describe 'Forgery Detector' do
       end
     end
     it "should use default salt if custom salt is empty" do
-      temp_app_config("request_authenticity_token_salt" => "") do
+      temp_app_config(:mack => {:request_authenticity_token_salt => ""}) do
         session_id = session.id
         real_token = Mack::Utils::AuthenticityTokenDispenser.instance.dispense_token(session_id)
         my_token = Digest::SHA1.hexdigest(session_id.to_s + "shh, it's a secret")
@@ -123,7 +123,7 @@ describe 'Forgery Detector' do
   
   describe 'Form helpers' do    
     it "should generate authenticity token when using form() method" do
-      temp_app_config("mack::disable_forgery_detector" => false) do
+      temp_app_config(:mack => {:disable_forgery_detector => false}) do
         my_token = Digest::SHA1.hexdigest(session.id.to_s + "shh, it's a secret")
         get xss_url
         response.body.should match(%{<input type="hidden" name="__authenticity_token" value="#{my_token}" />})
@@ -131,7 +131,7 @@ describe 'Forgery Detector' do
     end
     
     it "should let people add authenticity token when not using form() method" do 
-      temp_app_config("mack::disable_forgery_detector" => false) do
+      temp_app_config(:mack => {:disable_forgery_detector => false}) do
         my_token = Digest::SHA1.hexdigest(session.id.to_s + "shh, it's a secret")
         get xss2_url
         response.body.should match(%{<input type="hidden" name="__authenticity_token" value="#{my_token}" />})
@@ -145,7 +145,7 @@ describe 'Forgery Detector' do
     end
     
     it "should raise error when authenticity token is not present in the params" do
-      temp_app_config("mack::disable_forgery_detector" => false) do
+      temp_app_config(:mack => {:disable_forgery_detector => false}) do
         lambda{
           post(violate_xss_check_url)
         }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
@@ -153,7 +153,7 @@ describe 'Forgery Detector' do
     end
     
     it "should raise error when authenticity token is present but doesn't match" do
-      temp_app_config("mack::disable_forgery_detector" => false) do
+      temp_app_config(:mack => {:disable_forgery_detector => false}) do
         lambda{
           post(violate_xss_check_url, :__authenticity_token => "boo")
         }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
@@ -161,7 +161,7 @@ describe 'Forgery Detector' do
     end
     
     it "should not raise error when a valid authenticity token is present in post" do
-      temp_app_config("mack::disable_forgery_detector" => false) do
+      temp_app_config(:mack => {:disable_forgery_detector => false}) do
         my_token = Digest::SHA1.hexdigest(session.id.to_s + "shh, it's a secret")
         lambda{
           post(violate_xss_check_url, :__authenticity_token => my_token)
@@ -170,7 +170,7 @@ describe 'Forgery Detector' do
     end
     
     it "should not raise error when a valid authenticity token and custom salt are both present" do
-      temp_app_config("request_authenticity_token_salt" => "boo", "mack::disable_forgery_detector" => false) do
+      temp_app_config(:mack => {:request_authenticity_token_salt => 'boo', :disable_forgery_detector => false}) do
         my_token = Digest::SHA1.hexdigest(session.id.to_s + "boo")
         lambda{
           post(violate_xss_check_url, :__authenticity_token => my_token)
@@ -179,7 +179,7 @@ describe 'Forgery Detector' do
     end
     
     it "should not raise error when a valid authenticity token is present but custom salt is empty" do
-      temp_app_config("request_authenticity_token_salt" => "", "mack::disable_forgery_detector" => false) do
+      temp_app_config(:mack => {:request_authenticity_token_salt => '', :disable_forgery_detector => false}) do
         my_token = Digest::SHA1.hexdigest(session.id.to_s + "shh, it's a secret")
         lambda{
           post(violate_xss_check_url, :__authenticity_token => my_token)
@@ -217,7 +217,7 @@ describe 'Forgery Detector' do
     end
     
     it "should handle :only" do
-      temp_app_config("mack::disable_forgery_detector" => false) do
+      temp_app_config(:mack => {:disable_forgery_detector => false}) do
         lambda{
           post(forgery_test1_url)
         }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
@@ -234,7 +234,7 @@ describe 'Forgery Detector' do
     end
     
     it "should handle :except" do
-      temp_app_config("mack::disable_forgery_detector" => false) do
+      temp_app_config(:mack => {:disable_forgery_detector => false}) do
         lambda{
           post(forgery2_test1_url)
         }.should raise_error(Mack::Errors::InvalidAuthenticityToken)
@@ -251,7 +251,7 @@ describe 'Forgery Detector' do
     end
     
     it "should handle disable all" do
-      temp_app_config("mack::disable_forgery_detector" => false) do
+      temp_app_config(:mack => {:disable_forgery_detector => false}) do
         lambda{
           post(forgery3_test1_url)
         }.should_not raise_error(Mack::Errors::InvalidAuthenticityToken)
@@ -268,7 +268,7 @@ describe 'Forgery Detector' do
     end
     
     it "should work in inherited controller" do
-      temp_app_config("mack::disable_forgery_detector" => false) do
+      temp_app_config(:mack => {:disable_forgery_detector => false}) do
         lambda{
           post(forgery4_test1_url)
         }.should raise_error(Mack::Errors::InvalidAuthenticityToken)

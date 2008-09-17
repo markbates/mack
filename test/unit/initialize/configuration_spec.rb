@@ -38,27 +38,27 @@ describe Mack::Configuration do
   
   describe "Existence Check" do
     
-    it "should have valid reference to app_config" do
-      app_config.should_not be_nil
+    it "should have valid reference to configatron" do
+      configatron.should_not be_nil
     end
     
-    it "should have valid reference to mack's app_config" do
-      app_config.mack.should_not be_nil
+    it "should have valid reference to mack's configatron" do
+      configatron.mack.should_not be_nil
     end
     
-    it "should return nil if unknown config key is requested" do
-      app_config.mack.foo_bar
+    it "should raise NoMethodError if unknown config key is requested" do
+      lambda{configatron.mack.foo_bar}.should raise_error(NoMethodError)
     end
     
     it "should return valid reference if requested config key is valid" do
-      app_config.mack.cache_classes.should == true
+      configatron.mack.cache_classes.should == true
     end
     
   end
   
   it "should load facets before loading app config" do
-    app_config.mack.test_facets.should == 86400
-    app_config.test_facets.should == 900
+    configatron.mack.test_facets.should == 86400
+    configatron.test_facets.should == 900
   end
   
 end

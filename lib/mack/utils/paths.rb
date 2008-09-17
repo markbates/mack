@@ -130,9 +130,9 @@ module Mack
       Mack::Paths.root("config", files)
     end
     
-    # <MACK_PROJECT_ROOT>/config/app_config
-    def self.app_config(*files)
-      Mack::Paths.config("app_config", files)
+    # <MACK_PROJECT_ROOT>/config/configatron
+    def self.configatron(*files)
+      Mack::Paths.config("configatron", files)
     end
     
     # <MACK_PROJECT_ROOT>/config/initializers

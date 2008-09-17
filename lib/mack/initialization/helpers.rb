@@ -1,6 +1,6 @@
 boot_load(:helpers, :logging) do
   # Include ApplicationHelper into all controllers:
-  Mack.logger.debug "Initializing helpers..." unless app_config.log.disable_initialization_logging
+  Mack.logger.debug "Initializing helpers..." unless configatron.log.disable_initialization_logging
   # adding application_helper module into all defined controllers
   if Object.const_defined?("ApplicationHelper")
     deprecate_method("ApplicationHelper", "Mack::ViewHelpers::ApplicationHelper", "0.7.0")
