@@ -46,10 +46,10 @@ boot_load(:logging, :configuration) do
           def write(data)
             case data
             when /^(DEBUG:|INFO:|WARN:|ERROR:|FATAL:)\s\[.*\]\s(SELECT|INSERT|UPDATE|DELETE|CREATE|DROP)/
-              old_write(Mack::Utils::Ansi::Color.wrap(configatron.log.db_color, data))
+              old_write(Mack::Utils::Ansi::Color.wrap(configatron.log.colors.db, data))
             else
               level = data.match(/^\w+/).to_s
-              color = configatron.log.retrieve("#{level.downcase}_color", nil)
+              color = configatron.log.colors.retrieve("#{level.downcase}", nil)
               if color
                 old_write(Mack::Utils::Ansi::Color.wrap(color, data))
               else

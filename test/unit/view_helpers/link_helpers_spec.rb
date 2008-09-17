@@ -136,7 +136,7 @@ describe Mack::ViewHelpers::LinkHelpers do
     end
     
     it "should create 1 javascript tag with domain info if specified" do
-      temp_app_config(:mack => {:distributed_site_domain => "http://localhost:3001"}) do
+      temp_app_config(:mack => {:distributed => {:site_domain => "http://localhost:3001"}}) do
         data = javascript("foo")
         data.should match(/javascript/)
         data.should match(/localhost:3001/)
@@ -151,13 +151,13 @@ describe Mack::ViewHelpers::LinkHelpers do
     end
     
     it "should generate stylesheet link without domain info if not specified" do
-      temp_app_config(:mack => {:distributed_site_domain => nil}) do
+      temp_app_config(:mack => {:distributed => {:site_domain => nil}}) do
         stylesheet("foo").should_not match(/localhost/)
       end
     end
     
     it "should generate stylesheet link with domain info if specified" do
-      temp_app_config(:mack => {:distributed_site_domain => 'http://localhost:3001'}) do
+      temp_app_config(:mack => {:distributed => {:site_domain => "http://localhost:3001"}}) do
         stylesheet("foo").should match(/localhost:3001/)
       end
     end

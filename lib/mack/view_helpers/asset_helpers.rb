@@ -29,8 +29,7 @@ module Mack
       ret_val = ''
       
       # if no explicit asset_host setting, then use the one defined in configatron (if exists)
-      host = @hosts || configatron.mack.assets.hosts
-      host = '' if host.nil?
+      host = @hosts || (configatron.mack.assets.hosts.nil? ? '' : configatron.mack.assets.hosts)
       
       if host.kind_of?(Proc)
         ret_val = host.call(source)

@@ -29,7 +29,7 @@ module Mack
         
         # Encrypts the session and places it into the cookie.
         def set(id, request, response, cookies)
-          cookies[id] = {:value => YAML.dump(request.session).encrypt, :expires => (Time.now + configatron.cookie_session_store.expiry_time)}
+          cookies[id] = {:value => YAML.dump(request.session).encrypt, :expires => (Time.now + configatron.mack.cookie_session_store.expiry_time)}
         end
         
         # Deletes the cookie.
