@@ -19,9 +19,7 @@ namespace :gems do
   end # install
   
   task :freeze do
-    # puts "gems:freeze"
-    add_dependencies = ENV['INCLUDE_DEPENDENCIES'] || ENV['include_dependencies'] || false
-      Mack::Utils::GemManager.instance.required_gem_list.each do |g|
+    Mack::Utils::GemManager.instance.required_gem_list.each do |g|
       version = g.version? ? g.version : '> 0.0.0'
       ENV['gem_name'] = g.name.to_s
       ENV['version'] = version
@@ -33,8 +31,8 @@ namespace :gems do
   task :install_and_freeze do
     require 'rubygems/gem_runner'
     require 'ruby-debug'
-    
     add_dependencies = ENV['INCLUDE_DEPENDENCIES'] || ENV['include_dependencies'] || false
+    add_dependencies = false if add_dependencies.to_s.downcase == 'false'
     version = ENV['version'] || ENV['VERSION'] || ENV['ver'] || ENV['VER'] || '> 0.0.0'
     source  = ENV['source']  || ENV['SOURCE'] || 'http://gems.rubyforge.org'
     gem_name = ENV['gem_name']
@@ -146,6 +144,7 @@ end
 
 def msg(msg)
   verbose = ENV['VERBOSE'] || ENV['verbose'] || false
+  verbose = false if verbose.to_s.downcase == 'false'
   puts msg if verbose
   print "." if !verbose
 end
