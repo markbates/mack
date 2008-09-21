@@ -1,3 +1,4 @@
+* [#168] Fixed ERB errors not being reported correctly.
 * [#119] Freeze gems
 * [#23] Removed support for application_configuration and added support for configatron
 * gem: configatron 2.1.1

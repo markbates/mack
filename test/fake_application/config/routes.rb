@@ -58,6 +58,8 @@ Mack::Routes.build do |r|
     map.public_with_extension '/vtt/public_with_extension', :action => :public_with_extension
     map.partial_local '/vtt/partial_local', :action => :partial_local
     map.partial_outside '/vtt/partial_outside', :action => :partial_outside
+    map.broken_erb '/vtt/broken', :action => :broken
+    map.handle_error ILikeToBreak, :action => :fixed
   end
   
   r.old_foo "/my_old_foo", :redirect_to => "/tst_another/foo/:id", :status => 301

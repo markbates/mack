@@ -100,4 +100,10 @@ class Vtt::ViewTemplateController
     render(:partial, "application/outside_part")
   end
   
+  def fixed
+    @message = caught_exception.message
+    @backtrace = caught_exception.backtrace
+    render(:text, '')
+  end
+  
 end
