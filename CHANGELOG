@@ -1,6 +1,7 @@
 * [#168] Fixed ERB errors not being reported correctly.
 * [#167] Rake task to convert app config yamls to configatron
 * [#119] Freeze gems
+* [#106] INCOMPATIBILITY NOTICE: Removed deprecated support for droute_url
 * [#93] INCOMPATIBILITY NOTICE: Removed deprecated support for 'top' level ApplicationHelper
 * [#23] INCOMPATIBILITY NOTICE: Removed support for application_configuration and added support for configatron
 * gem: configatron 2.1.1
