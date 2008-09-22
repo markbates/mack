@@ -1,0 +1,2 @@
+class ILikeToBreak < StandardError
+end

@@ -2,12 +2,12 @@ helper_template:
   type: file
   template_path: <%= File.join(templates_directory_path, "app", "helpers", "views", "helper.rb.template") %>
   output_path: <%= File.join("app", "helpers", "views", "#{@name_singular}_helper.rb") %>
-<% if app_config.mack.testing_framework == "test_case" -%>
+<% if configatron.mack.testing_framework.to_s == "test_case" -%>
 helper_test_template:
   type: file
   template_path: <%= File.join(templates_directory_path, "test", "helpers", "views", "test_case.rb.template") %>
   output_path: <%= File.join("test", "helpers", "views", "#{@name_singular}_helper_test.rb") %>
-<% elsif app_config.mack.testing_framework == "rspec" -%>
+<% elsif configatron.mack.testing_framework.to_s == "rspec" -%>
 helper_test_template:
   type: file
   template_path: <%= File.join(templates_directory_path, "test", "helpers", "views", "rspec.rb.template") %>

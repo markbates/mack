@@ -25,6 +25,15 @@ describe "render(:action)" do
       get bart_html_erb_without_layout_url
       response.body.should == "Bart Simpson: HTML, ERB\n"
     end
+    
+    it "should report errors correctly" do
+      get broken_erb_url
+      message = assigns(:message)
+      backtrace = assigns(:backtrace)
+      message.should == 'ILikeToBreak'
+      backtrace.first.should_not match('lib/mack/rendering/view_template.rb')
+      backtrace.first.should match('views/vtt/view_template/broken.html.erb')
+    end
 
   end # erb
     

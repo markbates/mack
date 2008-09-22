@@ -118,19 +118,18 @@ module Mack
       end
       
       #
-      # Generate Javascript tag (<javascript src="/javascripts/foo.js?1241225" type="text/javascript" />)
+      # Generate Javascript tag (<script src="/javascripts/foo.js?1241225" type="text/javascript" />)
       #
       # If distributed_site_domain is specified, it will be used.
       #
-      def javascript(files, options = {})
+      def javascript(files)
         files = [files].flatten
-        options = {:type => "text/javascript"}.merge(options)
-        
+                
         link = ""
         files.each do |name|
           file_name = !name.to_s.end_with?(".js") ? "#{name}.js" : "#{name}"
           resource = "/javascripts/#{file_name}"
-          link += "<javascript src=\"#{get_resource_root(resource)}#{resource}?#{Time.now.to_i}\" type=\"#{options[:type]}\" />\n"
+          link += "<script src=\"#{get_resource_root(resource)}#{resource}?#{Time.now.to_i}\" type=\"text/javascript\"></script>\n"
         end
         return link
       end
@@ -164,7 +163,7 @@ module Mack
       private
       def get_resource_root(resource)
         path = ""
-        path = "#{app_config.mack.distributed_site_domain}" if app_config.mack.distributed_site_domain
+        path = "#{configatron.mack.distributed.site_domain}" unless configatron.mack.distributed.site_domain.nil?
         path = Mack::AssetHelpers.instance.asset_hosts(resource) if path.empty?
         return path
       end

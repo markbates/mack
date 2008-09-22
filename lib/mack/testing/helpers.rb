@@ -22,13 +22,13 @@ module Mack
       # Temporarily changes the application configuration. Changes are reverted after
       # the yield returns.
       def temp_app_config(options = {})
-        app_config.load_hash(options, String.randomize)
-        yield
-        app_config.revert
+        configatron.temp(options) do
+          yield
+        end
       end
     
       def remote_test # :nodoc:
-        if (app_config.run_remote_tests)
+        if (configatron.mack.run_remote_tests)
           yield
         end
       end
@@ -93,7 +93,7 @@ module Mack
         sess = Mack::SessionStore.get($current_session_id, nil, nil, nil)
         if sess.nil?
           id = String.randomize(40).downcase
-          set_cookie(app_config.mack.session_id, id)
+          set_cookie(configatron.mack.session_id, id)
           sess = Mack::Session.new(id)
           Mack::SessionStore.store.direct_set(id, sess)
           $current_session_id = id
@@ -194,7 +194,7 @@ module Mack
             spt = ck.split("=")
             name = spt.first
             value = spt.last
-            if name == app_config.mack.session_id
+            if name == configatron.mack.session_id
               value = nil unless @_mack_in_session
             end
             set_cookie(name, value)

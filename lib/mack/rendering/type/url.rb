@@ -63,7 +63,7 @@ module Mack
 
         private
         def do_render_remote_url(url, options)
-          Timeout::timeout(app_config.mack.render_url_timeout || 5) do
+          Timeout::timeout(configatron.mack.retrieve(:render_url_timeout, 5)) do
             uri = URI.parse(url)
             response = yield uri, options
             if response.code == "200"
@@ -79,7 +79,7 @@ module Mack
         end
 
         def do_render_local_url(url, options)
-          Timeout::timeout(app_config.mack.render_url_timeout || 5) do
+          Timeout::timeout(configatron.mack.retrieve(:render_url_timeout, 5)) do
             cooks = {}
             self.view_template.cookies.all.each do |c,v|
               cooks[c] = v[:value]
@@ -89,7 +89,7 @@ module Mack
             env = request.env.dup
             env - ["rack.input", "rack.errors", "PATH_INFO", "REQUEST_PATH", "REQUEST_URI", "REQUEST_METHOD"]
             env["rack.request.query_hash"] = options[:parameters] || {}
-            env["HTTP_COOKIE"] = "#{app_config.mack.session_id}=#{request.session.id};" if env["HTTP_COOKIE"].nil?
+            env["HTTP_COOKIE"] = "#{configatron.mack.session_id}=#{request.session.id};" if env["HTTP_COOKIE"].nil?
             options = env.merge(options)
             # Mack.logger.debug "NEW OPTIONS: #{options.inspect}"
             # Mack.logger.debug "url: #{url}"

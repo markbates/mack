@@ -6,12 +6,24 @@ module Mack
       class Erubis < Mack::Rendering::Engine::Base
         
         def render(io, binding)
-          src = Mack::Rendering::Engine::Erubis::TemplateCache.instance.cache[io]
-          if src.nil?
-            src = ::Erubis::Eruby.new(io).src
-            Mack::Rendering::Engine::Erubis::TemplateCache.instance.cache[io] = src
+          io_src = io
+          file_name = nil
+          if io.is_a?(File)
+            io_src = io.read
+            file_name = io.path
           end
-          eval(src, binding)
+          
+          eruby = ::Erubis::Eruby.new(io_src)
+          eruby.filename = file_name
+          eruby.result(binding)
+          
+          # src = Mack::Rendering::Engine::Erubis::TemplateCache.instance.cache[io]
+          # if src.nil?
+          #   src = ::Erubis::Eruby.new(io).src
+          #   Mack::Rendering::Engine::Erubis::TemplateCache.instance.cache[io] = src
+          # end
+          
+          # eval(src, binding)
         end
         
         def extension

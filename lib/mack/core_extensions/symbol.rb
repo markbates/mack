@@ -1,5 +1,9 @@
 class Symbol
   
+  def method_missing(sym, *args)
+    self.to_s.send(sym, *args)
+  end
+  
   # See Mack::ViewHelpers::FormHelpers date_time_select for more information
   def date_time_select(*args)
     Thread.current[:view_template].date_time_select(self, *args)

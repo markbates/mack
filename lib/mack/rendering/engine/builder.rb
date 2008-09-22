@@ -7,6 +7,9 @@ module Mack
       class Builder < Mack::Rendering::Engine::Base
         
         def render(io, binding)
+          if io.is_a?(File)
+            io = io.read
+          end
           @_xml = ::Builder::XmlMarkup.new(:target => @_xml_output, :indent => 1)
           view_template.instance_variable_set("@_xml", @_xml)
           eval(io, binding)

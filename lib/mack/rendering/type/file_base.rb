@@ -13,7 +13,7 @@ module Mack
           Mack::Rendering::Engine::Registry.engines[type].each do |e|
             @engine = find_engine(e).new(self.view_template)
             find_file(file + ".#{@engine.extension}") do |f|
-              return @engine.render(File.open(f).read, self.binder)
+              return @engine.render(File.new(f), self.binder)
             end
           end
           raise Mack::Errors::ResourceNotFound.new(file + ".*")

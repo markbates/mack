@@ -1,3 +1,20 @@
+* [#168] Fixed ERB errors not being reported correctly.
+* [#167] Rake task to convert app config yamls to configatron
+* [#164] Response helper for 'attachments'
+* [#152] INCOMPATIBILITY NOTICE: Removed deprecated support for delivered_emails
+* [#119] Freeze gems
+* [#106] INCOMPATIBILITY NOTICE: Removed deprecated support for droute_url
+* [#93] INCOMPATIBILITY NOTICE: Removed deprecated support for 'top' level ApplicationHelper
+* [#23] INCOMPATIBILITY NOTICE: Removed support for application_configuration and added support for configatron
+* gem: configatron 2.1.1
+* gem: cachetastic 1.9.9.100
+
+=== 0.7.1.1
+* [#163] Fixed jQuery code is being generated with double quotes instead of single quotes
+* [#162] Fixed View helpers for mack-javascript aren't being required
+* [#158] Fixed Turning off sessions throws an Error
+* [#155] Fixed invalid javascript tag
+
 === 0.7.1
 * [#153] Emails with just a single 'part' are now being sent correctly.
 * [#147] Added :confirm to button helpers.

@@ -2,7 +2,7 @@ module Mack
   
   # A holder for the session information. This objects gets stored using the Cachetastic system.
   # For more information about how Cachetastic works see the RDoc for that gem.
-  # The session cookie name defaults to: _mack_session_id but can be changed using the application_configuration
+  # The session cookie name defaults to: _mack_session_id but can be changed using the configatron
   # system like such:
   #   mack::session_id: _my_cool_app_sess_id
   class Session

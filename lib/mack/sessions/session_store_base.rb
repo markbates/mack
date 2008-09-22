@@ -5,7 +5,7 @@ module Mack
       
       def store # :nodoc:
         ivar_cache do
-          "Mack::SessionStore::#{app_config.mack.session_store.camelcase}".constantize
+          "Mack::SessionStore::#{configatron.mack.session_store.camelcase}".constantize
         end
       end
       

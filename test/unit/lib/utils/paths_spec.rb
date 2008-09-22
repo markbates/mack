@@ -115,10 +115,10 @@ describe Mack::Paths do
     
   end
   
-  describe "app_config" do
+  describe "configatron" do
     
-    it "should give the path to the app_config directory" do
-      Mack::Paths.app_config.should == File.join(Mack::Paths.config, "app_config", "")
+    it "should give the path to the configatron directory" do
+      Mack::Paths.configatron.should == File.join(Mack::Paths.config, "configatron", "")
     end
     
   end

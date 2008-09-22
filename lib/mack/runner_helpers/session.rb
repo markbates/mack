@@ -6,7 +6,7 @@ module Mack
       attr_accessor :sess_id
       
       def start(request, response, cookies)
-        if app_config.mack.use_sessions
+        if configatron.mack.use_sessions
           self.sess_id = retrieve_session_id(request, response, cookies)
           unless self.sess_id
             self.sess_id = create_new_session(request, response, cookies)
@@ -23,20 +23,22 @@ module Mack
       end
       
       def complete(request, response, cookies)
-        unless response.redirection?
-          request.session.delete(:tell)
+        if configatron.mack.use_sessions
+          unless response.redirection?
+            request.session.delete(:tell)
+          end
+          Mack::SessionStore.set(request.session.id, request, response, cookies)
         end
-        Mack::SessionStore.set(request.session.id, request, response, cookies) if app_config.mack.use_sessions
       end
       
       private
       def retrieve_session_id(request, response, cookies)
-        cookies[app_config.mack.session_id]
+        cookies[configatron.mack.session_id]
       end
       
       def create_new_session(request, response, cookies)
         id = String.randomize(40).downcase
-        cookies[app_config.mack.session_id] = {:value => id, :expires => nil}
+        cookies[configatron.mack.session_id] = {:value => id, :expires => nil}
         sess = Mack::Session.new(id)
         request.session = sess
         Mack::SessionStore.set(request.session.id, request, response, cookies)

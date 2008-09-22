@@ -14,7 +14,7 @@ describe Mack::Session do
     
   end
   
-  describe "app_config.mack.use_sessions" do
+  describe "configatron.mack.use_sessions" do
     
     class SessionSpecController
       include Mack::Controller
@@ -27,7 +27,7 @@ describe Mack::Session do
     end
     
     it "should be able to turn off sessions" do
-      temp_app_config("mack::use_sessions" => false) do
+      temp_app_config(:mack => {:use_sessions => false}) do
         lambda{get "/session_spec/index"}.should raise_error(Mack::Errors::NoSessionError)
       end
     end
