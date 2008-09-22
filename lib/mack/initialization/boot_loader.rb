@@ -26,8 +26,9 @@ module Mack
         begin
           Mack::BootLoader.instance.sequences[a.to_sym].run
         rescue Exception => e
-          puts "[#{a}]: #{e.message}"
-          puts e.backtrace
+          raise e
+          # puts "[#{a}]: #{e.message}"
+          # puts e.backtrace
         end
       end
     end

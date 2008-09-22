@@ -56,7 +56,7 @@ boot_load(:configuration) do
         end
       
         if Mack.env == 'development'
-          configatron.mack.cache_classes = true
+          configatron.mack.cache_classes = false
           configatron.log.level = :debug
         end
 
