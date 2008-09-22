@@ -30,7 +30,6 @@ namespace :gems do
   
   task :install_and_freeze do
     require 'rubygems/gem_runner'
-    require 'ruby-debug'
     add_dependencies = ENV['INCLUDE_DEPENDENCIES'] || ENV['include_dependencies'] || false
     add_dependencies = false if add_dependencies.to_s.downcase == 'false'
     version = ENV['version'] || ENV['VERSION'] || ENV['ver'] || ENV['VER'] || '> 0.0.0'
