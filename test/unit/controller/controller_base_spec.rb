@@ -148,7 +148,7 @@ describe Mack::Controller do
     get "/tst_home_page/world_hello"
     response.should be_redirect
     response.status.should == 302
-    response.should be_redirected_to("/hello/world")
+    response.should be_redirected_to("http://example.org/hello/world")
     response.body.should match(/Hello World/)
   end
    

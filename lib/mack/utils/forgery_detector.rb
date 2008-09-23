@@ -129,7 +129,7 @@ module Mack
         return true if !self.class.ignored_actions.empty? and self.skip_action?        
         return configatron.mack.disable_forgery_detector ||
                 self.skip_action? ||
-                request.params[:method] == "get" ||
+                request.params[:method].to_sym == :get ||
                 (request.params[:__authenticity_token] == authenticity_token)
       end
       

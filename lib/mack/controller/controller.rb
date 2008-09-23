@@ -54,7 +54,7 @@ module Mack
         run_filters(:before)
         # check to see if this controller responds to this action.
         # only run public methods!
-        if self.public_methods.include?(self.action_name)
+        if self.public_methods.include?(self.action_name.to_s)
           # call the action and capture the results to a variable.
           self.send(self.action_name)
         else

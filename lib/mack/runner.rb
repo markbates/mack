@@ -19,7 +19,7 @@ module Mack
       begin
         setup(env)
         begin
-          route = Mack::Routes::RouteMap.instance.get_route_from_request(self.request)
+          route = Mack::Routes.retrieve(self.request)
           if route[:redirect_to]
             # because the route is specified to be a redirect, let's do that:
             redirect_to(route)
@@ -32,7 +32,7 @@ module Mack
         # rescue Mack::Errors::ResourceNotFound, Mack::Errors::UndefinedRoute => e
         #   return try_to_find_resource(env, e)
         rescue Exception => e
-          route = Mack::Routes::RouteMap.instance.get_route_from_error(e.class)
+          route = Mack::Routes.retrieve_from_error(e.class)
           self.request.all_params[:original_controller] = @original_controller
           self.request.all_params[:original_action] = @original_action
           unless route.nil?
@@ -60,8 +60,13 @@ module Mack
       rescue NameError => e
         raise Mack::Errors::ResourceNotFound.new(self.request.path_info)
       end
-      self.request.all_params[:controller] = route[:controller]
-      self.request.all_params[:action] = route[:action]
+      puts "b: self.request.all_params: #{self.request.all_params.inspect}"
+      puts "b: self.request.params: #{self.request.params.inspect}"
+      self.request.params = route.merge(self.request.all_params)
+      puts "a: self.request.all_params: #{self.request.all_params.inspect}"
+      puts "a: self.request.params: #{self.request.params.inspect}"
+      # self.request.all_params[:controller] = route[:controller]
+      # self.request.all_params[:action] = route[:action]
       self.request.instance_variable_set("@params_controller", nil)
       self.request.instance_variable_set("@params_action", nil)
       
