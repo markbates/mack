@@ -9,5 +9,9 @@ module Mack
       self.controller.instance_variable_get("@#{key}")
     end
     
+    def attachment=(file_name)
+      self['Content-Disposition'] = "attachment; filename=#{file_name}"
+    end
+    
   end
 end
