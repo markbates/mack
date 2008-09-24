@@ -33,9 +33,11 @@ module Mack
         #   return try_to_find_resource(env, e)
         rescue Exception => e
           route = Mack::Routes.retrieve_from_error(e.class)
+          puts "error route: #{route.inspect}"
           self.request.all_params[:original_controller] = @original_controller
           self.request.all_params[:original_action] = @original_action
           unless route.nil?
+            puts "run_controller for #{e}"
             run_controller(route, e)
           else
             if e.class == Mack::Errors::ResourceNotFound || e.class == Mack::Errors::UndefinedRoute
@@ -62,7 +64,8 @@ module Mack
       end
       puts "b: self.request.all_params: #{self.request.all_params.inspect}"
       puts "b: self.request.params: #{self.request.params.inspect}"
-      self.request.params = route.merge(self.request.all_params)
+      # self.request.params = route.merge(self.request.all_params)
+      self.request.params = self.request.all_params.merge(route)
       puts "a: self.request.all_params: #{self.request.all_params.inspect}"
       puts "a: self.request.params: #{self.request.params.inspect}"
       # self.request.all_params[:controller] = route[:controller]

@@ -4,7 +4,7 @@ require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 class MimeController
   include Mack::Controller
 
-  def index
+  def marceau
     wants(:html) do
       render(:text, "HTML")
     end

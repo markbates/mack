@@ -3,7 +3,7 @@ module Mack
     
     # <MACK_PROJECT_ROOT>
     def self.root(*files)
-      File.join(Mack.root, *files.collect{|c| c.to_s})
+      File.join(Mack.root, *files)
     end
     
     # <MACK_PROJECT_ROOT>/public

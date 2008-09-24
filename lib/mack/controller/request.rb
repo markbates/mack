@@ -96,7 +96,7 @@ module Mack
     end
     
     def params=(p) # :nodoc:
-      @mack_params = {}
+      @mack_params = Mack::Request::Parameters.new
       parse_params(p)
     end
     

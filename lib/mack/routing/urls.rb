@@ -72,13 +72,13 @@ module Mack
         scheme = options[:scheme] || 'http'
         host = options[:host]
         port = options[:port] || 80
+        return '' if host.nil?
         if @request
           # puts "@request: #{@request.inspect}"
           scheme = @request.scheme if scheme.nil?
           port = @request.port if port.nil?
           host = @request.host if host.nil?
         end
-        return '' if host.nil?
         port = case port.to_i
         when 80, 443
         else

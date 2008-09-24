@@ -122,6 +122,8 @@ module Mack
     #   "<xml><greeting>Hello World</greeting></xml>"
     def wants(header_type, &block)
       header_type = header_type.to_sym
+      puts "header_type: #{header_type}"
+      puts "params[:format]: #{params[:format]}"
       if header_type == params[:format].to_sym
         yield
       end

@@ -137,6 +137,10 @@ describe Mack::Paths do
       Mack::Paths.views.should == File.join(Mack::Paths.app, "views")
     end
     
+    it 'should correctly take an array' do
+      Mack::Paths.views('foo', 'bar').should == File.join(Mack::Paths.app, 'views', 'foo', 'bar')
+    end
+    
   end
   
   describe "controllers" do
