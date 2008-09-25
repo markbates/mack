@@ -24,9 +24,16 @@ module Mack
         options - [:host, :port, :scheme]
         options.each_pair do |k, v|
           unless k.to_sym == :format
-            vp = Rack::Utils.escape(v.to_param)
-            if u.gsub!(":#{k}", vp).nil?
-              unused_params << "#{Rack::Utils.escape(k)}=#{vp}"
+            if u.match(/\*#{k}/)
+              vp = [v].flatten.collect {|c| Rack::Utils.escape(c.to_param)}
+              if u.gsub!("*#{k}", File.join(vp)).nil?
+                unused_params << "#{Rack::Utils.escape(k)}=#{vp}"
+              end
+            else
+              vp = Rack::Utils.escape(v.to_param)
+              if u.gsub!(":#{k}", vp).nil?
+                unused_params << "#{Rack::Utils.escape(k)}=#{vp}"
+              end
             end
           else
             format = v

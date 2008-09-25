@@ -270,6 +270,7 @@ describe Mack::Routes do
         Mack::Routes.retrieve('/chapters/1').should == {:controller => :chapters, :action => :show, :method => :get, :chaps => ['1'], :format => 'html'}
         Mack::Routes.retrieve('/a/me/z').should == {:controller => :books, :action => :peeps, :method => :get, :authors => ['me'], :format => 'html'}
         Mack::Routes.retrieve('/a/me/you/z').should == {:controller => :books, :action => :peeps, :method => :get, :authors => ['me', 'you'], :format => 'html'}
+        chapters_url(:authors => ['me', 'you']).should == '/a/me/you/z'
       end
       
       it 'should run a block at a runtime and return if :finished is thrown' do

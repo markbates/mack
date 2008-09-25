@@ -16,7 +16,6 @@ module Mack
         #   app/views/users/_form.html.erb 
         def render
           partial = self.render_value.to_s
-          puts "partial: #{partial}"
           parts = partial.split("/")
           if parts.size == 1
             # it's local to this controller
@@ -25,7 +24,6 @@ module Mack
           else
             # it's elsewhere
             parts[parts.size - 1] = "_" << parts.last
-            puts "parts.inspect: #{parts.inspect}"
             partial = Mack::Paths.views(parts)
           end
           partial = "#{partial}.#{self.options[:format]}"
