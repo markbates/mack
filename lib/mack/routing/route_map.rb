@@ -201,7 +201,6 @@ module Mack
           verb = (url_or_request.params["_method"] || url_or_request.request_method.downcase).to_sym
         end
         path = path.dup
-        puts "Trying to match: #{path}"
         format = (File.extname(path).blank? ? '.html' : File.extname(path))
         format = format[1..format.length]
         routes = @_route_map[verb]
@@ -214,18 +213,15 @@ module Mack
           end
           if route.match?(path)
             ret_val = route.options_with_parameters(path)
-            puts "Match Found! '#{path}' matched: #{ret_val.inspect}"
             return ret_val
           end
         end
         @_default_routes.each do |route|
           if route.match?(path) && route.options[:method] == verb
             ret_val = route.options_with_parameters(path)
-            puts "Default Match Found!: '#{path}' matched: #{ret_val.inspect} #{route.regex_pattern}"
             return ret_val
           end
         end
-        puts "No Match Found! '#{path}"
         raise Mack::Errors::UndefinedRoute.new(path)
       end
       
@@ -296,35 +292,18 @@ module Mack
         
         Mack::Routes::Urls.create_method("#{n_route}_url") do |*options|
           options = *options
-          puts "!!! options.inspect: #{options.inspect}"
           options = {} if options.nil? || !options.is_a?(Hash)
-          # url_for_pattern(route.path, {:host => route.options[:host], :scheme => route.options[:scheme], :port => route.options[:port], :format => route.options[:format]}.merge(options))
           url_for_pattern(route.path, {:format => route.options[:format]}.merge(options))
         end
         
         Mack::Routes::Urls.create_method("#{n_route}_full_url") do |*options|
           options = *options
-          puts "!!! options.inspect: #{options.inspect}"
           options = {} if options.nil? || !options.is_a?(Hash)
           if @request
             options = {:host => @request.host, :scheme => @request.scheme, :port => @request.port}.merge(options)
           end
           self.send("#{n_route}_url", options)
-          # # url_for_pattern(route.path, {:host => route.options[:host], :scheme => route.options[:scheme], :port => route.options[:port], :format => route.options[:format]}.merge(options))
-          # url_for_pattern(route.path, {:format => route.options[:format]}.merge(options))
         end
-        
-        # url = %{
-        #   def #{n_route}_url(options = {})
-        #     url_for_pattern("#{route.path}", options)
-        #   end
-        #   
-        #   def #{n_route}_full_url(options = {})
-        #     u = #{n_route}_url(options)
-        #     "\#{@request.full_host}\#{u}"
-        #   end
-        # }
-        # Mack::Routes::Urls.class_eval(url)
       end
       
       def handle_options(opts, &block)
@@ -354,7 +333,6 @@ module Mack
         route = {}
         route[:name] = name.to_s.gsub(/^#{self.controller}/, '')
         route[:options] = {:controller => self.controller, :action => route[:name].to_sym, :method => :get}.merge(options)
-        # route[:path] = path.gsub(/^\/#{self.controller}/, '')
         paths = path.split('/')
         paths.insert(0, self.controller.to_s)
         route[:path] = paths.reject{|m| m.blank?}.uniq.join('/')
@@ -375,7 +353,6 @@ module Mack
         self.options = {:action => :index}.merge(options)
         self.embedded_parameters = []
         build_regex_pattern
-        # puts "regex pattern for '#{self.path}' is '#{self.regex_pattern}'"
       end
       
       def ==(other)
@@ -387,8 +364,6 @@ module Mack
           if self.options[:format]
             format = (File.extname(url).blank? ? '.html' : File.extname(url))
             format = format[1..format.length]
-            # puts "format: #{format}"
-            # puts "self.options[:format] = #{self.options[:format]}"
             return format.to_sym == self.options[:format]
           end
           return true

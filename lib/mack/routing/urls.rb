@@ -16,8 +16,6 @@ module Mack
       #   url_for_pattern("/blog/:id", {:id => 1, :n_id => 2})
       #     # => "/blog/1?n_id=2
       def url_for_pattern(url, options = {})
-        puts "url: #{url}"
-        puts "options: #{options.inspect}"
         u = url.dup
         u = "/" if url.blank?
         unused_params = []
@@ -74,7 +72,6 @@ module Mack
         port = options[:port] || 80
         return '' if host.nil?
         if @request
-          # puts "@request: #{@request.inspect}"
           scheme = @request.scheme if scheme.nil?
           port = @request.port if port.nil?
           host = @request.host if host.nil?
