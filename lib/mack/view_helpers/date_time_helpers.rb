@@ -3,18 +3,24 @@ module Mack
     module FormHelpers
       
       MONTHS = [["January", 1], ["February", 2], ["March", 3], ["April", 4], ["May", 5], ["June", 6], ["July", 7], ["August", 8], 
-                ["September", 9], ["October", 10], ["November", 11], ["December", 12]]
-      DAYS = []
-      1.upto(31) do |m| 
-        DAYS << [(m < 10 ? "0#{m}" : m), m]
+                ["September", 9], ["October", 10], ["November", 11], ["December", 12]] unless defined?(MONTHS)
+      unless defined?(DAYS)
+        DAYS = []
+        1.upto(31) do |m| 
+          DAYS << [(m < 10 ? "0#{m}" : m), m]
+        end
       end
-      HOURS = []
-      1.upto(24) do |h|
-        HOURS << [(h < 10 ? "0#{h}" : h), h]
+      unless defined?(HOURS)
+        HOURS = []
+        1.upto(24) do |h|
+          HOURS << [(h < 10 ? "0#{h}" : h), h]
+        end
       end
-      MINUTES = []
-      1.upto(59) do |m| 
-        MINUTES << [(m < 10 ? "0#{m}" : m), m]
+      unless defined?(MINUTES)
+        MINUTES = []
+        1.upto(59) do |m| 
+          MINUTES << [(m < 10 ? "0#{m}" : m), m]
+        end
       end
       
       # This will create a series of select boxes that compromise a time object. By default boxes will be

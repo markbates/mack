@@ -17,7 +17,18 @@ class UrlHelperTestSimpleObject
   
 end
 
-describe "URL Helpers" do
+describe Mack::Routes::Urls do
+  
+  describe 'url_for_pattern' do
+    
+    it 'should generate a url based on the options specified' do
+      Mack::Routes.build do |r|
+        r.shoot_me_now '/please/shot/me/now', :controller => :default, :action => :index, :format => :gun
+      end
+      shoot_me_now_url.should == '/please/shot/me/now.gun'
+    end
+    
+  end
   
   it "should handle url formatting" do
     tst_resources_index_url(:format => :xml).should == "/tst_resources.xml"

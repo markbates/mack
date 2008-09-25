@@ -24,7 +24,7 @@ Mack::Routes.build do |r|
     map.env '/env', :action => :env
     map.kill_kenny_no_meth "/tst_another/kill_kenny", :action => :kill_kenny
     map.kill_kenny_bad "/tst_another/kill_kenny_bad", :action => :kill_kenny_bad
-    map.upload_file "/tst_another/do_upload", :action => :do_upload
+    map.upload_file "/tst_another/do_upload", :action => :do_upload, :method => :post
     map.upload_multiple "/tst_another/upload_multiple", :action => :upload_multiple
     map.xss "/tst_another/xss", :action => :xss
     map.xss2 "/tst/another/xss2", :action => :xss2

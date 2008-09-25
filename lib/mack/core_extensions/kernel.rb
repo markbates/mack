@@ -86,7 +86,6 @@ module Kernel
           if File.exists?(spec_file)
             spec = YAML.load(File.read(spec_file))
           else
-            # puts "#{spec_file} cannot be found"
             spec = nil
           end
           
@@ -96,7 +95,6 @@ module Kernel
             $:.insert(0, File.expand_path(file))
           end
 
-          # puts "Loading frozen gem: #{gem_name} from #{file}"
           found_local_gem = true
           break
         end

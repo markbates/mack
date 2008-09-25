@@ -56,7 +56,11 @@ module Mack
     class UndefinedRoute < StandardError
       # Takes a request object.
       def initialize(req)
-        super("#{req.path_info}; #{req.request_method}")
+        if req.is_a?(Mack::Request)
+          super("#{req.path_info}; #{req.request_method}")
+        else
+          super(req)
+        end
       end
     end # UndefinedRoute
     

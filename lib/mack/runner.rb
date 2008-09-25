@@ -19,7 +19,7 @@ module Mack
       begin
         setup(env)
         begin
-          route = Mack::Routes::RouteMap.instance.get_route_from_request(self.request)
+          route = Mack::Routes.retrieve(self.request)
           if route[:redirect_to]
             # because the route is specified to be a redirect, let's do that:
             redirect_to(route)
@@ -32,7 +32,7 @@ module Mack
         # rescue Mack::Errors::ResourceNotFound, Mack::Errors::UndefinedRoute => e
         #   return try_to_find_resource(env, e)
         rescue Exception => e
-          route = Mack::Routes::RouteMap.instance.get_route_from_error(e.class)
+          route = Mack::Routes.retrieve_from_error(e.class)
           self.request.all_params[:original_controller] = @original_controller
           self.request.all_params[:original_action] = @original_action
           unless route.nil?
@@ -54,23 +54,30 @@ module Mack
     
     #private
     def run_controller(route, e = nil)
-      # let's handle a normal request:
-      begin
-        cont = "#{route[:controller].to_s.camelcase}Controller".constantize
-      rescue NameError => e
-        raise Mack::Errors::ResourceNotFound.new(self.request.path_info)
-      end
-      self.request.all_params[:controller] = route[:controller]
-      self.request.all_params[:action] = route[:action]
-      self.request.instance_variable_set("@params_controller", nil)
-      self.request.instance_variable_set("@params_action", nil)
+      runner_block = route[:runner_block]
+      route - :runner_block
       
-      c = cont.new
-      c.configure_controller(self.request, self.response, self.cookies)
-      c.caught_exception = e unless e.nil?
+      self.request.params = self.request.all_params.merge(route)
+      
+      catch(:finished) do
+        if runner_block
+          runner_block.call(self.request, self.response, self.cookies)
+        end
+      
+        # let's handle a normal request:
+        begin
+          cont = "#{route[:controller].to_s.camelcase}Controller".constantize
+        rescue NameError => e
+          raise Mack::Errors::ResourceNotFound.new(self.request.path_info)
+        end
+      
+        c = cont.new
+        c.configure_controller(self.request, self.response, self.cookies)
+        c.caught_exception = e unless e.nil?
 
-      self.response.controller = c
-      self.response.write(c.run)
+        self.response.controller = c
+        self.response.write(c.run)
+      end
     end
     
     # Setup the request, response, cookies, session, etc...

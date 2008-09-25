@@ -20,6 +20,8 @@ module Mack
         u = "/" if url.blank?
         unused_params = []
         format = nil
+        host_options = {:host => options[:host], :port => options[:port], :scheme => options[:scheme]}
+        options - [:host, :port, :scheme]
         options.each_pair do |k, v|
           unless k.to_sym == :format
             vp = Rack::Utils.escape(v.to_param)
@@ -36,7 +38,8 @@ module Mack
         unless unused_params.empty?
           u << "?" << unused_params.sort.join("&")
         end
-        u
+        File.join(build_full_host_from_options(host_options), u)
+        # u
       end
     
       # Builds a simple HTML page to be rendered when a redirect occurs.
@@ -56,6 +59,29 @@ module Mack
             </body>
           </html>
         }
+      end
+      
+      def self.create_method(sym, &block)
+        define_method(sym, &block)
+      end
+      
+      private
+      def build_full_host_from_options(options = {})
+        scheme = options[:scheme] || 'http'
+        host = options[:host]
+        port = options[:port] || 80
+        return '' if host.nil?
+        if @request
+          scheme = @request.scheme if scheme.nil?
+          port = @request.port if port.nil?
+          host = @request.host if host.nil?
+        end
+        port = case port.to_i
+        when 80, 443
+        else
+          ":#{port}"
+        end
+        return "#{scheme.downcase}://#{host.downcase}#{port}"
       end
       
     end # Urls

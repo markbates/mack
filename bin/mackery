@@ -18,5 +18,4 @@ require File.join(File.dirname(__FILE__), "env_handler")
 
 cmd = "mackery-#{@app} #{ARGV.join(" ")}"
 cmd << " _#{@mack_gem_version}_" if @mack_gem_version
-# puts cmd
 system cmd

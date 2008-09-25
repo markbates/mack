@@ -35,7 +35,6 @@ if handler == "thin"
     thin_opts << "start"
   end
   thin_opts << ARGV
-  # puts "thin_opts: #{thin_opts.flatten.inspect}"
   Thin::Runner.new(thin_opts.flatten.reject{|a| a.match(/^_[\d\.]+_$/)}).run!
 else
   port = 3000

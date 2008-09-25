@@ -4,11 +4,21 @@ module Mack
     
     class Parameters < Hash # :nodoc:
       alias_method :old_hash, :[]
+      alias_method :old_store, :store
       def [](key)
         data = old_hash(key.to_sym) || old_hash(key.to_s)
         data = data.to_s if data.is_a?(Symbol)
         return data
       end
+      
+      def []=(key, value)
+        old_store(key.to_sym, value)
+      end
+      
+      # def store(key, value)
+      #   self[key.to_sym] = value
+      #   # old_store(key.to_sym, value)
+      # end
       
       def to_s
         s = self.inspect
@@ -83,6 +93,11 @@ module Mack
     #   parameters: {:controller => 'users', :action => 'show', :id => 1, :foo => "bar"}
     def params
       @mack_params
+    end
+    
+    def params=(p) # :nodoc:
+      @mack_params = Mack::Request::Parameters.new
+      parse_params(p)
     end
     
     alias_method :all_params, :params
