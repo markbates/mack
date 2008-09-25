@@ -1,3 +1,4 @@
+* [#170] Regex support in routes
 * [#169] Proc support for Routes
 * [#168] Fixed ERB errors not being reported correctly.
 * [#167] Rake task to convert app config yamls to configatron
