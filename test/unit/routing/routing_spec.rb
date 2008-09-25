@@ -271,7 +271,26 @@ describe Mack::Routes do
         Mack::Routes.retrieve('/a/me/you/z').should == {:controller => :books, :action => :peeps, :method => :get, :authors => ['me', 'you'], :format => 'html'}
       end
       
-      it 'should run a block at a runtime'
+      it 'should run a block at a runtime and return if :finished is thrown' do
+        Mack::Routes.build do |r|
+          r.connect '/i/am/a/runner/block/that/finishes' do |request, response, cookies|
+            response.write('Hello')
+            throw :finished
+          end
+        end
+        get '/i/am/a/runner/block/that/finishes'
+        response.body.should == 'Hello'
+      end
+      
+      it 'should run a block at runtime' do
+        Mack::Routes.build do |r|
+          r.connect '/i/am/a/runner/block/that/doesnt/finish', :controller => :tst_another, :action => :fun_runner_block do |request, response, cookies|
+            request.params[:fun] = 'Hell Yeah!'
+          end
+        end
+        get '/i/am/a/runner/block/that/doesnt/finish'
+        response.body.should == 'Hell Yeah!'
+      end
       
       it 'should raise a Mack::Errors::UndefinedRoute if there is not route defined' do
         lambda{Mack::Routes.retrieve('/asdfd/assd/af/asdf/asdf/asfd/asd/asdfa/sasf/dasdf/ad')}.should raise_error(Mack::Errors::UndefinedRoute)
