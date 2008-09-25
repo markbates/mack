@@ -17,7 +17,8 @@ require 'erb'
 require 'genosaurus'
 require 'net/http'
 require 'pp'
-require 'test/unit'
+require 'test/unit' 
+require 'thread'
 begin
   # just in case people don't have it installed.
   require 'ruby-debug'

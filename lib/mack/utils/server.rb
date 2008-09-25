@@ -26,7 +26,7 @@ module Mack
         app = Rack::Recursive.new(app)
         
         # This will reload any edited classes if the cache_classes config setting is set to true.
-        app = Rack::Reloader.new(app, 1) unless configatron.mack.cache_classes
+        app = Mack::Reloader.new(app) unless configatron.mack.cache_classes
         app
       end
 
