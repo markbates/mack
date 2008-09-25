@@ -3,6 +3,7 @@
 * [#167] Rake task to convert app config yamls to configatron
 * [#164] Response helper for 'attachments'
 * [#152] INCOMPATIBILITY NOTICE: Removed deprecated support for delivered_emails
+* [#138] Added support for 'host' & 'scheme' parameters in routes
 * [#119] Freeze gems
 * [#106] INCOMPATIBILITY NOTICE: Removed deprecated support for droute_url
 * [#93] INCOMPATIBILITY NOTICE: Removed deprecated support for 'top' level ApplicationHelper
