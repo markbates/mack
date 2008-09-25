@@ -121,6 +121,7 @@ describe Mack::Routes do
         urls.zoos_create_url.should == '/zoos'
         urls.zoos_foo_url.should == '/zoos/foo'
         urls.zoos_hello_url(:id => 1).should == '/zoos/hello/1'
+        Mack::Routes.retrieve('/zoos/hello/1.xml', :put).should == {:controller => :zoos, :action => :hello, :method => :put, :format => 'xml', :id => '1'}
         Mack::Routes.retrieve('/zoos/foo').should == {:controller => :zoos, :action => :foo, :method => :get, :format => 'html'}
         Mack::Routes.retrieve('/zoos/1').should == {:controller => :zoos, :action => :show, :id => '1', :method => :get, :format => 'html'}
         Mack::Routes.retrieve('/zoos/1', :delete).should == {:controller => :zoos, :action => :delete, :id => '1', :method => :delete, :format => 'html'}
