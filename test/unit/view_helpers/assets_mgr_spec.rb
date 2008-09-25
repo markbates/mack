@@ -11,7 +11,6 @@ describe Mack::AssetsManager do
   
   describe "javascript" do
     before(:all) do
-      assets.reset!
       assets.test do |a|
         a.add_js ['a', 'b']
         a.add_js "abc"
@@ -51,7 +50,6 @@ describe Mack::AssetsManager do
   
   describe "stylesheets" do
     before(:each) do 
-      assets.reset!
       assets.test do |a|
         a.add_css ['a', 'b']
         a.add_css "abc"
@@ -60,6 +58,10 @@ describe Mack::AssetsManager do
       assets.foo do |a|
         a.add_css "abc"
       end
+    end
+    
+    it "should have scaffold.css in the default group" do
+      assets.stylesheets('defaults').include?('scaffold.css').should == true
     end
     
     it "should accept array" do

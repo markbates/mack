@@ -124,7 +124,8 @@ module Mack
       #
       def javascript(files)
         files = [files].flatten
-                
+        files = resolve_bundle('javascripts', files)                
+        
         link = ""
         files.each do |name|
           file_name = !name.to_s.end_with?(".js") ? "#{name}.js" : "#{name}"
@@ -148,6 +149,7 @@ module Mack
       #
       def stylesheet(files, options = {})
         files = [files].flatten
+        files = resolve_bundle('stylesheets', files)
         options = {:media => 'screen', :rel => 'stylesheet', :type => 'text/css'}.merge(options)
         
         link = ""
@@ -161,6 +163,20 @@ module Mack
       end
       
       private
+      
+      def resolve_bundle(asset_type, sources)
+        groups = assets.groups_by_asset_type(asset_type)
+        groups.each do |group|
+          if sources.include?(group)
+            sources = sources[0..(sources.index(group))] +
+              assets.send(asset_type, group) +
+              sources[(sources.index(group) + 1)..sources.length]
+            sources.delete(group)
+          end
+        end
+        return sources
+      end
+      
       def get_resource_root(resource)
         path = ""
         path = "#{configatron.mack.distributed.site_domain}" unless configatron.mack.distributed.site_domain.nil?

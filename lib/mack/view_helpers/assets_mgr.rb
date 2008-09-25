@@ -18,15 +18,33 @@ module Mack
       @stylesheets = @group_hash[sym][:stylesheets]
       yield(self) if block_given?
     end
+    
+    def groups
+      return @group_hash.keys
+    end
+    
+    def groups_by_asset_type(type)
+      arr = []
+      groups.each do |group|
+        arr << group if @group_hash[group.to_sym] and @group_hash[group.to_sym][type.to_sym]
+      end
+      return arr
+    end
+    
+    def content_types
+      return [:javascripts, :stylesheets]
+    end
   
     def javascripts(group)
+      return nil if !@group_hash.has_key?(group.to_sym)
       return @group_hash[group.to_sym][:javascripts]
     end
   
     def stylesheets(group)
+      return nil if !@group_hash.has_key?(group.to_sym)
       return @group_hash[group.to_sym][:stylesheets]
     end
-  
+      
     def add_js(data)
       return add_data(data, 'javascripts', '.js')
     end
