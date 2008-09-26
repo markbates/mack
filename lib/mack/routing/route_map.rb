@@ -194,10 +194,12 @@ module Mack
         path = url_or_request
         host = nil
         scheme = nil
+        port = nil
         if url_or_request.is_a?(Mack::Request)
           path = url_or_request.path_info
           host = url_or_request.host
           scheme = url_or_request.scheme
+          port = url_or_request.port
           verb = (url_or_request.params["_method"] || url_or_request.request_method.downcase).to_sym
         end
         path = path.dup
@@ -210,6 +212,9 @@ module Mack
           end
           if route.options[:scheme]
             next unless route.options[:scheme].downcase == scheme
+          end
+          if route.options[:port]
+            next unless route.options[:port].to_i == port.to_i
           end
           if route.match?(path)
             ret_val = route.options_with_parameters(path)

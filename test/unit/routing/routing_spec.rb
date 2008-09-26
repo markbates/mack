@@ -253,12 +253,22 @@ describe Mack::Routes do
       
       it 'should match the scheme if specified' do
         Mack::Routes.build do |r|
-          r.dog '/routing/test/animals/cat', :controller => :animals, :action => :cat, :scheme => 'https'
+          r.cat '/routing/test/animals/cat', :controller => :animals, :action => :cat, :scheme => 'https'
         end
         req = Mack::Request.new(Rack::MockRequest.env_for("/routing/test/animals/cat"))
         lambda{Mack::Routes.retrieve(req)}.should raise_error(Mack::Errors::UndefinedRoute)
         req = Mack::Request.new(Rack::MockRequest.env_for("https://www.mackframework.com/routing/test/animals/cat"))
         Mack::Routes.retrieve(req).should == {:controller => :animals, :action => :cat, :scheme => 'https', :method => :get, :format => 'html'}
+      end
+      
+      it 'should match the port if specified' do
+        Mack::Routes.build do |r|
+          r.hamster '/routing/test/animals/hamster', :controller => :animals, :action => :hamster, :port => 8080
+        end
+        req = Mack::Request.new(Rack::MockRequest.env_for("/routing/test/animals/hamster"))
+        lambda{Mack::Routes.retrieve(req)}.should raise_error(Mack::Errors::UndefinedRoute)
+        req = Mack::Request.new(Rack::MockRequest.env_for("http://www.mackframework.com:8080/routing/test/animals/hamster"))
+        Mack::Routes.retrieve(req).should == {:controller => :animals, :action => :hamster, :port => 8080, :method => :get, :format => 'html'}
       end
       
       it 'should return proper wildcard parameters on a request' do
