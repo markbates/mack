@@ -56,7 +56,7 @@ module Mack
         end
       end
       
-      alias_method :s, :sanitize_html
+      alias_instance_method :sanitize_html, :s
       
     end # StringHelpers
   end # ViewHelpers

@@ -43,7 +43,8 @@ module Kernel
   
   unless Module.const_defined?('GEM_MOD')
     Module.const_set('GEM_MOD', 1)
-    alias_method :old_gem, :gem
+    
+    alias_instance_method :gem, :old_gem
     
     def gem(gem_name, *version_requirements)
       vendor_path = File.join(Mack.root, 'vendor')
