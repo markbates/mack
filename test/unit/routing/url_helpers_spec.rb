@@ -50,6 +50,13 @@ describe Mack::Routes::Urls do
   end
   
   it 'should generate full urls with named routes' do
+    yahoo_url.should == 'http://www.yahoo.com/api?key=12345'
+    yahoo_url(:key => 666).should == 'http://www.yahoo.com/api?key=666'
+    beatles_url(:action => :john).should == '/beatles/john'
+    host_me_url(:scheme => :http).should == 'http://www.mackframework.com/host/me'
+    port_me_url(:scheme => :http, :host => 'example.org').should == 'http://example.org:8000/port/me'
+    scheme_me_url(:host => 'example.org').should == 'https://example.org/scheme/me'
+    host_port_me_url(:scheme => :https).should == 'https://www.mackframework.com:8080/host/port/me'
     @request = Mack::Request.new(Rack::MockRequest.env_for("http://example.org"))
     yahoo_url.should == 'http://www.yahoo.com/api?key=12345'
     yahoo_url(:key => 666).should == 'http://www.yahoo.com/api?key=666'
