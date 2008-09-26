@@ -47,6 +47,25 @@ module Mack
         a(link_text, options)
       end
       
+      # If the current page matches the link requested, then it will only return the text.
+      # If the current page does not match the link requested then link_to is call.
+      def link_unless_current(text, link = text, options = {})
+        link_to_unless((link == request.fullpath), text, link, options)
+      end
+      
+      # Only creates a link if the expression is true, otherwise, it passes back the text.
+      def link_to_if(expr, text, link = text, options = {})
+        if expr
+          return link_to(text, link, options)
+        end
+        return text
+      end
+      
+      # Only creates a link unless the expression is true, otherwise, it passes back the text.
+      def link_to_unless(expr, text, link = text, options = {})
+        link_to_if(!expr, text, link, options)
+      end
+      
       # Used in views to create href links. It takes link_text, url, and a Hash that gets added
       # to the href as options.
       # 

@@ -5,6 +5,7 @@
 * [#168] Fixed ERB errors not being reported correctly.
 * [#167] Rake task to convert app config yamls to configatron
 * [#164] Response helper for 'attachments'
+* [#159] Added link_unless_current and link_if helpers
 * [#156] Added 'Wildcard' Routes support
 * [#152] INCOMPATIBILITY NOTICE: Removed deprecated support for delivered_emails
 * [#138] Added support for 'host' & 'scheme' parameters in routes

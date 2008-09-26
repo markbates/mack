@@ -69,6 +69,7 @@ describe Mack::ViewHelpers::LinkHelpers do
   end
   
   describe "link_to" do
+    
     it "should return content when link_to(...) is called" do
       a(my_url).should_not be_nil
       a(my_url).should_not be_empty
@@ -82,6 +83,39 @@ describe Mack::ViewHelpers::LinkHelpers do
       link_to("Mack", my_url, :method => :update, :confirm => "Are you sure?").should ==  
             a("Mack", :href => my_url, :method => :update, :confirm => "Are you sure?")
     end
+    
+  end
+  
+  describe 'link_unless_current' do
+    
+    it 'should not create a link if the link == the current page' do
+      @request = Mack::Request.new(Rack::MockRequest.env_for("http://example.org/homepage"))
+      link_unless_current('Hello World', '/homepage').should == 'Hello World'
+    end
+    
+    it 'should create a link if the link is not the current page' do
+      @request = Mack::Request.new(Rack::MockRequest.env_for("http://example.org/"))
+      link_unless_current('Hello World', '/homepage').should == '<a href="/homepage">Hello World</a>'
+    end
+    
+  end
+  
+  describe 'link_to_if' do
+    
+    it 'should only create a link if the statement is true' do
+      link_to_if((1 == 1), 'hello', '/').should == '<a href="/">hello</a>'
+      link_to_if((1 == 2), 'hello', '/').should == 'hello'
+    end
+    
+  end
+  
+  describe 'link_to_unless' do
+    
+    it 'should only create a link if the statement is false' do
+      link_to_unless((1 == 2), 'hello', '/').should == '<a href="/">hello</a>'
+      link_to_unless((1 == 1), 'hello', '/').should == 'hello'
+    end
+    
   end
   
   describe "link_image_to" do
