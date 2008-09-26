@@ -52,7 +52,7 @@ module Mack
       # Builds a simple HTML page to be rendered when a redirect occurs.
       # Hopefully no one sees the HTML, but in case the browser won't do the
       # redirect it's nice to let people know what's happening.
-      def redirect_html(original_path, new_path, status)
+      def redirect_html(original_path, new_path, status) # :nodoc:
         %{
           <!DOCTYPE HTML PUBLIC 
               "-//IETF//DTD HTML 2.0//EN"> 
@@ -68,7 +68,7 @@ module Mack
         }
       end
       
-      def self.create_method(sym, &block)
+      def self.create_method(sym, &block) # :nodoc:
         define_method(sym, &block)
       end
       
