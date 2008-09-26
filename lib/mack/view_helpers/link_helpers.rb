@@ -122,7 +122,7 @@ module Mack
       #
       # If distributed_site_domain is specified, it will be used.
       #
-      def javascript(files)
+      def javascript(files, options = {})
         files = [files].flatten
         files = resolve_bundle('javascripts', files)                
         
