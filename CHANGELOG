@@ -1,3 +1,4 @@
+* [#175] Generating urls should use host or scheme if defined
 * [#171] Ability to extend resources in routes
 * [#170] Regex support in routes
 * [#169] Proc support for Routes

@@ -74,15 +74,16 @@ module Mack
       
       private
       def build_full_host_from_options(options = {})
-        scheme = options[:scheme] || 'http'
+        scheme = options[:scheme]
         host = options[:host]
-        port = options[:port] || 80
-        return '' if host.nil?
+        port = options[:port]
+        return '' if host.blank? && scheme.blank? && port.nil?
         if @request
           scheme = @request.scheme if scheme.nil?
           port = @request.port if port.nil?
           host = @request.host if host.nil?
         end
+        port = 80 if port.nil?
         port = case port.to_i
         when 80, 443
         else

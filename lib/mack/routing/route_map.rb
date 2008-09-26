@@ -293,7 +293,7 @@ module Mack
         Mack::Routes::Urls.create_method("#{n_route}_url") do |*options|
           options = *options
           options = {} if options.nil? || !options.is_a?(Hash)
-          url_for_pattern(route.path, {:format => route.options[:format]}.merge(options))
+          url_for_pattern(route.path, (route.options.reject{|k,v| k.to_sym == :action || k.to_sym == :controller || k.to_sym == :method}).merge(options))
         end
         
         Mack::Routes::Urls.create_method("#{n_route}_full_url") do |*options|

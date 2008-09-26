@@ -19,15 +19,45 @@ end
 
 describe Mack::Routes::Urls do
   
+  before(:all) do
+    Mack::Routes.build do |r|
+      r.shoot_me_now '/please/shot/me/now', :controller => :default, :action => :index, :format => :gun
+      r.host_me '/host/me', :host => 'www.mackframework.com'
+      r.port_me '/port/me', :port => 8000
+      r.scheme_me '/scheme/me', :scheme => 'https'
+      r.host_port_me '/host/port/me', :host => 'www.mackframework.com', :port => 8080
+      r.yahoo '/api', :host => 'www.yahoo.com', :scheme => 'http', :key => 12345
+      r.beatles '/beatles/:action', :controller => :beatles
+    end
+  end
+  
   describe 'url_for_pattern' do
     
     it 'should generate a url based on the options specified' do
-      Mack::Routes.build do |r|
-        r.shoot_me_now '/please/shot/me/now', :controller => :default, :action => :index, :format => :gun
-      end
       shoot_me_now_url.should == '/please/shot/me/now.gun'
     end
     
+    it 'should build a full url if scheme and/or host is supplied' do
+      @request = Mack::Request.new(Rack::MockRequest.env_for("http://example.org"))
+      url_for_pattern("/:controller/:action", :controller => :users, :action => :show, :scheme => 'https').should == 'https://example.org/users/show'
+      url_for_pattern("/:controller/:action", :controller => :users, :action => :show, :host => 'myexample.org').should == 'http://myexample.org/users/show'
+      url_for_pattern("/:controller/:action", :controller => :users, :action => :show, :scheme => 'https', :host => 'myexample.org').should == 'https://myexample.org/users/show'
+      url_for_pattern("/:controller/:action", :controller => :users, :action => :show, :scheme => 'https', :host => 'myexample.org', :port => 8080).should == 'https://myexample.org:8080/users/show'
+      url_for_pattern("/:controller/:action", :controller => :users, :action => :show, :port => 8080).should == 'http://example.org:8080/users/show'
+      url_for_pattern("/:controller/:action", :controller => :users, :action => :show).should == '/users/show'
+    end
+    
+  end
+  
+  it 'should generate full urls with named routes' do
+    @request = Mack::Request.new(Rack::MockRequest.env_for("http://example.org"))
+    yahoo_url.should == 'http://www.yahoo.com/api?key=12345'
+    yahoo_url(:key => 666).should == 'http://www.yahoo.com/api?key=666'
+    beatles_url(:action => :john).should == '/beatles/john'
+    host_me_url.should == 'http://www.mackframework.com/host/me'
+    port_me_url.should == 'http://example.org:8000/port/me'
+    scheme_me_url.should == 'https://example.org/scheme/me'
+    host_port_me_url.should == 'http://www.mackframework.com:8080/host/port/me'
   end
   
   it "should handle url formatting" do
