@@ -184,11 +184,11 @@ module Mack
       private
       
       def resolve_bundle(asset_type, sources)
-        groups = assets.groups_by_asset_type(asset_type)
+        groups = assets_mgr.groups_by_asset_type(asset_type)
         groups.each do |group|
           if sources.include?(group)
             sources = sources[0..(sources.index(group))] +
-              assets.send(asset_type, group) +
+              assets_mgr.send(asset_type, group) +
               sources[(sources.index(group) + 1)..sources.length]
             sources.delete(group)
           end

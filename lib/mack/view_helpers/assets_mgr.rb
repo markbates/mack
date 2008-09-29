@@ -71,7 +71,7 @@ module Mack
 end
 
 module Kernel
-  def assets
+  def assets_mgr
     return Mack::AssetsManager.instance
   end
 end

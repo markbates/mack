@@ -47,7 +47,7 @@ boot_load(:app_files, :default_controller) do
   end
   
   # Add default assets
-  assets.defaults do |a| 
+  assets_mgr.defaults do |a| 
     a.add_css "scaffold"
   end
 end
