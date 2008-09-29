@@ -1,5 +1,6 @@
 * [#168] Fixed ERB errors not being reported correctly.
 * [#167] Rake task to convert app config yamls to configatron
+* [#165] Asset Packager
 * [#119] Freeze gems
 * [#23] Removed support for application_configuration and added support for configatron
 * gem: configatron 2.1.1
