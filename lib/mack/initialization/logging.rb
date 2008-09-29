@@ -38,26 +38,21 @@ boot_load(:logging, :configuration) do
     module Log4r # :nodoc:
       class IOOutputter # :nodoc:
 
-        # let's not do this more than once. :)
-        unless Log4r::IOOutputter.private_instance_methods.include?("old_write")
+        alias_instance_method :write
 
-          alias_method :old_write, :write
-
-          def write(data)
-            case data
-            when /^(DEBUG:|INFO:|WARN:|ERROR:|FATAL:)\s\[.*\]\s(SELECT|INSERT|UPDATE|DELETE|CREATE|DROP)/
-              old_write(Mack::Utils::Ansi::Color.wrap(configatron.log.colors.db, data))
+        def write(data)
+          case data
+          when /^(DEBUG:|INFO:|WARN:|ERROR:|FATAL:)\s\[.*\]\s(SELECT|INSERT|UPDATE|DELETE|CREATE|DROP)/
+            _original_write(Mack::Utils::Ansi::Color.wrap(configatron.log.colors.db, data))
+          else
+            level = data.match(/^\w+/).to_s
+            color = configatron.log.colors.retrieve("#{level.downcase}", nil)
+            if color
+              _original_write(Mack::Utils::Ansi::Color.wrap(color, data))
             else
-              level = data.match(/^\w+/).to_s
-              color = configatron.log.colors.retrieve("#{level.downcase}", nil)
-              if color
-                old_write(Mack::Utils::Ansi::Color.wrap(color, data))
-              else
-                old_write(data)
-              end
+              _original_write(data)
             end
           end
-
         end
 
       end # IOOutputter

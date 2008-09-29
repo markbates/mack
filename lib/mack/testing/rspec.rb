@@ -7,7 +7,7 @@ module Spec # :nodoc:
       include Mack::Routes::Urls
       include Mack::Testing::Helpers
     
-      alias_method :mack_run_with_description_capturing, :run_with_description_capturing
+      alias_instance_method :run_with_description_capturing, :mack_run_with_description_capturing
 
       def run_with_description_capturing
         begin

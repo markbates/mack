@@ -3,11 +3,16 @@ module Mack
   class Request < Rack::Request
     
     class Parameters < Hash # :nodoc:
-      alias_method :old_hash, :[]
+      alias_instance_method :[], :old_hash
+      alias_instance_method :store
       def [](key)
         data = old_hash(key.to_sym) || old_hash(key.to_s)
         data = data.to_s if data.is_a?(Symbol)
         return data
+      end
+      
+      def []=(key, value)
+        _original_store(key.to_sym, value)
       end
       
       def to_s
@@ -27,7 +32,7 @@ module Mack
       parse_params(rack_params)
     end
     
-    alias_method :rack_params, :params # :nodoc:
+    alias_instance_method :params, :rack_params # :nodoc:
         
     # Merges another Hash with the parameters for this request.
     def merge_params(opts = {})
@@ -85,7 +90,12 @@ module Mack
       @mack_params
     end
     
-    alias_method :all_params, :params
+    def params=(p) # :nodoc:
+      @mack_params = Mack::Request::Parameters.new
+      parse_params(p)
+    end
+    
+    alias_instance_method :params, :all_params
     
     # Returns a Mack::Request::UploadedFile object.
     def file(key)

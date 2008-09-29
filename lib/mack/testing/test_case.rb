@@ -8,7 +8,7 @@ module Test # :nodoc:
       
       # Let's alias the run method in the class above us so we can create a new one here
       # but still reference it.
-      alias_method :super_run, :run # :nodoc:
+      alias_instance_method :run, :super_run # :nodoc:
 
       # We need to wrap the run method so we can do things like
       # run a cleanup method if it exists

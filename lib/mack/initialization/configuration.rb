@@ -23,6 +23,8 @@ boot_load(:configuration) do
       unless const_defined?("LOADED")
         configatron.mack.render_url_timeout = 5
         configatron.mack.cache_classes = true
+        configatron.mack.reload_classes = 1
+        configatron.mack.deep_class_reload = false
         configatron.mack.use_lint = true
         configatron.mack.show_exceptions = true
         configatron.mack.use_sessions = true

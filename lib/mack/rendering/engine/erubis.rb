@@ -13,17 +13,23 @@ module Mack
             file_name = io.path
           end
           
-          eruby = ::Erubis::Eruby.new(io_src)
+          eruby = nil
+          
+          # src = Mack::Rendering::Engine::Erubis::TemplateCache.instance.cache[io_src]
+          # if src.nil?
+          #   eruby = ::Erubis::Eruby.new(io_src)
+          #   src = eruby.src
+          #   Mack::Rendering::Engine::Erubis::TemplateCache.instance.cache[io_src] = src
+          # else
+          #   eruby = ::Erubis::Eruby.new
+          #   eruby.src = src
+          # end
+
+            eruby = ::Erubis::Eruby.new(io_src)
+            # src = eruby.src
+
           eruby.filename = file_name
           eruby.result(binding)
-          
-          # src = Mack::Rendering::Engine::Erubis::TemplateCache.instance.cache[io]
-          # if src.nil?
-          #   src = ::Erubis::Eruby.new(io).src
-          #   Mack::Rendering::Engine::Erubis::TemplateCache.instance.cache[io] = src
-          # end
-          
-          # eval(src, binding)
         end
         
         def extension

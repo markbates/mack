@@ -21,7 +21,7 @@ self.send(:include, Mack::Routes::Urls)
 # without having to exit the console and start again.
 def reload!
   ivar_cache("_rack_reloader") do
-    Rack::Reloader.new(nil, 1)
+    Mack::Reloader.new(nil)
   end.reload!
 end
 

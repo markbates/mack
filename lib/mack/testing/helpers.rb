@@ -12,6 +12,13 @@ if Mack.env == "test"
       end # Session
     end # RunnerHelpers
   end # Mack
+  module Rack # :nodoc:
+    class MockRequest # :nodoc:
+      def method_missing(sym, *args)
+        @app.instance_variable_get("@app").instance_variable_get("@request").send(sym, *args)
+      end
+    end
+  end
 end
 #++
 

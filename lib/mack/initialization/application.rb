@@ -29,7 +29,6 @@ boot_load(:app_files, :default_controller) do
   # require 'app' files:
   Mack.logger.debug "Initializing 'app' classes..." unless configatron.log.disable_initialization_logging
   Dir.glob(Mack::Paths.app("**/*.rb")).each do |d|
-    # puts "d: #{d}"
     begin
       require d
     rescue NameError => e

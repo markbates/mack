@@ -2,6 +2,10 @@ class TstAnotherController
   include Mack::Controller
   include Mack::ViewHelpers::ApplicationHelper
   
+  def fun_runner_block
+    render(:text, params[:fun], :layout => false)
+  end
+  
   def foo
     render(:text, "tst_another_controller: foo: id: '#{params[:id]}' pickles: '#{params[:pickles]}'")
   end
