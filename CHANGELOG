@@ -10,12 +10,14 @@
 * [#164] Response helper for 'attachments'
 * [#159] Added link_unless_current and link_if helpers
 * [#156] Added 'Wildcard' Routes support
-* [#152] INCOMPATIBILITY NOTICE: Removed deprecated support for delivered_emails
+* [#152] INCOMPATIBILITY NOTICE: Removed deprecated support for delivered_emails use delivered_notifiers instead.
 * [#138] Added support for 'host' & 'scheme' parameters in routes
+* [#135] Replaced log4r with logging gem.
 * [#119] Freeze gems
 * [#106] INCOMPATIBILITY NOTICE: Removed deprecated support for droute_url
 * [#93] INCOMPATIBILITY NOTICE: Removed deprecated support for 'top' level ApplicationHelper
 * [#23] INCOMPATIBILITY NOTICE: Removed support for application_configuration and added support for configatron
+* gem: logging 0.9.4
 * gem: thin 1.0.0
 * gem: rspec 1.1.5
 * gem: configatron 2.1.2

@@ -1,6 +1,30 @@
 boot_load(:logging, :configuration) do
-  require 'log4r'
+  
+  require 'logging'
   require File.join(File.dirname(__FILE__), "..", "utils", "ansi", "ansi_color")
+  require File.join(File.dirname(__FILE__), 'logging', 'filter')
+  require File.join(File.dirname(__FILE__), 'logging', 'basic_layout')
+  require File.join(File.dirname(__FILE__), 'logging', 'color_layout')
+  
+  module Logging # :nodoc:
+    
+    def self.level_name_from_num(num)
+      h = ivar_cache do
+        Logging::LEVELS.invert
+      end
+      h[num]
+    end
+    
+    class LogEvent # :nodoc:
+      
+      def level_name
+        ::Logging.level_name_from_num(self.level)
+      end
+      
+    end
+    
+  end # Logging
+  
   module Mack
   
     def self.logger
@@ -17,92 +41,18 @@ boot_load(:logging, :configuration) do
         FileUtils.mkdir_p(log_directory)
       rescue Exception => e
       end
+      
+      Mack.logger = ::Logging::RootLogger.new
+      Mack.logger.add_appenders(::Logging::Appenders::File.new(Mack.env, :filename => File.join(log_directory, "#{Mack.env}.log"), :layout => Mack::Logging::BasicLayout.new))
+      Mack.logger.add_appenders(::Logging::Appenders::Stdout.new(:layout => Mack::Logging::ColorLayout.new)) if Mack.env?(:development)
+      Mack.logger.level = configatron.log.retrieve(:level, :info)
 
-      Mack.logger = Log4r::Logger.new('')
-      Mack.logger.level =  Module.instance_eval("Log4r::#{(configatron.log.retrieve(:level, :info)).to_s.upcase}")
-
-      format = Log4r::PatternFormatter.new(:pattern => "%l:\t[%d]\t%M")
-
-      if Mack.env == "development"
-        # console:
-        Mack.logger.add(Log4r::StdoutOutputter.new('console', :formatter => format))
-      end
-
-      # file:
-      Mack.logger.add(Log4r::FileOutputter.new('fileOutputter', :filename => File.join(log_directory, "#{Mack.env}.log"), :trunc => false, :formatter => format))    
     end
   
   end
 
   unless Mack.logger
-    module Log4r # :nodoc:
-      class IOOutputter # :nodoc:
-
-        alias_instance_method :write
-
-        def write(data)
-          case data
-          when /^(DEBUG:|INFO:|WARN:|ERROR:|FATAL:)\s\[.*\]\s(SELECT|INSERT|UPDATE|DELETE|CREATE|DROP)/
-            _original_write(Mack::Utils::Ansi::Color.wrap(configatron.log.colors.db, data))
-          else
-            level = data.match(/^\w+/).to_s
-            color = configatron.log.colors.retrieve("#{level.downcase}", nil)
-            if color
-              _original_write(Mack::Utils::Ansi::Color.wrap(color, data))
-            else
-              _original_write(data)
-            end
-          end
-        end
-
-      end # IOOutputter
-    end # Log4r
-  
     Mack.reset_logger!
-  end
+  end # Mack
 
-  module Mack
-    module Logging # :nodoc:
-      # Used to house a list of filters for parameter logging. The initial list
-      # includes password and password_confirmation
-      class Filter
-        include Singleton
-      
-        # The list of parameters you want filtered for logging.
-        attr_reader :list
-      
-        def initialize
-          @list = [:password, :password_confirmation]
-        end
-      
-        # Adds 'n' number of parameter names to the list
-        def add(*args)
-          @list << args
-          @list.flatten!
-        end
-      
-        # Removes 'n' number of parameter names from the list
-        def remove(*args)
-          @list.delete_values(*args)
-        end
-      
-        class << self
-        
-          def remove(*args)
-            Mack::Logging::Filter.instance.remove(*args)
-          end
-        
-          def add(*args)
-            Mack::Logging::Filter.instance.add(*args)
-          end
-        
-          def list
-            Mack::Logging::Filter.instance.list
-          end
-        
-        end
-      
-      end
-    end
-  end
-end
+end # boot_load

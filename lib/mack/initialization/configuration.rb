@@ -56,6 +56,7 @@ boot_load(:configuration) do
         configatron.log.colors.warn = :yellow
         configatron.log.colors.completed = :purple
         configatron.log.use_colors = true
+        configatron.log.time_format = '%Y-%m-%d %H:%M:%S'
       
         if Mack.env?(:production)
           configatron.mack.use_lint = false
