@@ -185,6 +185,9 @@ module Mack
       
       def resolve_bundle(asset_type, sources)
         groups = assets_mgr.groups_by_asset_type(asset_type)
+        sources.collect! { |s| s.to_s }
+        groups.collect! { |s| s.to_s }
+        
         groups.each do |group|
           if sources.include?(group)
             sources = sources[0..(sources.index(group))] +
