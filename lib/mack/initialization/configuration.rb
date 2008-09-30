@@ -15,6 +15,10 @@ boot_load(:configuration) do
     def self.env
       ENV["MACK_ENV"] ||= "development"
     end
+    
+    def self.env?(env)
+      self.env == env.to_s
+    end
   
     # All configuration for the Mack subsystem happens here. Each of the default environments,
     # production, development, and test have their own default configuration options. These
