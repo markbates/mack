@@ -16,6 +16,8 @@ boot_load(:configuration) do
       ENV["MACK_ENV"] ||= "development"
     end
     
+    # Returns true/false based on whether the specified environment
+    # is the current environment
     def self.env?(env)
       self.env == env.to_s
     end
