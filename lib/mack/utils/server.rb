@@ -22,7 +22,11 @@ module Mack
         app = Mack::Utils::ContentLengthHandler.new(app)
         app = Rack::Lint.new(app) if configatron.mack.use_lint 
         app = Rack::ShowStatus.new(app) 
-        app = Rack::ShowExceptions.new(app) if configatron.mack.show_exceptions
+        if configatron.mack.show_exceptions
+          app = Rack::ShowExceptions.new(app)
+        else
+          app = Mack::HandleExceptions.new(app)
+        end
         app = Rack::Recursive.new(app)
         
         # This will reload any edited classes if the cache_classes config setting is set to true.

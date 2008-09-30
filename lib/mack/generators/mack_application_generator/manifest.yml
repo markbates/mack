@@ -43,6 +43,14 @@ favicon:
   type: file
   template_path: <%= File.join(templates_directory_path, "public", "favicon.ico.template") %>
   output_path: <%= File.join(app_name, "public", "favicon.ico") %>
+404:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "public", "404.html.template") %>
+  output_path: <%= File.join(app_name, "public", "404.html") %>
+500:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "public", "500.html.template") %>
+  output_path: <%= File.join(app_name, "public", "500.html") %>
 scaffold_css:
   type: file
   template_path: <%= File.join(templates_directory_path, "public", "stylesheets", "scaffold.css.template") %>

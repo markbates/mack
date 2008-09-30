@@ -1,0 +1,15 @@
+<html>
+<head>
+  <title>Server Error! (500)</title>
+  <style>
+    body {
+      font-family: Verdana;
+    }
+  </style>
+</head>
+<body>
+  <h1>Server Error!</h1>
+
+  <p>We're sorry there appears to be a problem. Please try back again later.</p>
+</body>
+</html>
