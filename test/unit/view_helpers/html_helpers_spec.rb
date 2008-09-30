@@ -21,6 +21,7 @@ describe Mack::ViewHelpers::HtmlHelpers do
   end
   
   describe "rss_tag" do
+    
     it "should return content when rss() is called" do
       rss_tag("foo_bar").should_not be_nil
       rss_tag("foo_bar").should_not be_empty
@@ -29,6 +30,7 @@ describe Mack::ViewHelpers::HtmlHelpers do
     it "should return proper tag when called" do
       rss_tag(tst_resources_index_url(:format => :xml)).should == %{<link rel="alternate" type="application/rss+xml" title="RSS" href="/tst_resources.xml">}
     end
+    
   end
   
   describe "link_image_to" do
@@ -51,9 +53,11 @@ describe Mack::ViewHelpers::HtmlHelpers do
       link = link_image_to("/images/foo.jpg", "foo.com", {:border => 0, :alt => "This is an image!"})
       link.should == %{<a href="foo.com"><img alt="This is an image!" border="0" src="/images/foo.jpg" /></a>}
     end
+    
   end
   
   describe "img" do
+    
     it "should generate content when img is called" do
       img("foo.jpg").should_not be_nil
       img("foo.jpg").should_not be_empty
@@ -63,6 +67,23 @@ describe Mack::ViewHelpers::HtmlHelpers do
       img("/images/foo.jpg").should == %{<img src="/images/foo.jpg" />}
       img("/images/foo.jpg", :border => 0).should == %{<img border="0" src="/images/foo.jpg" />}
     end
+    
+  end
+  
+  describe 'google_analytics' do
+    
+    it 'should generate google analytics code for you' do
+      google_analytics(12345).should == %{
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("12345");
+pageTracker._trackPageview();
+</script>}.strip
+    end
+    
   end
   
 end
