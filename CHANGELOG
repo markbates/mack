@@ -14,7 +14,9 @@
 * [#106] INCOMPATIBILITY NOTICE: Removed deprecated support for droute_url
 * [#93] INCOMPATIBILITY NOTICE: Removed deprecated support for 'top' level ApplicationHelper
 * [#23] INCOMPATIBILITY NOTICE: Removed support for application_configuration and added support for configatron
-* gem: configatron 2.1.1
+* gem: thin 1.0.0
+* gem: rspec 1.1.5
+* gem: configatron 2.1.2
 * gem: cachetastic 1.9.9.100
 
 === 0.7.1.1

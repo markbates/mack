@@ -7,16 +7,11 @@ module Spec # :nodoc:
       include Mack::Routes::Urls
       include Mack::Testing::Helpers
     
-      alias_instance_method :run_with_description_capturing, :mack_run_with_description_capturing
+      alias_instance_method :eval_block, :mack_eval_block
 
-      def run_with_description_capturing
-        begin
-            in_session do
-              instance_eval(&(@_implementation || PENDING_EXAMPLE_BLOCK))
-            end
-        ensure
-          @_matcher_description = Spec::Matchers.generated_description
-          Spec::Matchers.clear_generated_description
+      def eval_block
+        in_session do
+          mack_eval_block
         end
       end
     
