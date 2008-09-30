@@ -16,7 +16,7 @@ describe Mack::AssetsManager do
         a.add_js "abc"
         a.add_js :def
       end
-      assets_mgr.foo do |a|
+      assets_mgr.my_bundle do |a|
         a.add_js "abc"
       end
     end
@@ -36,11 +36,11 @@ describe Mack::AssetsManager do
     
     it "should manage groups" do
       assets_mgr.javascripts('test').should_not be_nil
-      assets_mgr.javascripts('foo').should_not be_nil
+      assets_mgr.javascripts('my_bundle').should_not be_nil
     end
     
     it "should append .js to file name" do
-      ['test', 'foo'].each do |group|
+      ['test', 'my_bundle'].each do |group|
         assets_mgr.javascripts(group).each do |file|
           file.end_with?('.js').should == true
         end
@@ -55,7 +55,7 @@ describe Mack::AssetsManager do
         a.add_css "abc"
         a.add_css :def
       end
-      assets_mgr.foo do |a|
+      assets_mgr.my_bundle do |a|
         a.add_css "abc"
       end
     end
@@ -79,11 +79,11 @@ describe Mack::AssetsManager do
     
     it "should manage groups" do
       assets_mgr.stylesheets('test').should_not be_nil
-      assets_mgr.stylesheets('foo').should_not be_nil
+      assets_mgr.stylesheets('my_bundle').should_not be_nil
     end
     
     it "should append .css to file name" do
-      ['test', 'foo'].each do |group|
+      ['test', 'my_bundle'].each do |group|
         assets_mgr.stylesheets(group).each do |file|
           file.end_with?('.css').should == true
         end
