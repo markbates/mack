@@ -54,21 +54,23 @@ boot_load(:configuration) do
         configatron.log.colors.error = :red
         configatron.log.colors.fatal = :red
         configatron.log.colors.warn = :yellow
-        configatron.log.colors.completed = :purple      
+        configatron.log.colors.completed = :purple
+        configatron.log.use_colors = true
       
-        if Mack.env == 'production'
+        if Mack.env?(:production)
           configatron.mack.use_lint = false
           configatron.mack.show_exceptions = false
           configatron.log.level = :info
           configatron.log.detailed_requests = true
+          configatron.log.use_colors = false
         end
       
-        if Mack.env == 'development'
+        if Mack.env?(:development)
           configatron.mack.cache_classes = false
           configatron.log.level = :debug
         end
 
-        if Mack.env == 'test'
+        if Mack.env?(:test)
           configatron.mack.cookie_values = {}
           configatron.mack.session_store = :test
           configatron.mack.disable_forgery_detector = true

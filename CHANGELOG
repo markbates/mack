@@ -1,3 +1,4 @@
+* [#178] Added a configure parameter to turn off log coloring
 * [#176] Added a Google Analytics helper.
 * [#175] Generating urls should use host or scheme if defined
 * [#171] Ability to extend resources in routes
