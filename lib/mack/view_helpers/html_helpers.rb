@@ -2,6 +2,8 @@ module Mack
   module ViewHelpers # :nodoc:
     module HtmlHelpers
       
+      include Mack::AssetHelpersCommon
+      
       # Builds an HTML tag.
       # 
       # Examples:
@@ -28,6 +30,7 @@ module Mack
       
       # Builds a HTML image tag.
       def img(image_src, options = {})
+        image_src = "#{get_resource_root(image_src)}#{image_src}"
         non_content_tag(:img, {:src => image_src}.merge(options))
       end
       
@@ -48,6 +51,14 @@ module Mack
         end
         opts
       end
+      
+      def get_resource_root(resource)
+        path = ""
+        path = "#{configatron.mack.distributed.site_domain}" unless configatron.mack.distributed.site_domain.nil?
+        path = Mack::AssetHelpers.instance.asset_hosts(resource) if path.empty?
+        return path
+      end
+      
       
     end # HtmlHelpers
   end # ViewHelpers

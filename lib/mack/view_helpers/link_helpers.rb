@@ -2,6 +2,8 @@ module Mack
   module ViewHelpers # :nodoc:
     module LinkHelpers
       
+      include Mack::AssetHelpersCommon
+      
       # Generates a javascript popup window. It will create the javascript needed for the window,
       # as well as the href to call it.
       # 
@@ -199,12 +201,12 @@ module Mack
         return sources
       end
       
-      def get_resource_root(resource)
-        path = ""
-        path = "#{configatron.mack.distributed.site_domain}" unless configatron.mack.distributed.site_domain.nil?
-        path = Mack::AssetHelpers.instance.asset_hosts(resource) if path.empty?
-        return path
-      end
+      # def get_resource_root(resource)
+      #   path = ""
+      #   path = "#{configatron.mack.distributed.site_domain}" unless configatron.mack.distributed.site_domain.nil?
+      #   path = Mack::AssetHelpers.instance.asset_hosts(resource) if path.empty?
+      #   return path
+      # end
       
     end # LinkHelpers
   end # ViewHelpers

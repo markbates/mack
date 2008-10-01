@@ -32,6 +32,19 @@ describe Mack::ViewHelpers::HtmlHelpers do
   end
   
   describe "link_image_to" do
+    
+    before(:each) do
+      Mack::AssetHelpers.instance.reset!
+    end
+    
+    it "should use asset host if specified" do
+      configatron.temp do 
+        configatron.mack.assets.hosts = "asset.foo.com"
+        link_image_to("/images/foo.jpg", "foo.com").should == %{<a href="foo.com"><img src="asset.foo.com/images/foo.jpg" /></a>}
+        configatron.mack.assets.hosts = "http://asset.foo.com"
+        link_image_to("/images/foo.jpg", "foo.com").should == %{<a href="foo.com"><img src="http://asset.foo.com/images/foo.jpg" /></a>}
+      end
+    end
 
     it "should return content when link_to_image to is called" do
       link_image_to("foo.jpg", "foo.com").should_not be_nil
@@ -54,6 +67,17 @@ describe Mack::ViewHelpers::HtmlHelpers do
   end
   
   describe "img" do
+    before(:each) do
+      Mack::AssetHelpers.instance.reset!
+    end
+    
+    it "should use asset host if specified" do
+      configatron.temp do
+        configatron.mack.assets.hosts = "http://assets.foo.com"
+        img("foo.jpg").should match(/http:\/\/assets.foo.com/)
+      end
+    end
+    
     it "should generate content when img is called" do
       img("foo.jpg").should_not be_nil
       img("foo.jpg").should_not be_empty
