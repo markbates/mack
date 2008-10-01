@@ -58,7 +58,7 @@ module Mack
       route - :runner_block
       
       self.request.params = self.request.all_params.merge(route)
-      
+      self.response.content_type = Mack::Utils::MimeTypes[self.request.params[:format]]
       catch(:finished) do
         if runner_block
           runner_block.call(self.request, self.response, self.cookies)

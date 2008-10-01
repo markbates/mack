@@ -14,4 +14,14 @@ describe Mack::Response do
     
   end
   
+  describe 'content_type' do
+    
+    it 'should set and return the content_type correctly' do
+      res = Mack::Response.new
+      res.content_type = 'xml'
+      res.content_type.should == 'xml'
+    end
+    
+  end
+  
 end

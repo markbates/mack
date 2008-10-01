@@ -17,5 +17,9 @@ module Mack
       self['Content-Type'] = type
     end
     
+    def content_type
+      self['Content-Type']
+    end
+    
   end
 end

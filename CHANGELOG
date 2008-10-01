@@ -1,3 +1,4 @@
+* [#181] Content-type can now be set with calling render.
 * [#179] When configatron.mack.show_exceptions is false you now either the public/404.html or public/500.html file.
 * [#178] Added a configure parameter to turn off log coloring
 * [#176] Added a Google Analytics helper.

@@ -25,6 +25,11 @@ class WantsTestController
   def wants_404
     render(:template, '/application/404', :status => 404)
   end
+  
+  def already_set_content_type
+    response.content_type = 'javascript'
+    render(:text, 'hello world')
+  end
 end
 
 
@@ -49,7 +54,13 @@ describe Mack::Controller do
       r.ren_xml "/ren_xml", :controller => "wants_test", :action => :ren_xml, :format => :xml
       r.on_disk_wants_x "/odw_x", :controller => "wants_test", :action => :on_disk_wants, :format => :xml
       r.wants_unknown "/wants_404", :controller => "wants_test", :action => :wants_404
+      r.wants_already_set_content_type '/wants/already_set_content_type', :controller => :wants_test, :action => :already_set_content_type
     end
+  end
+  
+  it 'should not set the content type if it has already been set' do
+    get wants_already_set_content_type_url(:format => :xml)
+    response.content_type.should == 'javascript'
   end
   
   it "should handle admin_index" do
