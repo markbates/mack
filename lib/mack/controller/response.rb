@@ -13,5 +13,9 @@ module Mack
       self['Content-Disposition'] = "attachment; filename=#{file_name}"
     end
     
+    def content_type=(type)
+      self['Content-Type'] = type
+    end
+    
   end
 end
