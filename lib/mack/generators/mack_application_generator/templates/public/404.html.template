@@ -1,0 +1,15 @@
+<html>
+<head>
+  <title>Page Not Found! (404)</title>
+  <style>
+    body {
+      font-family: Verdana;
+    }
+  </style>
+</head>
+<body>
+  <h1>Page Not Found!</h1>
+
+  <p>We're sorry the page you have tried to access does not appear to exist. Please check the URL and try again.</p>
+</body>
+</html>

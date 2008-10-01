@@ -5,7 +5,10 @@ module Mack
       module Color
         
         def self.wrap(color, string)
-          "\e[#{Mack::Utils::Ansi::ColorRegistry.registered_items[color.to_sym] || 0}m#{string}\e[0m"
+          if configatron.log.use_colors
+            return "\e[#{Mack::Utils::Ansi::ColorRegistry.registered_items[color.to_sym] || 0}m#{string}\e[0m"
+          end
+          return string
         end
         
       end # Color

@@ -32,6 +32,18 @@ describe Mack do
     
   end
   
+  describe 'env?' do
+    
+    it 'should return true if the environment is equal' do
+      Mack.should be_env(:test)
+    end
+    
+    it 'should return false if the environment is not equal' do
+      Mack.should_not be_env(:development)
+    end
+    
+  end
+  
 end
 
 describe Mack::Configuration do

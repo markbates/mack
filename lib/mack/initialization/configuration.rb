@@ -15,6 +15,12 @@ boot_load(:configuration) do
     def self.env
       ENV["MACK_ENV"] ||= "development"
     end
+    
+    # Returns true/false based on whether the specified environment
+    # is the current environment
+    def self.env?(env)
+      self.env == env.to_s
+    end
   
     # All configuration for the Mack subsystem happens here. Each of the default environments,
     # production, development, and test have their own default configuration options. These
@@ -48,21 +54,24 @@ boot_load(:configuration) do
         configatron.log.colors.error = :red
         configatron.log.colors.fatal = :red
         configatron.log.colors.warn = :yellow
-        configatron.log.colors.completed = :purple      
+        configatron.log.colors.completed = :purple
+        configatron.log.use_colors = true
+        configatron.log.time_format = '%Y-%m-%d %H:%M:%S'
       
-        if Mack.env == 'production'
+        if Mack.env?(:production)
           configatron.mack.use_lint = false
           configatron.mack.show_exceptions = false
           configatron.log.level = :info
           configatron.log.detailed_requests = true
+          configatron.log.use_colors = false
         end
       
-        if Mack.env == 'development'
+        if Mack.env?(:development)
           configatron.mack.cache_classes = false
           configatron.log.level = :debug
         end
 
-        if Mack.env == 'test'
+        if Mack.env?(:test)
           configatron.mack.cookie_values = {}
           configatron.mack.session_store = :test
           configatron.mack.disable_forgery_detector = true
