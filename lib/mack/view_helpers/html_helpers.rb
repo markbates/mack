@@ -30,7 +30,7 @@ module Mack
       
       # Builds a HTML image tag.
       def img(image_src, options = {})
-        image_src = "#{get_resource_root(image_src)}#{image_src}"
+        image_src = "#{get_resource_root(image_src)}#{image_src}?#{configatron.mack.assets.stamp}"
         non_content_tag(:img, {:src => image_src}.merge(options))
       end
       

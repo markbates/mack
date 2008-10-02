@@ -151,7 +151,7 @@ module Mack
         files.each do |name|
           file_name = !name.to_s.end_with?(".js") ? "#{name}.js" : "#{name}"
           resource = "/javascripts/#{file_name}"
-          link += "<script src=\"#{get_resource_root(resource)}#{resource}?#{Time.now.to_i}\" type=\"text/javascript\"></script>\n"
+          link += "<script src=\"#{get_resource_root(resource)}#{resource}?#{configatron.mack.assets.stamp}\" type=\"text/javascript\"></script>\n"
         end
         return link
       end
@@ -177,7 +177,7 @@ module Mack
         files.each do |name|
           file_name = !name.to_s.end_with?(".css") ? "#{name}.css" : "#{name}"
           resource = "/stylesheets/#{file_name}"
-          link += "<link href=\"#{get_resource_root(resource)}#{resource}\" media=\"#{options[:media]}\" rel=\"#{options[:rel]}\" type=\"#{options[:type]}\" />\n"
+          link += "<link href=\"#{get_resource_root(resource)}#{resource}?#{configatron.mack.assets.stamp}\" media=\"#{options[:media]}\" rel=\"#{options[:rel]}\" type=\"#{options[:type]}\" />\n"
         end
         
         return link

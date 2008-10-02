@@ -44,6 +44,7 @@ boot_load(:configuration) do
         configatron.mack.disable_forgery_detector = false
         configatron.mack.assets.max_distribution = 4
         configatron.mack.assets.hosts = ''
+        configatron.mack.assets.stamp = Time.now.to_i
         configatron.mack.cookie_session_store.expiry_time = 4.hours
         
         configatron.log.level = :info
