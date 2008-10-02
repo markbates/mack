@@ -27,6 +27,13 @@ module Mack
               raise m
             end
             raise e
+          rescue NameError => e
+            if file_name
+              m = NameError.new("undefined local variable or method `#{e.name}' for #{e.backtrace[0].match(/(^.+:\d)/).captures.first}")
+              m.set_backtrace(e.backtrace)
+              raise m
+            end
+            raise e
           end
         end
         
