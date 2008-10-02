@@ -4,7 +4,7 @@ require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 describe Mack::ViewHelpers::LinkHelpers do
   include Mack::ViewHelpers
   before(:all) do
-    Mack::AssetHelpers.instance.reset!
+    Mack::Assets::Helpers.instance.reset!
   end
   
   
@@ -176,6 +176,26 @@ describe Mack::ViewHelpers::LinkHelpers do
         data.should match(/localhost:3001/)
         data.should match(/foo/)
       end
+    end
+  end
+  
+  describe "asset_bundle" do
+    before(:all) do 
+      assets_mgr.my_cool_bundle do |a|
+        a.add_js "foo"
+        a.add_js "bar"
+        
+        a.add_css "my_css"
+        a.add_css "my_css2"
+      end
+    end
+    
+    it "should handle asset_bundle" do
+      data = assets_bundle('my_cool_bundle')
+      data.should match(/foo.js/)
+      data.should match(/bar.js/)
+      data.should match(/my_css.css/)
+      data.should match(/my_css2.css/)
     end
   end
   

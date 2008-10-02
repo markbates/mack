@@ -36,7 +36,7 @@ describe Mack::ViewHelpers::HtmlHelpers do
   describe "link_image_to" do
     
     before(:each) do
-      Mack::AssetHelpers.instance.reset!
+      Mack::Assets::Helpers.instance.reset!
     end
     
     it "should use asset host if specified" do
@@ -71,7 +71,7 @@ describe Mack::ViewHelpers::HtmlHelpers do
   
   describe "img" do
     before(:each) do
-      Mack::AssetHelpers.instance.reset!
+      Mack::Assets::Helpers.instance.reset!
     end
     
     it "should use asset host if specified" do

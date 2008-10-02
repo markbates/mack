@@ -1,9 +1,7 @@
 module Mack
   module ViewHelpers # :nodoc:
     module HtmlHelpers
-      
-      include Mack::AssetHelpersCommon
-      
+
       # Builds an HTML tag.
       # 
       # Examples:
@@ -67,7 +65,7 @@ pageTracker._trackPageview();
       def get_resource_root(resource)
         path = ""
         path = "#{configatron.mack.distributed.site_domain}" unless configatron.mack.distributed.site_domain.nil?
-        path = Mack::AssetHelpers.instance.asset_hosts(resource) if path.empty?
+        path = Mack::Assets::Helpers.instance.asset_hosts(resource) if path.empty?
         return path
       end
       

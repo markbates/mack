@@ -1,5 +1,12 @@
 module Mack
   module ViewHelpers # :nodoc:
+    
+    def get_resource_root(resource)
+      path = ""
+      path = "#{configatron.mack.distributed.site_domain}" unless configatron.mack.distributed.site_domain.nil?
+      path = Mack::Assets::Helpers.instance.asset_hosts(resource) if path.empty?
+      return path
+    end
 
     # Used to easily include all Mack::ViewHelpers. It will NOT include itself!
     # This is primarily used to aid in testing view helpers.

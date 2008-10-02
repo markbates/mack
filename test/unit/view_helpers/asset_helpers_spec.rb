@@ -2,11 +2,11 @@ require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
 describe "Asset Hosts" do
-  include Mack::ViewHelpers::LinkHelpers
+  include Mack::ViewHelpers
   
   describe "Stylesheet" do
     before(:all) do
-      Mack::AssetHelpers.instance.reset!
+      Mack::Assets::Helpers.instance.reset!
     end
     
     it "should use default host if asset host is not defined" do
@@ -42,20 +42,20 @@ describe "Asset Hosts" do
     
     it "should override configatron setting if asset host is set by calling setter in AssetHelpers" do
       temp_app_config(:mack => {:assets => {:hosts => 'http://www.foo.com'}}) do
-        Mack::AssetHelpers.instance.asset_hosts="http://asset%d.foo.com"
+        Mack::Assets::Helpers.instance.asset_hosts="http://asset%d.foo.com"
         stylesheet('foo').should match(/asset(0|1|2|3|4).foo.com/)
       end
     end
     
     it "should take a proc for the asset host generator" do
-      Mack::AssetHelpers.instance.asset_hosts = Proc.new { |source| 'asset.foo.com' }
+      Mack::Assets::Helpers.instance.asset_hosts = Proc.new { |source| 'asset.foo.com' }
       stylesheet('foo').should match(/asset.foo.com/)
     end
   end
   
   describe "Javascript" do
     before(:all) do
-      Mack::AssetHelpers.instance.reset!
+      Mack::Assets::Helpers.instance.reset!
     end
     
     it "should use default host if asset host is not defined" do
@@ -91,13 +91,13 @@ describe "Asset Hosts" do
     
     it "should override configatron setting if asset host is set by calling setter in AssetHelpers" do
       temp_app_config("asset_hosts" => 'http://www.foo.com') do
-        Mack::AssetHelpers.instance.asset_hosts="http://asset%d.foo.com"
+        Mack::Assets::Helpers.instance.asset_hosts="http://asset%d.foo.com"
         javascript('foo').should match(/asset(0|1|2|3|4).foo.com/)
       end
     end
     
     it "should take a proc for the asset host generator" do
-      Mack::AssetHelpers.instance.asset_hosts = Proc.new { |source| 'asset.foo.com' }
+      Mack::Assets::Helpers.instance.asset_hosts = Proc.new { |source| 'asset.foo.com' }
       javascript('foo').should match(/asset.foo.com/)
     end
   end
