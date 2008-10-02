@@ -4,7 +4,7 @@ require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 describe Mack::ViewHelpers::LinkHelpers do
   include Mack::ViewHelpers
   before(:all) do
-    Mack::AssetHelpers.instance.reset!
+    Mack::Assets::Helpers.instance.reset!
   end
   
   
@@ -127,16 +127,16 @@ describe Mack::ViewHelpers::LinkHelpers do
     
     it "should be able to generate proper image url when no options are specified" do
       link = link_image_to("/images/foo.jpg", "foo.com")
-      link.should == %{<a href="foo.com"><img src="/images/foo.jpg" /></a>}
+      link.should == %{<a href="foo.com"><img src="/images/foo.jpg?#{configatron.mack.assets.stamp}" /></a>}
     end
     
     it "should generate proper image url when options are specified" do
       link = link_image_to("/images/foo.jpg", "foo.com", 
                            {:class => "foo", :alt => "This is an image!", :border => 0}, {:class => "bar"})
-      link.should == %{<a class="bar" href="foo.com"><img alt="This is an image!" border="0" class="foo" src="/images/foo.jpg" /></a>}
+      link.should == %{<a class="bar" href="foo.com"><img alt="This is an image!" border="0" class="foo" src="/images/foo.jpg?#{configatron.mack.assets.stamp}" /></a>}
       
       link = link_image_to("/images/foo.jpg", "foo.com", {:border => 0, :alt => "This is an image!"})
-      link.should == %{<a href="foo.com"><img alt="This is an image!" border="0" src="/images/foo.jpg" /></a>}
+      link.should == %{<a href="foo.com"><img alt="This is an image!" border="0" src="/images/foo.jpg?#{configatron.mack.assets.stamp}" /></a>}
     end
   end
   
@@ -179,6 +179,26 @@ describe Mack::ViewHelpers::LinkHelpers do
     end
   end
   
+  describe "asset_bundle" do
+    before(:all) do 
+      assets_mgr.my_cool_bundle do |a|
+        a.add_js "foo"
+        a.add_js "bar"
+        
+        a.add_css "my_css"
+        a.add_css "my_css2"
+      end
+    end
+    
+    it "should handle asset_bundle" do
+      data = assets_bundle('my_cool_bundle')
+      data.should match(/foo.js/)
+      data.should match(/bar.js/)
+      data.should match(/my_css.css/)
+      data.should match(/my_css2.css/)
+    end
+  end
+  
   describe "stylesheet" do
     it "should accept custom options to stylesheet tag" do
       stylesheet("foo", :media => 'print').should match(/print/)
@@ -201,14 +221,14 @@ describe Mack::ViewHelpers::LinkHelpers do
     end
     
     it "should generate proper css tag" do
-      stylesheet("foo").should == %{<link href="/stylesheets/foo.css" media="screen" rel="stylesheet" type="text/css" />\n}
-      stylesheet("foo", :media => 'print').should == %{<link href="/stylesheets/foo.css" media="print" rel="stylesheet" type="text/css" />\n}
-      stylesheet("foo", :media => 'print', :rel => 'bar').should == %{<link href="/stylesheets/foo.css" media="print" rel="bar" type="text/css" />\n}
-      stylesheet("foo", :media => 'print', :rel => 'bar', :type => 'some_type').should == %{<link href="/stylesheets/foo.css" media="print" rel="bar" type="some_type" />\n}
+      stylesheet("foo").should == %{<link href="/stylesheets/foo.css?#{configatron.mack.assets.stamp}" media="screen" rel="stylesheet" type="text/css" />\n}
+      stylesheet("foo", :media => 'print').should == %{<link href="/stylesheets/foo.css?#{configatron.mack.assets.stamp}" media="print" rel="stylesheet" type="text/css" />\n}
+      stylesheet("foo", :media => 'print', :rel => 'bar').should == %{<link href="/stylesheets/foo.css?#{configatron.mack.assets.stamp}" media="print" rel="bar" type="text/css" />\n}
+      stylesheet("foo", :media => 'print', :rel => 'bar', :type => 'some_type').should == %{<link href="/stylesheets/foo.css?#{configatron.mack.assets.stamp}" media="print" rel="bar" type="some_type" />\n}
     end
     
     it "should generate multiple css tags if given a list of names" do
-      stylesheet(["foo", "bar", "hello.css"]).should == %{<link href="/stylesheets/foo.css" media="screen" rel="stylesheet" type="text/css" />\n<link href="/stylesheets/bar.css" media="screen" rel="stylesheet" type="text/css" />\n<link href="/stylesheets/hello.css" media="screen" rel="stylesheet" type="text/css" />\n}
+      stylesheet(["foo", "bar", "hello.css"]).should == %{<link href="/stylesheets/foo.css?#{configatron.mack.assets.stamp}" media="screen" rel="stylesheet" type="text/css" />\n<link href="/stylesheets/bar.css?#{configatron.mack.assets.stamp}" media="screen" rel="stylesheet" type="text/css" />\n<link href="/stylesheets/hello.css?#{configatron.mack.assets.stamp}" media="screen" rel="stylesheet" type="text/css" />\n}
       
     end
     

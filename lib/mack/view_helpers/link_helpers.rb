@@ -2,8 +2,6 @@ module Mack
   module ViewHelpers # :nodoc:
     module LinkHelpers
       
-      include Mack::AssetHelpersCommon
-      
       # Generates a javascript popup window. It will create the javascript needed for the window,
       # as well as the href to call it.
       # 
@@ -151,7 +149,7 @@ module Mack
         files.each do |name|
           file_name = !name.to_s.end_with?(".js") ? "#{name}.js" : "#{name}"
           resource = "/javascripts/#{file_name}"
-          link += "<script src=\"#{get_resource_root(resource)}#{resource}?#{Time.now.to_i}\" type=\"text/javascript\"></script>\n"
+          link += "<script src=\"#{get_resource_root(resource)}#{resource}?#{configatron.mack.assets.stamp}\" type=\"text/javascript\"></script>\n"
         end
         return link
       end
@@ -177,10 +175,21 @@ module Mack
         files.each do |name|
           file_name = !name.to_s.end_with?(".css") ? "#{name}.css" : "#{name}"
           resource = "/stylesheets/#{file_name}"
-          link += "<link href=\"#{get_resource_root(resource)}#{resource}\" media=\"#{options[:media]}\" rel=\"#{options[:rel]}\" type=\"#{options[:type]}\" />\n"
+          link += "<link href=\"#{get_resource_root(resource)}#{resource}?#{configatron.mack.assets.stamp}\" media=\"#{options[:media]}\" rel=\"#{options[:rel]}\" type=\"#{options[:type]}\" />\n"
         end
         
         return link
+      end
+      
+      def assets_bundle(names)
+        names = [names].flatten
+        names.collect { |s| s.to_s }
+        arr = []
+        names.each do |name|
+          arr << javascript(name) if assets_mgr.has_group?(name, :javascripts)
+          arr << stylesheet(name) if assets_mgr.has_group?(name, :stylesheets)
+        end
+        return arr.join("\n")
       end
       
       private
@@ -200,14 +209,6 @@ module Mack
         end
         return sources
       end
-      
-      # def get_resource_root(resource)
-      #   path = ""
-      #   path = "#{configatron.mack.distributed.site_domain}" unless configatron.mack.distributed.site_domain.nil?
-      #   path = Mack::AssetHelpers.instance.asset_hosts(resource) if path.empty?
-      #   return path
-      # end
-      
     end # LinkHelpers
   end # ViewHelpers
 end # Mack

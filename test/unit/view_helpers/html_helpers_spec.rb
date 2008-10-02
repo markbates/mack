@@ -36,15 +36,15 @@ describe Mack::ViewHelpers::HtmlHelpers do
   describe "link_image_to" do
     
     before(:each) do
-      Mack::AssetHelpers.instance.reset!
+      Mack::Assets::Helpers.instance.reset!
     end
     
     it "should use asset host if specified" do
       configatron.temp do 
         configatron.mack.assets.hosts = "asset.foo.com"
-        link_image_to("/images/foo.jpg", "foo.com").should == %{<a href="foo.com"><img src="asset.foo.com/images/foo.jpg" /></a>}
+        link_image_to("/images/foo.jpg", "foo.com").should == %{<a href="foo.com"><img src="asset.foo.com/images/foo.jpg?#{configatron.mack.assets.stamp}" /></a>}
         configatron.mack.assets.hosts = "http://asset.foo.com"
-        link_image_to("/images/foo.jpg", "foo.com").should == %{<a href="foo.com"><img src="http://asset.foo.com/images/foo.jpg" /></a>}
+        link_image_to("/images/foo.jpg", "foo.com").should == %{<a href="foo.com"><img src="http://asset.foo.com/images/foo.jpg?#{configatron.mack.assets.stamp}" /></a>}
       end
     end
 
@@ -55,23 +55,23 @@ describe Mack::ViewHelpers::HtmlHelpers do
     
     it "should be able to generate proper image url when no options are specified" do
       link = link_image_to("/images/foo.jpg", "foo.com")
-      link.should == %{<a href="foo.com"><img src="/images/foo.jpg" /></a>}
+      link.should == %{<a href="foo.com"><img src="/images/foo.jpg?#{configatron.mack.assets.stamp}" /></a>}
     end
     
     it "should generate proper image url when options are specified" do
       link = link_image_to("/images/foo.jpg", "foo.com", 
                            {:class => "foo", :alt => "This is an image!", :border => 0}, {:class => "bar"})
-      link.should == %{<a class="bar" href="foo.com"><img alt="This is an image!" border="0" class="foo" src="/images/foo.jpg" /></a>}
+      link.should == %{<a class="bar" href="foo.com"><img alt="This is an image!" border="0" class="foo" src="/images/foo.jpg?#{configatron.mack.assets.stamp}" /></a>}
       
       link = link_image_to("/images/foo.jpg", "foo.com", {:border => 0, :alt => "This is an image!"})
-      link.should == %{<a href="foo.com"><img alt="This is an image!" border="0" src="/images/foo.jpg" /></a>}
+      link.should == %{<a href="foo.com"><img alt="This is an image!" border="0" src="/images/foo.jpg?#{configatron.mack.assets.stamp}" /></a>}
     end
     
   end
   
   describe "img" do
     before(:each) do
-      Mack::AssetHelpers.instance.reset!
+      Mack::Assets::Helpers.instance.reset!
     end
     
     it "should use asset host if specified" do
@@ -87,8 +87,8 @@ describe Mack::ViewHelpers::HtmlHelpers do
     end
     
     it "should generate proper img tag" do
-      img("/images/foo.jpg").should == %{<img src="/images/foo.jpg" />}
-      img("/images/foo.jpg", :border => 0).should == %{<img border="0" src="/images/foo.jpg" />}
+      img("/images/foo.jpg").should == %{<img src="/images/foo.jpg?#{configatron.mack.assets.stamp}" />}
+      img("/images/foo.jpg", :border => 0).should == %{<img border="0" src="/images/foo.jpg?#{configatron.mack.assets.stamp}" />}
     end
     
   end
