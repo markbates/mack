@@ -4,14 +4,15 @@ module Mack
     class ColorLayout < Mack::Logging::BasicLayout # :nodoc:
 
       def format(event)
-        if event.data.match(/^(SELECT|INSERT|UPDATE|DELETE|CREATE|DROP)/)
-          return Mack::Utils::Ansi::Color.wrap(configatron.log.colors.db, super(event))
+        message = super(event)
+        if message.match(/^(SELECT|INSERT|UPDATE|DELETE|CREATE|DROP)/)
+          return Mack::Utils::Ansi::Color.wrap(configatron.log.colors.db, message)
         else
           color = configatron.log.colors.retrieve(event.level_name.downcase.to_sym, nil)
           if color
-            return Mack::Utils::Ansi::Color.wrap(color, super(event))
+            return Mack::Utils::Ansi::Color.wrap(color, message)
           else
-            return super(event)
+            return message
           end
         end
       end

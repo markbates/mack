@@ -46,13 +46,12 @@ boot_load(:logging, :configuration) do
       Mack.logger.add_appenders(::Logging::Appenders::File.new(Mack.env, :filename => File.join(log_directory, "#{Mack.env}.log"), :layout => Mack::Logging::BasicLayout.new))
       Mack.logger.add_appenders(::Logging::Appenders::Stdout.new(:layout => Mack::Logging::ColorLayout.new)) if Mack.env?(:development)
       Mack.logger.level = configatron.log.retrieve(:level, :info)
-
     end
   
-  end
+  end # Mack
 
   unless Mack.logger
     Mack.reset_logger!
-  end # Mack
+  end
 
 end # boot_load

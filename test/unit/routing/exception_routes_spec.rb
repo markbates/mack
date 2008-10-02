@@ -62,12 +62,10 @@ describe "Routes Exceptions" do
   describe 'ResourceNotFound' do
     
     before(:each) do
-      $mack_app = Rack::Recursive.new(Mack::HandleExceptions.new(Mack::Runner.new))
       @fof = Mack::Paths.public('404.html')
     end
 
     after(:each) do
-      $mack_app = Rack::Recursive.new(Mack::Runner.new)
       FileUtils.rm_rf(@fof)
     end
   
@@ -104,12 +102,10 @@ describe "Routes Exceptions" do
   describe 'Non handle error' do
     
     before(:each) do
-      $mack_app = Rack::Recursive.new(Mack::HandleExceptions.new(Mack::Runner.new))
       @fof = Mack::Paths.public('500.html')
     end
 
     after(:each) do
-      $mack_app = Rack::Recursive.new(Mack::Runner.new)
       FileUtils.rm_rf(@fof)
     end
     

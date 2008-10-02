@@ -16,6 +16,7 @@ module Mack
     # This method needs to be defined as part of the Rack framework. As is noted for the Mack::Runner
     # class, this is where the center of the Mack framework lies.
     def call(env)
+      env["rack.errors"] = StringIO.new # Send Rack errors nowhere fast!
       begin
         setup(env)
         begin
@@ -29,27 +30,42 @@ module Mack
             @original_action = route[:action]
             run_controller(route)
           end
-        # rescue Mack::Errors::ResourceNotFound, Mack::Errors::UndefinedRoute => e
-        #   return try_to_find_resource(env, e)
+          # return teardown
         rescue Exception => e
+          # There was an exception, let's see if there's a handler for this error in routes:
           route = Mack::Routes.retrieve_from_error(e.class)
-          self.request.all_params[:original_controller] = @original_controller
-          self.request.all_params[:original_action] = @original_action
           unless route.nil?
+            self.request.all_params[:original_controller] = @original_controller
+            self.request.all_params[:original_action] = @original_action
+            # There is a handler, let's try running that:
             run_controller(route, e)
           else
-            if e.class == Mack::Errors::ResourceNotFound || e.class == Mack::Errors::UndefinedRoute
+            # If we can't find the resource, or there's no route, let's check the public directory:
+            case e
+            when Mack::Errors::ResourceNotFound, Mack::Errors::UndefinedRoute
               return try_to_find_resource(env, e)
             else
+              # Re-raise the exception
               raise e
             end
           end
+          # return teardown
         end
-        teardown
+      # Capture all the Exceptions for this call:
       rescue Exception => e
-        Mack.logger.error(e)
-        raise e
+        Mack.logger.error e
+        case e
+        when Mack::Errors::ResourceNotFound, Mack::Errors::UndefinedRoute
+          handle_error(404, 'Page Not Found!', e)
+        # If it's any other type of exception render the 500.html page:
+        else
+          handle_error(500, 'Server Error!', e)
+        end
+        # return teardown
+      ensure
+        teardown
       end
+      return self.response.finish
     end
     
     #private
@@ -76,7 +92,7 @@ module Mack
         c.caught_exception = e unless e.nil?
 
         self.response.controller = c
-        self.response.write(c.run)
+        return self.response.write(c.run)
       end
     end
     
@@ -98,17 +114,16 @@ module Mack
       self.runner_helpers.reverse.each do |help|
         help.complete(self.request, self.response, self.cookies)
       end
-      self.response.finish
+      # self.response.finish
     end
     
     def try_to_find_resource(env, exception)
-      env = env.dup
       # we can't find a route for this, so let's try and see if it's in the public directory:
-      if File.extname(env["PATH_INFO"]).blank?
-        env["PATH_INFO"] << ".html"
-      end
-      if File.exists?(Mack::Paths.public(env["PATH_INFO"]))
-        return Rack::File.new(Mack::Paths.public).call(env)
+      path = env["PATH_INFO"].dup
+      path << ".html" if File.extname(path).blank?
+      
+      if File.exists?(Mack::Paths.public(path))
+        return Rack::File.new(Mack::Paths.public).call(Rack::MockRequest.env_for(path))
       else
         raise exception
       end
@@ -127,6 +142,17 @@ module Mack
       self.response.status = status
       self.response[:location] = url
       self.response.write(redirect_html(self.request.path_info, url, status))
+    end
+    
+    private
+    def handle_error(status, body, e)
+      self.response.status = status
+      raise e if configatron.mack.show_exceptions
+      path = Mack::Paths.public("#{status}.html")
+      if File.exists?(path)
+        body = File.read(path)
+      end
+      self.response.write(body)
     end
     
   end

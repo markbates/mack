@@ -1,3 +1,6 @@
+* [#187] Fixed: When an exception is raised, the request doesn't get 'logged'
+* [#185] Fixed: .html is being appended to logged requests when there's a 404
+* [#184] Request logging should also print the message of the status code
 * [#181] Content-type can now be set with calling render.
 * [#179] When configatron.mack.show_exceptions is false you now either the public/404.html or public/500.html file.
 * [#178] Added a configure parameter to turn off log coloring
