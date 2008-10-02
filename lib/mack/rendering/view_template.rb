@@ -15,6 +15,10 @@ module Mack
         self.options = options
         @_yield_to_cache = {}
         Thread.current[:view_template] = self
+        # Define methods for :locals
+        (self.options[:locals] || {}).each do |k,v|
+          defined_instance_method(k) {v}
+        end
       end
       
       # Allows access to the current Mack::Controller object.
@@ -35,13 +39,6 @@ module Mack
       # Returns the Mack::CookieJar associated with the current Mack::Controller object.
       def cookies
         self.controller.cookies
-      end
-      
-      # If a method can not be found then the :locals key of
-      # the options is used to find the variable.
-      def method_missing(sym, *args)
-        raise NoMethodError.new(sym.to_s) unless self.options[:locals]
-        self.options[:locals][sym]
       end
       
       # Maps to the controller's param method. See also Mack::Controller::Base params.

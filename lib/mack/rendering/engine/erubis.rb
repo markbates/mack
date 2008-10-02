@@ -14,22 +14,20 @@ module Mack
           end
           
           eruby = nil
-          
-          # src = Mack::Rendering::Engine::Erubis::TemplateCache.instance.cache[io_src]
-          # if src.nil?
-          #   eruby = ::Erubis::Eruby.new(io_src)
-          #   src = eruby.src
-          #   Mack::Rendering::Engine::Erubis::TemplateCache.instance.cache[io_src] = src
-          # else
-          #   eruby = ::Erubis::Eruby.new
-          #   eruby.src = src
-          # end
 
-            eruby = ::Erubis::Eruby.new(io_src)
-            # src = eruby.src
+          eruby = ::Erubis::Eruby.new(io_src)
 
           eruby.filename = file_name
-          eruby.result(binding)
+          begin
+            eruby.result(binding)
+          rescue NoMethodError => e
+            if file_name
+              m = NoMethodError.new("undefined method `#{e.name}' for #{e.backtrace[0].match(/(^.+:\d)/).captures.first}")
+              m.set_backtrace(e.backtrace)
+              raise m
+            end
+            raise e
+          end
         end
         
         def extension
@@ -67,17 +65,6 @@ module Mack
         private
         def _erb_buffer( the_binding ) # :nodoc:
           eval( "_buf", the_binding, __FILE__, __LINE__)
-        end
-        
-        class TemplateCache # :nodoc:
-          include Singleton
-          
-          attr_reader :cache
-          
-          def initialize
-            @cache = {}
-          end
-          
         end
         
       end # Erubis
