@@ -260,9 +260,9 @@ module Mack
     #   end
     def render(render_type = :action, render_value = self.action_name, options = {})
       raise Mack::Errors::DoubleRender.new if render_performed?
-      response.status = options[:status] unless options[:status].nil?
-      options = {:content_type => Mack::Utils::MimeTypes[params[:format]], :layout => layout}.merge(options)
-      response.content_type = options[:content_type]
+      response.status = options[:status] if options[:status]
+      options = {:layout => layout}.merge(options)
+      response.content_type = options[:content_type] if options[:content_type]
       options.delete(:content_type)
       @view_template = Mack::Rendering::ViewTemplate.new(render_type, render_value, 
       {:format => params[:format].to_sym, :controller => self}.merge(options))

@@ -52,7 +52,7 @@ boot_load(:core_classes) do
   lib_dirs << "testing"# if Mack.env == "test"
   lib_dirs.each do |dir|
     dir_globs = Dir.glob(File.join(File.dirname(__FILE__), "mack", dir, "**/*.rb"))
-    dir_globs.each do |d|
+    dir_globs.sort.each do |d|
       require d unless d.match(/console/)
     end
   end

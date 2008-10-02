@@ -47,7 +47,7 @@ private
 # ----- Helper methods for Configuration Updater -------- #
 def convert_config_file(file)
   print "Converting: #{File.basename(file)}..."
-  dest_file = file.gsub(".yml", ".rb")
+  dest_file = file.gsub(".yml", ".rb").gsub('app_config', 'configatron')
   bak_file  = file
   hash = YAML.load(File.read(file))
   config_list = (hash) ? hash_to_configatron(hash) : []
@@ -56,6 +56,7 @@ def convert_config_file(file)
     line = update_data(line)
     data += (line + "\n")
   end
+  FileUtils.mkdir_p(File.dirname(dest_file))
   File.open(dest_file, "w") { |f| f.write(data.to_s) }
   puts "done."
 end
@@ -101,7 +102,7 @@ def hash_to_configatron(hash, configs = [], current_config = "configatron")
     if hash[key].is_a?Hash
       hash_to_configatron(hash[key], configs, (current_config + ".#{cleanup_key(key)}"))
     else
-      configs << current_config + ".#{cleanup_key(key)}=#{hash[key].inspect}"
+      configs << current_config + ".#{cleanup_key(key)} = #{hash[key].inspect}"
     end
   end
   return configs
