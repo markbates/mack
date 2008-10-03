@@ -26,7 +26,7 @@
 * gem: logging 0.9.4
 * gem: thin 1.0.0
 * gem: rspec 1.1.8
-* gem: configatron 2.1.2
+* gem: configatron 2.1.4
 * gem: cachetastic 2.0.0
 
 === 0.7.1.1

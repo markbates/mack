@@ -36,7 +36,7 @@ boot_load(:logging, :configuration) do
     end
   
     def self.reset_logger!
-      log_directory = configatron.log.retrieve(:root, Mack::Paths.log)
+      log_directory = configatron.mack.log.retrieve(:root, Mack::Paths.log)
       begin
         FileUtils.mkdir_p(log_directory)
       rescue Exception => e
@@ -45,7 +45,7 @@ boot_load(:logging, :configuration) do
       Mack.logger = ::Logging::RootLogger.new
       Mack.logger.add_appenders(::Logging::Appenders::File.new(Mack.env, :filename => File.join(log_directory, "#{Mack.env}.log"), :layout => Mack::Logging::BasicLayout.new))
       Mack.logger.add_appenders(::Logging::Appenders::Stdout.new(:layout => Mack::Logging::ColorLayout.new)) if Mack.env?(:development)
-      Mack.logger.level = configatron.log.retrieve(:level, :info)
+      Mack.logger.level = configatron.mack.log.retrieve(:level, :info)
     end
   
   end # Mack

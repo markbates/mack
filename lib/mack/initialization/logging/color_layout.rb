@@ -6,9 +6,9 @@ module Mack
       def format(event)
         message = super(event)
         if message.match(/^(SELECT|INSERT|UPDATE|DELETE|CREATE|DROP)/)
-          return Mack::Utils::Ansi::Color.wrap(configatron.log.colors.db, message)
+          return Mack::Utils::Ansi::Color.wrap(configatron.mack.log.colors.db, message)
         else
-          color = configatron.log.colors.retrieve(event.level_name.downcase.to_sym, nil)
+          color = configatron.mack.log.colors.retrieve(event.level_name.downcase.to_sym, nil)
           if color
             return Mack::Utils::Ansi::Color.wrap(color, message)
           else

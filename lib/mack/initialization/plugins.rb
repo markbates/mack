@@ -1,5 +1,5 @@
 boot_load(:plugins, :initializers) do
-  Mack.logger.debug "Initializing plugins..." unless configatron.log.disable_initialization_logging
+  Mack.logger.debug "Initializing plugins..." unless configatron.mack.log.disable_initialization_logging
   plugins = [] # a list of all plugins
   Dir.glob(Mack::Paths.plugins("*")).each do |d|
     plugins << d

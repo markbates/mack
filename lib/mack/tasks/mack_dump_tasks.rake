@@ -4,7 +4,7 @@ namespace :mack do
 
     desc "Dumps out the configuration for the specified environment."
     task :config => :environment do
-      pp Mack::Configuration.dump
+      puts Mack::Configuration.dump
     end # config
     
     desc "Show all the routes available"
