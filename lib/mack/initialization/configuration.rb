@@ -47,29 +47,29 @@ boot_load(:configuration) do
         configatron.mack.assets.stamp = Time.now.to_i
         configatron.mack.cookie_session_store.expiry_time = 4.hours
         
-        configatron.log.level = :info
-        configatron.log.detailed_requests = true
-        configatron.log.disable_initialization_logging = false
-        configatron.log.root = Mack::Paths.log
-        configatron.log.colors.db = :cyan
-        configatron.log.colors.error = :red
-        configatron.log.colors.fatal = :red
-        configatron.log.colors.warn = :yellow
-        configatron.log.colors.completed = :purple
-        configatron.log.use_colors = true
-        configatron.log.time_format = '%Y-%m-%d %H:%M:%S'
+        configatron.mack.log.level = :info
+        configatron.mack.log.detailed_requests = true
+        configatron.mack.log.disable_initialization_logging = false
+        configatron.mack.log.root = Mack::Paths.log
+        configatron.mack.log.colors.db = :cyan
+        configatron.mack.log.colors.error = :red
+        configatron.mack.log.colors.fatal = :red
+        configatron.mack.log.colors.warn = :yellow
+        configatron.mack.log.colors.completed = :purple
+        configatron.mack.log.use_colors = true
+        configatron.mack.log.time_format = '%Y-%m-%d %H:%M:%S'
       
         if Mack.env?(:production)
           configatron.mack.use_lint = false
           configatron.mack.show_exceptions = false
-          configatron.log.level = :info
-          configatron.log.detailed_requests = true
-          configatron.log.use_colors = false
+          configatron.mack.log.level = :info
+          configatron.mack.log.detailed_requests = true
+          configatron.mack.log.use_colors = false
         end
       
         if Mack.env?(:development)
           configatron.mack.cache_classes = false
-          configatron.log.level = :debug
+          configatron.mack.log.level = :debug
         end
 
         if Mack.env?(:test)
@@ -77,7 +77,7 @@ boot_load(:configuration) do
           configatron.mack.session_store = :test
           configatron.mack.disable_forgery_detector = true
           configatron.mack.run_remote_tests = true
-          configatron.log.level = :error
+          configatron.mack.log.level = :error
         end
 
         if File.exists?(Mack::Paths.configatron('default.rb'))
@@ -89,7 +89,7 @@ boot_load(:configuration) do
         end
     
         def self.dump
-          configatron.to_hash
+          configatron.inspect
         end
         
         LOADED = true

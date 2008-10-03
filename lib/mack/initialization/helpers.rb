@@ -1,6 +1,6 @@
 boot_load(:helpers, :logging) do
   # Include ApplicationHelper into all controllers:
-  Mack.logger.debug "Initializing helpers..." unless configatron.log.disable_initialization_logging
+  Mack.logger.debug "Initializing helpers..." unless configatron.mack.log.disable_initialization_logging
 
   module Mack
     module ControllerHelpers # :nodoc:

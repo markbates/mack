@@ -16,11 +16,11 @@ module Mack
         @end_time = Time.now
         @total_time = @end_time - @start_time
         @requests_per_second = (1 / @total_time).round
-        if configatron.log.detailed_requests
+        if configatron.mack.log.detailed_requests
           msg = "\n\t[#{request.params[:method].to_s.upcase}] '#{request.path_info}'\n"
           msg << "\tSession ID: #{request.session.id}\n" if configatron.mack.use_sessions
           msg << "\tParameters: #{request.all_params}\n"
-          msg << Mack::Utils::Ansi::Color.wrap(configatron.log.colors.completed, "\tCompleted in #{@total_time} (#{@requests_per_second} reqs/sec) | #{response.status} (#{Mack::Utils::HttpStatusCodes.get(response.status)}) [#{request.full_host}]")
+          msg << Mack::Utils::Ansi::Color.wrap(configatron.mack.log.colors.completed, "\tCompleted in #{@total_time} (#{@requests_per_second} reqs/sec) | #{response.status} (#{Mack::Utils::HttpStatusCodes.get(response.status)}) [#{request.full_host}]")
         else
           msg = "[#{request.request_method.upcase}] '#{request.path_info}' (#{total_time})"
         end

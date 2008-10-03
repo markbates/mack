@@ -40,13 +40,13 @@ boot_load(:paths) do
 end
 
 boot_load(:gems) do
-  Mack.logger.debug "Initializing custom gems..." unless configatron.log.disable_initialization_logging
+  Mack.logger.debug "Initializing custom gems..." unless configatron.mack.log.disable_initialization_logging
   load Mack::Paths.initializers("gems.rb")
   Mack::Utils::GemManager.instance.do_requires
 end
 
 boot_load(:core_classes) do
-  Mack.logger.debug "Initializing core classes..." unless configatron.log.disable_initialization_logging
+  Mack.logger.debug "Initializing core classes..." unless configatron.mack.log.disable_initialization_logging
   # Require all the necessary files to make Mack actually work!
   lib_dirs = ["assets", "errors", "core_extensions", "utils", "sessions", "runner_helpers", "routing", "view_helpers", "rendering", "controller", "tasks", "initialization/server", "generators", "distributed"]
   lib_dirs << "testing"# if Mack.env == "test"
@@ -63,7 +63,7 @@ boot_load(:runner) do
 end
 
 boot_load(:load_mack_core, :version, :paths, :configuration, :logging, :core_classes, :gems) do
-  Mack.logger.debug "Initialization of Mack Core finished." unless configatron.log.disable_initialization_logging
+  Mack.logger.debug "Initialization of Mack Core finished." unless configatron.mack.log.disable_initialization_logging
 end
 
 Mack::BootLoader.run(:load_mack_core)

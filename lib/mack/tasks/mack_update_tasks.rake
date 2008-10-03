@@ -63,11 +63,11 @@ end
 
 def update_data(old_data)
   updates = {
-    "configatron.log_level" => "configatron.log.level",
+    "configatron.mack.log_level" => "configatron.mack.log.level",
     "configatron.run_remote_tests" => "configatron.mack.run_remote_tests",
-    "configatron.log.db_color" => "configatron.log.colors.db",
-    "configatron.log.error_color" => "configatron.log.colors.error",
-    "configatron.log.completed_color" => "configatron.log.colors.completed",
+    "configatron.mack.log.db_color" => "configatron.mack.log.colors.db",
+    "configatron.mack.log.error_color" => "configatron.mack.log.colors.error",
+    "configatron.mack.log.completed_color" => "configatron.mack.log.colors.completed",
     "configatron.base_language" => "configatron.mack.localization.base_language",
     "configatron.supported_languages" => "configatron.mack.localization.supported_languages",
     "configatron.char_encoding" => "configatron.mack.localization.char_encoding",
