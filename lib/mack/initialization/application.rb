@@ -48,6 +48,6 @@ boot_load(:app_files, :default_controller) do
   
   # Add default assets
   assets_mgr.defaults do |a| 
-    a.add_css "scaffold"
+    a.add_css "scaffold" if File.exists?Mack::Paths.stylesheets("scaffold.css")
   end
 end

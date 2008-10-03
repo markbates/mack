@@ -130,7 +130,7 @@ module Mack
       
       def has_group?(group, asset_type = nil)
         if asset_type
-          return groups_by_asset_type(asset_type).include?group.to_s
+          return groups_by_asset_type(asset_type).include?(group.to_s)
         else
           return groups.include?(group)
         end
