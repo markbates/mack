@@ -25,26 +25,26 @@ module Spec # :nodoc:
     end
   end # Matchers
   
-  require 'spec/runner/formatter/base_text_formatter'
-  module Runner # :nodoc:
-    module Formatter # :nodoc:
-      class BaseTextFormatter < BaseFormatter # :nodoc:
-
-        def dump_pending
-          unless @pending_examples.empty?
-            @output.puts
-            @output.puts yellow("Pending:")
-            @pending_examples.each do |pending_example|
-              @output.puts yellow("#{pending_example[0]} (#{pending_example[1]})")
-              # @output.puts "  Called from #{pending_example[2]}"
-            end
-          end
-          @output.flush
-        end
-        
-      end # BaseTextFormatter
-    end # Formatter
-  end # Runner
+  # require 'spec/runner/formatter/base_text_formatter'
+  # module Runner # :nodoc:
+  #   module Formatter # :nodoc:
+  #     class BaseTextFormatter < BaseFormatter # :nodoc:
+  # 
+  #       def dump_pending
+  #         unless @pending_examples.empty?
+  #           @output.puts
+  #           @output.puts yellow("Pending:")
+  #           @pending_examples.each do |pending_example|
+  #             @output.puts yellow("#{pending_example[0]} (#{pending_example[1]})")
+  #             # @output.puts "  Called from #{pending_example[2]}"
+  #           end
+  #         end
+  #         @output.flush
+  #       end
+  #       
+  #     end # BaseTextFormatter
+  #   end # Formatter
+  # end # Runner
   
 end # Spec
 

@@ -17,7 +17,7 @@ module Mack
         Thread.current[:view_template] = self
         # Define methods for :locals
         (self.options[:locals] || {}).each do |k,v|
-          defined_instance_method(k) {v}
+          define_instance_method(k) {v}
         end
       end
       
