@@ -70,9 +70,9 @@ describe Mack::Assets::Manager do
       end
     end
     
-    it "should have scaffold.css in the default group" do
-      assets_mgr.assets(:stylesheets, 'defaults').include?('scaffold.css').should == true
-    end
+    # it "should have scaffold.css in the default group" do
+    #   assets_mgr.assets(:stylesheets, 'defaults').include?('scaffold.css').should == true
+    # end
     
     it "should accept array" do
       assets_mgr.assets(:stylesheets, 'test').include?('a.css').should == true
