@@ -32,8 +32,8 @@ module Mack
         
         # Retrieves the contents of the url using either GET or POST, passing along any specified parameters.
         def render
-          options = {:method => :get, :raise_exception => false}.merge(self.options)
-          url = self.render_value
+          options = {:method => :get, :raise_exception => false}.merge(self._options)
+          url = self._render_value
           remote = url.match(/^[a-zA-Z]+:\/\//)
           case options[:method]
           when :get
@@ -43,7 +43,7 @@ module Mack
               end
             else
               do_render_local_url(url, options) do |url, options|
-                Rack::MockRequest.new(self.app_for_rendering).get(url, options)
+                Rack::MockRequest.new(self._app_for_rendering).get(url, options)
               end
             end
           when :post
@@ -53,7 +53,7 @@ module Mack
               end
             else
               do_render_local_url(url, options) do |url, options|
-                Rack::MockRequest.new(self.app_for_rendering).post(url, options)
+                Rack::MockRequest.new(self._app_for_rendering).post(url, options)
               end
             end
           else

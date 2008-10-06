@@ -9,7 +9,7 @@ module Mack
       class Text < Mack::Rendering::Type::Base
         
         def render
-          self.render_value
+          self._render_value
         end
         
       end # Text

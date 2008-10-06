@@ -10,8 +10,8 @@ module Mack
       class Inline < Mack::Rendering::Type::Base
         
         def render
-          @engine = find_engine((self.options[:engine] || :erubis)).new(self.view_template)
-          return @engine.render(self.render_value, self.binder)
+          @engine = find_engine((self._options[:engine] || :erubis)).new(self.view_template)
+          return @engine.render(self._render_value, self._binder)
         end
         
         # Passes concatenation messages through to the Mack::Rendering::Engine object.
