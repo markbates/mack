@@ -63,7 +63,7 @@ module CommonHelpers
   end
   
   def erb(template)
-    Mack::Rendering::ViewTemplate.new(:inline, template, :controller => MockController.new).compile_and_render
+    Mack::Rendering::ViewTemplate.new(:inline, template, :controller => MockController.new)._compile_and_render
   end
   
   def view_template

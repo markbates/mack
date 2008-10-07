@@ -9,9 +9,9 @@ module Mack
         # Attempts to find the file on disk and return it. If no file extension is provided then the 'format' 
         # of the request is appended to the file name.
         def render
-          p_file = self.render_value
+          p_file = self._render_value
           if File.extname(p_file).blank?
-            p_file = "#{p_file}.#{self.options[:format]}"
+            p_file = "#{p_file}.#{self._options[:format]}"
           end
           find_file(Mack::Paths.public(p_file)) do |f|
             return File.open(f).read

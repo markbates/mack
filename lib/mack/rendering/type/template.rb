@@ -13,7 +13,7 @@ module Mack
         # Example:
         #   <%= render(:template, "users/show") %> # => app/views/users/show.html.erb
         def render
-          t_file = Mack::Paths.views("#{self.render_value}.#{self.options[:format]}")
+          t_file = Mack::Paths.views("#{self._render_value}.#{self._options[:format]}")
           render_file(t_file, :template)
         end
         

@@ -12,7 +12,7 @@ module Mack
         # Example:
         #   app/views/layouts/application.html.erb 
         def render
-          l_file = Mack::Paths.layouts("#{self.options[:layout]}.#{self.options[:format]}")
+          l_file = Mack::Paths.layouts("#{self._options[:layout]}.#{self._options[:format]}")
           begin
             render_file(l_file, :layout)
           rescue Mack::Errors::ResourceNotFound => e

@@ -1,3 +1,7 @@
+=== 0.8.0.1
+* [#190] Fixed ViewTemplate methods can easily be overridden
+
+=== 0.8.0
 * [#187] Fixed: When an exception is raised, the request doesn't get 'logged'
 * [#185] Fixed: .html is being appended to logged requests when there's a 404
 * [#184] Request logging should also print the message of the status code

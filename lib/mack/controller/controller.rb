@@ -272,7 +272,7 @@ module Mack
     private
     def do_render
       render unless @view_template
-      @rendered_action = @view_template.compile_and_render
+      @rendered_action = @view_template._compile_and_render
     end
 
     def layout

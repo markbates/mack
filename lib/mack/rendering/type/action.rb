@@ -28,7 +28,7 @@ module Mack
         # Example:
         #   app/views/users/show.html.erb 
         def render
-          a_file = File.join(self.controller_view_path, "#{self.render_value}.#{self.options[:format]}")
+          a_file = File.join(self.controller_view_path, "#{self._render_value}.#{self._options[:format]}")
           render_file(a_file)
         end
         
