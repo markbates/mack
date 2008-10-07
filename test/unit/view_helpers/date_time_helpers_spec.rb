@@ -112,7 +112,27 @@ describe Mack::ViewHelpers::FormHelpers do
       dts.should match(/expected_date\(day\)/)
       dts.should match(/<option value="24" selected>24<\/option>/)
     end
+
+  end
+
+  describe "date/time order" do
+    it "should handle date reordering" do
+      @dilbert = Dilbert.new
+      @dilbert.created_at = Time.parse("2008-8-16 19:35")
+      date_time_select(:dilbert, :created_at, :date_order => [:day, :month, :year]).should == fixture("date_time_select_with_date_ordering.html")
+    end
     
+    it "should handle time reordering" do
+      @dilbert = Dilbert.new
+      @dilbert.created_at = Time.parse("2008-8-16 19:35")
+      date_time_select(:dilbert, :created_at, :time_order => [:minute, :second, :hour]).should == fixture("date_time_select_with_time_ordering.html")      
+    end
+    
+    it "should handle date time group reordering" do
+      @dilbert = Dilbert.new
+      @dilbert.created_at = Time.parse("2008-8-16 19:35")
+      date_time_select(:dilbert, :created_at, :date_order => [:day, :month, :year], :date_time_order => [:time, :date]).should == fixture("date_time_select_with_date_time_ordering.html")
+    end
   end
   
   describe "params" do
