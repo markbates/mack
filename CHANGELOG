@@ -1,5 +1,6 @@
 === 0.8.0.1
 * [#190] Fixed ViewTemplate methods can easily be overridden
+* [#134] 'errorfy' form elements [this update include changes in mack-active_record, mack-data_mapper, and mack-notifier]
 * [#131] Added ability to rearrange date/time select
 === 0.8.0
 * [#187] Fixed: When an exception is raised, the request doesn't get 'logged'
