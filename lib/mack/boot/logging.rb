@@ -1,5 +1,13 @@
-boot_load(:logging, :configuration) do
+require 'rubygems'
+require 'mack-facets'
+
+run_once do
   
+  require File.join_from_here('configuration.rb')
+  
+  puts "Initializing logging..."
+  
+  gem 'logging'
   require 'logging'
   
   require File.join_from_here("..", "utils", "ansi", "ansi_color.rb")
@@ -51,8 +59,6 @@ boot_load(:logging, :configuration) do
   
   end # Mack
 
-  unless Mack.logger
-    Mack.reset_logger!
-  end
+  Mack.reset_logger!
 
-end # boot_load
+end # run_once

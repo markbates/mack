@@ -288,8 +288,17 @@ module Mack
           end
           options[:value] = var.send(fe.calling_method)
           
+          if var.error_for(fe.calling_method)
+            fe.options = {:error_class => "error"}.merge(fe.options)
+            class_arr = fe.options[:class].to_s.split(" ").collect { |s| s.strip }
+            class_arr << fe.options[:error_class]
+            fe.options[:class] = class_arr.join(" ")
+          end
+          
           yield var, fe, options if block_given?
           
+          # we don't need the error_class by this time, since if used it will get appended into options[:class]
+          fe.options.delete(:error_class)
           return label_parameter_tag(name, options[:id], var, fe) + non_content_tag(:input, options.merge(fe.options))
         end
       end

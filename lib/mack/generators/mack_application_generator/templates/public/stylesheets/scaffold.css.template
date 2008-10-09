@@ -168,3 +168,7 @@ label {
   display: inline-block;
 }
 
+.error {
+  border: 2px solid red;
+  padding: 2px 2px 2px 2px;
+}

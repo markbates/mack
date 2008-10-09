@@ -1,5 +1,12 @@
 module Kernel
   
+  #
+  # Return the instance of the AssetManager class.
+  #
+  def assets_mgr
+    return Mack::Assets::Manager.instance
+  end
+  
   # Returns Mack::Utils::GemManager
   def require_gems
     yield Mack::Utils::GemManager.instance

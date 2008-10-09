@@ -10,11 +10,6 @@ require 'rubygems'
 require 'fileutils'
 require 'thin'
 
-module Rack
-  ADAPTERS[:mack] = 'config/configatron/default.rb' if ADAPTERS.is_a?(Hash)
-  ADAPTERS << [:mack, 'config/configatron/default.rb'] if ADAPTERS.is_a?(Array)
-end
-
 require 'mack'
 
 handler = "thin"
