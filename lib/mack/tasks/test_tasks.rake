@@ -3,6 +3,7 @@ require 'pathname'
 require 'spec'
 require 'spec/rake/spectask'
 require 'fileutils'
+require 'mack-facets'
 namespace :test do
   
   task :setup do
@@ -10,8 +11,7 @@ namespace :test do
   
   desc "Run test code."
   Rake::TestTask.new(:test_case) do |t|
-    require File.join(File.dirname(__FILE__), '..', 'initialization', 'configuration')
-    Mack::BootLoader.run(:configuration)
+    require File.join_from_here('..', 'boot', 'configuration.rb')
     t.libs << "test"
     t.pattern = configatron.mack.send("#{configatron.mack.testing_framework}_file_pattern")
     t.verbose = true
@@ -19,8 +19,7 @@ namespace :test do
   
   desc 'Run specifications'
   Spec::Rake::SpecTask.new(:rspec) do |t|
-    require File.join(File.dirname(__FILE__), '..', 'initialization', 'configuration')
-    Mack::BootLoader.run(:configuration)
+    require File.join_from_here('..', 'boot', 'configuration.rb')
     t.spec_opts << '--options' << 'test/spec.opts' if File.exists?('test/spec.opts')
     t.spec_files = Dir.glob(configatron.mack.send("#{configatron.mack.testing_framework}_file_pattern"))
   end

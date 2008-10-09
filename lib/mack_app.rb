@@ -5,7 +5,7 @@ if __FILE__ == $0
 end
 
 run_once do
-  [:hello, :core, :lib, :initializers, :routes, :app, :helpers].each do |f|
+  [:hello, :core, :gems, :plugins, :lib, :initializers, :routes, :app, :helpers].each do |f|
     require File.join_from_here('mack', 'boot', "#{f}.rb")
   end
 end
