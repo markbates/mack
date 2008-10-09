@@ -11,7 +11,7 @@ run_once do
   require File.join_from_here('logging.rb')
   require File.join_from_here('extensions.rb')
   
-  Mack.logger.debug "Initializing custom gems..." unless configatron.mack.log.disable_initialization_logging
+  Mack.logger.debug "Initializing custom gem Rake tasks..." unless configatron.mack.log.disable_initialization_logging
   
   require File.join_from_here('..', 'utils', 'gem_manager.rb')
   
