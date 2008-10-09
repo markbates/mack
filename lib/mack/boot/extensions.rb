@@ -6,7 +6,7 @@ run_once do
   
   Dir.glob(File.join_from_here('..', 'core_extensions', '**/*.rb')).each do |d|
     d = File.expand_path(d)
-    puts d
+    # puts d
     require d
   end
   

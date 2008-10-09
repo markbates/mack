@@ -4,7 +4,7 @@ run_once do
   require File.join_from_here('paths.rb')
   require File.join_from_here('extensions.rb')
   
-  init_message('configuration')
+  # init_message('configuration')
   
   module Mack
     module Configuration

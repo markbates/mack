@@ -11,7 +11,7 @@ run_once do
   lib_dirs.each do |dir|
     dir_globs = Dir.glob(File.join_from_here("..", dir, "**/*.rb"))
     dir_globs.sort.each do |d|
-      puts File.expand_path(d)
+      # puts File.expand_path(d)
       require File.expand_path(d) unless d.match(/console/)
     end
   end

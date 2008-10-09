@@ -16,7 +16,7 @@ run_once do
   search_path(:lib).each do |path|
     Dir.glob(File.join(path, "**/*.rb")).each do |d|
       d = File.expand_path(d)
-      puts d
+      # puts d
       require d
     end
   end

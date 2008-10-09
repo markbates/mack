@@ -20,7 +20,7 @@ run_once do
     Dir.glob(File.join(path, "**/*.rb")).each do |d|
       begin
         d = File.expand_path(d)
-        puts d
+        # puts d
         require d
       rescue NameError => e
         if e.message.match("uninitialized constant")
