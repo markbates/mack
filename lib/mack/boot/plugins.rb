@@ -13,7 +13,7 @@ run_once do
   
   plugins = [] # a list of all plugins
   
-  search_path(:plugins).each do |path|
+  Mack.search_path(:plugins).each do |path|
     Dir.glob(File.join(path, '*')).each do |d|
       plugins << d
       $: << File.join(d, "lib") # add the lib for this plugin to the global load path

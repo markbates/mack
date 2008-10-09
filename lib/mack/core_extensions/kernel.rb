@@ -1,23 +1,5 @@
 module Kernel
   
-  def search_path(key)
-    if $__mack_search_path.nil?
-      $__mack_search_path = {}
-    end
-    paths = ($__mack_search_path[key.to_sym] ||= []).dup
-    paths << Mack::Paths.send(key) if Mack::Paths.methods.include?(key.to_s)
-    paths.flatten.uniq
-  end
-  
-  def add_search_path(key, path)
-    if $__mack_search_path.nil?
-      $__mack_search_path = {}
-    end
-    paths = ($__mack_search_path[key.to_sym] ||= [])
-    paths << File.expand_path(path)
-    $__mack_search_path[key.to_sym] = paths
-  end
-  
   def init_message(message) # :nodoc:
     message = "Initializing '#{message}' ..."
     if Mack.methods.include?('logger')

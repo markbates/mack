@@ -10,6 +10,7 @@ module Mack
         # Since engines are stored in an array, the are looped through until a template is found on disk.
         # If no template is found then a Mack::Errors::ResourceNotFound exception is thrown.
         def render_file(file, type = :action)
+
           Mack::Rendering::Engine::Registry.engines[type].each do |e|
             @engine = find_engine(e).new(self.view_template)
             find_file(file + ".#{@engine.extension}") do |f|
