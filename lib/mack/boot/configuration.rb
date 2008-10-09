@@ -1,11 +1,10 @@
-require 'mack-facets'
 require 'configatron'
-require 'fileutils'
 
 run_once do
   require File.join_from_here('paths.rb')
+  require File.join_from_here('extensions.rb')
   
-  puts "Initializing configuration..."
+  init_message('configuration')
   
   module Mack
     module Configuration
@@ -62,13 +61,14 @@ run_once do
         configatron.mack.run_remote_tests = true
         configatron.mack.log.level = :error
       end
-
-      if File.exists?(Mack::Paths.configatron('default.rb'))
-        require Mack::Paths.configatron('default.rb')
-      end
-    
-      if File.exists?(Mack::Paths.configatron("#{Mack.env}.rb"))
-        require Mack::Paths.configatron("#{Mack.env}.rb")
+      
+      search_path(:configatron).each do |path|
+        [:default, Mack.env].each do |f|
+          fp = File.join(path, "#{f}.rb")
+          if File.exists?(fp)
+            require fp
+          end
+        end
       end
   
       def self.dump

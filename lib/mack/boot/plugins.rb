@@ -9,11 +9,15 @@ run_once do
   
   require File.join_from_here('gems.rb')
   
-  Mack.logger.debug "Initializing plugins..." unless configatron.mack.log.disable_initialization_logging
+  init_message('plugins')
+  
   plugins = [] # a list of all plugins
-  Dir.glob(Mack::Paths.plugins("*")).each do |d|
-    plugins << d
-    $: << File.join(d, "lib") # add the lib for this plugin to the global load path
+  
+  search_path(:plugins).each do |path|
+    Dir.glob(File.join(path, '*')).each do |d|
+      plugins << d
+      $: << File.join(d, "lib") # add the lib for this plugin to the global load path
+    end
   end
   plugins.sort.each do |plug|
     begin

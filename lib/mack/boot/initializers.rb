@@ -9,12 +9,14 @@ run_once do
   
   require File.join_from_here('core')
   
-  Mack.logger.debug "Initializing custom initializers..." unless configatron.mack.log.disable_initialization_logging
+  init_message('initializers')
   
-  Dir.glob(Mack::Paths.initializers('**/*.rb')).each do |d|
-    d = File.expand_path(d)
-    puts d
-    require d
+  search_path(:initializers).each do |path|
+    Dir.glob(File.join(path, '**/*.rb')).each do |d|
+      d = File.expand_path(d)
+      puts d
+      require d
+    end
   end
   
 end

@@ -31,7 +31,7 @@ rescue Exception => e
 end
 
 run_once do
-  [:version, :paths, :environment, :extensions, :configuration, :logging, :assets, :core, :gems].each do |f|
+  [:version, :extensions, :paths, :environment, :configuration, :logging, :assets, :core, :gems].each do |f|
     require File.join_from_here('mack', 'boot', "#{f}.rb")
   end
 end

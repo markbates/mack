@@ -1,6 +1,5 @@
 require 'fileutils'
 run_once do
-  puts "Initializing paths..."
   
   module Mack
     

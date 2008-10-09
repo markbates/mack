@@ -9,7 +9,7 @@ run_once do
 
   require File.join_from_here('app')
   
-  Mack.logger.debug "Initializing helpers..." unless configatron.mack.log.disable_initialization_logging
+  init_message('helpers')
 
   module Mack
     module ControllerHelpers # :nodoc:

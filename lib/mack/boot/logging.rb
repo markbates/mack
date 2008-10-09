@@ -5,7 +5,7 @@ run_once do
   
   require File.join_from_here('configuration.rb')
   
-  puts "Initializing logging..."
+  init_message('logging')
   
   gem 'logging'
   require 'logging'
