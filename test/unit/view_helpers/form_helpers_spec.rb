@@ -9,6 +9,10 @@ describe Mack::ViewHelpers::FormHelpers do
     attr_accessor :honest
     
     def error_for(name)
+      return "Lawyer can't be honest" if name.to_s == "honest"
+    end
+    
+    def has_error?(name)
       return true if name.to_s == "honest"
       return false
     end
@@ -46,6 +50,10 @@ describe Mack::ViewHelpers::FormHelpers do
     
     it "should let user override the error class" do
       text_field(:lawyer, :honest, :class => "foo", :error_class => "bar").should == %{<input class="foo bar" id="lawyer_honest" name="lawyer[honest]" type="text" value="false" />}
+    end
+    
+    it "should let user know what the field error is" do
+      @lawyer.error_for(:honest).should_not be_nil
     end
   end
   
