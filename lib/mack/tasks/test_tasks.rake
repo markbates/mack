@@ -79,8 +79,7 @@ namespace :test do
 end
 
 task :default do
-  require File.join(File.dirname(__FILE__), '..', 'initialization', 'configuration')
-  Mack::BootLoader.run(:configuration)
+  require File.join_from_here('..', 'boot', 'configuration.rb')
   tf = "rspec"
   begin
     tf = configatron.mack.testing_framework
