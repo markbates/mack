@@ -11,7 +11,7 @@ run_once do
   
   init_message('routes')
   
-  search_path(:config).each do |path|
+  Mack.search_path(:config).each do |path|
     f = File.join(path, 'routes.rb')
     require f if File.exists?(f)
   end

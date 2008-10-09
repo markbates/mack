@@ -16,7 +16,7 @@ run_once do
   path = Mack::Paths.controllers("default_controller.rb")
   require path if File.exists?(path)
   
-  search_path(:app).each do |path|
+  Mack.search_path(:app).each do |path|
     Dir.glob(File.join(path, "**/*.rb")).each do |d|
       begin
         d = File.expand_path(d)

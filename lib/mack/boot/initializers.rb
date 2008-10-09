@@ -11,7 +11,7 @@ run_once do
   
   init_message('initializers')
   
-  search_path(:initializers).each do |path|
+  Mack.search_path(:initializers).each do |path|
     Dir.glob(File.join(path, '**/*.rb')).each do |d|
       d = File.expand_path(d)
       # puts d

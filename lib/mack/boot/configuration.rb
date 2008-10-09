@@ -62,7 +62,7 @@ run_once do
         configatron.mack.log.level = :error
       end
       
-      search_path(:configatron).each do |path|
+      Mack.search_path(:configatron).each do |path|
         [:default, Mack.env].each do |f|
           fp = File.join(path, "#{f}.rb")
           if File.exists?(fp)

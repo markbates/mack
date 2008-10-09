@@ -13,7 +13,7 @@ run_once do
   
   init_message('lib')
   
-  search_path(:lib).each do |path|
+  Mack.search_path(:lib).each do |path|
     Dir.glob(File.join(path, "**/*.rb")).each do |d|
       d = File.expand_path(d)
       # puts d
