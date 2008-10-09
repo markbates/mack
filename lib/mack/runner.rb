@@ -122,11 +122,13 @@ module Mack
       path = env["PATH_INFO"].dup
       path << ".html" if File.extname(path).blank?
       
-      if File.exists?(Mack::Paths.public(path))
-        return Rack::File.new(Mack::Paths.public).call(Rack::MockRequest.env_for(path))
-      else
-        raise exception
+      Mack.search_path(:public).each do |p|
+        f = File.join(p, path)
+        if File.exists?(f)
+          return Rack::File.new(p).call(Rack::MockRequest.env_for(path))
+        end
       end
+      raise exception
     end
     
     # This will redirect the request to the specified url. A default status of

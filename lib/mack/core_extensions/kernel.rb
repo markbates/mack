@@ -9,6 +9,16 @@ module Kernel
     end
   end
   
+  # Returns Mack::Portlets::Manager
+  def require_portlets
+    yield Mack::Utils::PortletsManager.instance
+  end
+  
+  # Returns an Array of gems required by the Mack::Portlets::Manager
+  def required_portlets_list
+    Mack::Utils::PortletsManager.instance.required_portlet_list
+  end
+  
   #
   # Return the instance of the AssetManager class.
   #

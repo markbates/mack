@@ -19,6 +19,7 @@ else
   require File.join(fl, 'boot', 'version.rb')
   require File.join(fl, 'boot', 'extensions.rb')
   require File.join(fl, 'boot', 'paths.rb')
+  require File.join(fl, 'boot', 'portlets.rb')
   require File.join(fl, 'boot', 'configuration.rb')
   require File.join(fl, 'boot', 'environment.rb')
   require File.join(fl, 'boot', 'gem_tasks.rb')
