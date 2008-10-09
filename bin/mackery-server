@@ -1,9 +1,9 @@
 #!/usr/local/bin/ruby
 # require File.join(File.dirname(__FILE__), "options_handler")
 
-require File.join(File.dirname(__FILE__), "env_handler")
+require File.expand_path(File.join(File.dirname(__FILE__), "env_handler.rb"))
 
-require File.join(File.dirname(__FILE__), "gem_load_path")
+require File.expand_path(File.join(File.dirname(__FILE__), "gem_load_path.rb"))
 
 require 'rubygems'
 
@@ -36,5 +36,26 @@ else
   if ARGV.include?("-p")
     port = ARGV[ARGV.index("-p") + 1]
   end
+  
+  module Mack
+    # Even though it's called, SimpleServer, this might be the only server you need to run
+    # a Mack application.
+    # 
+    # This SimpleServer does not use Thin. But does work with anything that Rack has a handler for.
+    class SimpleServer
+
+      class << self
+
+        def run(options)
+          r = "Rack::Handler::#{options[:handler].camelcase}"
+          puts "Starting app using: #{r} in #{options[:environment]} mode on port: #{options[:port]}"
+          eval(r).run(Mack::Utils::Server.build_app, :Port => options[:port])
+        end
+
+      end
+
+    end
+  end
+  
   Mack::SimpleServer.run(:handler => handler, :port => port, :environment => ENV["MACK_ENV"])
 end
