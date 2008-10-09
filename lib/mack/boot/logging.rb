@@ -1,10 +1,19 @@
-boot_load(:logging, :configuration) do
+require 'rubygems'
+require 'mack-facets'
+
+run_once do
   
+  require File.join_from_here('configuration.rb')
+  
+  # init_message('logging')
+  
+  gem 'logging'
   require 'logging'
-  require File.join(File.dirname(__FILE__), "..", "utils", "ansi", "ansi_color")
-  require File.join(File.dirname(__FILE__), 'logging', 'filter')
-  require File.join(File.dirname(__FILE__), 'logging', 'basic_layout')
-  require File.join(File.dirname(__FILE__), 'logging', 'color_layout')
+  
+  require File.join_from_here("..", "utils", "ansi", "ansi_color.rb")
+  require File.join_from_here('logging', 'filter')
+  require File.join_from_here('logging', 'basic_layout.rb')
+  require File.join_from_here('logging', 'color_layout.rb')
   
   module Logging # :nodoc:
     
@@ -50,8 +59,6 @@ boot_load(:logging, :configuration) do
   
   end # Mack
 
-  unless Mack.logger
-    Mack.reset_logger!
-  end
+  Mack.reset_logger!
 
-end # boot_load
+end # run_once

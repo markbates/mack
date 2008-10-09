@@ -1,16 +1,17 @@
 #!/usr/local/bin/ruby
 # require File.join(File.dirname(__FILE__), "options_handler")
 
-require File.join(File.dirname(__FILE__), "env_handler")
+require File.expand_path(File.join(File.dirname(__FILE__), "env_handler.rb"))
 
-require File.join(File.dirname(__FILE__), "gem_load_path")
+require File.expand_path(File.join(File.dirname(__FILE__), "gem_load_path.rb"))
 
 libs = []
 libs << "-r irb/completion"
-mack_lib_path = File.join(FileUtils.pwd, 'vendor', 'framework', 'mack', 'lib', 'mack')
+mack_lib_path = File.expand_path(File.join(FileUtils.pwd, 'vendor', 'framework', 'mack', 'lib', 'mack'))
+
 if File.exists?(mack_lib_path)
-  libs << "-r #{File.join(mack_lib_path, 'initialization', 'console')}"  
+  libs << "-r #{File.expand_path(File.join(mack_lib_path, 'boot', 'console'))}"  
 else
-  libs << "-r #{File.join(File.dirname(__FILE__), '..', 'lib', 'mack', 'initialization', 'console')}"
+  libs << "-r #{File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib', 'mack', 'boot', 'console'))}"
 end
 system "irb #{libs.join(" ")} --simple-prompt"

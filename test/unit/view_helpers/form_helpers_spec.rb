@@ -55,6 +55,7 @@ describe Mack::ViewHelpers::FormHelpers do
     it "should let user know what the field error is" do
       @lawyer.error_for(:honest).should_not be_nil
     end
+
   end
   
   describe "check_box" do
