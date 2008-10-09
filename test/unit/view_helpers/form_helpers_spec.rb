@@ -4,6 +4,20 @@ require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 describe Mack::ViewHelpers::FormHelpers do
   include Mack::ViewHelpers
   
+  class Lawyer
+    attr_accessor :full_name
+    attr_accessor :honest
+    
+    def error_for(name)
+      return "Lawyer can't be honest" if name.to_s == "honest"
+    end
+    
+    def has_error?(name)
+      return true if name.to_s == "honest"
+      return false
+    end
+  end
+  
   class Cop
     attr_accessor :full_name
     attr_accessor :level
@@ -19,6 +33,28 @@ describe Mack::ViewHelpers::FormHelpers do
     @simple = "hi"
     @default_file = "~/resume.doc"
     @select_options = [["one", 1], ["two", 2], ["three", 3]]
+    
+    @lawyer = Lawyer.new
+    @lawyer.full_name = "foo bar"
+    @lawyer.honest = false
+  end
+  
+  describe "error" do
+    it "should add extra css to form field if there's an error" do
+      text_field(:lawyer, :honest).should == %{<input class="error" id="lawyer_honest" name="lawyer[honest]" type="text" value="false" />}
+    end
+    
+    it "should put the error class in the first class list so it doesn't override existing style definition" do
+      text_field(:lawyer, :honest, :class => "foo").should == %{<input class="foo error" id="lawyer_honest" name="lawyer[honest]" type="text" value="false" />}
+    end
+    
+    it "should let user override the error class" do
+      text_field(:lawyer, :honest, :class => "foo", :error_class => "bar").should == %{<input class="foo bar" id="lawyer_honest" name="lawyer[honest]" type="text" value="false" />}
+    end
+    
+    it "should let user know what the field error is" do
+      @lawyer.error_for(:honest).should_not be_nil
+    end
   end
   
   describe "check_box" do
