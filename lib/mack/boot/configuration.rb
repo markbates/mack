@@ -40,6 +40,8 @@ run_once do
       configatron.mack.log.colors.completed = :purple
       configatron.mack.log.use_colors = true
       configatron.mack.log.time_format = '%Y-%m-%d %H:%M:%S'
+      
+      configatron.mack.static_paths = ["/css", "/images", "/files", "/images", "/stylesheets", "/javascripts", "/media", "/favicon.ico"]
     
       if Mack.env?(:production)
         configatron.mack.use_lint = false
