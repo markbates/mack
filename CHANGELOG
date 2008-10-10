@@ -1,4 +1,6 @@
 * [#193] Portlet Support
+* [#134] Form elements are now 'errorfied'.
+* [#131] Date/Time select boxes can now be easily re-arranged.
 * gem: configatron 2.1.5
 
 === 0.8.0.2
