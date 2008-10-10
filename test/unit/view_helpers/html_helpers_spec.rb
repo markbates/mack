@@ -84,6 +84,10 @@ describe Mack::ViewHelpers::HtmlHelpers do
     it "should generate content when img is called" do
       img("foo.jpg").should_not be_nil
       img("foo.jpg").should_not be_empty
+      img("foo.jpg").should match('/images/foo.jpg')
+      img("/foo.jpg").should match('/foo.jpg')
+      img("/images/foo.jpg").should match('/images/foo.jpg')
+      img("images/foo.jpg").should match('/images/foo.jpg')
     end
     
     it "should generate proper img tag" do

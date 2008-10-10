@@ -19,12 +19,13 @@ else
   require File.join(fl, 'boot', 'version.rb')
   require File.join(fl, 'boot', 'extensions.rb')
   require File.join(fl, 'boot', 'paths.rb')
+  require File.join(fl, 'boot', 'portlets.rb')
   require File.join(fl, 'boot', 'configuration.rb')
   require File.join(fl, 'boot', 'environment.rb')
   require File.join(fl, 'boot', 'gem_tasks.rb')
   
   # Requires all rake tasks that ship with the Mack framework.
-  [fl, Mack::Paths.lib, Mack::Paths.plugins].each do |dir|
+  [fl, Mack.search_path(:lib), Mack.search_path(:plugins)].flatten.each do |dir|
     begin
       require File.join(dir, "tasks", "rake_helpers.rb")
     rescue Exception => e

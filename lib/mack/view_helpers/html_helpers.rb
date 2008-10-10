@@ -28,6 +28,16 @@ module Mack
       
       # Builds a HTML image tag.
       def img(image_src, options = {})
+        image_src = case image_src.to_s
+        when /^\/images/
+          image_src
+        when /^images/
+          '/' + image_src
+        when /^\//
+          image_src
+        else
+          '/images/' + image_src
+        end
         image_src = "#{get_resource_root(image_src)}#{image_src}?#{configatron.mack.assets.stamp}"
         non_content_tag(:img, {:src => image_src}.merge(options))
       end

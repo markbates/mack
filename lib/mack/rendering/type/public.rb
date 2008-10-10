@@ -13,8 +13,10 @@ module Mack
           if File.extname(p_file).blank?
             p_file = "#{p_file}.#{self._options[:format]}"
           end
-          find_file(Mack::Paths.public(p_file)) do |f|
-            return File.open(f).read
+          Mack.search_path(:public).each do |path|
+            find_file(File.join(path, p_file)) do |f|
+              return File.open(f).read
+            end
           end
           raise Mack::Errors::ResourceNotFound.new(p_file)
         end
