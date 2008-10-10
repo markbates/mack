@@ -35,10 +35,12 @@ database_yml:
   template_path: <%= File.join(templates_directory_path, "config", "#{f}.template") %>
   output_path: <%= File.join(app_name, "config", f) %>
 <% end -%>
-gems_rb:
+<% [:gems, :inflections, :mime_types, :portlets].each do |f| -%>
+initializers_<%= f %>_rb:
   type: file
-  template_path: <%= File.join(templates_directory_path, "config", "initializers", "gems.rb.template") %>
-  output_path: <%= File.join(app_name, "config", "initializers", "gems.rb") %>
+  template_path: <%= File.join(templates_directory_path, "config", "initializers", "#{f}.rb.template") %>
+  output_path: <%= File.join(app_name, "config", "initializers", "#{f}.rb") %>
+<% end -%>
 favicon:
   type: file
   template_path: <%= File.join(templates_directory_path, "public", "favicon.ico.template") %>

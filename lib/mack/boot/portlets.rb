@@ -2,7 +2,9 @@ run_once do
   
   require File.join_from_here('paths.rb')
   
-  require File.join_from_here('..', 'utils', 'portlets_manager.rb')
+  Dir.glob(File.join_from_here('..', 'portlets', '**/*.rb')).each do |d|
+    require File.expand_path(d)
+  end
   
   Mack.search_path(:initializers).each do |path|
     f = File.join(path, 'portlets.rb')
