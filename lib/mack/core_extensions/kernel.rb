@@ -11,12 +11,12 @@ module Kernel
   
   # Returns Mack::Portlets::Manager
   def require_portlets
-    yield Mack::Utils::PortletsManager.instance
+    yield Mack::Portlet::Manager.instance
   end
   
   # Returns an Array of gems required by the Mack::Portlets::Manager
   def required_portlets_list
-    Mack::Utils::PortletsManager.instance.required_portlet_list
+    Mack::Portlet::Manager.instance.required_portlet_list
   end
   
   #

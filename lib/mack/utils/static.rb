@@ -7,6 +7,7 @@ module Mack
 
       if can_serve
         res = @file_server.call(env)
+        # This is the BIG difference between Mack::Static and Rack::Static:
         return @app.call(env) if res.nil? || res[0] == 404
         return res
       else

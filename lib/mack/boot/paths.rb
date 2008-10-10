@@ -187,6 +187,21 @@ run_once do
       def self.plugins(*files)
         Mack::Paths.vendor("plugins", *files)
       end
+      
+      # <MACK_PROJECT_ROOT>/tmp/portlet_package
+      def self.portlet_package(*files)
+        Mack::Paths.tmp('portlet_package', *files)
+      end
+      
+      # <MACK_PROJECT_ROOT>/portlet_config
+      def self.portlet_config(*files)
+        Mack::Paths.root('portlet_config', *files)
+      end
+      
+      # <MACK_PROJECT_ROOT>/bin
+      def self.bin(*files)
+        Mack::Paths.root('bin', *files)
+      end
 
     end # Paths
   end # Mack
