@@ -8,11 +8,11 @@ describe Mack::ViewHelpers::FormHelpers do
     attr_accessor :full_name
     attr_accessor :honest
     
-    def error_for(name)
+    def errors_for(name)
       return "Lawyer can't be honest" if name.to_s == "honest"
     end
     
-    def has_error?(name)
+    def has_errors?(name)
       return true if name.to_s == "honest"
       return false
     end
@@ -53,7 +53,7 @@ describe Mack::ViewHelpers::FormHelpers do
     end
     
     it "should let user know what the field error is" do
-      @lawyer.error_for(:honest).should_not be_nil
+      @lawyer.errors_for(:honest).should_not be_nil
     end
 
   end

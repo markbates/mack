@@ -288,7 +288,7 @@ module Mack
           end
           options[:value] = var.send(fe.calling_method)
           
-          if var.has_error?(fe.calling_method)
+          if var.has_errors?(fe.calling_method)
             fe.options = {:error_class => "error"}.merge(fe.options)
             class_arr = fe.options[:class].to_s.split(" ").collect { |s| s.strip }
             class_arr << fe.options[:error_class]
