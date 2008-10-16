@@ -1,5 +1,6 @@
 * [#200] INCOMPATIBILITY NOTICE: mack-notifier configatron namespaces have changed from *_settings to * (e.g. smtp_settings to smtp)
 * [#196] Extlib 0.9.8 support
+* [#195] DataMapper 0.9.6 support
 * [#193] Portlet Support
 * [#134] Form elements are now 'errorfied'.
 * [#131] Date/Time select boxes can now be easily re-arranged.
