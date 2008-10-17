@@ -35,18 +35,15 @@ module Mack
         return false
       end
       
-      def options_with_parameters(url)
+      def options_with_parameters(url, host = nil)
         format = (File.extname(url).blank? ? '.html' : File.extname(url))
         format = format[1..format.length]
         opts = self.options.merge(:format => format)
         url = url.gsub(/\.#{format}$/, '')
-        if self.embedded_parameters[:uri].any?
-          url.split('/').each_with_index do |seg, i|
-            ep = self.embedded_parameters[:uri][i]
-            unless ep.nil?
-              opts[ep.to_sym] = seg
-            end
-          end
+        opts.merge!(get_embedded_parameters(:uri, url, '/'))
+        unless host.nil?
+          opts.merge!(get_embedded_parameters(:host, host, '.'))
+          opts.merge!(:host => host) if self.options[:host]
         end
         if self.wildcard
           caps = url.match(self.regex_patterns[:uri]).captures
@@ -59,6 +56,18 @@ module Mack
       end
       
       private
+      def get_embedded_parameters(name, path, splitter = '/')
+        vals = {}
+        if self.embedded_parameters[name].any? && !path.nil?
+          path.split(splitter).each_with_index do |seg, i|
+            ep = self.embedded_parameters[name][i]
+            unless ep.nil?
+              vals[ep.to_sym] = seg
+            end
+          end
+        end
+        vals
+      end
       
       def build_regex_patterns
         {:uri => {:path => self.path, :splitter => '/', :emb_pat => ':'}, :host => {:path => self.options[:host], :splitter => '.', :emb_pat => ':'}}.each do |k, v|

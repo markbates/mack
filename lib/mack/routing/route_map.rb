@@ -56,7 +56,7 @@ module Mack
             next unless route.options[:port].to_i == port.to_i
           end
           if route.match?(path)
-            ret_val = route.options_with_parameters(path)
+            ret_val = route.options_with_parameters(path, host)
             return ret_val
           end
         end

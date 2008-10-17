@@ -1,5 +1,6 @@
 * [#203] Updated distributed: view_cache to include Mack::ViewHelpers instead of Mack::ViewHelpers::LinkHelpers
 * [#200] INCOMPATIBILITY NOTICE: mack-notifier configatron namespaces have changed from *_settings to * (e.g. smtp_settings to smtp)
+* [#198] Added Embedded parameters in 'host' for Routes
 * [#196] Extlib 0.9.8 support
 * [#195] DataMapper 0.9.6 support
 * [#193] Portlet Support
