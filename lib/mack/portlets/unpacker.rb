@@ -17,7 +17,7 @@ module Mack
                 if cp
                   FileUtils.cp(f, f.gsub(path, Mack::Paths.send(key)), :verbose => true) if cp
                 else
-                  puts "Skipping: #{f}"
+                  puts "Skipping: #{dest}"
                 end
               end
             end
