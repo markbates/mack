@@ -23,12 +23,14 @@ module Mack
         host_options = {:host => options[:host], :port => options[:port], :scheme => options[:scheme]}
         options - [:host, :port, :scheme]
         if host_options[:host]
+          hu = host_options[:host].dup
           options.each_pair do |k, v|
             vp = Rack::Utils.escape(v.to_param)
-            unless host_options[:host].gsub!(":#{k}", vp).nil?
+            unless hu.gsub!(":#{k}", vp).nil?
               options - [k.to_sym]
             end
           end
+          host_options[:host] = hu
         end
         options.each_pair do |k, v|
           unless k.to_sym == :format

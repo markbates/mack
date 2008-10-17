@@ -104,23 +104,23 @@ module Mack
       end
       
       # Sets up mappings and named routes for a resource.
-      def resource(controller, &block)
+      def resource(controller, options = {}, &block)
         # yield up to add other resources:
         if block_given?
           proxy = ResourceProxy.new(controller)
           yield proxy
           proxy.routes.each do |route|
-            connect_with_name("#{controller}_#{route[:name]}", route[:path], route[:options])
+            connect_with_name("#{controller}_#{route[:name]}", route[:path], options.merge(route[:options]))
           end
         end
         # connect the default resources:
-        connect_with_name("#{controller}_index", "/#{controller}", {:controller => controller, :action => :index, :method => :get})
-        connect_with_name("#{controller}_create", "/#{controller}", {:controller => controller, :action => :create, :method => :post})
-        connect_with_name("#{controller}_new", "/#{controller}/new", {:controller => controller, :action => :new, :method => :get})
-        connect_with_name("#{controller}_show", "/#{controller}/:id", {:controller => controller, :action => :show, :method => :get})
-        connect_with_name("#{controller}_edit", "/#{controller}/:id/edit", {:controller => controller, :action => :edit, :method => :get})
-        connect_with_name("#{controller}_update", "/#{controller}/:id", {:controller => controller, :action => :update, :method => :put})
-        connect_with_name("#{controller}_delete", "/#{controller}/:id", {:controller => controller, :action => :delete, :method => :delete})
+        connect_with_name("#{controller}_index", "/#{controller}", {:controller => controller, :action => :index, :method => :get}.merge(options))
+        connect_with_name("#{controller}_create", "/#{controller}", {:controller => controller, :action => :create, :method => :post}.merge(options))
+        connect_with_name("#{controller}_new", "/#{controller}/new", {:controller => controller, :action => :new, :method => :get}.merge(options))
+        connect_with_name("#{controller}_show", "/#{controller}/:id", {:controller => controller, :action => :show, :method => :get}.merge(options))
+        connect_with_name("#{controller}_edit", "/#{controller}/:id/edit", {:controller => controller, :action => :edit, :method => :get}.merge(options))
+        connect_with_name("#{controller}_update", "/#{controller}/:id", {:controller => controller, :action => :update, :method => :put}.merge(options))
+        connect_with_name("#{controller}_delete", "/#{controller}/:id", {:controller => controller, :action => :delete, :method => :delete}.merge(options))
       end
       
       def inspect # :nodoc:
