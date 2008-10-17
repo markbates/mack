@@ -251,6 +251,14 @@ describe Mack::Routes do
         Mack::Routes.retrieve(req).should == {:controller => :animals, :action => :dog, :host => 'www.mackframework.com', :method => :get, :format => 'html'}
       end
       
+      it 'should return embedded parameters on for host' do
+        Mack::Routes.build do |r|
+          r.doggy '/routing/test/animals/doggy', :controller => :animals, :action => :dog, :host => ':dog_type.mackframework.com'
+        end
+        req = Mack::Request.new(Rack::MockRequest.env_for("http://poodle.mackframework.com/routing/test/animals/doggy"))
+        Mack::Routes.retrieve(req).should == {:controller => :animals, :action => :dog, :dog_type => 'poodle', :host => 'poodle.mackframework.com', :method => :get, :format => 'html'}
+      end
+      
       it 'should match the scheme if specified' do
         Mack::Routes.build do |r|
           r.cat '/routing/test/animals/cat', :controller => :animals, :action => :cat, :scheme => 'https'

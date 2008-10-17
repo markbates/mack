@@ -47,7 +47,7 @@ module Mack
         routes = @_route_map[verb]
         routes.each do |route|
           if route.options[:host]
-            next unless route.options[:host].downcase == host
+            next unless !host.nil? && host.match(route.regex_patterns[:host])
           end
           if route.options[:scheme]
             next unless route.options[:scheme].downcase == scheme
