@@ -257,6 +257,7 @@ describe Mack::Routes do
         end
         req = Mack::Request.new(Rack::MockRequest.env_for("http://poodle.mackframework.com/routing/test/animals/doggy"))
         Mack::Routes.retrieve(req).should == {:controller => :animals, :action => :dog, :dog_type => 'poodle', :host => 'poodle.mackframework.com', :method => :get, :format => 'html'}
+        doggy_url(:dog_type => 'spaniel').should == 'http://spaniel.mackframework.com/routing/test/animals/doggy'
       end
       
       it 'should match the scheme if specified' do

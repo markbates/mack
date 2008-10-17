@@ -22,6 +22,14 @@ module Mack
         format = nil
         host_options = {:host => options[:host], :port => options[:port], :scheme => options[:scheme]}
         options - [:host, :port, :scheme]
+        if host_options[:host]
+          options.each_pair do |k, v|
+            vp = Rack::Utils.escape(v.to_param)
+            unless host_options[:host].gsub!(":#{k}", vp).nil?
+              options - [k.to_sym]
+            end
+          end
+        end
         options.each_pair do |k, v|
           unless k.to_sym == :format
             if u.match(/\*#{k}/)
@@ -89,7 +97,7 @@ module Mack
         else
           ":#{port}"
         end
-        return "#{scheme.downcase}://#{host.downcase}#{port}"
+        return "#{(scheme || 'http').downcase}://#{host.downcase}#{port}"
       end
       
     end # Urls
