@@ -6,8 +6,8 @@ run_once do
   
   init_message('routes')
   
-  # We want local routes to be first, hence the reverse
-  Mack.search_path(:config).reverse.each do |path|
+  # We want local routes to be first
+  Mack.search_path_local_first(:config).each do |path|
     f = File.join(path, 'routes.rb')
     require f if File.exists?(f)
   end

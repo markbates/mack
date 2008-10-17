@@ -27,6 +27,13 @@ run_once do
       paths << Mack::Paths.send(key) if Mack::Paths.methods.include?(key.to_s) && mack_paths_value
       paths.flatten.uniq
     end
+    
+    def self.search_path_local_first(key)
+      paths = []
+      paths << Mack::Paths.send(key) if Mack::Paths.methods.include?(key.to_s)
+      paths << self.search_path(key, false)
+      paths.flatten.uniq
+    end
 
     def self.add_search_path(key, path)
       if $__mack_search_path.nil?

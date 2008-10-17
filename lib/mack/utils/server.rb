@@ -18,9 +18,12 @@ module Mack
         end
 
         # Any urls listed will go straight to the public directly and will not be served up via the app:
-        Mack.search_path(:public).each do |path|
+        Mack.search_path(:public, false).reverse.each do |path|
           app = Mack::Static.new(app, :urls =>  configatron.mack.static_paths, :root => path)
         end
+        
+        app = Mack::Static.new(app, :urls =>  configatron.mack.static_paths, :root => Mack::Paths.public)
+        
         # app = Mack::Static.new(app)
         app = Mack::Utils::ContentLengthHandler.new(app)
         app = Rack::Lint.new(app) if configatron.mack.use_lint 

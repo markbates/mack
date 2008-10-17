@@ -38,6 +38,14 @@ describe Mack::Paths do
     
   end
   
+  describe 'search_path_local_first' do
+    
+    it 'should try to append a Mack::Paths value, if it exists' do
+      Mack.search_path_local_first(:app).should == [Mack::Paths.app, '/Users/foo']
+    end
+    
+  end
+  
   describe 'add_search_path' do
     
     it 'should append to the current search path for the key' do
