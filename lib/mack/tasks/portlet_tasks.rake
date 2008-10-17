@@ -24,6 +24,10 @@ namespace :mack do
       puts `#{sudo} gem install #{Mack::Paths.root('pkg', Mack::Portlet.portlet_spec.name)}-#{Mack::Portlet.portlet_spec.version}.gem --no-update-sources`
     end
     
+    task :unpacker => :environment do
+      Mack::Portlet::Unpacker.instance.unpack(ENV['unpacker_key'], ENV['FORCE'])
+    end
+    
   end
   
 end

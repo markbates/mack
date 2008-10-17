@@ -31,6 +31,11 @@ describe Mack::Paths do
       Mack.search_path(:app).should == ['/Users/foo', Mack::Paths.app]
     end
     
+    it 'should not return the Mack::Paths value if told not to' do
+      Mack.search_path(:test).should == [Mack::Paths.test]
+      Mack.search_path(:test, false).should == []
+    end
+    
   end
   
   describe 'add_search_path' do

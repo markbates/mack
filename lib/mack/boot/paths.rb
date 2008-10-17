@@ -19,12 +19,12 @@ run_once do
       self.env == env.to_s
     end
     
-    def self.search_path(key)
+    def self.search_path(key, mack_paths_value = true)
       if $__mack_search_path.nil?
         $__mack_search_path = {}
       end
       paths = ($__mack_search_path[key.to_sym] ||= []).dup
-      paths << Mack::Paths.send(key) if Mack::Paths.methods.include?(key.to_s)
+      paths << Mack::Paths.send(key) if Mack::Paths.methods.include?(key.to_s) && mack_paths_value
       paths.flatten.uniq
     end
 

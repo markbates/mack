@@ -37,3 +37,9 @@ rule /^gems:freeze:/ do |t|
   ENV['gem_name'] = gem_name
   Rake::Task["gems:install_and_freeze"].invoke
 end
+
+rule /^mack:portlet:unpack:/ do |t|
+  key = t.name.gsub('mack:portlet:unpack:', '')
+  ENV['unpacker_key'] = key
+  Rake::Task["mack:portlet:unpacker"].invoke
+end
