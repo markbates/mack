@@ -114,6 +114,23 @@ describe Mack::Routes do
         herbs_show_url(:id => 1).should == '/herbs/1'
       end
       
+      it 'should mask routes' do
+        Mack::Routes.build do |r|
+          r.resource :colors, :as => :colours
+          r.resource :coat, :as => {:mask => :jacket, :redirect => 302}
+        end
+        colors_show_url(:id => 1).should == '/colours/1'
+        colours_show_url(:id => 1).should == '/colours/1'
+        Mack::Routes.retrieve('/colours/1').should == {:controller => :colors, :action => :show, :id => '1', :method => :get, :format => 'html'}
+        Mack::Routes.retrieve('/colors/1').should == {:controller => :colors, :action => :show, :id => '1', :method => :get, :format => 'html'}
+        
+        coats_show_url(:id => 1).should == {:controller => :jackets, :action => :show, :id => '1', :method => :get, :format => 'html'}
+        jackets_show_url(:id => 1).should == {:controller => :jackets, :action => :show, :id => '1', :method => :get, :format => 'html'}
+        
+        get coats_show_url(:id => 1)
+        response.should be_redirected_to(jackets_show_url(:id => 1))
+      end
+      
     end
     
     describe 'connect' do
