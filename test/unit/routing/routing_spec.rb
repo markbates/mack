@@ -101,6 +101,19 @@ describe Mack::Routes do
         Mack::Routes.retrieve('/zoos/1', :delete).should == {:controller => :zoos, :action => :delete, :id => '1', :method => :delete, :format => 'html'}
       end
       
+      it 'should take options' do
+        Mack::Routes.build do |r|
+          r.resource :mars, :host => 'www.lifeonmars.com'
+          r.resource :herbs, :controller => :spices
+        end
+        mars_index_url.should == 'http://www.lifeonmars.com/mars'
+        mars_show_url(:id => 1).should == 'http://www.lifeonmars.com/mars/1'
+        req = Mack::Request.new(Rack::MockRequest.env_for("http://www.lifeonmars.com/mars/1"))
+        Mack::Routes.retrieve(req).should == {:controller => :mars, :action => :show, :id => '1', :method => :get, :format => 'html', :host => 'www.lifeonmars.com'}
+        Mack::Routes.retrieve('/herbs/1').should == {:controller => :spices, :action => :show, :id => '1', :method => :get, :format => 'html'}
+        herbs_show_url(:id => 1).should == '/herbs/1'
+      end
+      
     end
     
     describe 'connect' do
