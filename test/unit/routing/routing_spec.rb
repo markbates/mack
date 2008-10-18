@@ -3,32 +3,6 @@ require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
 describe Mack::Routes do
 
-  before(:each) do
-    # Mack::Routes.reset!
-    @_temp_url_holder = nil
-  end
-  
-  def urls
-    unless @_temp_url_holder
-      @_temp_url_holder
-      name = "Mr#{String.randomize.downcase}"
-      eval %{
-        class #{name}
-          class << self
-            include Mack::Routes::Urls
-            
-            def include?(m)
-              #{name}.methods.include?(m)
-            end
-            self.convert_security_of_methods(:protected, :public)
-          end
-        end
-      }
-      @_temp_url_holder = name.constantize
-    end
-    @_temp_url_holder
-  end
-
   describe 'build' do
     
     it 'should yield up a Mack::Routes::RouteMap instance' do
@@ -84,15 +58,15 @@ describe Mack::Routes do
       it 'should create a set of resource urls' do
         Mack::Routes.build {|r| r.resource :users}
         [:show, :edit, :update, :delete, :index, :new, :create].each do |m|
-          urls.should include("users_#{m}_url")
+          self.methods.should include("users_#{m}_url")
         end
-        urls.users_show_url(:id => 1).should == '/users/1'
-        urls.users_edit_url(:id => 1).should == '/users/1/edit'
-        urls.users_update_url(:id => 1).should == '/users/1'
-        urls.users_delete_url(:id => 1).should == '/users/1'
-        urls.users_index_url.should == '/users'
-        urls.users_new_url.should == '/users/new'
-        urls.users_create_url.should == '/users'
+        users_show_url(:id => 1).should == '/users/1'
+        users_edit_url(:id => 1).should == '/users/1/edit'
+        users_update_url(:id => 1).should == '/users/1'
+        users_delete_url(:id => 1).should == '/users/1'
+        users_index_url.should == '/users'
+        users_new_url.should == '/users/new'
+        users_create_url.should == '/users'
         Mack::Routes.retrieve('/users/1').should == {:controller => :users, :action => :show, :id => '1', :method => :get, :format => 'html'}
         Mack::Routes.retrieve('/users/1/edit').should == {:controller => :users, :action => :edit, :id => '1', :method => :get, :format => 'html'}
         Mack::Routes.retrieve('/users/1', :put).should == {:controller => :users, :action => :update, :id => '1', :method => :put, :format => 'html', :format => 'html'}
@@ -110,17 +84,17 @@ describe Mack::Routes do
           end
         end
         [:show, :edit, :update, :delete, :index, :new, :create, :foo, :hello].each do |m|
-          urls.should include("zoos_#{m}_url")
+          self.methods.should include("zoos_#{m}_url")
         end
-        urls.zoos_show_url(:id => 1).should == '/zoos/1'
-        urls.zoos_edit_url(:id => 1).should == '/zoos/1/edit'
-        urls.zoos_update_url(:id => 1).should == '/zoos/1'
-        urls.zoos_delete_url(:id => 1).should == '/zoos/1'
-        urls.zoos_index_url.should == '/zoos'
-        urls.zoos_new_url.should == '/zoos/new'
-        urls.zoos_create_url.should == '/zoos'
-        urls.zoos_foo_url.should == '/zoos/foo'
-        urls.zoos_hello_url(:id => 1).should == '/zoos/hello/1'
+        zoos_show_url(:id => 1).should == '/zoos/1'
+        zoos_edit_url(:id => 1).should == '/zoos/1/edit'
+        zoos_update_url(:id => 1).should == '/zoos/1'
+        zoos_delete_url(:id => 1).should == '/zoos/1'
+        zoos_index_url.should == '/zoos'
+        zoos_new_url.should == '/zoos/new'
+        zoos_create_url.should == '/zoos'
+        zoos_foo_url.should == '/zoos/foo'
+        zoos_hello_url(:id => 1).should == '/zoos/hello/1'
         Mack::Routes.retrieve('/zoos/hello/1.xml', :put).should == {:controller => :zoos, :action => :hello, :method => :put, :format => 'xml', :id => '1'}
         Mack::Routes.retrieve('/zoos/foo').should == {:controller => :zoos, :action => :foo, :method => :get, :format => 'html'}
         Mack::Routes.retrieve('/zoos/1').should == {:controller => :zoos, :action => :show, :id => '1', :method => :get, :format => 'html'}
@@ -166,8 +140,8 @@ describe Mack::Routes do
         Mack::Routes.build do |r|
           r.dog '/dog', :controller => :animals, :action => :dog
         end
-        urls.should include('dog_url')
-        urls.dog_url.should == '/dog'
+        self.methods.should include('dog_url')
+        dog_url.should == '/dog'
       end
       
       it 'should take a block that can be used at runtime' do
