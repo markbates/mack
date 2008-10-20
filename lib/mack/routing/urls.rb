@@ -21,7 +21,7 @@ module Mack
         unused_params = []
         format = nil
         host_options = {:host => options[:host], :port => options[:port], :scheme => options[:scheme]}
-        options - [:host, :port, :scheme]
+        options - [:host, :port, :scheme, :runner_block]
         if host_options[:host]
           hu = host_options[:host].dup
           options.each_pair do |k, v|
