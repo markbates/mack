@@ -13,47 +13,31 @@ describe Mack::Routes do
     
   end
   
-  # describe 'any?' do
-  #   
-  #   it 'should return true if there are any routes defined' do
-  #     Mack::Routes.should_not be_any
-  #     Mack::Routes.build do |r|
-  #       r.connect '/', :controller => :default, :action => :index
-  #     end
-  #     Mack::Routes.should be_any
-  #   end
-  #   
-  # end
-  # 
-  # describe 'empty?' do
-  #   
-  #   it 'should return true if there are no routes defined' do
-  #     Mack::Routes.should be_empty
-  #     Mack::Routes.build do |r|
-  #       r.connect '/', :controller => :default, :action => :index
-  #     end
-  #     Mack::Routes.should_not be_empty
-  #   end
-  #   
-  # end
-  # 
-  # describe 'reset!' do
-  #   
-  #   it 'should remove all routes from the RouteMap' do
-  #     Mack::Routes.should be_empty
-  #     Mack::Routes.build do |r|
-  #       r.connect '/', :controller => :default, :action => :index
-  #     end
-  #     Mack::Routes.should_not be_empty
-  #     Mack::Routes.reset!
-  #     Mack::Routes.should be_empty
-  #   end
-  #   
-  # end
-  
   describe 'RouteMap' do
     
     describe 'resource' do
+      
+      describe 'nested' do
+        
+        it 'should create nested resources' do
+          
+          Mack::Routes.build do |r|
+            r.resource :universes do |u|
+              u.resource :planets do |p|
+                p.foo 'foo'
+                p.resource :moons, :controller => :moonies
+              end
+            end
+          end
+          
+          moons_show_url(:id => 'cheese', :planet_id => 'earth', :universe_id => 'milky_way').should == '/universes/milky_way/planets/earth/moons/cheese'
+          Mack::Routes.retrieve('/universes/milky_way/planets/earth/moons/cheese').should == {:controller => :moonies, :action => :show, :method => :get, :format => 'html', :id => 'cheese', :planet_id => 'earth', :universe_id => 'milky_way'}
+          planets_show_url(:id => 'earth', :universe_id => 'milky_way').should == '/universes/milky_way/planets/earth'
+          Mack::Routes.retrieve('/universes/milky_way/planets/earth').should == {:controller => :planets, :action => :show, :method => :get, :format => 'html', :id => 'earth', :universe_id => 'milky_way'}
+          planets_foo_url.should == '/planets/foo'
+        end
+        
+      end
       
       it 'should create a set of resource urls' do
         Mack::Routes.build {|r| r.resource :users}
