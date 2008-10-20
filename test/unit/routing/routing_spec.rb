@@ -13,47 +13,31 @@ describe Mack::Routes do
     
   end
   
-  # describe 'any?' do
-  #   
-  #   it 'should return true if there are any routes defined' do
-  #     Mack::Routes.should_not be_any
-  #     Mack::Routes.build do |r|
-  #       r.connect '/', :controller => :default, :action => :index
-  #     end
-  #     Mack::Routes.should be_any
-  #   end
-  #   
-  # end
-  # 
-  # describe 'empty?' do
-  #   
-  #   it 'should return true if there are no routes defined' do
-  #     Mack::Routes.should be_empty
-  #     Mack::Routes.build do |r|
-  #       r.connect '/', :controller => :default, :action => :index
-  #     end
-  #     Mack::Routes.should_not be_empty
-  #   end
-  #   
-  # end
-  # 
-  # describe 'reset!' do
-  #   
-  #   it 'should remove all routes from the RouteMap' do
-  #     Mack::Routes.should be_empty
-  #     Mack::Routes.build do |r|
-  #       r.connect '/', :controller => :default, :action => :index
-  #     end
-  #     Mack::Routes.should_not be_empty
-  #     Mack::Routes.reset!
-  #     Mack::Routes.should be_empty
-  #   end
-  #   
-  # end
-  
   describe 'RouteMap' do
     
     describe 'resource' do
+      
+      describe 'nested' do
+        
+        it 'should create nested resources' do
+          
+          Mack::Routes.build do |r|
+            r.resource :universes do |u|
+              u.resource :planets do |p|
+                p.foo 'foo'
+                p.resource :moons, :controller => :moonies
+              end
+            end
+          end
+          
+          moons_show_url(:id => 'cheese', :planet_id => 'earth', :universe_id => 'milky_way').should == '/universes/milky_way/planets/earth/moons/cheese'
+          Mack::Routes.retrieve('/universes/milky_way/planets/earth/moons/cheese').should == {:controller => :moonies, :action => :show, :method => :get, :format => 'html', :id => 'cheese', :planet_id => 'earth', :universe_id => 'milky_way'}
+          planets_show_url(:id => 'earth', :universe_id => 'milky_way').should == '/universes/milky_way/planets/earth'
+          Mack::Routes.retrieve('/universes/milky_way/planets/earth').should == {:controller => :planets, :action => :show, :method => :get, :format => 'html', :id => 'earth', :universe_id => 'milky_way'}
+          planets_foo_url.should == '/planets/foo'
+        end
+        
+      end
       
       it 'should create a set of resource urls' do
         Mack::Routes.build {|r| r.resource :users}
@@ -114,25 +98,25 @@ describe Mack::Routes do
         herbs_show_url(:id => 1).should == '/herbs/1'
       end
       
-      it 'should mask routes' do
-        Mack::Routes.build do |r|
-          r.resource :colors, :as => :colours
-          r.resource :coats, :as => {:mask => :jackets, :redirect => 302}
-        end
-        colors_show_url(:id => 1).should == '/colours/1'
-        colours_show_url(:id => 1).should == '/colours/1'
-        Mack::Routes.retrieve('/colours/1').should == {:controller => :colors, :action => :show, :id => '1', :method => :get, :format => 'html'}
-        Mack::Routes.retrieve('/colors/1').should == {:controller => :colors, :action => :show, :id => '1', :method => :get, :format => 'html'}
-        
-        Mack::Routes.retrieve('/coats/1').should == {:controller => :coats, :action => :show, :id => '1', :method => :get, :format => 'html'}
-        Mack::Routes.retrieve('/jackets/1').should == {:controller => :coats, :action => :show, :id => '1', :method => :get, :format => 'html'}
-        
-        coats_show_url(:id => 1).should == '/jackets/1'
-        jackets_show_url(:id => 1).should == '/jackets/1'
-        
-        get coats_show_url(:id => 1)
-        response.should be_redirected_to(jackets_show_url(:id => 1))
-      end
+      # it 'should mask routes' do
+      #   Mack::Routes.build do |r|
+      #     r.resource :colors, :as => :colours
+      #     r.resource :coats, :as => {:mask => :jackets, :redirect => 302}
+      #   end
+      #   colors_show_url(:id => 1).should == '/colours/1'
+      #   colours_show_url(:id => 1).should == '/colours/1'
+      #   Mack::Routes.retrieve('/colours/1').should == {:controller => :colors, :action => :show, :id => '1', :method => :get, :format => 'html'}
+      #   Mack::Routes.retrieve('/colors/1').should == {:controller => :colors, :action => :show, :id => '1', :method => :get, :format => 'html'}
+      #   
+      #   Mack::Routes.retrieve('/coats/1').should == {:controller => :coats, :action => :show, :id => '1', :method => :get, :format => 'html'}
+      #   Mack::Routes.retrieve('/jackets/1').should == {:controller => :coats, :action => :show, :id => '1', :method => :get, :format => 'html'}
+      #   
+      #   coats_show_url(:id => 1).should == '/jackets/1'
+      #   jackets_show_url(:id => 1).should == '/jackets/1'
+      #   
+      #   get coats_show_url(:id => 1)
+      #   response.should be_redirected_to(jackets_show_url(:id => 1))
+      # end
       
     end
     
