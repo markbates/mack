@@ -56,6 +56,7 @@ class TstAnotherController
     file = request.file("file0")
     @saved_file_name = file.file_name
     @album = params[:album]
+    @user = params[:user]
   end
   
   def upload_multiple

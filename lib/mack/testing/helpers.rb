@@ -151,11 +151,19 @@ module Mack
             form_input += "content-disposition: form-data; name=\"#{k}\"; filename=\"#{v.file_name}\"\r\n"
             form_input += "Content-Type: #{v.mime}\r\n\r\n"
             form_input += "#{v.content}\r\n"
-          elsif k != :multipart 
+            options - k
+          elsif k == :multipart 
+            options - k
+          end
+        end
+        unless options.empty?
+          params = options.to_params
+          params.split('&').each do |p|
+            k_v = p.split('=')
             form_input += boundary
-            form_input += "content-disposition: form-data; name=\"#{k}\"\r\n"
+            form_input += "content-disposition: form-data; name=\"#{k_v[0]}\"\r\n"
             form_input += "Content-Type: text/plain\r\n\r\n"
-            form_input += "#{v}\r\n"
+            form_input += "#{k_v[1]}\r\n"
           end
         end
         form_input += boundary

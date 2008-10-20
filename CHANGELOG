@@ -1,3 +1,4 @@
+* [#205] Fixed testing of nested parameters and file uploads breaks
 * [#204] Resource routes can now take options when being defined.
 * [#203] Updated distributed: view_cache to include Mack::ViewHelpers instead of Mack::ViewHelpers::LinkHelpers
 * [#200] INCOMPATIBILITY NOTICE: mack-notifier configatron namespaces have changed from *_settings to * (e.g. smtp_settings to smtp)
