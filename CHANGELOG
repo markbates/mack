@@ -1,3 +1,5 @@
+* [#211] Added a pagination API to mack-data_mapper
+* [#210] Added a pagination API to mack-orm
 * [#209] inline form built by link_to should include authenticity token
 * [#208] Added support for DataMapper repository context per request
 * [#207] Fixed session cookie not being deleted properly
