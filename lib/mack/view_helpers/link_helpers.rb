@@ -87,7 +87,7 @@ module Mack
           meth = nil
           confirm = nil
         
-          meth = %{var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var s = document.createElement('input'); s.setAttribute('type', 'hidden'); s.setAttribute('name', '_method'); s.setAttribute('value', '#{options[:method]}'); f.appendChild(s);f.submit()}
+          meth = %{var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var s = document.createElement('input'); s.setAttribute('type', 'hidden'); s.setAttribute('name', '_method'); s.setAttribute('value', '#{options[:method]}'); f.appendChild(s); var s2 = document.createElement('input'); s2.setAttribute('type', 'hidden'); s2.setAttribute('name', '__authenticity_token'); s2.setAttribute('value', '#{Mack::Utils::AuthenticityTokenDispenser.instance.dispense_token(session.id)}'); f.appendChild(s2); f.submit()}
           options.delete(:method)
         
           if options[:confirm]

@@ -56,13 +56,15 @@ describe Mack::ViewHelpers::LinkHelpers do
     end
     
     it "should return proper html when called with options" do
+      authenticity_token = Mack::Utils::AuthenticityTokenDispenser.instance.dispense_token(session.id)
+      
       a("Mack", :href => my_url).should == %{<a href="#{my_url}">Mack</a>}
       a("Mack", :href => my_url, :target => "_blank").should == %{<a href="#{my_url}" target=\"_blank">Mack</a>}
       
-      result = %{<a href="#{my_url}" onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var s = document.createElement('input'); s.setAttribute('type', 'hidden'); s.setAttribute('name', '_method'); s.setAttribute('value', 'delete'); f.appendChild(s);f.submit();return false;">Mack</a>}
+      result = %{<a href="#{my_url}" onclick="var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var s = document.createElement('input'); s.setAttribute('type', 'hidden'); s.setAttribute('name', '_method'); s.setAttribute('value', 'delete'); f.appendChild(s); var s2 = document.createElement('input'); s2.setAttribute('type', 'hidden'); s2.setAttribute('name', '__authenticity_token'); s2.setAttribute('value', '#{authenticity_token}'); f.appendChild(s2); f.submit();return false;">Mack</a>}
       a("Mack", :href => my_url, :method => :delete).should == result
              
-      result = %{<a href="#{my_url}" onclick="if (confirm('Are you sure?')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var s = document.createElement('input'); s.setAttribute('type', 'hidden'); s.setAttribute('name', '_method'); s.setAttribute('value', 'update'); f.appendChild(s);f.submit() } ;return false;">Mack</a>}
+      result = %{<a href="#{my_url}" onclick="if (confirm('Are you sure?')) { var f = document.createElement('form'); f.style.display = 'none'; this.parentNode.appendChild(f); f.method = 'POST'; f.action = this.href;var s = document.createElement('input'); s.setAttribute('type', 'hidden'); s.setAttribute('name', '_method'); s.setAttribute('value', 'update'); f.appendChild(s); var s2 = document.createElement('input'); s2.setAttribute('type', 'hidden'); s2.setAttribute('name', '__authenticity_token'); s2.setAttribute('value', '#{authenticity_token}'); f.appendChild(s2); f.submit() } ;return false;">Mack</a>}
       link = a("Mack", :href => my_url, :method => :update, :confirm => "Are you sure?")
       link.should == result
     end
