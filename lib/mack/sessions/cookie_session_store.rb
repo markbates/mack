@@ -22,7 +22,7 @@ module Mack
             return sess
           rescue Exception => e
             # The cookie was bad, delete it and start a new session.
-            c.delete(id)
+            expire(id, request, response, cookies)
             return nil
           end
         end
@@ -35,6 +35,7 @@ module Mack
         # Deletes the cookie.
         def expire(id, request, response, cookies)
           cookies.delete(id)
+          response.delete_cookie(id)
         end
       
       end

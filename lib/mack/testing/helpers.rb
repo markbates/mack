@@ -178,7 +178,7 @@ module Mack
     
       def mack_app
         if $mack_app.nil?
-          $mack_app = Rack::Recursive.new(Mack::Runner.new)
+          $mack_app = Rack::Recursive.new(Mack::Application.new)
         end
         $mack_app
       end

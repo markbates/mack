@@ -1,4 +1,6 @@
 * [#209] inline form built by link_to should include authenticity token
+* [#208] Added support for DataMapper repository context per request
+* [#207] Fixed session cookie not being deleted properly
 * [#206] Portlet now have access to its base_path
 * [#205] Fixed testing of nested parameters and file uploads breaks
 * [#204] Resource routes can now take options when being defined.

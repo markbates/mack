@@ -53,5 +53,9 @@ module Mack
       FileUtils.mv(self.temp_file.path, self.destination_path)
     end
     
+    def valid?
+      !self.file_name.blank? && !self.temp_file.nil?
+    end
+    
   end
 end # :nodoc:
