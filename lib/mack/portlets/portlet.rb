@@ -33,6 +33,8 @@ Mack.add_search_path(:lib, File.join(File.dirname(__FILE__), '#{@portlet_spec.na
 Mack.add_search_path(:public, File.join(File.dirname(__FILE__), '#{@portlet_spec.name}', 'public'))
 Mack.add_search_path(:vendor, File.join(File.dirname(__FILE__), '#{@portlet_spec.name}', 'vendor'))
 Mack.add_search_path(:plugins, File.join(File.dirname(__FILE__), '#{@portlet_spec.name}', 'vendor', 'plugins'))
+
+Mack.set_base_path(:#{@portlet_spec.name}, File.join(File.dirname(__FILE__), '#{@portlet_spec.name}'))
           }.strip
           
         end # File.open

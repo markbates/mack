@@ -19,6 +19,24 @@ run_once do
       self.env == env.to_s
     end
     
+    def self.base_path(key)
+      if $__mack_base_path.nil?
+        $__mack_base_path = {}
+      end
+      path = Mack.root
+      path = $__mack_base_path[key.to_sym] if $__mack_base_path.has_key?(key.to_sym)
+      path
+    end
+    
+    def self.set_base_path(key, value = "")
+      if $__mack_base_path.nil?
+        $__mack_base_path = {}
+      end
+      return if key == :local
+      Mack.logger.warn "Base path for #{key} will be overwritten with #{value}" if $__mack_base_path.has_key?(key.to_sym)
+      $__mack_base_path[key.to_sym] = value
+    end
+    
     def self.search_path(key, mack_paths_value = true)
       if $__mack_search_path.nil?
         $__mack_search_path = {}
