@@ -3,32 +3,6 @@ require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
 describe Mack::Routes do
 
-  before(:each) do
-    # Mack::Routes.reset!
-    @_temp_url_holder = nil
-  end
-  
-  def urls
-    unless @_temp_url_holder
-      @_temp_url_holder
-      name = "Mr#{String.randomize.downcase}"
-      eval %{
-        class #{name}
-          class << self
-            include Mack::Routes::Urls
-            
-            def include?(m)
-              #{name}.methods.include?(m)
-            end
-            self.convert_security_of_methods(:protected, :public)
-          end
-        end
-      }
-      @_temp_url_holder = name.constantize
-    end
-    @_temp_url_holder
-  end
-
   describe 'build' do
     
     it 'should yield up a Mack::Routes::RouteMap instance' do
@@ -39,60 +13,44 @@ describe Mack::Routes do
     
   end
   
-  # describe 'any?' do
-  #   
-  #   it 'should return true if there are any routes defined' do
-  #     Mack::Routes.should_not be_any
-  #     Mack::Routes.build do |r|
-  #       r.connect '/', :controller => :default, :action => :index
-  #     end
-  #     Mack::Routes.should be_any
-  #   end
-  #   
-  # end
-  # 
-  # describe 'empty?' do
-  #   
-  #   it 'should return true if there are no routes defined' do
-  #     Mack::Routes.should be_empty
-  #     Mack::Routes.build do |r|
-  #       r.connect '/', :controller => :default, :action => :index
-  #     end
-  #     Mack::Routes.should_not be_empty
-  #   end
-  #   
-  # end
-  # 
-  # describe 'reset!' do
-  #   
-  #   it 'should remove all routes from the RouteMap' do
-  #     Mack::Routes.should be_empty
-  #     Mack::Routes.build do |r|
-  #       r.connect '/', :controller => :default, :action => :index
-  #     end
-  #     Mack::Routes.should_not be_empty
-  #     Mack::Routes.reset!
-  #     Mack::Routes.should be_empty
-  #   end
-  #   
-  # end
-  
   describe 'RouteMap' do
     
     describe 'resource' do
       
+      describe 'nested' do
+        
+        it 'should create nested resources' do
+          
+          Mack::Routes.build do |r|
+            r.resource :universes do |u|
+              u.resource :planets do |p|
+                p.foo 'foo'
+                p.resource :moons, :controller => :moonies
+              end
+            end
+          end
+          
+          moons_show_url(:id => 'cheese', :planet_id => 'earth', :universe_id => 'milky_way').should == '/universes/milky_way/planets/earth/moons/cheese'
+          Mack::Routes.retrieve('/universes/milky_way/planets/earth/moons/cheese').should == {:controller => :moonies, :action => :show, :method => :get, :format => 'html', :id => 'cheese', :planet_id => 'earth', :universe_id => 'milky_way'}
+          planets_show_url(:id => 'earth', :universe_id => 'milky_way').should == '/universes/milky_way/planets/earth'
+          Mack::Routes.retrieve('/universes/milky_way/planets/earth').should == {:controller => :planets, :action => :show, :method => :get, :format => 'html', :id => 'earth', :universe_id => 'milky_way'}
+          planets_foo_url.should == '/planets/foo'
+        end
+        
+      end
+      
       it 'should create a set of resource urls' do
         Mack::Routes.build {|r| r.resource :users}
         [:show, :edit, :update, :delete, :index, :new, :create].each do |m|
-          urls.should include("users_#{m}_url")
+          self.methods.should include("users_#{m}_url")
         end
-        urls.users_show_url(:id => 1).should == '/users/1'
-        urls.users_edit_url(:id => 1).should == '/users/1/edit'
-        urls.users_update_url(:id => 1).should == '/users/1'
-        urls.users_delete_url(:id => 1).should == '/users/1'
-        urls.users_index_url.should == '/users'
-        urls.users_new_url.should == '/users/new'
-        urls.users_create_url.should == '/users'
+        users_show_url(:id => 1).should == '/users/1'
+        users_edit_url(:id => 1).should == '/users/1/edit'
+        users_update_url(:id => 1).should == '/users/1'
+        users_delete_url(:id => 1).should == '/users/1'
+        users_index_url.should == '/users'
+        users_new_url.should == '/users/new'
+        users_create_url.should == '/users'
         Mack::Routes.retrieve('/users/1').should == {:controller => :users, :action => :show, :id => '1', :method => :get, :format => 'html'}
         Mack::Routes.retrieve('/users/1/edit').should == {:controller => :users, :action => :edit, :id => '1', :method => :get, :format => 'html'}
         Mack::Routes.retrieve('/users/1', :put).should == {:controller => :users, :action => :update, :id => '1', :method => :put, :format => 'html', :format => 'html'}
@@ -110,22 +68,55 @@ describe Mack::Routes do
           end
         end
         [:show, :edit, :update, :delete, :index, :new, :create, :foo, :hello].each do |m|
-          urls.should include("zoos_#{m}_url")
+          self.methods.should include("zoos_#{m}_url")
         end
-        urls.zoos_show_url(:id => 1).should == '/zoos/1'
-        urls.zoos_edit_url(:id => 1).should == '/zoos/1/edit'
-        urls.zoos_update_url(:id => 1).should == '/zoos/1'
-        urls.zoos_delete_url(:id => 1).should == '/zoos/1'
-        urls.zoos_index_url.should == '/zoos'
-        urls.zoos_new_url.should == '/zoos/new'
-        urls.zoos_create_url.should == '/zoos'
-        urls.zoos_foo_url.should == '/zoos/foo'
-        urls.zoos_hello_url(:id => 1).should == '/zoos/hello/1'
+        zoos_show_url(:id => 1).should == '/zoos/1'
+        zoos_edit_url(:id => 1).should == '/zoos/1/edit'
+        zoos_update_url(:id => 1).should == '/zoos/1'
+        zoos_delete_url(:id => 1).should == '/zoos/1'
+        zoos_index_url.should == '/zoos'
+        zoos_new_url.should == '/zoos/new'
+        zoos_create_url.should == '/zoos'
+        zoos_foo_url.should == '/zoos/foo'
+        zoos_hello_url(:id => 1).should == '/zoos/hello/1'
         Mack::Routes.retrieve('/zoos/hello/1.xml', :put).should == {:controller => :zoos, :action => :hello, :method => :put, :format => 'xml', :id => '1'}
         Mack::Routes.retrieve('/zoos/foo').should == {:controller => :zoos, :action => :foo, :method => :get, :format => 'html'}
         Mack::Routes.retrieve('/zoos/1').should == {:controller => :zoos, :action => :show, :id => '1', :method => :get, :format => 'html'}
         Mack::Routes.retrieve('/zoos/1', :delete).should == {:controller => :zoos, :action => :delete, :id => '1', :method => :delete, :format => 'html'}
       end
+      
+      it 'should take options' do
+        Mack::Routes.build do |r|
+          r.resource :mars, :host => 'www.lifeonmars.com'
+          r.resource :herbs, :controller => :spices
+        end
+        mars_index_url.should == 'http://www.lifeonmars.com/mars'
+        mars_show_url(:id => 1).should == 'http://www.lifeonmars.com/mars/1'
+        req = Mack::Request.new(Rack::MockRequest.env_for("http://www.lifeonmars.com/mars/1"))
+        Mack::Routes.retrieve(req).should == {:controller => :mars, :action => :show, :id => '1', :method => :get, :format => 'html', :host => 'www.lifeonmars.com'}
+        Mack::Routes.retrieve('/herbs/1').should == {:controller => :spices, :action => :show, :id => '1', :method => :get, :format => 'html'}
+        herbs_show_url(:id => 1).should == '/herbs/1'
+      end
+      
+      # it 'should mask routes' do
+      #   Mack::Routes.build do |r|
+      #     r.resource :colors, :as => :colours
+      #     r.resource :coats, :as => {:mask => :jackets, :redirect => 302}
+      #   end
+      #   colors_show_url(:id => 1).should == '/colours/1'
+      #   colours_show_url(:id => 1).should == '/colours/1'
+      #   Mack::Routes.retrieve('/colours/1').should == {:controller => :colors, :action => :show, :id => '1', :method => :get, :format => 'html'}
+      #   Mack::Routes.retrieve('/colors/1').should == {:controller => :colors, :action => :show, :id => '1', :method => :get, :format => 'html'}
+      #   
+      #   Mack::Routes.retrieve('/coats/1').should == {:controller => :coats, :action => :show, :id => '1', :method => :get, :format => 'html'}
+      #   Mack::Routes.retrieve('/jackets/1').should == {:controller => :coats, :action => :show, :id => '1', :method => :get, :format => 'html'}
+      #   
+      #   coats_show_url(:id => 1).should == '/jackets/1'
+      #   jackets_show_url(:id => 1).should == '/jackets/1'
+      #   
+      #   get coats_show_url(:id => 1)
+      #   response.should be_redirected_to(jackets_show_url(:id => 1))
+      # end
       
     end
     
@@ -166,8 +157,8 @@ describe Mack::Routes do
         Mack::Routes.build do |r|
           r.dog '/dog', :controller => :animals, :action => :dog
         end
-        urls.should include('dog_url')
-        urls.dog_url.should == '/dog'
+        self.methods.should include('dog_url')
+        dog_url.should == '/dog'
       end
       
       it 'should take a block that can be used at runtime' do
@@ -249,6 +240,15 @@ describe Mack::Routes do
         lambda{Mack::Routes.retrieve(req)}.should raise_error(Mack::Errors::UndefinedRoute)
         req = Mack::Request.new(Rack::MockRequest.env_for("http://www.mackframework.com/routing/test/animals/dog"))
         Mack::Routes.retrieve(req).should == {:controller => :animals, :action => :dog, :host => 'www.mackframework.com', :method => :get, :format => 'html'}
+      end
+      
+      it 'should return embedded parameters on for host' do
+        Mack::Routes.build do |r|
+          r.doggy '/routing/test/animals/doggy', :controller => :animals, :action => :dog, :host => ':dog_type.mackframework.com'
+        end
+        req = Mack::Request.new(Rack::MockRequest.env_for("http://poodle.mackframework.com/routing/test/animals/doggy"))
+        Mack::Routes.retrieve(req).should == {:controller => :animals, :action => :dog, :dog_type => 'poodle', :host => 'poodle.mackframework.com', :method => :get, :format => 'html'}
+        doggy_url(:dog_type => 'spaniel').should == 'http://spaniel.mackframework.com/routing/test/animals/doggy'
       end
       
       it 'should match the scheme if specified' do

@@ -47,7 +47,7 @@ module Mack
         routes = @_route_map[verb]
         routes.each do |route|
           if route.options[:host]
-            next unless route.options[:host].downcase == host
+            next unless !host.nil? && host.match(route.regex_patterns[:host])
           end
           if route.options[:scheme]
             next unless route.options[:scheme].downcase == scheme
@@ -56,7 +56,7 @@ module Mack
             next unless route.options[:port].to_i == port.to_i
           end
           if route.match?(path)
-            ret_val = route.options_with_parameters(path)
+            ret_val = route.options_with_parameters(path, host)
             return ret_val
           end
         end
@@ -104,31 +104,24 @@ module Mack
       end
       
       # Sets up mappings and named routes for a resource.
-      def resource(controller, &block)
+      def resource(controller, options = {}, &block)
         # yield up to add other resources:
         if block_given?
-          proxy = ResourceProxy.new(controller)
+          proxy = ResourceProxy.new(controller, [controller.to_sym])
           yield proxy
           proxy.routes.each do |route|
-            connect_with_name("#{controller}_#{route[:name]}", route[:path], route[:options])
+            connect_with_name("#{controller}_#{route[:name]}", route[:path], options.merge(route[:options]))
           end
         end
         # connect the default resources:
-        connect_with_name("#{controller}_index", "/#{controller}", {:controller => controller, :action => :index, :method => :get})
-        connect_with_name("#{controller}_create", "/#{controller}", {:controller => controller, :action => :create, :method => :post})
-        connect_with_name("#{controller}_new", "/#{controller}/new", {:controller => controller, :action => :new, :method => :get})
-        connect_with_name("#{controller}_show", "/#{controller}/:id", {:controller => controller, :action => :show, :method => :get})
-        connect_with_name("#{controller}_edit", "/#{controller}/:id/edit", {:controller => controller, :action => :edit, :method => :get})
-        connect_with_name("#{controller}_update", "/#{controller}/:id", {:controller => controller, :action => :update, :method => :put})
-        connect_with_name("#{controller}_delete", "/#{controller}/:id", {:controller => controller, :action => :delete, :method => :delete})
+        build_resource_routes(controller, controller, controller, options)
       end
       
       def inspect # :nodoc:
         @_route_map.inspect
       end
       
-      private
-      def connect_with_name(name, path, options = {}, &block)
+      def connect_with_name(name, path, options = {}, &block) # :nodoc:
         n_route = name.methodize
         route = connect(path, {:action => n_route.to_sym}.merge(options), &block)
         
@@ -145,9 +138,20 @@ module Mack
             options = {:host => @request.host, :scheme => @request.scheme, :port => @request.port}.merge(options)
           end
           self.send("#{n_route}_url", options)
-        end
+        end        
       end
       
+      def build_resource_routes(method_base, path_base, controller, options) # :nodoc:
+        connect_with_name("#{method_base}_index", "/#{path_base}", {:controller => controller, :action => :index, :method => :get}.merge(options))
+        connect_with_name("#{method_base}_create", "/#{path_base}", {:controller => controller, :action => :create, :method => :post}.merge(options))
+        connect_with_name("#{method_base}_new", "/#{path_base}/new", {:controller => controller, :action => :new, :method => :get}.merge(options))
+        connect_with_name("#{method_base}_show", "/#{path_base}/:id", {:controller => controller, :action => :show, :method => :get}.merge(options))
+        connect_with_name("#{method_base}_edit", "/#{path_base}/:id/edit", {:controller => controller, :action => :edit, :method => :get}.merge(options))
+        connect_with_name("#{method_base}_update", "/#{path_base}/:id", {:controller => controller, :action => :update, :method => :put}.merge(options))
+        connect_with_name("#{method_base}_delete", "/#{path_base}/:id", {:controller => controller, :action => :delete, :method => :delete}.merge(options))
+      end
+      
+      private
       def handle_options(opts, &block)
         opts = {:method => :get}.merge(opts.symbolize_keys)
         opts[:runner_block] = block if block_given?
