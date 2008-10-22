@@ -1,3 +1,4 @@
+* [#213] Fixed the params method should be case insensitive
 * [#211] Added a pagination API to mack-data_mapper
 * [#210] Added a pagination API to mack-orm
 * [#209] inline form built by link_to should include authenticity token
