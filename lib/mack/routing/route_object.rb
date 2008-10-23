@@ -8,6 +8,7 @@ module Mack
       attr_accessor :wildcard
       attr_accessor :embedded_parameters
       attr_accessor :regex_patterns
+      attr_accessor :insertion_order
       
       def initialize(path, options = {})
         self.path = path
@@ -17,6 +18,8 @@ module Mack
         self.regex_patterns = {}
         self.embedded_parameters = {:uri => [], :host => []}
         build_regex_patterns
+        
+        self.insertion_order = Mack::Routes::RouteObject.next_insertion_index
       end
       
       def ==(other)
@@ -55,7 +58,17 @@ module Mack
         opts
       end
       
+      def <=>(other)
+        self.insertion_order <=> other.insertion_order
+      end
+      
       private
+      
+      def self.next_insertion_index
+        (@__next_insertion_index ||= 0)
+        @__next_insertion_index += 1
+      end
+      
       def get_embedded_parameters(name, path, splitter = '/')
         vals = {}
         if self.embedded_parameters[name].any? && !path.nil?
@@ -101,50 +114,6 @@ module Mack
           raise ArgumentError.new("'#{path}' is a #{path.class} and it should be either a String or Regexp!")
         end
       end
-      
-      
-      # def build_regex_pattern
-      #   if self.options[:host]
-      #     if self.options[:host].is_a?(Regexp)
-      #       self.host_regex_pattern = self.options[:host]
-      #     else
-      #       reg = []
-      #       self.options[:host].split('.').each_with_index do |seg, i|
-      #         if seg.match(/^:/)
-      #           self.host_embedded_parameters[i] = seg.gsub(':', '')
-      #           reg << '[^/]+'
-      #         else
-      #           reg << seg.downcase
-      #         end
-      #       end
-      #       self.host_regex_pattern = /^#{reg.join('.') + '(\..+$|$)'}/
-      #       puts "self.host_regex_pattern: #{self.host_regex_pattern.inspect}"
-      #     end
-      #   end
-      #   if self.path.is_a?(Regexp)
-      #     self.regex_pattern = self.path
-      #   elsif self.path.is_a?(String)
-      #     reg = []
-      #     if self.path == '/'
-      #       self.regex_pattern = /^\/$/
-      #     else
-      #       self.path.split('/').each_with_index do |seg, i|
-      #         if seg.match(/^:/)
-      #           self.embedded_parameters[i] = seg.gsub(':', '')
-      #           reg << '[^/]+'
-      #         elsif seg.match(/^\*/)
-      #           self.wildcard = seg.gsub('*', '')
-      #           reg << '(.+)'
-      #         else
-      #           reg << seg.downcase
-      #         end
-      #       end
-      #       self.regex_pattern = /^#{reg.join('/') + '(\..+$|$)'}/
-      #     end
-      #   else
-      #     raise ArgumentError.new("'#{self.path}' is a #{self.path.class} and it should be either a String or Regexp!")
-      #   end
-      # end
       
     end # RouteObject
     

@@ -1,3 +1,4 @@
+* [#217] Fixed rake mack:dump:routes throws errors
 * [#216] Added ability to turn off view caching in distributed app
 * [#215] Asset path lookup flow update
 * [#213] Fixed the params method should be case insensitive

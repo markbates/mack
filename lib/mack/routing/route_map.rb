@@ -93,6 +93,7 @@ module Mack
       #   "/:controller/:action"
       # These get created for each of the 4 HTTP verbs.
       def defaults
+        @_default_routes = []
         [:get, :post, :put, :delete].each do |verb|
           @_default_routes << RouteObject.new("/:controller/:action/:id", :method => verb)
           @_default_routes << RouteObject.new("/:controller/:action", :method => verb)
@@ -119,6 +120,14 @@ module Mack
       
       def inspect # :nodoc:
         @_route_map.inspect
+      end
+      
+      def routes_list # :nodoc:
+        @_route_map
+      end
+      
+      def default_routes_list # :nodoc:
+        @_default_routes || []
       end
       
       def connect_with_name(name, path, options = {}, &block) # :nodoc:
