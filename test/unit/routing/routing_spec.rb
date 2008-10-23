@@ -68,6 +68,8 @@ describe Mack::Routes do
         Mack::Routes.build do |r|
           r.resource :zoos do |zoo|
             zoo.foo '/zoos/foo', :action => :foo
+            zoo.fubar 'zoos/fubar', :action => :fubar
+            zoo.bar 'bar', :action => :bar
             zoo.hello '/hello/:id', :action => :hello, :method => :put
           end
         end
@@ -82,6 +84,8 @@ describe Mack::Routes do
         zoos_new_url.should == '/zoos/new'
         zoos_create_url.should == '/zoos'
         zoos_foo_url.should == '/zoos/foo'
+        zoos_fubar_url.should == '/zoos/fubar'
+        zoos_bar_url.should == '/zoos/bar'
         zoos_hello_url(:id => 1).should == '/zoos/hello/1'
         Mack::Routes.retrieve('/zoos/hello/1.xml', :put).should == {:controller => :zoos, :action => :hello, :method => :put, :format => 'xml', :id => '1'}
         Mack::Routes.retrieve('/zoos/foo').should == {:controller => :zoos, :action => :foo, :method => :get, :format => 'html'}
