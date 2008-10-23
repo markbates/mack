@@ -1,7 +1,8 @@
 module Mack
   module ViewHelpers # :nodoc:
     module HtmlHelpers
-
+      include Mack::Assets
+      
       # Builds an HTML tag.
       # 
       # Examples:

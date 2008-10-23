@@ -1,6 +1,7 @@
 module Mack
   module ViewHelpers # :nodoc:
     module LinkHelpers
+      include Mack::Assets
       
       # Generates a javascript popup window. It will create the javascript needed for the window,
       # as well as the href to call it.
