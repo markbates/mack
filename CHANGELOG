@@ -1,3 +1,4 @@
+* [#216] Added ability to turn off view caching in distributed app
 * [#215] Asset path lookup flow update
 * [#209] inline form built by link_to should include authenticity token
 * [#208] Added support for DataMapper repository context per request
