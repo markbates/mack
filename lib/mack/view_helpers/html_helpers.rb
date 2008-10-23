@@ -72,12 +72,12 @@ pageTracker._trackPageview();
         opts
       end
       
-      def get_resource_root(resource)
-        path = ""
-        path = "#{configatron.mack.distributed.site_domain}" unless configatron.mack.distributed.site_domain.nil?
-        path = Mack::Assets::Helpers.instance.asset_hosts(resource) if path.empty?
-        return path
-      end
+      # def get_resource_root(resource)
+      #   path = ""
+      #   path = "#{configatron.mack.distributed.site_domain}" unless configatron.mack.distributed.site_domain.nil?
+      #   path = Mack::Assets::Helpers.instance.asset_hosts(resource) if path.empty?
+      #   return path
+      # end
       
       
     end # HtmlHelpers

@@ -3,8 +3,8 @@ module Mack
     
     def get_resource_root(resource)
       path = ""
-      path = "#{configatron.mack.distributed.site_domain}" unless configatron.mack.distributed.site_domain.nil?
       path = Mack::Assets::Helpers.instance.asset_hosts(resource) if path.empty?
+      path = "#{configatron.mack.distributed.site_domain}" unless !path.empty? or configatron.mack.distributed.site_domain.nil?
       return path
     end
 

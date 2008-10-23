@@ -10,14 +10,15 @@ describe "Asset Hosts" do
     end
     
     it "should use default host if asset host is not defined" do
+      s = stylesheet('foo')
       stylesheet('foo').should == %{<link href="/stylesheets/foo.css?#{configatron.mack.assets.stamp}" media="screen" rel="stylesheet" type="text/css" />\n}
     end
     
-    it "should use app domain if specifed and even if asset host is defined" do
+    it "should use asset host even if site_domain is specified" do
       temp_app_config(:mack => {:assets => {:hosts => "http://assets.foo.com"}, :distributed => { :site_domain => 'http://localhost:3001'}}) do
         data = stylesheet('foo')
-        data.should match(/localhost:3001/)
-        data.should_not match(/assets.foo.com/)
+        data.should_not match(/localhost:3001/)
+        data.should match(/assets.foo.com/)
       end
     end
     
@@ -62,11 +63,11 @@ describe "Asset Hosts" do
       javascript('foo').should_not match(/http/)
     end
     
-    it "should use app domain if specifed and even if asset host is defined" do
+    it "should use asset host if specifed and even if site_domain is defined" do
       temp_app_config(:mack => {:assets => {:hosts => "http://assets.foo.com"}, :distributed => { :site_domain => 'http://localhost:3001'}}) do
         data = javascript('foo')
-        data.should match(/localhost:3001/)
-        data.should_not match(/assets.foo.com/)
+        data.should_not match(/localhost:3001/)
+        data.should match(/assets.foo.com/)
       end
     end
     
