@@ -25,6 +25,8 @@ describe Mack::Routes do
             r.resource :universes do |u|
               u.resource :planets do |p|
                 p.foo 'foo'
+                p.bar 'planets/bar'
+                p.fubar '/planets/fubar'
                 p.resource :moons, :controller => :moonies
               end
             end
@@ -34,7 +36,9 @@ describe Mack::Routes do
           Mack::Routes.retrieve('/universes/milky_way/planets/earth/moons/cheese').should == {:controller => :moonies, :action => :show, :method => :get, :format => 'html', :id => 'cheese', :planet_id => 'earth', :universe_id => 'milky_way'}
           planets_show_url(:id => 'earth', :universe_id => 'milky_way').should == '/universes/milky_way/planets/earth'
           Mack::Routes.retrieve('/universes/milky_way/planets/earth').should == {:controller => :planets, :action => :show, :method => :get, :format => 'html', :id => 'earth', :universe_id => 'milky_way'}
-          planets_foo_url.should == '/planets/foo'
+          planets_foo_url.should == '/universes/:universe_id/planets/foo'
+          planets_bar_url.should == '/universes/:universe_id/planets/bar'
+          planets_fubar_url.should == '/universes/:universe_id/planets/fubar'
         end
         
       end

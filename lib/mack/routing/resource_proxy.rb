@@ -26,14 +26,7 @@ module Mack
             Mack::Routes::RouteMap.instance.connect_with_name("#{name}_#{route[:name]}", route[:path], options.merge(route[:options]))
           end
         end
-        x = []
-        self.resources.each do |r|
-          x << r
-          x << ":#{r.to_s.singular}_id"
-        end
-        x << name
-        x = x.join('/')
-        Mack::Routes::RouteMap.instance.build_resource_routes(name, x, name, options)
+        Mack::Routes::RouteMap.instance.build_resource_routes(name, compile_path(name, self.resources), name, options)
       end
       
       private
@@ -41,10 +34,23 @@ module Mack
         route = {}
         route[:name] = name.to_s.gsub(/^#{self.controller}/, '')
         route[:options] = {:controller => self.controller, :action => route[:name].to_sym, :method => :get}.merge(options)
-        paths = path.split('/')
-        paths.insert(0, self.controller.to_s)
-        route[:path] = paths.reject{|m| m.blank?}.uniq.join('/')
+        paths = compile_path(self.controller, self.resources.reject{|m| m === self.resources.last}).split('/')
+        paths << path.split('/')
+        paths.flatten!
+        paths.compact!
+        paths.uniq!
+        route[:path] = paths.reject{|m| m.blank?}.join('/')
         routes << route
+      end
+      
+      def compile_path(name, res)
+        x = []
+        res.each do |r|
+          x << r
+          x << ":#{r.to_s.singular}_id"
+        end
+        x << name
+        x.compact.join('/')
       end
       
     end # ResourceProxy
