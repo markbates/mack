@@ -6,13 +6,14 @@ module Mack
       alias_instance_method :[], :old_hash
       alias_instance_method :store
       def [](key)
-        data = old_hash(key.to_sym) || old_hash(key.to_s)
+        key = key.to_s.downcase
+        data = old_hash(key.to_sym) || old_hash(key)
         data = data.to_s if data.is_a?(Symbol)
         return data
       end
       
       def []=(key, value)
-        _original_store(key.to_sym, value)
+        _original_store(key.downcase.to_sym, value)
       end
       
       def to_s
@@ -135,6 +136,8 @@ module Mack
         if k.to_s.match(/.+\[.+\]/)
           nv = k.to_s.match(/.+\[(.+)\]/).captures.first
           nk = k.to_s.match(/(.+)\[.+\]/).captures.first
+          nk.downcase!
+          nv.downcase!
           @mack_params[nk.to_sym] = {} if @mack_params[nk.to_sym].nil?
           v = v.uri_unescape if v.is_a?(String)
           @mack_params[nk.to_sym].merge!(nv.to_sym => v)
