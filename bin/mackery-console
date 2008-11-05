@@ -1,6 +1,8 @@
 #!/usr/local/bin/ruby
 # require File.join(File.dirname(__FILE__), "options_handler")
 
+require 'rubygems'
+
 require File.expand_path(File.join(File.dirname(__FILE__), "env_handler.rb"))
 
 require File.expand_path(File.join(File.dirname(__FILE__), "gem_load_path.rb"))

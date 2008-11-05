@@ -1,3 +1,5 @@
+* [#223] Fixed mackery console fails
+
 === 0.8.1
 * [#217] Fixed rake mack:dump:routes throws errors
 * [#216] Added ability to turn off view caching in distributed app
