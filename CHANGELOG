@@ -1,3 +1,4 @@
+* [#225] Removed dependency on Thin
 * [#223] Fixed mackery console fails
 
 === 0.8.1

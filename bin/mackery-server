@@ -1,5 +1,4 @@
 #!/usr/local/bin/ruby
-# require File.join(File.dirname(__FILE__), "options_handler")
 
 require File.expand_path(File.join(File.dirname(__FILE__), "env_handler.rb"))
 
@@ -8,16 +7,29 @@ require File.expand_path(File.join(File.dirname(__FILE__), "gem_load_path.rb"))
 require 'rubygems'
 
 require 'fileutils'
-require 'thin'
 
 require 'mack'
 
-handler = "thin"
+handler = nil
 
 if ARGV.include?("-h")
   handler = ARGV[ARGV.index("-h") + 1]
   ARGV.delete("-h")
   ARGV.delete(handler)
+end
+
+unless handler
+  begin
+    require 'thin'
+    handler = 'thin'
+  rescue Exception => e
+    begin
+      require 'mongrel'
+      handler = 'mongrel'
+    rescue Exception => e
+      handler = 'WEBrick'
+    end
+  end
 end
 
 if handler == "thin"

@@ -54,7 +54,6 @@ namespace :gem do
         s.add_dependency("mack-more", gh.version)
         s.add_dependency("configatron", "2.1.5")
         s.add_dependency("logging", "0.9.4")
-        s.add_dependency("thin", "1.0.0")
         s.add_dependency("builder", "2.1.2")
         s.add_dependency("daemons", "1.0.10")
         s.add_dependency("erubis", "2.6.2")
