@@ -1,3 +1,4 @@
+puts "***** #{File.basename(__FILE__)} ****"
 Dir.glob(File.join(File.dirname(__FILE__), 'gems', '*')).each do |gem|
   puts "File.expand_path(File.join(gem, 'lib')): #{File.expand_path(File.join(gem, 'lib'))}"
   $:.insert(0, File.expand_path(File.join(gem, 'lib')))
@@ -31,7 +32,7 @@ rescue Exception => e
 end
 
 run_once do
-  [:dependent_gems, :version, :extensions, :paths, :portlets, :environment, :configuration, :logging, :assets, :core, :gems].each do |f|
+  [:version, :extensions, :paths, :portlets, :environment, :configuration, :logging, :assets, :core, :gems].each do |f|
     require File.join_from_here('mack', 'boot', "#{f}.rb")
   end
 end

@@ -7,7 +7,7 @@ run_once do
   
   # init_message('logging')
   
-  gem 'logging'
+  # gem 'logging'
   require 'logging'
   
   require File.join_from_here("..", "utils", "ansi", "ansi_color.rb")
