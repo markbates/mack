@@ -1,6 +1,6 @@
-if __FILE__ == $0
-  require 'fileutils'
-  ENV["MACK_ROOT"] = File.join(FileUtils.pwd, 'test', 'fake_application')
+Dir.glob(File.join(File.dirname(__FILE__), 'gems', '*')).each do |gem|
+  puts "File.expand_path(File.join(gem, 'lib')): #{File.expand_path(File.join(gem, 'lib'))}"
+  $:.insert(0, File.expand_path(File.join(gem, 'lib')))
 end
 
 require 'rubygems'
@@ -31,50 +31,7 @@ rescue Exception => e
 end
 
 run_once do
-  [:version, :extensions, :paths, :portlets, :environment, :configuration, :logging, :assets, :core, :gems].each do |f|
+  [:dependent_gems, :version, :extensions, :paths, :portlets, :environment, :configuration, :logging, :assets, :core, :gems].each do |f|
     require File.join_from_here('mack', 'boot', "#{f}.rb")
   end
 end
-
-# fl = File.join(File.dirname(__FILE__), "mack")
-# require File.join(fl, "initialization", "boot_loader.rb")
-# require File.join(fl, "initialization", "environment.rb")
-# require File.join(fl, "initialization", "configuration.rb")
-# require File.join(fl, "initialization", "logging.rb")
-# 
-# boot_load(:version) do
-#   require File.join(File.dirname(__FILE__), "mack", "version")
-# end
-# 
-# boot_load(:paths) do
-#   require File.join(File.dirname(__FILE__), "mack", "utils", "paths")
-# end
-# 
-# boot_load(:gems) do
-#   Mack.logger.debug "Initializing custom gems..." unless configatron.mack.log.disable_initialization_logging
-#   load Mack::Paths.initializers("gems.rb")
-#   Mack::Utils::GemManager.instance.do_requires
-# end
-# 
-# boot_load(:core_classes) do
-#   Mack.logger.debug "Initializing core classes..." unless configatron.mack.log.disable_initialization_logging
-#   # Require all the necessary files to make Mack actually work!
-#   lib_dirs = ["assets", "errors", "core_extensions", "utils", "sessions", "runner_helpers", "routing", "view_helpers", "rendering", "controller", "tasks", "initialization/server", "generators", "distributed"]
-#   lib_dirs << "testing"# if Mack.env == "test"
-#   lib_dirs.each do |dir|
-#     dir_globs = Dir.glob(File.join(File.dirname(__FILE__), "mack", dir, "**/*.rb"))
-#     dir_globs.sort.each do |d|
-#       require d unless d.match(/console/)
-#     end
-#   end
-# end
-# 
-# boot_load(:runner) do
-#   require File.join(File.dirname(__FILE__), "mack", "runner")
-# end
-# 
-# boot_load(:load_mack_core, :version, :paths, :configuration, :logging, :core_classes, :gems) do
-#   Mack.logger.debug "Initialization of Mack Core finished." unless configatron.mack.log.disable_initialization_logging
-# end
-# 
-# Mack::BootLoader.run(:load_mack_core)

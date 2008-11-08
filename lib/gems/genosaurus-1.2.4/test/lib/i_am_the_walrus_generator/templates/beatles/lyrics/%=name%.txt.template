@@ -1,0 +1,1 @@
+Lyrics for: <%= param(:name).gsub("_", " ").capitalize_all_words %>

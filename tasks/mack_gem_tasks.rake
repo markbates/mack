@@ -15,6 +15,11 @@ require 'tasks/gem_helper'
 namespace :gem do
   
   namespace :package  do
+    
+    task :freezer do
+      require 'gemfreezer'
+      GemFreezer.run(GemFreezer::Options.new(:freeze_directory => File.join(FileUtils.pwd, 'lib', 'gems')))
+    end
   
     desc "Package up the mack gem."
     task :mack do |t|
@@ -50,16 +55,17 @@ namespace :gem do
         
         s.rdoc_options << '--title' << 'Mack' << '--main' << 'README' << '--line-numbers' << "--inline-source"
         
-        s.add_dependency("rack", "0.4.0")
+        # s.add_dependency("rack", "0.4.0")
         s.add_dependency("mack-more", gh.version)
-        s.add_dependency("configatron", "2.1.5")
-        s.add_dependency("logging", "0.9.4")
-        s.add_dependency("builder", "2.1.2")
-        s.add_dependency("daemons", "1.0.10")
-        s.add_dependency("erubis", "2.6.2")
-        s.add_dependency("genosaurus", "1.2.4")
-        s.add_dependency("rcov", "0.8.1.2.0")
-        s.add_dependency("rspec", "1.1.8")
+        s.add_dependency('gemfreezer')
+        # s.add_dependency("configatron", "2.1.5")
+        # s.add_dependency("logging", "0.9.4")
+        # s.add_dependency("builder", "2.1.2")
+        # s.add_dependency("daemons", "1.0.10")
+        # s.add_dependency("erubis", "2.6.2")
+        # s.add_dependency("genosaurus", "1.2.4")
+        # s.add_dependency("rcov", "0.8.1.2.0")
+        # s.add_dependency("rspec", "1.1.8")
       
         s.rubyforge_project = gh.project
         

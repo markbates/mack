@@ -1,0 +1,7 @@
+directory_1:
+  type: directory
+  output_path: beatles/albums/magical_mystery_tour
+template_1:
+  type: file
+  template_path: <%= File.join(templates_directory_path, "fields.txt") %>
+  output_path: beatles/albums/magical_mystery_tour/lyrics/strawberry_fields_forever.lyrics

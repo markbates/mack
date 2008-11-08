@@ -1,0 +1,4 @@
+template_1:
+  type: copy
+  template_path: <%= File.join(templates_directory_path, "hello_world.txt") %>
+  output_path: hw.txt

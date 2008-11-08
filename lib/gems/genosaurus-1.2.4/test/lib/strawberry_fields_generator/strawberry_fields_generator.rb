@@ -1,0 +1,2 @@
+class StrawberryFieldsGenerator < Genosaurus
+end

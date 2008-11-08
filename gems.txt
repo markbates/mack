@@ -1,0 +1,9 @@
+rack, 0.4.0
+configatron, 2.1.5
+logging, 0.9.4
+builder, 2.1.2
+daemons, 1.0.10
+erubis, 2.6.2
+genosaurus, 1.2.4
+rcov, 0.8.1.2.0
+rspec, 1.1.8
