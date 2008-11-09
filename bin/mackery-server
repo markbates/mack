@@ -23,8 +23,8 @@ unless handler
     require 'thin'
     handler = 'thin'
   rescue Exception => e
-    puts e.message
-    puts e.backtrace
+    # puts e.message
+    # puts e.backtrace
     begin
       require 'mongrel'
       handler = 'mongrel'

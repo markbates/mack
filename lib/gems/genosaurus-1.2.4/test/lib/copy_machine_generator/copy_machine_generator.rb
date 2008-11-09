@@ -1,0 +1,2 @@
+class CopyMachineGenerator < Genosaurus
+end

@@ -1,0 +1,2 @@
+class IAmTheWalrusGenerator < Genosaurus
+end

@@ -1,0 +1,2 @@
+class DirectoryGenerator < Genosaurus
+end

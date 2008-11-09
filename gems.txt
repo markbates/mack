@@ -4,3 +4,5 @@ builder, 2.1.2
 daemons, 1.0.10
 rcov, 0.8.1.2.0
 rspec, 1.1.8
+configatron, 2.1.5
+genosaurus, 1.2.4
