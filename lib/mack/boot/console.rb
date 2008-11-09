@@ -1,3 +1,5 @@
+require File.join(File.dirname(__FILE__), '..', 'core_extensions', 'gem_kernel')
+
 require 'mack-facets'
 
 run_once do
