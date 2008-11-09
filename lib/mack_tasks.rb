@@ -1,8 +1,11 @@
 puts "***** #{File.basename(__FILE__)} ****"
-Dir.glob(File.join(File.dirname(__FILE__), 'gems', '*')).each do |gem|
-  puts "File.expand_path(File.join(gem, 'lib')): #{File.expand_path(File.join(gem, 'lib'))}"
-  $:.insert(0, File.expand_path(File.join(gem, 'lib')))
-end
+# Dir.glob(File.join(File.dirname(__FILE__), 'gems', '*')).each do |gem|
+#   puts "File.expand_path(File.join(gem, 'lib')): #{File.expand_path(File.join(gem, 'lib'))}"
+#   $:.insert(0, File.expand_path(File.join(gem, 'lib')))
+# end
+
+require File.join(File.dirname(__FILE__), 'mack', 'core_extensions', 'gem_kernel')
+add_gem_path(File.expand_path(File.join(File.dirname(__FILE__), 'gems')))
 
 require 'rake'
 require 'rake/testtask'

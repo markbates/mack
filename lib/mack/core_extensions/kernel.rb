@@ -73,8 +73,9 @@ module Kernel
     alias_instance_method :gem, :old_gem
     
     def gem(gem_name, *version_requirements)
-      vendor_path = File.join(Mack.root, 'vendor')
-      gem_path = File.join(vendor_path, 'gems')
+      # vendor_path = File.join(Mack.root, 'vendor')
+      # gem_path = File.join(vendor_path, 'gems')
+      add_gem_path(File.join(Mack.root, 'vendor', 'gems'))
       
       # try to normalize the version requirement string
       ver = version_requirements.to_s.strip
@@ -88,7 +89,15 @@ module Kernel
       
       found_local_gem = false
       
-      Dir.glob(File.join(gem_path, "#{gem_name}*")).each_with_index do |file, i|
+      dirs = []
+      Gem.path.each do |p|
+        dirs << Dir.glob(File.join(p, "#{gem_name}*"))
+      end
+      dirs.flatten!
+      dirs.uniq!
+      
+      dirs.each_with_index do |file, i|
+        file = File.basename(file)
         # all frozen gem has the pattern [gem_name]-[version]
         next if !file.include?'-'
   

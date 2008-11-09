@@ -40,9 +40,10 @@ namespace :gem do
         s.author = "markbates"
         s.email = "mark@mackframework.com"
         s.homepage = "http://www.mackframework.com"
-        s.has_rdoc = true
+        # s.has_rdoc = true
+        s.rdoc_options << '--exclude=gems/'
         s.extra_rdoc_files = ["README", "CHANGELOG"]
-        s.files = FileList["README", "lib/**/*.*", 'bin/**/*.*']
+        s.files = FileList["README", "lib/**/*", 'bin/**/*.*']
         s.require_paths << '.'
         s.require_paths << 'bin'
         s.require_paths << 'lib'
@@ -55,9 +56,10 @@ namespace :gem do
         
         s.rdoc_options << '--title' << 'Mack' << '--main' << 'README' << '--line-numbers' << "--inline-source"
         
+        s.add_dependency('rake')
         # s.add_dependency("rack", "0.4.0")
         s.add_dependency("mack-more", gh.version)
-        s.add_dependency('gemfreezer')
+        # s.add_dependency('gemfreezer')
         s.add_dependency("configatron", "2.1.5")
         # s.add_dependency("logging", "0.9.4")
         # s.add_dependency("builder", "2.1.2")

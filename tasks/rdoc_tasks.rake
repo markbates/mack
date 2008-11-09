@@ -8,5 +8,6 @@ Rake::RDocTask.new do |rd|
   rd.rdoc_dir = "doc"
   rd.options << "--line-numbers"
   rd.options << "--inline-source"
+  rd.options << '--exclude=gems/'
   rd.title = "Mack Framework"
 end
