@@ -1,3 +1,4 @@
+* [#226] Bundled gems.
 * [#225] Removed dependency on Thin
 * [#223] Fixed mackery console fails
 
