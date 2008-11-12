@@ -1,6 +1,6 @@
 puts "***** #{File.basename(__FILE__)} ****"
-require File.join(File.dirname(__FILE__), 'lib', 'mack', 'core_extensions', 'gem_kernel')
-add_gem_path(File.expand_path(File.join(File.dirname(__FILE__), 'lib', 'gems')))
+# require File.join(File.dirname(__FILE__), 'lib', 'mack', 'core_extensions', 'gem_kernel')
+# add_gem_path(File.expand_path(File.join(File.dirname(__FILE__), 'lib', 'gems')))
 
 require 'rake'
 require 'rake/testtask'

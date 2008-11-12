@@ -1,5 +1,7 @@
 #!/usr/local/bin/ruby
-require File.join(File.dirname(__FILE__), '..', 'lib', 'mack', 'core_extensions', 'gem_kernel')
+require File.join(File.dirname(__FILE__), '..', 'lib', 'gems')
+# add_gem_path(File.join(File.dirname(__FILE__), '..', 'lib', 'gems'))
+
 require 'fileutils'
 require 'optparse'
 require 'optparse/time'

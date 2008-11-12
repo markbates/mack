@@ -4,8 +4,8 @@ puts "***** #{File.basename(__FILE__)} ****"
 #   $:.insert(0, File.expand_path(File.join(gem, 'lib')))
 # end
 
-require File.join(File.dirname(__FILE__), 'mack', 'core_extensions', 'gem_kernel')
-add_gem_path(File.expand_path(File.join(File.dirname(__FILE__), 'gems')))
+# require File.join(File.dirname(__FILE__), 'mack', 'core_extensions', 'gem_kernel')
+# add_gem_path(File.expand_path(File.join(File.dirname(__FILE__), 'gems')))
 
 require 'rake'
 require 'rake/testtask'
@@ -13,7 +13,13 @@ require 'rake/rdoctask'
 require 'fileutils'
 require 'rubygems'
 require 'mack-facets'
-require 'configatron'
+
+begin
+  gem 'configatron', '~> 2.1.5'
+rescue Gem::LoadError
+  $:.unshift(File.expand_path(File.join(File.dirname(__FILE__), 'gems', 'configatron-2.1.5')))
+end
+# require 'configatron'
 
 fl = File.join_from_here('mack')
 

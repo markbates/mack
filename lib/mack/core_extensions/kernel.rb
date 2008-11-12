@@ -75,22 +75,26 @@ module Kernel
     def gem(gem_name, *version_requirements)
       # vendor_path = File.join(Mack.root, 'vendor')
       # gem_path = File.join(vendor_path, 'gems')
-      add_gem_path(File.join(Mack.root, 'vendor', 'gems'))
+      # add_gem_path(File.join(Mack.root, 'vendor', 'gems'))
+      Gem.set_paths(File.join(Mack.root, 'vendor', 'gems'))
       
       # try to normalize the version requirement string
       ver = version_requirements.to_s.strip
       ver = "> 0.0.0" if ver == nil or ver.empty?
       # if the version string starts with number, then prepend = to it (since the developer wants an exact match)
-      ver = "= " + ver if ver[0,1] != '=' and ver[0,1] != '>' and ver[0,1] != '<'
+      ver = "= " + ver if ver[0,1] != '=' and ver[0,1] != '>' and ver[0,1] != '<' and ver[0,1] != '~'
       
       num = ver.match(/\d.+/).to_s
       op  = ver.delete(num).strip
-      op  += "=" if op == '=' 
+      op  += "=" if op == '='
+      
+      op = '>=' if op == '~>'
       
       found_local_gem = false
       
       dirs = []
       Gem.path.each do |p|
+        puts "gem path: #{p}"
         dirs << Dir.glob(File.join(p, "#{gem_name}*"))
       end
       dirs.flatten!

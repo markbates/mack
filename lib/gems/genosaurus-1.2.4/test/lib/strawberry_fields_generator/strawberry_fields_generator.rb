@@ -1,2 +1,0 @@
-class StrawberryFieldsGenerator < Genosaurus
-end
