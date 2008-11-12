@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '..', 'core_extensions', 'gem_kernel')
+require File.join(File.dirname(__FILE__), '..', '..', 'gems')
 
 require 'mack-facets'
 
