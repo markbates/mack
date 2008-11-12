@@ -1,12 +1,3 @@
-puts "***** #{File.basename(__FILE__)} ****"
-# Dir.glob(File.join(File.dirname(__FILE__), 'gems', '*')).each do |gem|
-#   puts "File.expand_path(File.join(gem, 'lib')): #{File.expand_path(File.join(gem, 'lib'))}"
-#   $:.insert(0, File.expand_path(File.join(gem, 'lib')))
-# end
-
-# require File.join(File.dirname(__FILE__), 'mack', 'core_extensions', 'gem_kernel')
-# add_gem_path(File.expand_path(File.join(File.dirname(__FILE__), 'gems')))
-
 require File.join(File.dirname(__FILE__), 'gems')
 require 'rake'
 require 'rake/testtask'
@@ -48,37 +39,5 @@ else
       end
     end
   end  
-  
-  
-  # # puts "running mack_tasks from: #{fl}"
-  # require File.join(File.dirname(__FILE__), '..', 'bin', 'gem_load_path')
-  # 
-  # require File.join(fl, 'tasks', 'rake_helpers')
-  # require File.join(fl, 'core_extensions', 'kernel')
-  # require File.join(fl, 'utils', 'paths')
-  # 
-  # require File.join(fl, 'initialization', 'boot_loader')
-  # require File.join(fl, 'initialization', 'configuration')
-  # 
-  # Mack::BootLoader.run(:configuration)
-  # require File.join(fl, 'utils', 'gem_manager')
-  # 
-  # require Mack::Paths.initializers("gems.rb")
-  # Mack::Utils::GemManager.instance.do_task_requires
-  # 
-  # # Requires all rake tasks that ship with the Mack framework.
-  # [fl, Mack::Paths.lib, Mack::Paths.plugins].each do |dir|
-  #   begin
-  #     require File.join(dir, "tasks", "rake_helpers.rb")
-  #   rescue Exception => e
-  #     # raise e
-  #   end
-  #   files = Dir.glob(File.join(dir, "**/*.rake"))
-  #   files.each do |f|
-  #     unless f == __FILE__
-  #       load f
-  #     end
-  #   end
-  # end
   
 end

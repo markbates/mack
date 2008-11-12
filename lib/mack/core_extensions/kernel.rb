@@ -94,7 +94,6 @@ module Kernel
       
       dirs = []
       Gem.path.each do |p|
-        puts "gem path: #{p}"
         dirs << Dir.glob(File.join(p, "#{gem_name}*"))
       end
       dirs.flatten!
