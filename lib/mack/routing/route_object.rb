@@ -9,10 +9,12 @@ module Mack
       attr_accessor :embedded_parameters
       attr_accessor :regex_patterns
       attr_accessor :insertion_order
+      attr_accessor :deferred
       
       def initialize(path, options = {})
         self.path = path
         self.options = {:action => :index}.merge(options)
+        self.deferred = self.options.delete(:deferred?) || false
         # self.embedded_parameters = []
         # self.host_embedded_parameters = []
         self.regex_patterns = {}

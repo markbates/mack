@@ -13,6 +13,7 @@ module Mack
       def reset! # :nodoc:
         @_default_routes = []
         @_route_map = {:get => [], :post => [], :put => [], :delete => [], :errors => {}}
+        @_deferred_route_map = {:get => [], :post => [], :put => [], :delete => [], :errors => {}}
       end
       
       def any? # :nodoc:
@@ -81,6 +82,7 @@ module Mack
         end
         route = RouteObject.new(path, options)
         @_route_map[options[:method]] << route
+        @_deferred_route_map[options[:method]] << route if route.deferred
         route
       end
       
@@ -124,6 +126,10 @@ module Mack
       
       def routes_list # :nodoc:
         @_route_map
+      end
+      
+      def deferred_routes_list # :nodoc:
+        @_deferred_route_map
       end
       
       def default_routes_list # :nodoc:

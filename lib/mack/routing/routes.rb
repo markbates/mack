@@ -163,6 +163,10 @@ module Mack
         Mack::Routes::RouteMap.instance.inspect
       end
       
+      def deferred_routes_list # :nodoc:
+        Mack::Routes::RouteMap.instance.deferred_routes_list
+      end
+      
     end
     
   end # Routes
