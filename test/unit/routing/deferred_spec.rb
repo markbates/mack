@@ -5,6 +5,8 @@ describe Mack::Routes do
   
   describe 'deferred?' do
     
+    configatron.mack.use_deferred_routes = true
+    
     Mack::Routes.build do |r|
       r.i_am_deferred '/i/am/deferred', :controller => :default, :action => :index, :deferred? => true, :method => :post
       r.i_am_not_deferred '/i/am/not/deferred', :controller => :default, :action => :index

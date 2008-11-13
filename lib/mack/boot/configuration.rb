@@ -47,7 +47,7 @@ run_once do
       configatron.mack.portlet.need_tar = false
       configatron.mack.portlet.need_zip = false
       
-      configatron.mack.use_deferred_routes = true
+      configatron.mack.use_deferred_routes = false
     
       if Mack.env?(:production)
         configatron.mack.use_lint = false
