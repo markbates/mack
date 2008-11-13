@@ -28,10 +28,19 @@ module Mack
         self.options == other
       end
       
-      def match?(url)
-        if url.downcase.match(self.regex_patterns[:uri])
+      def match?(env = {})
+        if self.options[:host]
+          return false unless !env[:host].nil? && env[:host].match(self.regex_patterns[:host])
+        end
+        if self.options[:scheme]
+          return false unless !env[:scheme].nil? && self.options[:scheme].downcase == env[:scheme]
+        end
+        if self.options[:port]
+          return false unless !env[:port].nil? && self.options[:port].to_i == env[:port].to_i
+        end
+        if env[:uri].downcase.match(self.regex_patterns[:uri])
           if self.options[:format]
-            format = (File.extname(url).blank? ? '.html' : File.extname(url))
+            format = (File.extname(env[:uri]).blank? ? '.html' : File.extname(env[:uri]))
             format = format[1..format.length]
             return format.to_sym == self.options[:format]
           end

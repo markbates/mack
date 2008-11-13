@@ -12,7 +12,7 @@ module Mack
         method = env["REQUEST_METHOD"].downcase.to_sym
         routes = Mack::Routes.deferred_routes_list[method]
         routes.each do |route|
-          return true if env["PATH_INFO"].match(route.regex_patterns[:uri])
+          return true if route.match?(:uri => env['PATH_INFO'], :host => env['SERVER_NAME'], :port => env['SERVER_PORT'], :scheme => env['rack.url_scheme'])
         end
       end
       return false

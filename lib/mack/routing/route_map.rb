@@ -47,22 +47,13 @@ module Mack
         format = format[1..format.length]
         routes = @_route_map[verb]
         routes.each do |route|
-          if route.options[:host]
-            next unless !host.nil? && host.match(route.regex_patterns[:host])
-          end
-          if route.options[:scheme]
-            next unless route.options[:scheme].downcase == scheme
-          end
-          if route.options[:port]
-            next unless route.options[:port].to_i == port.to_i
-          end
-          if route.match?(path)
+          if route.match?(:uri => path, :host => host, :scheme => scheme, :port => port)
             ret_val = route.options_with_parameters(path, host)
             return ret_val
           end
         end
         @_default_routes.each do |route|
-          if route.match?(path) && route.options[:method] == verb
+          if route.match?(:uri => path) && route.options[:method] == verb
             ret_val = route.options_with_parameters(path)
             return ret_val
           end

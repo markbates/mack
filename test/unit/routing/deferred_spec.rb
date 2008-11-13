@@ -8,6 +8,10 @@ describe Mack::Routes do
     Mack::Routes.build do |r|
       r.i_am_deferred '/i/am/deferred', :controller => :default, :action => :index, :deferred? => true, :method => :post
       r.i_am_not_deferred '/i/am/not/deferred', :controller => :default, :action => :index
+      r.i_am_deferred_w_host '/i/am/deferred_w_host', :controller => :default, :action => :index, :deferred? => true, :host => 'www.example.com'
+      r.i_am_deferred_w_port '/i/am/deferred_w_port', :controller => :default, :action => :index, :deferred? => true, :port => 8080
+      r.i_am_deferred_w_scheme '/i/am/deferred_w_scheme', :controller => :default, :action => :index, :deferred? => true, :scheme => 'https'
+      r.i_am_deferred_w_all '/i/am/deferred_w_all', :controller => :default, :action => :index, :deferred? => true, :host => 'www.example.com', :port => 6969, :scheme => 'https'
     end
     
     it 'should mark a request as deferred' do
@@ -25,6 +29,19 @@ describe Mack::Routes do
         runner.should_not be_deferred(Rack::MockRequest.env_for('/i/am/deferred', :method => :post))
         runner.should_not be_deferred(Rack::MockRequest.env_for('/i/am/not/deferred'))
       end
+    end
+    
+    it 'should handle port, scheme, host, etc...' do
+      runner = Mack::Runner.new
+      runner.should be_deferred(Rack::MockRequest.env_for('http://www.example.com/i/am/deferred_w_host'))
+      runner.should be_deferred(Rack::MockRequest.env_for('http://www.example.com:8080/i/am/deferred_w_port'))
+      runner.should be_deferred(Rack::MockRequest.env_for('https://www.example.com/i/am/deferred_w_scheme'))
+      runner.should be_deferred(Rack::MockRequest.env_for('https://www.example.com:6969/i/am/deferred_w_all'))
+      
+      runner.should_not be_deferred(Rack::MockRequest.env_for('http://www.foo.com/i/am/deferred_w_host'))
+      runner.should_not be_deferred(Rack::MockRequest.env_for('http://www.example.com:8181/i/am/deferred_w_port'))
+      runner.should_not be_deferred(Rack::MockRequest.env_for('http://www.example.com/i/am/deferred_w_scheme'))
+      runner.should_not be_deferred(Rack::MockRequest.env_for('http://www.foo.com:9696/i/am/deferred_w_all'))
     end
     
   end
