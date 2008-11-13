@@ -1,5 +1,6 @@
 * [#230] Upgraded to facets 2.4.5
 * [#229] Upgraded to english 0.3.1
+* [#227] Removed WEBrick logging
 * [#226] Bundled gems.
 * [#225] Removed dependency on Thin
 * [#223] Fixed mackery console fails
