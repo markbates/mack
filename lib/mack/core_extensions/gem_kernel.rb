@@ -18,7 +18,7 @@ unless Object.const_defined?('GEM_PATHS_MOD')
       alias_method :__original_set_paths, :set_paths
   
       def set_paths(*gpaths)
-        __original_set_paths(gpaths.flatten.compact.uniq.join(File::PATH_SEPARATOR))
+        __original_set_paths([@gem_path, gpaths].flatten.compact.uniq.join(File::PATH_SEPARATOR))
         Gem.reset!
         @gem_path.uniq!
         @gem_path
