@@ -48,6 +48,7 @@ if handler == "thin"
   thin_opts << ARGV
   Thin::Runner.new(thin_opts.flatten.reject{|a| a.match(/^_[\d\.]+_$/)}).run!
 else
+  require 'logger'
   port = 3000
   if ARGV.include?("-p")
     port = ARGV[ARGV.index("-p") + 1]
@@ -65,7 +66,7 @@ else
         def run(options)
           r = "Rack::Handler::#{options[:handler].camelcase}"
           puts "Starting app using: #{r} in #{options[:environment]} mode on port: #{options[:port]}"
-          eval(r).run(Mack::Utils::Server.build_app, :Port => options[:port], :Logger => Logger.new(StringIO.new), :AccessLog => [])
+          eval(r).run(Mack::Utils::Server.build_app, :Port => options[:port], :Logger => ::Logger.new(StringIO.new), :AccessLog => [])
         end
 
       end
