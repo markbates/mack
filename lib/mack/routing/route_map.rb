@@ -148,13 +148,17 @@ module Mack
       end
       
       def build_resource_routes(method_base, path_base, controller, options) # :nodoc:
-        connect_with_name("#{method_base}_index", "/#{path_base}", {:controller => controller, :action => :index, :method => :get}.merge(options))
-        connect_with_name("#{method_base}_create", "/#{path_base}", {:controller => controller, :action => :create, :method => :post}.merge(options))
-        connect_with_name("#{method_base}_new", "/#{path_base}/new", {:controller => controller, :action => :new, :method => :get}.merge(options))
-        connect_with_name("#{method_base}_show", "/#{path_base}/:id", {:controller => controller, :action => :show, :method => :get}.merge(options))
-        connect_with_name("#{method_base}_edit", "/#{path_base}/:id/edit", {:controller => controller, :action => :edit, :method => :get}.merge(options))
-        connect_with_name("#{method_base}_update", "/#{path_base}/:id", {:controller => controller, :action => :update, :method => :put}.merge(options))
-        connect_with_name("#{method_base}_delete", "/#{path_base}/:id", {:controller => controller, :action => :delete, :method => :delete}.merge(options))
+        deferred = options.delete(:deferred?) || []
+        if deferred && !deferred.is_a?(Array)
+          deferred = [:create, :update]
+        end
+        connect_with_name("#{method_base}_index", "/#{path_base}", {:controller => controller, :action => :index, :method => :get, :deferred? => deferred.include?(:index)}.merge(options))
+        connect_with_name("#{method_base}_create", "/#{path_base}", {:controller => controller, :action => :create, :method => :post, :deferred? => deferred.include?(:create)}.merge(options))
+        connect_with_name("#{method_base}_new", "/#{path_base}/new", {:controller => controller, :action => :new, :method => :get, :deferred? => deferred.include?(:new)}.merge(options))
+        connect_with_name("#{method_base}_show", "/#{path_base}/:id", {:controller => controller, :action => :show, :method => :get, :deferred? => deferred.include?(:show)}.merge(options))
+        connect_with_name("#{method_base}_edit", "/#{path_base}/:id/edit", {:controller => controller, :action => :edit, :method => :get, :deferred? => deferred.include?(:edit)}.merge(options))
+        connect_with_name("#{method_base}_update", "/#{path_base}/:id", {:controller => controller, :action => :update, :method => :put, :deferred? => deferred.include?(:update)}.merge(options))
+        connect_with_name("#{method_base}_delete", "/#{path_base}/:id", {:controller => controller, :action => :delete, :method => :delete, :deferred? => deferred.include?(:delete)}.merge(options))
       end
       
       private
