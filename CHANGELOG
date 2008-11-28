@@ -1,3 +1,4 @@
+* [#236] Upgraded to ActiveRecord 2.2.2
 * [#235] Upgraded to DataMapper 0.9.7
 * [#230] Upgraded to facets 2.4.5
 * [#229] Upgraded to english 0.3.1
@@ -6,7 +7,9 @@
 * [#225] Removed dependency on Thin
 * [#223] Fixed mackery console fails
 * [#16] Added deferred? routes.
+* gem: active_record 2.2.2
 * gem: data_mapper 0.9.7
+* gem: addressable 2.0.0
 * gem: facets 2.4.5
 * gem: english 0.3.1
 * gem: rspec 1.1.11
