@@ -76,19 +76,19 @@ module Kernel
       return if FALSE_GEM_NAMES.include?(gem_name)
       # puts '***************'
       # puts "gem_name: #{gem_name}"
-      # vendor_path = File.join(Mack.root, 'vendor')
-      # gem_path = File.join(vendor_path, 'gems')
-      # add_gem_path(File.join(Mack.root, 'vendor', 'gems'))
       
       # try to normalize the version requirement string
       ver = version_requirements.to_s.strip
-      ver = "> 0.0.0" if ver == nil or ver.empty?
-      # if the version string starts with number, then prepend = to it (since the developer wants an exact match)
-      ver = "= " + ver if ver[0,1] != '=' and ver[0,1] != '>' and ver[0,1] != '<' and ver[0,1] != '~'
+      if ver == nil || ver.empty?
+        ver = '> 0.0.0'
+      else
+        # if the version string starts with number, then prepend = to it (since the developer wants an exact match)
+        ver = "= " + ver if ver[0,1] != '=' && ver[0,1] != '>' && ver[0,1] != '<' && ver[0,1] != '~'
+      end
       
       num = ver.match(/\d.+/).to_s
       op  = ver.delete(num).strip
-      op  += "=" if op == '='
+      op  += '=' if op == '='
       
       op = '>=' if op == '~>'
       
@@ -118,13 +118,12 @@ module Kernel
         
         # generate number comparison string that we can evaluate, to make sure that we
         # pick the correct gem based on the requested version requirements
-        comparison = "'#{file_ver}' #{op} '#{num}'"  # e.g.: "'0.8.0' > '0.0.0'"
         
         # if we find the match (i.e. the comparison string checks out) then
         # read the frozen spec file in that directory (so we can see what the require path is)
         # and prepend the new require path(s) to the global search path.
         # If we didn't find it, then continue to look (obviously)
-        if eval(comparison)           
+        if eval("'#{file_ver}' #{op} '#{num}'")
           spec_file = File.join(file, 'spec.yaml')
           
           if File.exists?(spec_file)
@@ -133,10 +132,11 @@ module Kernel
             spec = nil
           end
           
-          if spec and spec.require_path
+          if spec && spec.require_path
             spec.require_path.each { |rp| $:.insert(0, File.expand_path(File.join(file, rp))) }
           else
-            $:.insert(0, File.expand_path(file))
+            # puts "File.expand_path(file): #{File.expand_path(file)}"
+            # $:.insert(0, File.expand_path(file))
           end
 
           found_local_gem = true
