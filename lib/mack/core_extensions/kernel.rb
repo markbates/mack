@@ -67,16 +67,18 @@ module Kernel
     end
   end
   
-  unless Module.const_defined?('GEM_MOD')
-    Module.const_set('GEM_MOD', 1)
-    
+  run_once do
+    Gem.set_paths(File.join(Mack.root, 'vendor', 'gems'))
+    FALSE_GEM_NAMES = %w{specifications gems doc cache}
     alias_instance_method :gem, :old_gem
     
     def gem(gem_name, *version_requirements)
+      return if FALSE_GEM_NAMES.include?(gem_name)
+      # puts '***************'
+      # puts "gem_name: #{gem_name}"
       # vendor_path = File.join(Mack.root, 'vendor')
       # gem_path = File.join(vendor_path, 'gems')
       # add_gem_path(File.join(Mack.root, 'vendor', 'gems'))
-      Gem.set_paths(File.join(Mack.root, 'vendor', 'gems'))
       
       # try to normalize the version requirement string
       ver = version_requirements.to_s.strip
@@ -98,6 +100,9 @@ module Kernel
       end
       dirs.flatten!
       dirs.uniq!
+      # puts "Gem.path: #{Gem.path.inspect}"
+      # puts "--------"
+      # puts "dirs: #{dirs.inspect}" 
       
       dirs.each_with_index do |file, i|
         file = File.basename(file)
