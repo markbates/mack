@@ -7,6 +7,7 @@
 * [#226] Bundled gems.
 * [#225] Removed dependency on Thin
 * [#223] Fixed mackery console fails
+* [#148] Added button_to_remote helper method. 
 * [#16] Added deferred? routes.
 * gem: active_record 2.2.2
 * gem: data_mapper 0.9.7
