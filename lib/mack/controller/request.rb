@@ -2,30 +2,8 @@ module Mack
   
   class Request < Rack::Request
     
-    class Parameters < Hash # :nodoc:
-      alias_instance_method :[], :old_hash
-      alias_instance_method :store
-      def [](key)
-        key = key.to_s.downcase
-        data = old_hash(key.to_sym) || old_hash(key)
-        data = data.to_s if data.is_a?(Symbol)
-        return data
-      end
-      
-      def []=(key, value)
-        _original_store(key.downcase.to_sym, value)
-      end
-      
-      def to_s
-        s = self.inspect
-        Mack::Logging::Filter.list.each do |p|
-          s.gsub!(/:#{p}=>\"[^\"]+\"/, ":#{p}=>\"<FILTERED>\"")
-        end
-        s
-      end
-      
-    end
-    
+    autoload :DateTimeParameter, File.join_from_here('request', 'date_time_parameter')
+    autoload :Parameters, File.join_from_here('request', 'parameters')
     
     def initialize(env) # :nodoc:
       super(env)
@@ -146,37 +124,6 @@ module Mack
           @mack_params[k.to_sym] = v#.to_s.uri_unescape
         end
       end
-    end
-    
-    class DateTimeParameter # :nodoc:
-      attr_accessor :year
-      attr_accessor :month
-      attr_accessor :day
-      attr_accessor :hour
-      attr_accessor :minute
-      attr_accessor :second
-      
-      def initialize
-        self.year = Time.now.year
-        self.month = 1
-        self.day = 1
-        self.hour = 0
-        self.minute = 0
-        self.second = 0
-      end
-      
-      def add(key, value)
-        self.send("#{key}=", value)
-      end
-      
-      def to_s
-        "#{year}-#{month}-#{day} #{hour}:#{minute}:#{second}"
-      end
-      
-      def to_time
-        Time.parse(self.to_s)
-      end
-      
     end
     
   end # Request
