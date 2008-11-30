@@ -1,3 +1,4 @@
+=== 0.8.2
 * [#237] Fixed render :rjs throws errors
 * [#236] Upgraded to ActiveRecord 2.2.2
 * [#235] Upgraded to DataMapper 0.9.7
