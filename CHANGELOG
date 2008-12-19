@@ -1,4 +1,5 @@
 * [#238] Upgraded to DataMapper 0.9.8
+* [#133] Added Form Builders
 * gem: data_mapper 0.9.8
 * gem: addressable 2.0.1
 
