@@ -2,7 +2,6 @@ class <%= @name_plural_camel %>Controller
   include Mack::Controller
   <% @actions.each do |action| %>
   def <%= action %>
-    
   end
   <% end %>
 end

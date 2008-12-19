@@ -19,7 +19,7 @@ class ControllerGenerator < Genosaurus
     @name_plural_camel = @name_plural.camelcase
     @actions = []
     if param(:actions).to_s == "restful"
-      @actions = "index,show,new,edit,create,update,destroy".split(",")
+      @actions = %w{index show new edit create update destroy}
     else      
       @actions = param(:actions).split(",") unless param(:actions).blank?
     end
