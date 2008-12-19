@@ -7,7 +7,7 @@ describe Mack::View::FormBuilder do
     include Mack::View::FormBuilder
     
     def text_field(*args)
-      "<p>#{super(*args)}</p>"
+      "<p>#{element(:text_field, *args)}</p>"
     end
     
   end
@@ -15,8 +15,12 @@ describe Mack::View::FormBuilder do
   class GodfatherFormBuilder
     include Mack::View::FormBuilder
     
-    def all(*args)
-      "<i>#{super(*args)}</i>"
+    def text_field(*args)
+      "<p>#{element(:text_field, *args)}</p>"
+    end
+    
+    def all(sym, *args)
+      "<i>#{element(sym, *args)}</i>"
     end
     
   end
@@ -38,10 +42,6 @@ describe Mack::View::FormBuilder do
     @sw.password_field(:skywalker, :value => 1).should == %{<input id="skywalker" name="skywalker" type="password" value="1" />}
   end
   
-  it 'should create a view helper method named after the class' do
-    Mack::ViewHelpers::FormHelpers.instance_methods.should include('star_wars_form')
-  end
-  
   it 'should work' do
     get '/star_wars/skywalker'
     response.should be_successful
@@ -49,8 +49,30 @@ describe Mack::View::FormBuilder do
   end
   
   it 'should use the all method if available' do
-    @gf.text_field(:skywalker, :value => 1).should == %{<i><input id="skywalker" name="skywalker" type="text" value="1" /></i>}
+    @gf.text_field(:skywalker, :value => 1).should == %{<p><input id="skywalker" name="skywalker" type="text" value="1" /></p>}
     @gf.password_field(:skywalker, :value => 1).should == %{<i><input id="skywalker" name="skywalker" type="password" value="1" /></i>}
+  end 
+  
+  describe 'partial' do
+
+    class StripesController
+      include Mack::Controller
+    end
+    
+    class StripesBuilder
+      include Mack::View::FormBuilder
+      
+      partial :text_field, 'fb_partials/text_field'
+      partial :all, 'fb_partials/all'
+    end
+    
+    it 'should render a partial if told to' do
+      get '/stripes/index'
+      response.should be_successful
+      response.body.should match(%{<h1><input id="murray" name="murray" type="text" value="Bill Murray" /></h1>})
+      response.body.should match(%{<h2><input id="ramis" name="ramis" type="password" value="Harold Ramis" /></h2>})
+    end
+    
   end
   
 end
