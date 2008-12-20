@@ -6,11 +6,11 @@ module Rack
   # allows a Rack stack to serve both static and dynamic content.
   #
   # Examples:
-  #     use Rack::Static, :urls => ["/media"]
+  #     use Rack::Static, :urls => ['/media']
   #     will serve all requests beginning with /media from the "media" folder
   #     located in the current directory (ie media/*).
   #
-  #     use Rack::Static, :urls => ["/css", "/images"], :root => 'public'
+  #     use Rack::Static, :urls => ['/css', '/images'], :root => 'public'
   #     will serve all requests beginning with /css or /images from the folder
   #     'public' in the current directory (ie public/css/* and public/images/*)
 
@@ -18,7 +18,7 @@ module Rack
 
     def initialize(app, options={})
       @app = app
-      @urls = options[:urls] || ["/favicon.ico"]
+      @urls = options[:urls] || ['/favicon.ico']
       root = options[:root] || Dir.pwd
       @file_server = Rack::File.new(root)
     end

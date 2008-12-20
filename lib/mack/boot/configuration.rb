@@ -41,7 +41,7 @@ run_once do
       configatron.mack.log.use_colors = true
       configatron.mack.log.time_format = '%Y-%m-%d %H:%M:%S'
       
-      configatron.mack.static_paths = ["/css", "/images", "/files", "/images", "/stylesheets", "/javascripts", "/media", "/favicon.ico"]
+      configatron.mack.static_paths = ['/css', '/images', '/files', '/images', '/stylesheets', '/javascripts', '/media', '/favicon.ico']
       
       configatron.mack.portlet.verbose = false
       configatron.mack.portlet.need_tar = false
