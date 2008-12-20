@@ -30,7 +30,7 @@ module Mack
       #   <% end -%>
       def form(action, options = {}, &block)
         options = {:method => :post, :action => action}.merge(options)
-        form_builder = options.delete(:builder)
+        form_builder = options.delete(:builder) || Mack::View::DefaultFormBuilder.new(Thread.current[:view_template])
         if options[:id]
           options = {:class => options[:id]}.merge(options)
         end
@@ -46,11 +46,7 @@ module Mack
         concat("<form#{build_options(options)}>\n", block.binding)
         concat(meth, block.binding) unless meth.blank?
         concat(form_authenticity_field, block.binding) unless configatron.mack.disable_forgery_detector
-        if form_builder
-          yield form_builder
-        else
-          yield
-        end
+        yield form_builder
         concat("\n</form>", block.binding)
         # content_tag(:form, options, &block)
       end

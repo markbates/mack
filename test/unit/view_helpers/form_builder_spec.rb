@@ -2,6 +2,7 @@ require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
 describe Mack::View::FormBuilder do
+  include Mack::ViewHelpers
   
   class StarWarsFormBuilder
     include Mack::View::FormBuilder
@@ -71,6 +72,19 @@ describe Mack::View::FormBuilder do
       response.should be_successful
       response.body.should match(%{<h1><input id="murray" name="murray" type="text" value="Bill Murray" /></h1>})
       response.body.should match(%{<h2><input id="ramis" name="ramis" type="password" value="Harold Ramis" /></h2>})
+    end
+    
+  end
+  
+  describe 'form' do
+    
+    def concat(*args)
+    end
+    
+    it 'should yield up a default form builder' do
+      form('/foo') do |f|
+        f.class.should == Mack::View::DefaultFormBuilder
+      end
     end
     
   end
