@@ -60,9 +60,9 @@ describe Mack::ViewHelpers::FormHelpers do
     it "should generate a label" do
       @dilbert = Dilbert.new
       @dilbert.created_at = Time.parse("2008-8-16 19:35")
-      date_time_select(:dilbert, :created_at, :label => true).should == %{<label for="dilbert_created_at">Created at</label>} + fixture("default_date_time_select.html")
+      date_time_select(:dilbert, :created_at, :label => true).should == %{<label for="dilbert_created_at">Created at</label>\n} + fixture("default_date_time_select.html")
       
-      date_time_select(:dilbert, :created_at, :label => "Created").should == %{<label for="dilbert_created_at">Created</label>} + fixture("default_date_time_select.html")
+      date_time_select(:dilbert, :created_at, :label => "Created").should == %{<label for="dilbert_created_at">Created</label>\n} + fixture("default_date_time_select.html")
     end
     
     it "should generate seconds if told" do

@@ -12,7 +12,7 @@ module Mack
       # the authenticity token is already included in your form.
       #
       def form_authenticity_field
-        str = %{<input type="hidden" name="__authenticity_token" value="#{Mack::Utils::AuthenticityTokenDispenser.instance.dispense_token(request.session.id)}" />}
+        str = %{<input type="hidden" name="__authenticity_token" value="#{Mack::Utils::AuthenticityTokenDispenser.instance.dispense_token(request.session.id)}" />\n}
       end
         
       
@@ -261,16 +261,16 @@ module Mack
       
       private
       def label_parameter_tag(name, id, var, fe)
-        label = ""
+        label = ''
         if fe.options[:label]
           if fe.options[:label].is_a?(TrueClass)
             if var.nil?
-              label = %{<label for="#{id}">#{name.to_s.humanize}</label>}
+              label = %{<label for="#{id}">#{name.to_s.humanize}</label>\n}
             else
-              label = %{<label for="#{id}">#{fe.calling_method.to_s.humanize}</label>}
+              label = %{<label for="#{id}">#{fe.calling_method.to_s.humanize}</label>\n}
             end
           else
-            label = %{<label for="#{id}">#{fe.options[:label]}</label>}
+            label = %{<label for="#{id}">#{fe.options[:label]}</label>\n}
           end
           fe.options.delete(:label)
         end

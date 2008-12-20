@@ -83,8 +83,8 @@ describe Mack::ViewHelpers::FormHelpers do
     end
     
     it "should create a label if asked" do
-      check_box(:cop, :tos, :label => true).should == %{<label for="cop_tos">Tos</label><input id="cop_tos" name="cop[tos]" type="checkbox" />}
-      check_box(:cop, :tos, :label => "TOS").should == %{<label for="cop_tos">TOS</label><input id="cop_tos" name="cop[tos]" type="checkbox" />}
+      check_box(:cop, :tos, :label => true).should == %{<label for="cop_tos">Tos</label>\n<input id="cop_tos" name="cop[tos]" type="checkbox" />}
+      check_box(:cop, :tos, :label => "TOS").should == %{<label for="cop_tos">TOS</label>\n<input id="cop_tos" name="cop[tos]" type="checkbox" />}
     end
     
   end
@@ -109,8 +109,8 @@ describe Mack::ViewHelpers::FormHelpers do
     end
     
     it "should create a label if asked" do
-      file_field(:unknown, :label => true).should == %{<label for="unknown">Unknown</label><input id="unknown" name="unknown" type="file" />}
-      file_field(:unknown, :label => "I Know").should == %{<label for="unknown">I Know</label><input id="unknown" name="unknown" type="file" />}
+      file_field(:unknown, :label => true).should == %{<label for="unknown">Unknown</label>\n<input id="unknown" name="unknown" type="file" />}
+      file_field(:unknown, :label => "I Know").should == %{<label for="unknown">I Know</label>\n<input id="unknown" name="unknown" type="file" />}
     end
     
   end
@@ -156,8 +156,8 @@ describe Mack::ViewHelpers::FormHelpers do
     end
     
     it "should create a label if asked" do
-      password_field(:cop, :full_name, :label => true).should == %{<label for="cop_full_name">Full name</label><input id="cop_full_name" name="cop[full_name]" type="password" value="ness" />}
-      password_field(:cop, :full_name, :label => "Cop's Name").should == %{<label for="cop_full_name">Cop's Name</label><input id="cop_full_name" name="cop[full_name]" type="password" value="ness" />}
+      password_field(:cop, :full_name, :label => true).should == %{<label for="cop_full_name">Full name</label>\n<input id="cop_full_name" name="cop[full_name]" type="password" value="ness" />}
+      password_field(:cop, :full_name, :label => "Cop's Name").should == %{<label for="cop_full_name">Cop's Name</label>\n<input id="cop_full_name" name="cop[full_name]" type="password" value="ness" />}
     end
     
   end
@@ -219,8 +219,8 @@ describe Mack::ViewHelpers::FormHelpers do
     end
     
     it "should create a label if asked" do
-      radio_button(:cop, :level, :label => true).should == %{<label for="cop_level">Level</label><input checked="checked" id="cop_level" name="cop[level]" type="radio" value="1" />}
-      radio_button(:cop, :level, :label => "The Level").should == %{<label for="cop_level">The Level</label><input checked="checked" id="cop_level" name="cop[level]" type="radio" value="1" />}
+      radio_button(:cop, :level, :label => true).should == %{<label for="cop_level">Level</label>\n<input checked="checked" id="cop_level" name="cop[level]" type="radio" value="1" />}
+      radio_button(:cop, :level, :label => "The Level").should == %{<label for="cop_level">The Level</label>\n<input checked="checked" id="cop_level" name="cop[level]" type="radio" value="1" />}
     end
     
   end
@@ -252,8 +252,8 @@ describe Mack::ViewHelpers::FormHelpers do
     end
     
     it "should create a label if asked" do
-      select_tag(:cop, :level, :label => true).should == %{<label for="cop_level">Level</label><select id="cop_level" name="cop[level]"></select>}
-      select_tag(:cop, :level, :label => "The Level").should == %{<label for="cop_level">The Level</label><select id="cop_level" name="cop[level]"></select>}
+      select_tag(:cop, :level, :label => true).should == %{<label for="cop_level">Level</label>\n<select id="cop_level" name="cop[level]"></select>}
+      select_tag(:cop, :level, :label => "The Level").should == %{<label for="cop_level">The Level</label>\n<select id="cop_level" name="cop[level]"></select>}
     end
     
   end
@@ -279,8 +279,8 @@ describe Mack::ViewHelpers::FormHelpers do
     end
     
     it "should create a label if asked" do
-      text_area(:cop, :full_name, :label => true).should == %{<label for="cop_full_name">Full name</label><textarea cols="60" id="cop_full_name" name="cop[full_name]" rows="20">ness</textarea>}
-      text_area(:cop, :full_name, :label => "Cop's Name").should == %{<label for="cop_full_name">Cop's Name</label><textarea cols="60" id="cop_full_name" name="cop[full_name]" rows="20">ness</textarea>}
+      text_area(:cop, :full_name, :label => true).should == %{<label for="cop_full_name">Full name</label>\n<textarea cols="60" id="cop_full_name" name="cop[full_name]" rows="20">ness</textarea>}
+      text_area(:cop, :full_name, :label => "Cop's Name").should == %{<label for="cop_full_name">Cop's Name</label>\n<textarea cols="60" id="cop_full_name" name="cop[full_name]" rows="20">ness</textarea>}
     end
     
   end
@@ -305,8 +305,8 @@ describe Mack::ViewHelpers::FormHelpers do
     end
     
     it "should create a label if asked" do
-      text_field(:cop, :full_name, :label => true).should == %{<label for="cop_full_name">Full name</label><input id="cop_full_name" name="cop[full_name]" type="text" value="ness" />}
-      text_field(:cop, :full_name, :label => "Cop's Name").should == %{<label for="cop_full_name">Cop's Name</label><input id="cop_full_name" name="cop[full_name]" type="text" value="ness" />}
+      text_field(:cop, :full_name, :label => true).should == %{<label for="cop_full_name">Full name</label>\n<input id="cop_full_name" name="cop[full_name]" type="text" value="ness" />}
+      text_field(:cop, :full_name, :label => "Cop's Name").should == %{<label for="cop_full_name">Cop's Name</label>\n<input id="cop_full_name" name="cop[full_name]" type="text" value="ness" />}
     end
     
   end
