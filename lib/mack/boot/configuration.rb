@@ -48,6 +48,8 @@ run_once do
       configatron.mack.portlet.need_zip = false
       
       configatron.mack.use_deferred_routes = false
+      
+      configatron.mack.default_form_builder = 'mack/view/default_form_builder'
     
       if Mack.env?(:production)
         configatron.mack.use_lint = false

@@ -30,7 +30,7 @@ module Mack
       #   <% end -%>
       def form(action, options = {}, &block)
         options = {:method => :post, :action => action}.merge(options)
-        form_builder = options.delete(:builder) || Mack::View::DefaultFormBuilder.new(Thread.current[:view_template])
+        form_builder = options.delete(:builder) || configatron.mack.default_form_builder.camelcase.constantize.new(Thread.current[:view_template])
         if options[:id]
           options = {:class => options[:id]}.merge(options)
         end
