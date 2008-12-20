@@ -60,7 +60,7 @@ class ControllerGenerator < Genosaurus
   
   def add_actions
     @actions.each do |action|
-      template(action_template(action), File.join("app", "views", @name_plural, "#{action}.html.erb"))
+      template(action_template(action), File.join('app', 'views', @name_plural, "#{action}.html.erb"))
     end    
   end
   

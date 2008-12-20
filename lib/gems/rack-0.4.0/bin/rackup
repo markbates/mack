@@ -5,7 +5,7 @@ require 'optparse'
 
 automatic = false
 server = nil
-env = "development"
+env = 'development'
 daemonize = false
 pid = nil
 options = {:Port => 9292, :Host => "0.0.0.0", :AccessLog => []}
@@ -125,7 +125,7 @@ end
 p server  if $DEBUG
 
 case env
-when "development"
+when 'development'
   app = Rack::Builder.new {
     use Rack::CommonLogger, STDERR  unless server.name =~ /CGI/
     use Rack::ShowExceptions

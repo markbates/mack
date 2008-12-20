@@ -244,7 +244,7 @@ module Spec
           example_group.it_should_behave_like("shared example_group")
           example_group.include mod1
 
-          example_group.it("test") do
+          example_group.it('test') do
             mod1_method
             mod2_method
           end

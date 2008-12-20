@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), "..", "lib", "mack", "version")
+require File.join(File.dirname(__FILE__), '..', 'lib', 'mack', "version")
 class GemHelper # :nodoc:
   include Singleton
   
@@ -9,8 +9,8 @@ class GemHelper # :nodoc:
   
   def initialize
     self.project = "magrathea"
-    self.package = "mack"
-    self.gem_name = "mack"
+    self.package = 'mack'
+    self.gem_name = 'mack'
     self.version = Mack::VERSION
   end
   

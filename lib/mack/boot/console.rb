@@ -13,9 +13,9 @@ run_once do
 
   fl = File.join_from_here('..')
 
-  require File.join(fl, "..", "..", "bin", "gem_load_path.rb")
+  require File.join(fl, '..', '..', "bin", "gem_load_path.rb")
 
-  require File.join(fl, "..", "mack.rb")
+  require File.join(fl, '..', "mack.rb")
 
   require File.join(fl, "testing", "helpers.rb")
 

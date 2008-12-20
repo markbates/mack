@@ -22,7 +22,7 @@ module Rack
     F = ::File
 
     def _call(env)
-      if env["PATH_INFO"].include? ".."
+      if env["PATH_INFO"].include? '..'
         body = "Forbidden\n"
         size = body.respond_to?(:bytesize) ? body.bytesize : body.size
         return [403, {"Content-Type" => "text/plain","Content-Length" => size.to_s}, [body]]

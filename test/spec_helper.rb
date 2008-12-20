@@ -4,16 +4,16 @@ require 'spec'
 
 require 'rake'
 require 'fileutils'
-ENV["MACK_ENV"] = "test"
-ENV["MACK_ROOT"] = File.join(File.dirname(__FILE__), "fake_application")
+ENV['MACK_ENV'] = 'test'
+ENV['MACK_ROOT'] = File.join(File.dirname(__FILE__), "fake_application")
 
 if $genosaurus_output_directory.nil?
-  $genosaurus_output_directory = ENV["MACK_ROOT"]
+  $genosaurus_output_directory = ENV['MACK_ROOT']
   puts "$genosaurus_output_directory: #{$genosaurus_output_directory}"
 end
 
 # load the mack framework:
-require(File.join(File.dirname(__FILE__), "..", "lib", 'mack'))
+require(File.join(File.dirname(__FILE__), '..', 'lib', 'mack'))
 
 
 #-------------- HELPER MODULES --------------------------#

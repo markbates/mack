@@ -12,7 +12,7 @@ namespace :test do
   desc "Run test code."
   Rake::TestTask.new(:test_case) do |t|
     require File.join_from_here('..', 'boot', 'configuration.rb')
-    t.libs << "test"
+    t.libs << 'test'
     t.pattern = configatron.mack.send("#{configatron.mack.testing_framework}_file_pattern")
     t.verbose = true
   end
@@ -57,7 +57,7 @@ namespace :test do
   
   private
   def common_coverage
-    ENV["MACK_ENV"] = "test"
+    ENV['MACK_ENV'] = 'test'
     Rake::Task["mack:environment"].invoke
     Rake::Task["test:setup"].invoke
     

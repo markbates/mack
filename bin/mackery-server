@@ -74,5 +74,5 @@ else
     end
   end
   
-  Mack::SimpleServer.run(:handler => handler, :port => port, :environment => ENV["MACK_ENV"])
+  Mack::SimpleServer.run(:handler => handler, :port => port, :environment => ENV['MACK_ENV'])
 end

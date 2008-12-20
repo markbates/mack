@@ -49,7 +49,7 @@ namespace :gem do
         s.require_paths << 'lib'
         
         s.bindir = "bin"
-        s.executables << "mack"
+        s.executables << 'mack'
         s.executables << "mackery"
         s.executables << "mackery-console"
         s.executables << "mackery-server"
@@ -62,7 +62,7 @@ namespace :gem do
         s.add_dependency("erubis")
         s.add_dependency("mack-more", gh.version)
         # s.add_dependency('gemfreezer')
-        # s.add_dependency("configatron", "2.1.5")
+        # s.add_dependency('configatron', "2.1.5")
         # s.add_dependency("logging", "0.9.4")
         # s.add_dependency("builder")
         # s.add_dependency("daemons", "1.0.10")

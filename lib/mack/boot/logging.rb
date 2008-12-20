@@ -10,7 +10,7 @@ run_once do
   # gem 'logging'
   require 'logging'
   
-  require File.join_from_here("..", "utils", "ansi", "ansi_color.rb")
+  require File.join_from_here('..', "utils", "ansi", "ansi_color.rb")
   require File.join_from_here('logging', 'filter')
   require File.join_from_here('logging', 'basic_layout.rb')
   require File.join_from_here('logging', 'color_layout.rb')

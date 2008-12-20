@@ -28,7 +28,7 @@ else
   # Requires all rake tasks that ship with the Mack framework.
   [fl, Mack.search_path(:lib), Mack.search_path(:plugins)].flatten.each do |dir|
     begin
-      require File.join(dir, "tasks", "rake_helpers.rb")
+      require File.join(dir, 'tasks', "rake_helpers.rb")
     rescue Exception => e
       # raise e
     end

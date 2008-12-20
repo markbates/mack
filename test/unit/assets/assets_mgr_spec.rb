@@ -58,7 +58,7 @@ describe Mack::Assets::Manager do
     end
   end
   
-  describe "stylesheets" do
+  describe 'stylesheets' do
     before(:each) do 
       assets_mgr.test do |a|
         a.add_css ['a', 'b']

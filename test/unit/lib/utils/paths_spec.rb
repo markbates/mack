@@ -3,18 +3,18 @@ require Pathname(__FILE__).dirname.expand_path.parent.parent.parent + 'spec_help
 
 describe Mack::Paths do
 
-  describe "public" do
+  describe 'public' do
 
     it "should give the path to the public directory" do
-      Mack::Paths.public.should == File.expand_path(File.join(Mack.root, "public"))
+      Mack::Paths.public.should == File.expand_path(File.join(Mack.root, 'public'))
     end
 
     it "should join the file name given with the public directory path" do
-      Mack::Paths.public("index.html").should == File.expand_path(File.join(Mack.root, "public", "index.html"))
+      Mack::Paths.public("index.html").should == File.expand_path(File.join(Mack.root, 'public', "index.html"))
     end
 
     it "should join the file names given with the public directory path" do
-      Mack::Paths.public("foo", "index.html").should == File.expand_path(File.join(Mack.root, "public", "foo", "index.html"))
+      Mack::Paths.public("foo", "index.html").should == File.expand_path(File.join(Mack.root, 'public', "foo", "index.html"))
     end
 
   end

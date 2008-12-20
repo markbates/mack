@@ -1,7 +1,7 @@
 require "test/unit"
 
 #--
-if Mack.env == "test"
+if Mack.env == 'test'
   module Mack
     module RunnerHelpers # :nodoc:
       class Session

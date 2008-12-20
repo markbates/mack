@@ -1,5 +1,5 @@
 # This is a sample TestCase file.  You can safely delete this file
-require File.join(File.dirname(__FILE__), "..", "test_helper.rb")
+require File.join(File.dirname(__FILE__), '..', "test_helper.rb")
 
 class DefaultControllerTest < Test::Unit::TestCase
   

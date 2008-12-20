@@ -4,7 +4,7 @@ namespace :mack do
     
     desc "Convert application configuration yml file into Configatron file"
     task :configuration do
-      file = ENV['FILE'] || ENV['file'] || File.join(Mack.root, "config", "app_config")
+      file = ENV['FILE'] || ENV['file'] || File.join(Mack.root, 'config', "app_config")
       raise "Cannot find: #{file}" if !File.exists?(file)
       if File.directory?(file)
         Dir.glob(File.join(file, "**", "*.yml")).each do |f|
@@ -23,11 +23,11 @@ namespace :mack do
   #   desc "Renames thin.ru to rackup.ru and updates your thin.yml, if necessary."
   #   task :rackup do
   #     require 'fileutils'
-  #     ru = File.join(Mack.root, "config", "thin.ru")
+  #     ru = File.join(Mack.root, 'config', "thin.ru")
   #     if File.exists?(ru)
-  #       FileUtils.mv(ru, File.join(Mack.root, "config", "rackup.ru"))
+  #       FileUtils.mv(ru, File.join(Mack.root, 'config', "rackup.ru"))
   #     end
-  #     thin_yml = File.join(Mack.root, "config", "thin.yml")
+  #     thin_yml = File.join(Mack.root, 'config', "thin.yml")
   #     if File.exists?(thin_yml)
   #       contents = File.open(thin_yml).read
   #       contents.gsub!("thin.ru", "rackup.ru")
@@ -97,7 +97,7 @@ def cleanup_key(key)
   end
 end
 
-def hash_to_configatron(hash, configs = [], current_config = "configatron")
+def hash_to_configatron(hash, configs = [], current_config = 'configatron')
   hash.each_key do |key|
     if hash[key].is_a?Hash
       hash_to_configatron(hash[key], configs, (current_config + ".#{cleanup_key(key)}"))

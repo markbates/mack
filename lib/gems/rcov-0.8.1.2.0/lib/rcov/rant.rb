@@ -58,8 +58,8 @@ module Rant          # :nodoc:
         end
         args.concat rcov_opts
         args << "-o" << @output_dir
-        if test(?d, "test")
-          @test_dirs << "test" 
+        if test(?d, 'test')
+          @test_dirs << 'test' 
         elsif test(?d, "tests")
           @test_dirs << "tests"
         end

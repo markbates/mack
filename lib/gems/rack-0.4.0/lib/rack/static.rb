@@ -10,9 +10,9 @@ module Rack
   #     will serve all requests beginning with /media from the "media" folder
   #     located in the current directory (ie media/*).
   #
-  #     use Rack::Static, :urls => ["/css", "/images"], :root => "public"
+  #     use Rack::Static, :urls => ["/css", "/images"], :root => 'public'
   #     will serve all requests beginning with /css or /images from the folder
-  #     "public" in the current directory (ie public/css/* and public/images/*)
+  #     'public' in the current directory (ie public/css/* and public/images/*)
 
   class Static
 

@@ -249,7 +249,7 @@ gem: cachetastic 1.7.4
 * INCOMPATIBILITY NOTICE: Test::Unit::TestCase is no longer the default testing framework, RSpec is. If you wish to use
   Test::Unit::TestCase add the following config parameter to your config/app_config/default.yml file:
   mack::testing_framework: test_case
-* INCOMPATIBILITY NOTICE: ENV["_mack_env"] and ENV["_mack_root"] are no longer supported, please use ENV["MACK_ENV"] and ENV["MACK_ROOT"], or just Mack.env and Mack.root
+* INCOMPATIBILITY NOTICE: ENV["_mack_env"] and ENV["_mack_root"] are no longer supported, please use ENV['MACK_ENV'] and ENV['MACK_ROOT'], or just Mack.env and Mack.root
 * INCOMPATIBILITY NOTICE: MACK_DEFAULT_LOGGER constant is no longer available. Please use Mack.logger instead.
 * INCOMPATIBILITY NOTICE: The ApplicationHelper module is now deprecated. Please move view level helpers into Mack::ViewHelpers::* and controller helpers into Mack::ControllerHelpers::<controller_name>
 * thin.ru and thin.yml are no longer needed, you may delete them.

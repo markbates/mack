@@ -12,7 +12,7 @@ run_once do
       # application load setup.
       def self.load
         ivar_cache do
-          require File.join_from_here("..", "..", "mack_app")
+          require File.join_from_here('..', '..', "mack_app")
         end
       end
 

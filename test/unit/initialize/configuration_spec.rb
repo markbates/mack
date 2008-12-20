@@ -6,14 +6,14 @@ describe Mack do
   describe "root" do
     
     it "should return the path to the application's root" do
-      Mack.root.should == ENV["MACK_ROOT"]
+      Mack.root.should == ENV['MACK_ROOT']
     end
     
     it "should return pwd if a root isn't set" do
       r = Mack.root
-      ENV["MACK_ROOT"] = nil
+      ENV['MACK_ROOT'] = nil
       Mack.root.should == FileUtils.pwd
-      ENV["MACK_ROOT"] = r
+      ENV['MACK_ROOT'] = r
     end
     
   end
@@ -21,13 +21,13 @@ describe Mack do
   describe "env" do
     
     it "should return the environment" do
-      Mack.env == "test"
+      Mack.env == 'test'
     end
     
     it "should return 'development' if env isn't set" do
-      ENV["MACK_ENV"] = nil
-      Mack.env.should == "development"
-      ENV["MACK_ENV"] = "test"
+      ENV['MACK_ENV'] = nil
+      Mack.env.should == 'development'
+      ENV['MACK_ENV'] = 'test'
     end
     
   end

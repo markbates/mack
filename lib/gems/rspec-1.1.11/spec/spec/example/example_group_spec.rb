@@ -272,7 +272,7 @@ module Spec
           it "should run before(:all) block only once" do
             before_all_run_count_run_count = 0
             example_group.before(:all) {before_all_run_count_run_count += 1}
-            example_group.it("test") {true}
+            example_group.it('test') {true}
             example_group.it("test2") {true}
             example_group.run
             before_all_run_count_run_count.should == 1
@@ -281,7 +281,7 @@ module Spec
           it "should run after(:all) block only once" do
             after_all_run_count = 0
             example_group.after(:all) {after_all_run_count += 1}
-            example_group.it("test") {true}
+            example_group.it('test') {true}
             example_group.it("test2") {true}
             example_group.run
             after_all_run_count.should == 1
@@ -293,7 +293,7 @@ module Spec
             context_instance_value_out = ""
             example_group.before(:all) { @instance_var = context_instance_value_in }
             example_group.after(:all) { context_instance_value_out = @instance_var }
-            example_group.it("test") {true}
+            example_group.it('test') {true}
             example_group.run
             context_instance_value_in.should == context_instance_value_out
           end
@@ -302,7 +302,7 @@ module Spec
             context_instance_value_in = "Hello there"
             context_instance_value_out = ""
             example_group.before(:all) { @instance_var = context_instance_value_in }
-            example_group.it("test") {context_instance_value_out = @instance_var}
+            example_group.it('test') {context_instance_value_out = @instance_var}
             example_group.run
             context_instance_value_in.should == context_instance_value_out
           end
@@ -340,7 +340,7 @@ module Spec
             @special_example_group.append_before(:each) { fiddle << "special.append_before(:each, :type => :special)" }
 
             example_group = Class.new(@special_example_group).describe("I'm a special example_group") {}
-            example_group.it("test") {true}
+            example_group.it('test') {true}
             example_group.run
             fiddle.should == [
               'Example.prepend_before(:all)',
@@ -408,7 +408,7 @@ module Spec
 
             example_group.include mod1, mod2
 
-            example_group.it("test") do
+            example_group.it('test') do
               mod1_method
               mod2_method
             end
@@ -516,7 +516,7 @@ module Spec
 
           it "should not run any example" do
             spec_ran = false
-            example_group.it("test") {spec_ran = true}
+            example_group.it('test') {spec_ran = true}
             example_group.run
             spec_ran.should be_false
           end
@@ -541,7 +541,7 @@ module Spec
               error.message.should eql("before(:all) failure")
             end
 
-            example_group.it("test") {true}
+            example_group.it('test') {true}
             example_group.run
           end
         end

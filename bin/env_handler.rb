@@ -1,5 +1,5 @@
 if ARGV.include?("-e")
-  ENV["MACK_ENV"] = ARGV[ARGV.index("-e") + 1] unless ENV["MACK_ENV"]
+  ENV['MACK_ENV'] = ARGV[ARGV.index("-e") + 1] unless ENV['MACK_ENV']
 end
 
 @mack_gem_version = nil

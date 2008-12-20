@@ -1,62 +1,62 @@
 # Files:
 default_controller:
   type: file
-  template_path: <%= File.join(templates_directory_path, "app", "controllers", "default_controller.rb.template") %>
-  output_path: <%= File.join(app_name, "app", "controllers", "default_controller.rb") %>
+  template_path: <%= File.join(templates_directory_path, 'app', 'controllers', "default_controller.rb.template") %>
+  output_path: <%= File.join(app_name, 'app', 'controllers', "default_controller.rb") %>
 application_helper:
   type: file
-  template_path: <%= File.join(templates_directory_path, "app", "helpers", "views", "application_helper.rb.template") %>
-  output_path: <%= File.join(app_name, "app", "helpers", "views", "application_helper.rb") %>
+  template_path: <%= File.join(templates_directory_path, 'app', 'helpers', 'views', "application_helper.rb.template") %>
+  output_path: <%= File.join(app_name, 'app', 'helpers', 'views', "application_helper.rb") %>
 default_controller_helper:
   type: file
-  template_path: <%= File.join(templates_directory_path, "app", "helpers", "controllers", "default_controller_helper.rb.template") %>
-  output_path: <%= File.join(app_name, "app", "helpers", "controllers", "default_controller_helper.rb") %>
+  template_path: <%= File.join(templates_directory_path, 'app', 'helpers', 'controllers', "default_controller_helper.rb.template") %>
+  output_path: <%= File.join(app_name, 'app', 'helpers', 'controllers', "default_controller_helper.rb") %>
 index_view:
   type: file
-  template_path: <%= File.join(templates_directory_path, "app", "views", "default", "index.html.erb.template") %>
-  output_path: <%= File.join(app_name, "app", "views", "default", "index.html.erb") %>
+  template_path: <%= File.join(templates_directory_path, 'app', 'views', "default", "index.html.erb.template") %>
+  output_path: <%= File.join(app_name, 'app', 'views', "default", "index.html.erb") %>
 application_layout:
   type: file
-  template_path: <%= File.join(templates_directory_path, "app", "views", "layouts", "application.html.erb.template") %>
-  output_path: <%= File.join(app_name, "app", "views", "layouts", "application.html.erb") %>
-<% ["default", "development", "production", "test"].each do |env| -%>
+  template_path: <%= File.join(templates_directory_path, 'app', 'views', 'layouts', "application.html.erb.template") %>
+  output_path: <%= File.join(app_name, 'app', 'views', 'layouts', "application.html.erb") %>
+<% ["default", 'development', "production", 'test'].each do |env| -%>
 <%= env %>_yml:
   type: file
-  template_path: <%= File.join(templates_directory_path, "config", "configatron", "#{env}.rb.template") %>
-  output_path: <%= File.join(app_name, "config", "configatron", "#{env}.rb") %>
+  template_path: <%= File.join(templates_directory_path, 'config', 'configatron', "#{env}.rb.template") %>
+  output_path: <%= File.join(app_name, 'config', 'configatron', "#{env}.rb") %>
 <% end -%>
 database_yml:
   type: file
-  template_path: <%= File.join(templates_directory_path, "config", "database.yml.template") %>
-  output_path: <%= File.join(app_name, "config", "database.yml") %>
+  template_path: <%= File.join(templates_directory_path, 'config', "database.yml.template") %>
+  output_path: <%= File.join(app_name, 'config', 'database.yml') %>
 <% ["routes.rb"].each do |f| -%>
 <%= f %>_config_file:
   type: file
-  template_path: <%= File.join(templates_directory_path, "config", "#{f}.template") %>
-  output_path: <%= File.join(app_name, "config", f) %>
+  template_path: <%= File.join(templates_directory_path, 'config', "#{f}.template") %>
+  output_path: <%= File.join(app_name, 'config', f) %>
 <% end -%>
 <% [:gems, :inflections, :mime_types, :portlets].each do |f| -%>
 initializers_<%= f %>_rb:
   type: file
-  template_path: <%= File.join(templates_directory_path, "config", "initializers", "#{f}.rb.template") %>
-  output_path: <%= File.join(app_name, "config", "initializers", "#{f}.rb") %>
+  template_path: <%= File.join(templates_directory_path, 'config', 'initializers', "#{f}.rb.template") %>
+  output_path: <%= File.join(app_name, 'config', 'initializers', "#{f}.rb") %>
 <% end -%>
 favicon:
   type: file
-  template_path: <%= File.join(templates_directory_path, "public", "favicon.ico.template") %>
-  output_path: <%= File.join(app_name, "public", "favicon.ico") %>
+  template_path: <%= File.join(templates_directory_path, 'public', "favicon.ico.template") %>
+  output_path: <%= File.join(app_name, 'public', "favicon.ico") %>
 404:
   type: file
-  template_path: <%= File.join(templates_directory_path, "public", "404.html.template") %>
-  output_path: <%= File.join(app_name, "public", "404.html") %>
+  template_path: <%= File.join(templates_directory_path, 'public', "404.html.template") %>
+  output_path: <%= File.join(app_name, 'public', "404.html") %>
 500:
   type: file
-  template_path: <%= File.join(templates_directory_path, "public", "500.html.template") %>
-  output_path: <%= File.join(app_name, "public", "500.html") %>
+  template_path: <%= File.join(templates_directory_path, 'public', "500.html.template") %>
+  output_path: <%= File.join(app_name, 'public', "500.html") %>
 scaffold_css:
   type: file
-  template_path: <%= File.join(templates_directory_path, "public", "stylesheets", "scaffold.css.template") %>
-  output_path: <%= File.join(app_name, "public", "stylesheets", "scaffold.css") %>
+  template_path: <%= File.join(templates_directory_path, 'public', 'stylesheets', "scaffold.css.template") %>
+  output_path: <%= File.join(app_name, 'public', 'stylesheets', "scaffold.css") %>
 rakefile:
   type: file
   template_path: <%= File.join(templates_directory_path, "Rakefile.template") %>
@@ -65,70 +65,73 @@ rakefile:
 # Directories:
 models:
   type: directory
-  output_path: <%= File.join(app_name, "app", "models") %>
+  output_path: <%= File.join(app_name, 'app', 'models') %>
 lib_tasks:
   type: directory
-  output_path: <%= File.join(app_name, "lib", "tasks") %>
+  output_path: <%= File.join(app_name, 'lib', 'tasks') %>
 db_migrations:
   type: directory
-  output_path: <%= File.join(app_name, "db", "migrations") %>
-<% ["images", "javascripts"].each do |f| -%>
+  output_path: <%= File.join(app_name, 'db', 'migrations') %>
+<% ['images', 'javascripts'].each do |f| -%>
 public_<%= f %>:
   type: directory
-  output_path: <%= File.join(app_name, "public", f) %>
+  output_path: <%= File.join(app_name, 'public', f) %>
 <% end -%>
+form_builders:
+  type: directory
+  output_path: <%= File.join(app_name, 'app', "form_builders") %>
 
 # Test
 <% if testing_framework == "test_case" %>
 test_helper:
   type: file
-  template_path: <%= File.join(templates_directory_path, "test", "test_helper.rb.template") %>
-  output_path: <%= File.join(app_name, "test", "test_helper.rb") %>
+  template_path: <%= File.join(templates_directory_path, 'test', "test_helper.rb.template") %>
+  output_path: <%= File.join(app_name, 'test', "test_helper.rb") %>
 test_controllers:
   type: directory
-  output_path: <%= File.join(app_name, "test", "controllers") %>
+  output_path: <%= File.join(app_name, 'test', 'controllers') %>
 test_example:
   type: file
-  template_path: <%= File.join(templates_directory_path, "test", "controllers", "default_controller_test.rb.template") %>
-  output_path: <%= File.join(app_name, "test", "controllers", "default_controller_test.rb") %>
+  template_path: <%= File.join(templates_directory_path, 'test', 'controllers', "default_controller_test.rb.template") %>
+  output_path: <%= File.join(app_name, 'test', 'controllers', "default_controller_test.rb") %>
 test_models:
   type: directory
-  output_path: <%= File.join(app_name, "test", "models") %>
+  output_path: <%= File.join(app_name, 'test', 'models') %>
 helper_test_example:
   type: file
-  template_path: <%= File.join(templates_directory_path, "test", "helpers", "controllers", "default_controller_helper_test.rb.template") %>
-  output_path: <%= File.join(app_name, "test", "helpers", "controllers", "default_controller_helper_test.rb") %>
+  template_path: <%= File.join(templates_directory_path, 'test', 'helpers', 'controllers', "default_controller_helper_test.rb.template") %>
+  output_path: <%= File.join(app_name, 'test', 'helpers', 'controllers', "default_controller_helper_test.rb") %>
 app_helper_test_example:
   type: file
-  template_path: <%= File.join(templates_directory_path, "test", "helpers", "views", "application_helper_test.rb.template") %>
-  output_path: <%= File.join(app_name, "test", "helpers", "view", "application_helper_test.rb") %>
+  template_path: <%= File.join(templates_directory_path, 'test', 'helpers', 'views', "application_helper_test.rb.template") %>
+  output_path: <%= File.join(app_name, 'test', 'helpers', "view", "application_helper_test.rb") %>
 <% elsif testing_framework == "rspec" %>
 test_spec_helper:
   type: file
-  template_path: <%= File.join(templates_directory_path, "test", "spec_helper.rb.template") %>
-  output_path: <%= File.join(app_name, "test", "spec_helper.rb") %>
+  template_path: <%= File.join(templates_directory_path, 'test', "spec_helper.rb.template") %>
+  output_path: <%= File.join(app_name, 'test', "spec_helper.rb") %>
 test_spec_opts:
   type: file
-  template_path: <%= File.join(templates_directory_path, "test", "spec.opts.template") %>
-  output_path: <%= File.join(app_name, "test", "spec.opts") %>
+  template_path: <%= File.join(templates_directory_path, 'test', "spec.opts.template") %>
+  output_path: <%= File.join(app_name, 'test', "spec.opts") %>
 test_spec_example:
   type: file
-  template_path: <%= File.join(templates_directory_path, "test", "controllers", "default_controller_spec.rb.template") %>
-  output_path: <%= File.join(app_name, "test", "controllers", "default_controller_spec.rb") %>
+  template_path: <%= File.join(templates_directory_path, 'test', 'controllers', "default_controller_spec.rb.template") %>
+  output_path: <%= File.join(app_name, 'test', 'controllers', "default_controller_spec.rb") %>
 helper_test_spec_example:
   type: file
-  template_path: <%= File.join(templates_directory_path, "test", "helpers", "controllers", "default_controller_helper_spec.rb.template") %>
-  output_path: <%= File.join(app_name, "test", "helpers", "controllers", "default_controller_helper_spec.rb") %>
+  template_path: <%= File.join(templates_directory_path, 'test', 'helpers', 'controllers', "default_controller_helper_spec.rb.template") %>
+  output_path: <%= File.join(app_name, 'test', 'helpers', 'controllers', "default_controller_helper_spec.rb") %>
 app_helper_test_spec_example:
   type: file
-  template_path: <%= File.join(templates_directory_path, "test", "helpers", "views", "application_helper_spec.rb.template") %>
-  output_path: <%= File.join(app_name, "test", "helpers", "views", "application_helper_spec.rb") %>
+  template_path: <%= File.join(templates_directory_path, 'test', 'helpers', 'views', "application_helper_spec.rb.template") %>
+  output_path: <%= File.join(app_name, 'test', 'helpers', 'views', "application_helper_spec.rb") %>
 test_spec_models:
   type: directory
-  output_path: <%= File.join(app_name, "test", "models") %>
+  output_path: <%= File.join(app_name, 'test', 'models') %>
 <% end %>
 
 # Plugins
 vendor_plugins:
   type: directory
-  output_path: <%= File.join(app_name, "vendor", "plugins") %>
+  output_path: <%= File.join(app_name, 'vendor', 'plugins') %>

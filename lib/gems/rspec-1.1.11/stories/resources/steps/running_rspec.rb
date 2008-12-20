@@ -1,7 +1,7 @@
 steps_for :running_rspec do
 
   Given("the file $relative_path") do |relative_path|
-    @path = File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "resources", relative_path))
+    @path = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', "resources", relative_path))
     unless File.exist?(@path)
       raise "could not find file at #{@path}"
     end
