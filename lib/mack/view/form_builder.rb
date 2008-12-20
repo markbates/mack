@@ -1,5 +1,3 @@
-require File.join_from_here('all_helpers')
-require File.join_from_here('form_helpers')
 module Mack
   module View # :nodoc:
     # FormBuilders are a great way to encapsulate reusable form formatting.
