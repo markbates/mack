@@ -1,3 +1,4 @@
+* [#239] Add do_sqlite3 to gems.rb
 * [#238] Upgraded to DataMapper 0.9.8
 * [#133] Added Form Builders
 * gem: data_mapper 0.9.8
