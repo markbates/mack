@@ -58,6 +58,16 @@ module Mack
         self.all(sym, *args)
       end
       
+      # Override form_start and form_ends to bookmark your forms.
+      def form_start
+        ''
+      end
+      
+      # Override form_start and form_ends to bookmark your forms.
+      def form_end
+        ''
+      end
+      
       # Returns the actual form element from the Mack::ViewHelpers::FormHelper module.
       # This should be used in any method you override in a FormBuilder.
       # 
@@ -91,7 +101,10 @@ module Mack
         mod = Module.new do
           eval %{
             def #{klass.methodize}_form(action, options = {}, &block)
-              self.form(action, options.merge(:builder => #{base}.new(self)), &block)
+              builder = #{base}.new(self)
+              concat("\#{builder.form_start}\n", block.binding)
+              self.form(action, options.merge(:builder => builder), &block)
+              concat("\n\#{builder.form_end}\n", block.binding)
             end
           }
         end # Module.new
@@ -114,13 +127,20 @@ module Mack
         #     partial :password_field, 'form_partials/password_field'
         #   end
         def partial(element_name, partial)
-          define_method(element_name) do |*args|
-            if element_name == :all
-              val = element(*args)
-            else
-              val = element(element_name, *args)
+          element_name = element_name.to_sym
+          if element_name == :form_start || element_name == :form_end
+            define_method(element_name) do 
+              self.view.render(:partial, partial)
             end
-            self.view.render(:partial, partial, :locals => {:form_element => val})
+          else
+            define_method(element_name) do |*args|
+              if element_name == :all
+                val = element(*args)
+              else
+                val = element(element_name, *args)
+              end
+              self.view.render(:partial, partial, :locals => {:form_element => val})
+            end
           end
         end
         

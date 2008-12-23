@@ -64,7 +64,12 @@ describe Mack::View::FormBuilder do
       include Mack::View::FormBuilder
       
       partial :text_field, 'fb_partials/text_field'
+      partial :form_start, 'fb_partials/form_start'
       partial :all, 'fb_partials/all'
+      
+      def form_end
+        '</div>'
+      end
     end
     
     it 'should render a partial if told to' do
@@ -72,6 +77,13 @@ describe Mack::View::FormBuilder do
       response.should be_successful
       response.body.should match(%{<h1><input id="murray" name="murray" type="text" value="Bill Murray" /></h1>})
       response.body.should match(%{<h2><input id="ramis" name="ramis" type="password" value="Harold Ramis" /></h2>})
+    end
+    
+    it 'should wrap the whole form with a partial' do
+      get '/stripes/index'
+      response.should be_successful
+      puts response.body.should.inspect
+      response.body.should match(%{<div id='one_kick_ass_form'>})
     end
     
   end
