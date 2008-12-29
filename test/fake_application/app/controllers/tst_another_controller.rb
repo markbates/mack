@@ -20,8 +20,8 @@ class TstAnotherController
     })
   end
   
-  def show_all_params
-    render(:text, request.all_params)
+  def show_params
+    render(:text, request.params)
   end
   
   def act_level_layout_test_action

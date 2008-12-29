@@ -35,8 +35,8 @@ module Mack
           # There was an exception, let's see if there's a handler for this error in routes:
           route = Mack::Routes.retrieve_from_error(e.class)
           unless route.nil?
-            self.request.all_params[:original_controller] = @original_controller
-            self.request.all_params[:original_action] = @original_action
+            self.request.params[:original_controller] = @original_controller
+            self.request.params[:original_action] = @original_action
             # There is a handler, let's try running that:
             run_controller(route, e)
           else
@@ -73,7 +73,7 @@ module Mack
       runner_block = route[:runner_block]
       route - :runner_block
       
-      self.request.params = self.request.all_params.merge(route)
+      self.request.params = self.request.params.merge(route)
       self.response.content_type = Mack::Utils::MimeTypes[self.request.params[:format]]
       catch(:finished) do
         if runner_block
@@ -137,7 +137,7 @@ module Mack
     def redirect_to(route)
       status = route[:status] || 302
       url = route[:redirect_to]
-      options = self.request.all_params
+      options = self.request.params
       options.merge!(route)
       options - [:controller, :action, :redirect_to, :method, :status, :format]
       url = url_for_pattern(url, options)

@@ -83,7 +83,7 @@ describe Mack::Request do
       end
       
       it "should work" do
-        get "/tst_another/show_all_params?password=123456&foo=fubar"
+        get "/tst_another/show_params?password=123456&foo=fubar"
         f = ':foo=>"fubar"'
         response.body.should match(/#{f}/)
         p = ':password=>"<FILTERED>"'

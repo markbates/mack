@@ -5,22 +5,48 @@ module Mack
     autoload :DateTimeParameter, File.join_from_here('request', 'date_time_parameter')
     autoload :Parameters, File.join_from_here('request', 'parameters')
     
+    alias_instance_method :params, :original_parameters # :nodoc:
+    
     def initialize(env) # :nodoc:
       super(env)
-      @mack_params = Mack::Request::Parameters.new
-      parse_params(rack_params)
     end
     
-    alias_instance_method :params, :rack_params # :nodoc:
+    # Gives access to the session. See Mack::Session for more information.
+    attr_accessor :session 
         
     # Merges another Hash with the parameters for this request.
     def merge_params(opts = {})
       parse_params(opts)
     end
     
-    # Gives access to the session. See Mack::Session for more information.
-    attr_accessor :session 
+    # Gives access to the request parameters. This includes 'get' parameters, 'post' parameters
+    # as well as parameters from the routing process. The parameter will also be 'unescaped'
+    # when it is returned.
+    # 
+    # Example:
+    #   uri: '/users/1?foo=bar'
+    #   route: '/users/:id' => {:controller => 'users', :action => 'show'}
+    #   parameters: {:controller => 'users', :action => 'show', :id => 1, :foo => "bar"}
+    def params
+      unless @mack_params
+        @mack_params = Mack::Request::Parameters.new
+        parse_params(original_parameters)
+      end
+      @mack_params
+    end
     
+    def params=(p) # :nodoc:
+      @mack_params = Mack::Request::Parameters.new
+      parse_params(p)
+    end
+    
+    # Returns a Mack::Request::UploadedFile object.
+    def file(key)
+      ivar_cache("file_#{key}") do
+        Mack::Request::UploadedFile.new(params[key] ||= {})
+      end
+    end
+
     # Examples:
     #  http://example.org
     #  https://example.org
@@ -56,33 +82,7 @@ module Mack
       end
       return full_host
     end
-    
-    # Gives access to the request parameters. This includes 'get' parameters, 'post' parameters
-    # as well as parameters from the routing process. The parameter will also be 'unescaped'
-    # when it is returned.
-    # 
-    # Example:
-    #   uri: '/users/1?foo=bar'
-    #   route: '/users/:id' => {:controller => 'users', :action => 'show'}
-    #   parameters: {:controller => 'users', :action => 'show', :id => 1, :foo => "bar"}
-    def params
-      @mack_params
-    end
-    
-    def params=(p) # :nodoc:
-      @mack_params = Mack::Request::Parameters.new
-      parse_params(p)
-    end
-    
-    alias_instance_method :params, :all_params
-    
-    # Returns a Mack::Request::UploadedFile object.
-    def file(key)
-      ivar_cache("file_#{key}") do
-        Mack::Request::UploadedFile.new(params[key] ||= {})
-      end
-    end
-    
+
     private
     def named_host?(host)
       !(host.nil? || /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.match(host))
