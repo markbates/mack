@@ -19,32 +19,14 @@ module Spec # :nodoc:
   end # Example
   
   module Matchers # :nodoc:
+    
+    alias_method :__original_match, :match
+    
     def match(regexp)
       regexp = /#{regexp}/ if regexp.is_a?(String)
-      Matchers::Match.new(regexp)
+      __original_match(regexp)
     end
   end # Matchers
-  
-  # require 'spec/runner/formatter/base_text_formatter'
-  # module Runner # :nodoc:
-  #   module Formatter # :nodoc:
-  #     class BaseTextFormatter < BaseFormatter # :nodoc:
-  # 
-  #       def dump_pending
-  #         unless @pending_examples.empty?
-  #           @output.puts
-  #           @output.puts yellow("Pending:")
-  #           @pending_examples.each do |pending_example|
-  #             @output.puts yellow("#{pending_example[0]} (#{pending_example[1]})")
-  #             # @output.puts "  Called from #{pending_example[2]}"
-  #           end
-  #         end
-  #         @output.flush
-  #       end
-  #       
-  #     end # BaseTextFormatter
-  #   end # Formatter
-  # end # Runner
   
 end # Spec
 
