@@ -9,7 +9,11 @@ Dir.glob(File.join(path, '*')).each do |p|
   gem_name = full_gem_name.gsub("-#{version}", '')
   $:.unshift(File.join(p, 'lib'))
   begin
-    gem gem_name, "~> #{version}"
+    if RUBY_VERSION >= '1.9.1'
+      gem gem_name
+    else
+      gem gem_name, "~> #{version}"
+    end
   rescue Gem::LoadError
   end
 end
