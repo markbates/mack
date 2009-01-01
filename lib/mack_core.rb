@@ -1,8 +1,8 @@
-require File.join(File.dirname(__FILE__), 'gems')
 require 'rubygems'
+require 'mack-facets'
+require File.join(File.dirname(__FILE__), 'gems')
 require 'rack'
 require 'digest'
-require 'mack-facets'
 require 'mack-encryption'
 require 'configatron'
 require 'fileutils'
