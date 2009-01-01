@@ -21,7 +21,7 @@ module Mack
     
       # Removes 'n' number of parameter names from the list
       def remove(*args)
-        @list.delete_values(*args)
+        @list = (@list - args)
       end
     
       class << self

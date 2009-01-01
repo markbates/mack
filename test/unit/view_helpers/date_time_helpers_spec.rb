@@ -168,7 +168,7 @@ describe Mack::ViewHelpers::FormHelpers do
       post dilbert_third_url, "updated_at(month)" => "8"
       response.should be_successful
       time_found = assigns(:time_found)
-      time_found.to_s.should == Time.parse("2008-8-1").to_s
+      time_found.to_s.should == Time.parse("#{Time.now.year}-8-1").to_s
     end
     
   end
