@@ -1,4 +1,3 @@
-require 'test/unit'
 module Mack
   module Testing
     module TestCaseAssertions

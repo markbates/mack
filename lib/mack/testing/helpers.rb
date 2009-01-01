@@ -1,5 +1,3 @@
-require "test/unit"
-
 #--
 if Mack.env == 'test'
   module Mack

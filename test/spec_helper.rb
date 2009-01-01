@@ -81,9 +81,10 @@ module ContentValidationHelper
   def validate_content_and_type(directory, file_name, content_type = :html)
     validate_content(directory, file_name)
     response["Content-Type"].should == case content_type
-      when :xml: "application/xml; text/xml"
-      when :html: "text/html"
-      #... add more content type here when needed
+    when :xml
+      "application/xml; text/xml"
+    when :html
+      "text/html"
     end
   end
   
