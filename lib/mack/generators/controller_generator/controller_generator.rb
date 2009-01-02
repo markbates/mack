@@ -39,7 +39,7 @@ class ControllerGenerator < Genosaurus
       unless rf.match(".resource :#{@name_plural}")
         puts "Updating routes.rb"
         nrf = ""
-        rf.each do |line|
+        rf.each_line do |line|
           if line.match("Mack::Routes.build")
             x = line.match(/\|(.+)\|/).captures
             line << "\n  # Added by rake generate:controller name=#{param(:name)} actions=#{param(:actions)}"

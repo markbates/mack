@@ -116,6 +116,13 @@ module Rack
       @original_headers = headers
       @headers = Rack::Utils::HeaderHash.new
       headers.each { |field, values|
+        if values.is_a?(String)
+          va = []
+          values.each_line { |v|
+            va << v
+          }
+          values = va
+        end
         values.each { |value|
           @headers[field] = value
         }
