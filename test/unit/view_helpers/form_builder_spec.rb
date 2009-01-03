@@ -1,34 +1,50 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
+class StarWarsFormBuilder
+  include Mack::View::FormBuilder
+  
+  def text_field(*args)
+    "<p>#{element(:text_field, *args)}</p>"
+  end
+  
+end
+
+class GodfatherFormBuilder
+  include Mack::View::FormBuilder
+  
+  def text_field(*args)
+    "<p>#{element(:text_field, *args)}</p>"
+  end
+  
+  def all(sym, *args)
+    "<i>#{element(sym, *args)}</i>"
+  end
+  
+end
+
+class StarWarsController
+  include Mack::Controller
+end
+
+class StripesController
+  include Mack::Controller
+end
+
+class StripesBuilder
+  include Mack::View::FormBuilder
+  
+  partial :text_field, 'fb_partials/text_field'
+  partial :form_start, 'fb_partials/form_start'
+  partial :all, 'fb_partials/all'
+  
+  def form_end
+    '</div>'
+  end
+end
+
 describe Mack::View::FormBuilder do
   include Mack::ViewHelpers
-  
-  class StarWarsFormBuilder
-    include Mack::View::FormBuilder
-    
-    def text_field(*args)
-      "<p>#{element(:text_field, *args)}</p>"
-    end
-    
-  end
-  
-  class GodfatherFormBuilder
-    include Mack::View::FormBuilder
-    
-    def text_field(*args)
-      "<p>#{element(:text_field, *args)}</p>"
-    end
-    
-    def all(sym, *args)
-      "<i>#{element(sym, *args)}</i>"
-    end
-    
-  end
-  
-  class StarWarsController
-    include Mack::Controller
-  end
   
   before(:each) do
     @sw = StarWarsFormBuilder.new(Mack::Rendering::ViewTemplate.new(:text, ''))
@@ -56,22 +72,6 @@ describe Mack::View::FormBuilder do
   
   describe 'partial' do
 
-    class StripesController
-      include Mack::Controller
-    end
-    
-    class StripesBuilder
-      include Mack::View::FormBuilder
-      
-      partial :text_field, 'fb_partials/text_field'
-      partial :form_start, 'fb_partials/form_start'
-      partial :all, 'fb_partials/all'
-      
-      def form_end
-        '</div>'
-      end
-    end
-    
     it 'should render a partial if told to' do
       get '/stripes/index'
       response.should be_successful
@@ -82,7 +82,6 @@ describe Mack::View::FormBuilder do
     it 'should wrap the whole form with a partial' do
       get '/stripes/index'
       response.should be_successful
-      puts response.body.should.inspect
       response.body.should match(%{<div id='one_kick_ass_form'>})
     end
     
