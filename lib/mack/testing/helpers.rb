@@ -204,11 +204,6 @@ module Mack
       def strip_cookies_from_response(res)
         unless res.original_headers["Set-Cookie"].nil?
           headers = res.original_headers["Set-Cookie"]
-          if headers.is_a?(String)
-            h = []
-            headers.each_line {|l| h << l}
-            headers = h
-          end
           headers.each do |ck|
             spt = ck.split("=")
             name = spt.first
