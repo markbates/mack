@@ -78,7 +78,7 @@ module Kernel
       # puts "gem_name: #{gem_name}"
       
       # try to normalize the version requirement string
-      ver = version_requirements.to_s.strip
+      ver = [version_requirements].flatten.first.to_s.strip
       if ver == nil || ver.empty?
         ver = '> 0.0.0'
       else

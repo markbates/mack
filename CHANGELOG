@@ -6,6 +6,7 @@
 * gem: cachetastic 2.1.0
 * gem: data_mapper 0.9.8
 * gem: addressable 2.0.1
+* gem: extlib 0.9.9
 
 === 0.8.2
 * [#237] Fixed render :rjs throws errors
