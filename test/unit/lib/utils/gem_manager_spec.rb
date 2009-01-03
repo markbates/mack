@@ -72,8 +72,8 @@ describe Mack::Utils::GemManager do
   end
   
   it "should be able to handle do_requires properly when called" do
-    g = add_gem(:termios)
-    g.to_s.should == "termios"
+    g = add_gem(:cheat)
+    g.to_s.should == "cheat"
     gem_manager.do_requires
     g = add_gem(:redgreen, :version => "1.2.2")
     g = add_gem(:redgreen, :version => "1.2.3", :libs => :redgreen)
