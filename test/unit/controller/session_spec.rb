@@ -1,6 +1,16 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
+class SessionSpecController
+  include Mack::Controller
+  
+  def index
+    session[:id] = params[:id] if session[:id].nil?
+    render(:text, "id: #{session[:id]}")
+  end
+  
+end
+
 describe Mack::Session do
   
   describe "reset!" do
@@ -15,16 +25,6 @@ describe Mack::Session do
   end
   
   describe "configatron.mack.use_sessions" do
-    
-    class SessionSpecController
-      include Mack::Controller
-      
-      def index
-        session[:id] = params[:id] if session[:id].nil?
-        render(:text, "id: #{session[:id]}")
-      end
-      
-    end
     
     it "should be able to turn off sessions" do
       temp_app_config(:mack => {:use_sessions => false}) do

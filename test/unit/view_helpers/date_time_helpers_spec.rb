@@ -1,33 +1,32 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
+class Dilbert
+  attr_accessor :created_at
+end
+
+class DilbertController
+  include Mack::Controller
+  
+  def first
+    @dilbert = Dilbert.new
+    @dilbert.created_at = Time.parse("2008-8-16 15:35")
+    render(:inline, "<%= :dilbert.date_time_select :created_at %>")
+  end
+  
+  def second
+    @time_found = params[:dilbert][:created_at]
+    render(:text, @time_found.to_s)
+  end
+  
+  def third
+    @time_found = params[:updated_at]
+    render(:text, @time_found.to_s)
+  end
+end
+
 describe Mack::ViewHelpers::FormHelpers do
   include Mack::ViewHelpers
-  
-  class Dilbert
-    attr_accessor :created_at
-  end
-  
-  class DilbertController
-    include Mack::Controller
-    
-    
-    def first
-      @dilbert = Dilbert.new
-      @dilbert.created_at = Time.parse("2008-8-16 15:35")
-      render(:inline, "<%= :dilbert.date_time_select :created_at %>")
-    end
-    
-    def second
-      @time_found = params[:dilbert][:created_at]
-      render(:text, @time_found.to_s)
-    end
-    
-    def third
-      @time_found = params[:updated_at]
-      render(:text, @time_found.to_s)
-    end
-  end
   
   Mack::Routes.build do |r|
     r.with_options(:controller => :dilbert) do |map|

@@ -1,17 +1,17 @@
 require 'pathname'
 require Pathname(__FILE__).dirname.expand_path.parent.parent + 'spec_helper'
 
-describe Mack::Routes::RouteMap do
-
-  class ChaptersController
-    include Mack::Controller
-    
-    def show
-      @chapters = params[:chaps]
-      render(:text, 'hello')
-    end
-    
+class ChaptersController
+  include Mack::Controller
+  
+  def show
+    @chapters = params[:chaps]
+    render(:text, 'hello')
   end
+  
+end
+
+describe Mack::Routes::RouteMap do
 
   Mack::Routes.build do |r|
     r.chapter_show "/chapters/*chaps", :controller => :chapters, :action => :show
