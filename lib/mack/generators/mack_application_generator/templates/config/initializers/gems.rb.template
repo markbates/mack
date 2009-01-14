@@ -8,7 +8,7 @@ require_gems do |gem|
 <% if @options["orm"] -%>
   gem.add 'mack-<%=@options["orm"]%>', :libs => 'mack-<%=@options["orm"]%>', :version => '<%= Mack::VERSION %>'
   <% if @options["orm"] == 'data_mapper' -%>
-gem.add 'do_sqlite3', :version => '0.9.9'
+gem.add 'do_sqlite3'
   <% end -%>
 <% end -%>
   # examples:
