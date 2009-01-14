@@ -1,7 +1,10 @@
+* [#243] Upgraded to Rack 0.9.1
 * [#241] Removed dependency on Facets
 * [#239] Add do_sqlite3 to gems.rb
 * [#238] Upgraded to DataMapper 0.9.8
 * [#133] Added Form Builders
+* gem: rack 0.9.1
+* gem: rspec 1.1.12
 * gem: configatron 2.2.1
 * gem: cachetastic 2.1.0
 * gem: data_mapper 0.9.8
