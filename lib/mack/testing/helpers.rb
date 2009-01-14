@@ -43,11 +43,26 @@ module Mack
         $mack_app.instance_variable_get("@app").instance_variable_get("@response").instance_variable_get("@controller").instance_variable_get("@#{key}")
       end
 
+      # create a wrapper object for file upload testing.
+      def file_for_upload(path)
+        return Mack::Testing::FileWrapper.new(path)
+      end
+
       # Performs a 'get' request for the specified uri.
       def get(uri, options = {})
-        build_response(request.get(uri, build_request_options(options)))
+        build_response(request.get(uri, build_request_options({:input => options.to_params})))
       end
-    
+
+      # Performs a 'post' request for the specified uri.
+      def post(uri, options = {})
+        if options[:multipart]
+          form_input = build_multipart_data(options)
+          build_response(request.post(uri, build_request_options({"CONTENT_TYPE" => "multipart/form-data, boundary=Mack-boundary", "CONTENT_LENGTH" => form_input.size, :input => form_input})))
+        else
+          build_response(request.post(uri, build_request_options({:input => options.to_params})))
+        end
+      end
+
       # Performs a 'put' request for the specified uri.
       def put(uri, options = {})
         if options[:multipart]
@@ -58,24 +73,9 @@ module Mack
         end
       end
       
-      # create a wrapper object for file upload testing.
-      def file_for_upload(path)
-        return Mack::Testing::FileWrapper.new(path)
-      end
-          
-      # Performs a 'post' request for the specified uri.
-      def post(uri, options = {})
-        if options[:multipart]
-          form_input = build_multipart_data(options)
-          build_response(request.post(uri, build_request_options({"CONTENT_TYPE" => "multipart/form-data, boundary=Mack-boundary", "CONTENT_LENGTH" => form_input.size, :input => form_input})))
-        else
-          build_response(request.post(uri, build_request_options({:input => options.to_params})))
-        end
-      end
-    
       # Performs a 'delete' request for the specified uri.
       def delete(uri, options = {})
-        build_response(request.delete(uri, build_request_options(options)))
+        build_response(request.delete(uri, build_request_options({:input => options.to_params})))
       end
     
       # Returns a Rack::MockRequest. If there isn't one, a new one is created.
@@ -182,7 +182,8 @@ module Mack
       end
     
       def build_request_options(options)
-        {"HTTP_COOKIE" => test_cookies.join("%s=%s", "; ")}.merge(options)
+        opts = {"HTTP_COOKIE" => test_cookies.join("%s=%s", "; ")}.merge(options)
+        opts
       end
     
       def build_response(res)
@@ -194,7 +195,7 @@ module Mack
             [res].flatten.each do |r|
               strip_cookies_from_response(r)
             end
-            res = request.get(res["Location"])
+            res = request.get(res[:location])
             @responses << res
           end
         end

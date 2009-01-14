@@ -16,7 +16,7 @@
 #
 class BlankSlate
   class << self
-
+    
     # Hide the method named +name+ in the BlankSlate class.  Don't
     # hide +instance_eval+ or any method beginning with "__".
     def hide(name)
@@ -45,7 +45,7 @@ class BlankSlate
       end
     end
   end
-
+  
   instance_methods.each { |m| hide(m) }
 end
 

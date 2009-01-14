@@ -16,7 +16,7 @@ module Rcov
   #   require 'rcov/rcovtask'
   #   
   #   Rcov::RcovTask.new do |t|
-  #     t.libs << 'test'
+  #     t.libs << "test"
   #     t.test_files = FileList['test/test*.rb']
   #     t.verbose = true
   #   end
@@ -81,7 +81,7 @@ module Rcov
     # Create a testing task.
     def initialize(name=:rcov)
       @name = name
-      @libs = ['lib']
+      @libs = ["lib"]
       @pattern = nil
       @test_files = nil
       @verbose = false

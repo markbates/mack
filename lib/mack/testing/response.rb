@@ -41,7 +41,7 @@ module Mack
       end
       
       def location
-        self.responses.first.location
+        self.responses.first.headers[:location]
       end
       
     end # Response

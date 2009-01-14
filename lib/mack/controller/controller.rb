@@ -91,7 +91,7 @@ module Mack
       options = {:status => 302}.merge(options)
       raise Rack::ForwardRequest.new(url) if options[:server_side]
       response.status = options[:status]
-      response[:location] = url
+      response['Location'] = url
       render(:text, redirect_html(request.path_info, url, options[:status]))
     end
 

@@ -10,7 +10,7 @@
 
 module Builder
   def self.check_for_name_collision(klass, method_name, defined_constant=nil)
-    if klass.instance_methods.include?(method_name.to_s)
+    if klass.instance_methods.include?(method_name)
       fail RuntimeError,
 	"Name Collision: Method '#{method_name}' is already defined in #{klass}"
     end
@@ -27,7 +27,7 @@ module Builder
 
   ####################################################################
   # XML Character converter, from Sam Ruby:
-  # (see http://intertwingly.net/stories/2005/09/28/xchar.rb).
+  # (see http://intertwingly.net/stories/2005/09/28/xchar.rb). 
   #
   module XChar # :nodoc:
 
@@ -74,7 +74,7 @@ module Builder
     # See http://www.w3.org/TR/REC-xml/#charsets for details.
     VALID = [
       0x9, 0xA, 0xD,
-      (0x20..0xD7FF),
+      (0x20..0xD7FF), 
       (0xE000..0xFFFD),
       (0x10000..0x10FFFF)
     ]
