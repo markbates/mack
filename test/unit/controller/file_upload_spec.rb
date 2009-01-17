@@ -27,4 +27,12 @@ describe "File Upload Request" do
     assigns(:user)[:username].should == "mark"
   end
   
+  it 'should work with put' do
+    put upload_file_as_put_url, :multipart => true, :file0 => file_for_upload(File.join(File.dirname(__FILE__), 'images', "homer_brain.jpg")), :album => 'simpsons'
+    assigns(:saved_file_name).should_not be_nil
+    assigns(:saved_file_name).should == "homer_brain.jpg"
+    assigns(:album).should_not be_nil
+    assigns(:album).should == "simpsons"
+  end
+  
 end

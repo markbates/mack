@@ -195,7 +195,7 @@ module Mack
             [res].flatten.each do |r|
               strip_cookies_from_response(r)
             end
-            res = request.get(res[:location])
+            res = request.get(res['Location'])
             @responses << res
           end
         end

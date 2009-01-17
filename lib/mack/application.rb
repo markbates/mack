@@ -142,7 +142,7 @@ module Mack
       options - [:controller, :action, :redirect_to, :method, :status, :format]
       url = url_for_pattern(url, options)
       self.response.status = status
-      self.response[:location] = url
+      self.response['Location'] = url
       self.response.write(redirect_html(self.request.path_info, url, status))
     end
     

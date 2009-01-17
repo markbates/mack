@@ -47,10 +47,10 @@ describe Mack::Request::Parameters do
   end
   
   it 'should return hashed nested parameters' do
-    [:get, :post, :delete, :put].each do |meth|
-      puts "#{meth.to_s.upcase}: ----------------------------"
+    [:get, :post, :put, :delete].each do |meth|
+      # puts "#{meth.to_s.upcase}: ----------------------------"
       send(meth, '/parameter_test', {:foo => :bar, :user => {:name => 'Mark Bates'}})
-      puts "request.params: #{request.params.inspect}"
+      # puts "request.params: #{request.params.inspect}"
       response.should be_successful
       request.params[:method].should == meth.to_s
       request.params.should be_kind_of(Hash)

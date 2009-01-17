@@ -8,7 +8,7 @@ ENV['MACK_ROOT'] = File.join(File.dirname(__FILE__), "fake_application")
 
 if $genosaurus_output_directory.nil?
   $genosaurus_output_directory = ENV['MACK_ROOT']
-  puts "$genosaurus_output_directory: #{$genosaurus_output_directory}"
+  # puts "$genosaurus_output_directory: #{$genosaurus_output_directory}"
 end
 
 # load the mack framework:

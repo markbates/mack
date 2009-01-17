@@ -123,7 +123,7 @@ module Rack
 
     # The union of GET and POST data.
     def params
-      self.put? ? self.GET : self.GET.update(self.POST)
+      self.GET.merge(self.POST)
     rescue EOFError => e
       self.GET
     end

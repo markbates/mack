@@ -8,7 +8,6 @@ module Mack
     alias_instance_method :params, :original_parameters # :nodoc:
     
     def initialize(env) # :nodoc:
-      puts "env: #{env.inspect}"
       super(env)
     end
     
