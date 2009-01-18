@@ -1,8 +1,11 @@
+=== 0.8.3
 * [#243] Upgraded to Rack 0.9.1
+* [#242] Upgraded to DataMapper 0.9.9
 * [#241] Removed dependency on Facets
 * [#239] Add do_sqlite3 to gems.rb
-* [#238] Upgraded to DataMapper 0.9.8
+* [#166] Effects for mack-javascript
 * [#133] Added Form Builders
+* [#22] Ruby 1.9 Support
 * gem: rack 0.9.1
 * gem: rspec 1.1.12
 * gem: configatron 2.2.2
