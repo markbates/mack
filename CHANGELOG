@@ -1,3 +1,7 @@
+* [#247] Upgrade to DataMapper 0.9.10
+* gem: data_mapper 0.9.10
+* gem: extlib 0.9.10
+
 === 0.8.3.1
 * [#246] Fixed mack-javascript isn't generating javascript
 
