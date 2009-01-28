@@ -1,3 +1,6 @@
+=== 0.8.3.1
+* [#246] Fixed mack-javascript isn't generating javascript
+
 === 0.8.3
 * [#243] Upgraded to Rack 0.9.1
 * [#242] Upgraded to DataMapper 0.9.9
