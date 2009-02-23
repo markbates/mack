@@ -1,3 +1,4 @@
+* [#249] Added Sass support
 * [#248] Haml can now be used for layouts.
 * [#247] Upgrade to DataMapper 0.9.10
 * gem: data_mapper 0.9.10
